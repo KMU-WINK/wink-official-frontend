@@ -4,7 +4,7 @@ import AOS from "aos";
 import styles from "@/styles/Home.module.css";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-
+import Content1 from "components/Content1";
 
 export default function Home() {
   useEffect(() => {
@@ -25,19 +25,19 @@ export default function Home() {
       </Head>
       <TopBar />
       <div className={styles.wave}>
-        <p
-          data-aos="zoom-in"
-          data-aos-once="true"
-        >
+        <p data-aos="zoom-in" data-aos-once="true">
           <span>찡긋.</span> 우리 안의 일렁임을 불태울
           <br />
           가장 나다운 방법.
         </p>
-        <p
-          data-aos="fade-up"
-          data-aos-delay="1000"
-        >지원하기 {`>`}</p>
+        <p data-aos="fade-up" data-aos-delay="1000">
+          지원하기 {`>`}
+        </p>
       </div>
+      <div className={styles.container1}>
+        <Content1></Content1>
+      </div>
+      <div className={styles.container1_end}></div>
     </>
   );
 }
