@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Content1 from "components/Content1";
 import Content2 from "components/Content2";
+import Footer from "components/Footer";
 
 export default function Home() {
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function Home() {
         <div className={styles.container1_end}></div>
         <Content2 />
       </div>
+      <Footer />
     </>
   );
 }
