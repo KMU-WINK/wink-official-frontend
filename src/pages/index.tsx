@@ -5,6 +5,7 @@ import styles from "@/styles/Home.module.css";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Content1 from "components/Content1";
+import Content2 from "components/Content2";
 
 export default function Home() {
   useEffect(() => {
@@ -18,7 +19,7 @@ export default function Home() {
         <title>WINK: Web IN Kookmin</title>
         <meta
           name="description"
-          content="국민대학교 소프트웨어융합대학 웹 학술 동아리 윙크😉"
+          content="국민대학교 소프트웨어융합대학 웹 학술 동아리 윙크 😉"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -34,10 +35,13 @@ export default function Home() {
           지원하기 {`>`}
         </p>
       </div>
-      <div className={styles.container1}>
-        <Content1></Content1>
+      <div className={styles.content_container}>
+        <div className={styles.container1}>
+          <Content1/>
+        </div>
+        <div className={styles.container1_end}></div>
+        <Content2 />
       </div>
-      <div className={styles.container1_end}></div>
     </>
   );
 }
