@@ -1,4 +1,4 @@
-import styles from "@/styles/Content1.module.css";
+import styles from "@/styles/Content.module.css";
 import Image from "next/image";
 import image1 from "../public/content1_1.png";
 import image2 from "../public/content1_2.png";

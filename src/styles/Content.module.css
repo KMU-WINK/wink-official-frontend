@@ -1,13 +1,13 @@
 .container {
   display: flex;
-  gap: 80px;
+  gap: 6.25px;
 }
 
 .content {
+  padding: 0px 40px;
   display: flex;
   flex-direction: column;
   gap: 70px;
-  width: 400px;
 }
 
 .content > h1,
@@ -29,6 +29,16 @@
   border-radius: 30px;
 }
 
+.image_shadow {
+  box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.1);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Mobile */
 @media (max-width: 700px) {
   .container {
@@ -40,5 +50,9 @@
   .content {
     display: flex;
     gap: 24px;
+  }
+
+  .content > h1 {
+    font-size: 32px;
   }
 }
