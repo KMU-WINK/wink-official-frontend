@@ -25,14 +25,14 @@ const Content1 = () => {
       </div>
       <div className={styles.content}>
         <Image
-          data-aos="fade-down"
+          data-aos="fade-left"
           className={styles.image}
           src={image2}
           alt={"Image 2"}
           width={400}
           height={670}
         />
-        <p data-aos="fade-left">
+        <p data-aos="fade-right">
           내용은 세 줄 정도면 좋겠어요.
           <br />
           솔직히 작은 글씨라 읽을까 싶기도 하지만,
