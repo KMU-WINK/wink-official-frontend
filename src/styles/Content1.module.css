@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    gap: 80px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+  width: 400px;
+}
+
+.content > h1,
+.content > p {
+  font-family: Noto Sans CJK KR;
+  color: #000000;
+  font-weight: 500;
+}
+
+.content > h1 {
+  font-size: 48px;
+}
+
+.content > p {
+  font-weight: 23px;
+}
+
+.image {
+  border-radius: 30px;
+}
