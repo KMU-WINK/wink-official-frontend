@@ -100,9 +100,9 @@ export default function Home() {
             <br />
             걸어 왔을까요?
           </h1>
-          {contentList_1.map((content) => (
-            // eslint-disable-next-line react/jsx-key
+          {contentList_1.map((content, index) => (
             <Content3
+              key={index}
               subject={content.subject}
               title={content.title}
               text={content.text}
@@ -118,9 +118,9 @@ export default function Home() {
             <br />
             강약을 주면서...
           </h1>
-          {contentList_2.map((content) => (
-            // eslint-disable-next-line react/jsx-key
+          {contentList_2.map((content, index) => (
             <Content3
+              key={index}
               subject={content.subject}
               title={content.title}
               text={content.text}
