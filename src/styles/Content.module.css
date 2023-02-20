@@ -12,7 +12,6 @@
 
 .content > h1,
 .content > p {
-  font-family: Noto Sans CJK KR;
   color: #000000;
   font-weight: 500;
 }
@@ -61,7 +60,6 @@
 /* Content 3 + type 1 */
 .type1 > h1,
 .type1 > p {
-  font-family: "Noto Sans JK KR";
   color: #000000;
   padding: 10px 0px;
 }
