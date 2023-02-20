@@ -93,6 +93,23 @@
   background: linear-gradient(180deg, #C8D7FF 0%, rgba(200, 215, 255, 0) 100%);
 }
 
+.container3 {
+  display: flex;
+  flex-direction: column;
+  padding: 150px 0px
+}
+
+.container3 > div:not(:last-of-type) {
+  margin-bottom: 130px;
+}
+
+.container3 > h1 {
+  padding: 0px 40px;
+  font-weight: 700;
+  font-size: 48px;
+  margin-bottom: 48px;
+}
+
 /* Mobile */
 @media (max-width: 700px) {
   .wave > p {
@@ -111,5 +128,18 @@
     width: 100%;
     height: 105px;
     background: linear-gradient(180deg, #C8D7FF 0%, rgba(200, 215, 255, 0) 100%);
+  }
+
+  .container3 {
+    padding: 75px 0px
+  }
+  
+  .container3 > div:not(:last-of-type) {
+    margin-bottom: 65px;
+  }
+  
+  .container3 > h1 {
+    font-size: 32px;
+    margin-bottom: 24px;
   }
 }
