@@ -11,7 +11,14 @@ interface ContentProps {
 const Content2 = ({ title, imageSrc, imageAlt }: ContentProps) => {
   return (
     <div className={styles.content}>
-      <h1 data-aos="fade-right">{title}</h1>
+      <h1 data-aos="fade-right">
+        {title.split("\n").map((txt) => (
+          <>
+            {txt}
+            <br />
+          </>
+        ))}
+      </h1>
       <Image
         className={`${styles.image} ${styles.image_shadow}`}
         data-aos="zoom-in"
@@ -19,7 +26,6 @@ const Content2 = ({ title, imageSrc, imageAlt }: ContentProps) => {
         src={imageSrc}
         alt={imageAlt}
         width={878}
-        height={417}
       />
     </div>
   );
