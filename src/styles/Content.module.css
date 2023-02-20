@@ -21,7 +21,7 @@
 }
 
 .content > p {
-  font-weight: 23px;
+  font-size: 23px;
 }
 
 .image {
@@ -30,6 +30,15 @@
 
 .image_shadow {
   box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.1);
+}
+
+.reset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 .center {
@@ -67,7 +76,7 @@
   font-weight: 500;
   font-size: 36px;
 }
-.type1 > p {
+.type1 > h3 {
   font-size: 22px;
 }
 
@@ -78,7 +87,7 @@
   font-weight: 500;
 }
 .type2 > h1,
-.type2 > p {
+.type2 > h3 {
   padding: 6px 0px;
 }
 .type2 > h1 {
@@ -86,7 +95,7 @@
   font-weight: 500;
   font-size: 36px;
 }
-.type2 > p {
+.type2 > h3 {
   color: #6b7684;
   font-size: 22px;
 }
@@ -122,13 +131,13 @@
 
   /* Content 3 + type 1 */
   .type1 > h1,
-  .type1 > p {
+  .type1 > h3 {
     padding: 5px 0px;
   }
   .type1 > h1 {
     font-size: 22px;
   }
-  .type1 > p {
+  .type1 > h3 {
     font-size: 18px;
   }
 

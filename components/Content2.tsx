@@ -12,11 +12,11 @@ const Content2 = ({ title, imageSrc, imageAlt }: ContentProps) => {
   return (
     <div className={styles.content}>
       <h1 data-aos="fade-right">
-        {title.split("\n").map((txt) => (
-          <>
+        {title.split("\n").map((txt, index) => (
+          <p className={styles.reset} key={index}>
             {txt}
             <br />
-          </>
+          </p>
         ))}
       </h1>
       <Image

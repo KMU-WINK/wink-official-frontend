@@ -23,21 +23,21 @@ const Content3 = ({
       <div className={subject === null ? styles.type1 : styles.type2}>
         {subject !== null ? <h2>{subject}</h2> : null}
         <h1>
-          {title.split("\n").map((txt) => (
-            <>
+          {title.split("\n").map((txt, index) => (
+            <p className={styles.reset} key={index}>
               {txt}
               <br />
-            </>
+            </p>
           ))}
         </h1>
-        <p>
-          {text.split("\n").map((txt) => (
-            <>
+        <h3>
+          {text.split("\n").map((txt, index) => (
+            <p className={styles.reset} key={index}>
               {txt}
               <br />
-            </>
+            </p>
           ))}
-        </p>
+        </h3>
       </div>
       <Image
         className={styles.image}
