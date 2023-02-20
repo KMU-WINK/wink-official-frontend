@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Content1 from "components/Content1";
 import Content2 from "components/Content2";
+import image2_1 from "../../public/content2_1.png"
 import Footer from "components/Footer";
 
 export default function Home() {
@@ -41,7 +42,7 @@ export default function Home() {
           <Content1/>
         </div>
         <div className={styles.container1_end}></div>
-        <Content2 />
+        <Content2 title={"당연히 여긴 제목이죠!\n제트자로 보도록 유도해요."} imageSrc={image2_1} imageAlt={"Image 2-1"} />
       </div>
       <Footer />
     </>
