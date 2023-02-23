@@ -1,0 +1,163 @@
+.container {
+  display: flex;
+  gap: 6.25px;
+}
+
+.content {
+  padding: 0px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+
+.content > h1,
+.content > p {
+  color: #000000;
+  font-weight: 500;
+}
+
+.content > h1 {
+  font-size: 48px;
+}
+
+.content > p {
+  font-size: 23px;
+}
+
+.image {
+  border-radius: 30px;
+}
+
+.image_shadow {
+  box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.1);
+}
+
+.reset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Content 3 CSS */
+.content_3 {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  padding: 0px 40px;
+}
+
+.type1,
+.type2 {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content_3_r {
+  flex-direction: row-reverse;
+}
+
+/* Content 3 + type 1 */
+.type1 > h1,
+.type1 > p {
+  color: #000000;
+  padding: 10px 0px;
+}
+.type1 > h1 {
+  font-weight: 500;
+  font-size: 36px;
+}
+.type1 > h3 {
+  font-size: 22px;
+}
+
+/* Content 3 + type 2 */
+.type2 > h2 {
+  color: #3a70ff;
+  font-size: 28px;
+  font-weight: 500;
+}
+.type2 > h1,
+.type2 > h3 {
+  padding: 6px 0px;
+}
+.type2 > h1 {
+  color: #000000;
+  font-weight: 500;
+  font-size: 36px;
+}
+.type2 > h3 {
+  color: #6b7684;
+  font-size: 22px;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 40px;
+    gap: 48px;
+  }
+
+  .content {
+    display: flex;
+    gap: 24px;
+  }
+
+  .content > h1 {
+    font-size: 32px;
+  }
+
+  /* Content 3 CSS */
+  .content_3 {
+    flex-direction: column-reverse;
+    padding: 0px 40px;
+    gap: 8px;
+  }
+
+  .content_3_r {
+    flex-direction: column-reverse;
+  }
+
+  /* Content 3 + type 1 */
+  .type1 > h1,
+  .type1 > h3 {
+    padding: 5px 0px;
+  }
+  .type1 > h1 {
+    font-size: 22px;
+  }
+  .type1 > h3 {
+    font-size: 18px;
+  }
+
+  /* Content 3 + type 2 */
+  .type2 > h2 {
+    color: #3a70ff;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  .type2 > h1,
+  .type2 > p {
+    padding: 3px 0px;
+  }
+  .type2 > h1 {
+    color: #000000;
+    font-weight: 500;
+    font-size: 22px;
+  }
+  .type2 > p {
+    color: #6b7684;
+    font-size: 18px;
+  }
+}
