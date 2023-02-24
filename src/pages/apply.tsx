@@ -17,7 +17,14 @@ const Apply: NextPage = () => {
             alt={"rocket iamge"}
             width={500}
           />
-          <h1>WINK 2023-1 신입 부원 모집</h1>
+          <div className={styles.text}>
+            <h1>
+              <span>Web IN Koomin</span>
+              <br />
+              신입 부원 모집
+            </h1>
+            <h2>🚀 윙크에서 우주까지 함께 할 동료를 모집합니다!</h2>
+          </div>
         </div>
         <div className={styles.container}>
           <iframe

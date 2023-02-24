@@ -37,9 +37,22 @@
   padding-bottom: 56.25%;
 }
 
-.background > h1 {
-  font-size: 32px;
+.text {
   z-index: 10;
+}
+
+.text > h1 {
+  font-size: 48px;
+  font-weight: 800;
+}
+
+.text > h1 > span {
+  color: #3a70ff;
+}
+
+.text > h2 {
+  margin-top: 24px;
+  font-size: 24px;
 }
 
 .rocket {
