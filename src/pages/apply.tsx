@@ -19,13 +19,15 @@ const Apply: NextPage = () => {
           />
           <h1>WINK 2023-1 신입 부원 모집</h1>
         </div>
-        <iframe
-          width="780"
-          height="940"
-          src="https://docs.google.com/forms/d/e/1FAIpQLSflhDGcmQNjqHG3f65Pm-PjkkV6Jw9kleQB4vuBOus5UYLSPQ/viewform"
-          allowTransparency={true}
-          allowFullScreen
-        />
+        <div className={styles.container}>
+          <iframe
+            width="780"
+            height="940"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSflhDGcmQNjqHG3f65Pm-PjkkV6Jw9kleQB4vuBOus5UYLSPQ/viewform"
+            allowTransparency={true}
+            allowFullScreen
+          />
+        </div>
       </div>
       <Footer />
     </>
