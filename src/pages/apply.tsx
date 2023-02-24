@@ -11,8 +11,13 @@ const Apply: NextPage = () => {
       <TopBar />
       <div className={styles.sheetForm}>
         <div className={styles.background}>
-          <Image className={styles.rocket} src={rocket} alt={"rocket iamge"} width={500} />
-          WINK 2023-1 신입 부원 모집
+          <Image
+            className={styles.rocket}
+            src={rocket}
+            alt={"rocket iamge"}
+            width={500}
+          />
+          <h1>WINK 2023-1 신입 부원 모집</h1>
         </div>
         <iframe
           width="780"

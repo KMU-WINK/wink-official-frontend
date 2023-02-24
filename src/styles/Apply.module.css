@@ -6,8 +6,6 @@
 } 
 
 .sheetForm {
-
-    font-size: 32px;
     display: flex;
     gap: 16px;
     flex-direction: column;
@@ -26,6 +24,11 @@
     background-size: contain;
     background-size: 100% auto;
     background-repeat: no-repeat;    
+
+}
+
+.background > h1 {
+    font-size: 32px;
     z-index: 10;
 }
 
