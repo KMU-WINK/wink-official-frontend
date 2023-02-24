@@ -48,7 +48,7 @@ const TopBar = () => {
             <Link href={"/"}>부원 소개</Link>
           </li>
           <li>
-            <Link href={"/"}>지원하기</Link>
+            <Link href={"/apply"}>지원하기</Link>
           </li>
         </ul>
       </nav>
