@@ -9,6 +9,7 @@ import Content2 from "components/Content2";
 import image2_1 from "../../public/content2_1.png";
 import Footer from "components/Footer";
 import Content3 from "components/Content3";
+import Link from "next/link";
 
 const contentList_1 = [
   {
@@ -81,7 +82,7 @@ export default function Home() {
           가장 나다운 방법.
         </p>
         <p data-aos="fade-up" data-aos-delay="1000">
-          지원하기 {`>`}
+          <Link href={"/apply"}>지원하기 {`>`}</Link>
         </p>
       </div>
       <div className={styles.content_container}>
