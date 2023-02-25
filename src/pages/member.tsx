@@ -3,7 +3,6 @@ import TopBar from "components/TopBar";
 import styles from "@/styles/Member.module.css";
 import Image, { StaticImageData } from "next/image";
 import profile from "../../public/profile.png";
-
 import icon_github from "../../public/github.png";
 import icon_instagram from "../../public/instagram.png";
 import icon_tistory from "../../public/tistory.png";
@@ -18,6 +17,12 @@ interface userInfo {
 }
 
 const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
+  const websiteList = [
+    [github, icon_github],
+    [instagram, icon_instagram],
+    [blog, icon_tistory],
+  ];
+
   return (
     <div className={styles.profileCard}>
       <Image
@@ -29,27 +34,24 @@ const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
         <h1>{name}</h1>
         <h2>{role}</h2>
         <li className={`${styles.profileWeb} p-4`}>
-          <a target="_blank" href={github} rel="noreferrer">
-            <Image
-              className={styles.icon}
-              src={icon_github}
-              alt={`${name}'s github`}
-            />
-          </a>
-          <a target="_blank" href={instagram} rel="noreferrer">
-            <Image
-              className={styles.icon}
-              src={icon_instagram}
-              alt={`${name}'s instagram`}
-            />
-          </a>
-          <a target="_blank" href={blog} rel="noreferrer">
-            <Image
-              className={styles.icon}
-              src={icon_tistory}
-              alt={`${name}'s blog`}
-            />
-          </a>
+          {websiteList.map((info, index) => {
+            if (info[0] !== "") {
+              return (
+                <a
+                  key={index}
+                  target="_blank"
+                  href={info[0].toString()}
+                  rel="noreferrer"
+                >
+                  <Image
+                    className={styles.icon}
+                    src={info[1]}
+                    alt={`${name}'s github`}
+                  />
+                </a>
+              );
+            }
+          })}
         </li>
       </div>
     </div>
@@ -65,8 +67,8 @@ export default function Member() {
           name={"최지원"}
           role={"21학번 프론트엔드 개발자"}
           github={"https://github.com/Choi-Jiwon-38"}
-          instagram={""}
-          blog={""}
+          instagram={"https://www.instagram.com/aid_choi/"}
+          blog={"https://what-time.tistory.com/"}
           image={undefined}
         />
         <Profile
