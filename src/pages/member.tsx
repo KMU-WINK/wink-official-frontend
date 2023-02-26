@@ -25,7 +25,7 @@ const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
   return (
     <div className="flex flex-col items-center py-10 border border-[#808080] rounded-2xl">
       <Image
-        className="w-32 h-32 rounded-full border border-gray-400 mb-2"
+        className="w-32 h-32 rounded-full border border-gray-300 bg-[#B0C6FF] mb-2"
         src={image ? image : profile}
         alt={`${name}'s profile image`}
       />
