@@ -61,7 +61,7 @@ export default function Member() {
   return (
     <>
       <TopBar />
-      <div className="grid justify-center gap-5 px-10 py-2.5 grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+      <div className="grid justify-center gap-5 px-10 py-2.5 grid-cols-1 xl:grid-cols-[repeat(4,_250px)] lg:grid-cols-[repeat(3,_250px)] md:grid-cols-[repeat(2,_250px)]">
         <Profile
           name={"최지원"}
           role={"21학번 프론트엔드 개발자"}
