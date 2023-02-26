@@ -22,7 +22,7 @@ function TopBar() {
     },
     {
       title: "부원 소개",
-      href: "/",
+      href: "/member",
       mobileHide: true,
     },
     {
