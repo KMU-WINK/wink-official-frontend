@@ -48,7 +48,7 @@ function TopBar() {
         scrollY !== 0 && " border-b"
       }`}
     >
-      <div className="w-full max-w-6xl flex justify-between p-4 lg:p-6">
+<div className="w-full max-w-6xl flex justify-between p-4 lg:p-6">
         <Link href={"/"} replace>
           <Image
             className="object-contain h-6"
