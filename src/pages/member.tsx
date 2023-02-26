@@ -1,6 +1,5 @@
 import Footer from "components/Footer";
 import TopBar from "components/TopBar";
-import styles from "@/styles/Member.module.css";
 import Image, { StaticImageData } from "next/image";
 import profile from "../../public/profile.png";
 import icon_github from "../../public/github.png";
@@ -24,16 +23,16 @@ const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
   ];
 
   return (
-    <div className={styles.profileCard}>
+    <div className="flex flex-col items-center py-10 border border-[#808080] rounded-2xl">
       <Image
-        className={`${styles.profileImage} mb-2`}
+        className="w-32 h-32 rounded-full border border-gray-400 mb-2"
         src={image ? image : profile}
         alt={`${name}'s profile image`}
       />
-      <div className={styles.profileInfo}>
-        <h1>{name}</h1>
+      <div className="flex flex-col items-center">
+        <h1 className="text-lg font-extrabold">{name}</h1>
         <h2>{role}</h2>
-        <li className={`${styles.profileWeb} p-4`}>
+        <li className="flex gap-2.5 p-4">
           {websiteList.map((info, index) => {
             if (info[0] !== "") {
               return (
@@ -44,7 +43,7 @@ const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
                   rel="noreferrer"
                 >
                   <Image
-                    className={styles.icon}
+                    className="w-8 h-8"
                     src={info[1]}
                     alt={`${name}'s github`}
                   />
@@ -62,7 +61,7 @@ export default function Member() {
   return (
     <>
       <TopBar />
-      <div className={styles.profileGrid}>
+      <div className="grid justify-center gap-5 px-10 py-2.5 grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
         <Profile
           name={"최지원"}
           role={"21학번 프론트엔드 개발자"}
