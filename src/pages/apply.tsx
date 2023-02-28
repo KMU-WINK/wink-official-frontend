@@ -4,13 +4,14 @@ import Footer from "components/Footer";
 import Image from "next/image";
 import rocket from "../../public/rocket.png";
 import arrow from "../../public/arrow.svg";
+import cloud from "../../public/cloud.png";
 
 const Apply: NextPage = () => {
   return (
     <>
       <TopBar />
       <div className="flex flex-col align-center">
-        <div className="flex flex-col justify-center items-center w-full h-screen bg-[#c8d7ff] bg-bottom bg-contain bg-no-repeat bg-[url('../../public/cloud.png')]">
+        <div className="flex flex-col justify-center items-center w-full h-screen bg-[#c8d7ff]">
           <Image
             className="z-0 absolute top-16 right-10 w-4/12"
             src={rocket}
@@ -25,11 +26,17 @@ const Apply: NextPage = () => {
               🚀 윙크에서 우주까지 함께 할 동료를 모집합니다!
             </h2>
           </div>
-          <Image
-            className="absolute bottom-1 lg:bottom-7 animate-bounce h-12 cursor-pointer"
-            src={arrow}
-            alt={"scroll button"}
-          />
+          <div className="absolute bottom-0">
+            <Image src={cloud} alt="cloud" />
+            <div className="bg-white h-[200px] lg:h-0" />
+            <div className="flex justify-center">
+              <Image
+                className="absolute bottom-1 lg:bottom-7 animate-bounce h-12 cursor-pointer"
+                src={arrow}
+                alt={"scroll button"}
+              />
+            </div>
+          </div>
         </div>
         <div className="relative w-full my-10 h-[940px] pb-[56.25%]">
           <iframe
