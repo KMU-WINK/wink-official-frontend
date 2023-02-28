@@ -5,8 +5,10 @@ import Image from "next/image";
 import rocket from "../../public/rocket.png";
 import arrow from "../../public/arrow.svg";
 import cloud from "../../public/cloud.png";
+import useMoveScroll from "@/util/useMoveScroll";
 
 const Apply: NextPage = () => {
+  const {element, onMoveToElement} = useMoveScroll()
   return (
     <>
       <TopBar />
@@ -32,15 +34,16 @@ const Apply: NextPage = () => {
             <div className="flex justify-center">
               <Image
                 className="absolute bottom-1 lg:bottom-7 animate-bounce h-12 cursor-pointer"
+                onClick={onMoveToElement}
                 src={arrow}
                 alt={"scroll button"}
               />
             </div>
           </div>
         </div>
-        <div className="relative w-full my-10 h-[940px] pb-[56.25%]">
+        <div ref={element} className="relative w-full my-10 h-[940px] pb-[56.25%]">
           <iframe
-            className="absolute top-0 left-0 w-[calc(100%-80px)] bg-[#f4f7ff] border border-[#e4e4e4] rounded-2xl mx-10"
+            className="absolute mt-[92px] top-0 left-0 w-[calc(100%-80px)] bg-[#f4f7ff] border border-[#e4e4e4] rounded-2xl mx-10"
             width="780"
             height="940"
             src=""
