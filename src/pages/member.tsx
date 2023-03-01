@@ -25,8 +25,10 @@ const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
   return (
     <div className="flex flex-col items-center py-10 border border-[#808080] rounded-2xl">
       <Image
-        className="w-32 h-32 rounded-full border border-gray-300 bg-[#B0C6FF] mb-2"
-        src={image ? image : profile}
+        className="rounded-full border border-gray-300 bg-[#B0C6FF] mb-2"
+        width={128}
+        height={128}
+        src={`${github}.png`}
         alt={`${name}'s profile image`}
       />
       <div className="flex flex-col items-center">
@@ -73,7 +75,7 @@ export default function Member() {
         <Profile
           name={"장수미"}
           role={"윙크 유일무이 디자이너"}
-          github={"https://github.com/Choi-Jiwon-38"}
+          github={"https://github.com/jangsumi"}
           instagram={""}
           blog={""}
           image={undefined}
@@ -81,7 +83,7 @@ export default function Member() {
         <Profile
           name={"이보현"}
           role={"프론트엔드 공장장"}
-          github={"https://github.com/Choi-Jiwon-38"}
+          github={"https://github.com/250b"}
           instagram={""}
           blog={""}
           image={undefined}
@@ -89,7 +91,7 @@ export default function Member() {
         <Profile
           name={"박정명"}
           role={"최고존엄 10대 회장"}
-          github={"https://github.com/Choi-Jiwon-38"}
+          github={"https://github.com/j-myeong"}
           instagram={""}
           blog={""}
           image={undefined}
@@ -97,7 +99,7 @@ export default function Member() {
         <Profile
           name={"하준혁"}
           role={"최고존엄 9대, 10대 부회장"}
-          github={"https://github.com/Choi-Jiwon-38"}
+          github={"https://github.com/sirldev"}
           instagram={""}
           blog={""}
           image={undefined}
