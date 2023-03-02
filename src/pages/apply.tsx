@@ -24,10 +24,19 @@ const Apply: NextPage = () => {
             width={500}
           />
           <div className="z-10 px-2">
-            <h1 data-aos="fade" data-aos-delay="800" className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold">
+            <h1
+              data-aos="fade"
+              data-aos-delay="800"
+              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold"
+            >
               <span className="text-[#3a70ff]">WINK</span> 신입 부원 모집
             </h1>
-            <h2 data-aos="fade" data-aos-delay="1200" data-aos-duration="1600" className="text-lg md:text-xl lg:text-2xl mt-1 lg:mt-4">
+            <h2
+              data-aos="fade"
+              data-aos-delay="1200"
+              data-aos-duration="1800"
+              className="text-lg md:text-xl lg:text-2xl mt-1 lg:mt-4"
+            >
               🚀 윙크에서 우주까지 함께 할 동료를 모집합니다!
             </h2>
           </div>
@@ -44,15 +53,10 @@ const Apply: NextPage = () => {
             </div>
           </div>
         </div>
-        <div
-          ref={element}
-          className="relative w-full my-10 h-[940px] pb-[56.25%]"
-        >
+        <div ref={element} className="relative w-full">
           <iframe
-            className="absolute mt-[92px] top-0 left-0 w-[calc(100%-80px)] bg-[#f4f7ff] border border-[#e4e4e4] rounded-2xl mx-10"
-            width="780"
-            height="940"
-            src=""
+            className="relative top-0 left-0 w-full h-[800px] bg-[#f4f7ff] border border-[#e4e4e4]"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSc_qbE0qf78S5MS-GW4pfRlnT7B_vbRogfsLcabjnM0i-0sQQ/viewform?embedded=true"
             allowFullScreen
           />
         </div>
