@@ -2,6 +2,7 @@ import Footer from "components/Footer";
 import TopBar from "components/TopBar";
 import Image from "next/image";
 import icon_profile from "../../public/profile.png";
+import dataJson from "../../json/data.json";
 
 interface userInfo {
   name: string;
@@ -62,7 +63,6 @@ const Profile = ({
         })}
       </div>
     </div>
-
   );
 };
 
@@ -72,46 +72,17 @@ export default function Member() {
       <TopBar />
       <div className="h-16" />
       <div className="grid justify-center gap-7 px-10 py-2.5 grid-cols-[repeat(1,_340px)] 2xl:grid-cols-[repeat(4,_340px)] xl:grid-cols-[repeat(3,_340px)] md:grid-cols-[repeat(2,_340px)]">
-        <Profile
-          name={"최지원"}
-          intro={"21학번 프론트엔드 개발자"}
-          github={"https://github.com/Choi-Jiwon-38"}
-          instagram={"https://www.instagram.com/aid_choi/"}
-          blog={"https://what-time.tistory.com/"}
-          profile={false}
-        />
-        <Profile
-          name={"장수미"}
-          intro={"윙크 유일무이 디자이너"}
-          github={"https://github.com/jangsumi"}
-          instagram={""}
-          blog={""}
-          profile={true}
-        />
-        <Profile
-          name={"이보현"}
-          intro={"프론트엔드 공장장"}
-          github={"https://github.com/250b"}
-          instagram={""}
-          blog={""}
-          profile={false}
-        />
-        <Profile
-          name={"박정명"}
-          intro={"최고존엄 10대 회장"}
-          github={"https://github.com/j-myeong"}
-          instagram={""}
-          blog={""}
-          profile={true}
-        />
-        <Profile
-          name={"하준혁"}
-          intro={"최고존엄 9대, 10대 부회장"}
-          github={"https://github.com/sirldev"}
-          instagram={""}
-          blog={""}
-          profile={true}
-        />
+        {dataJson.member.map((member, index) => (
+          <Profile
+            key={index}
+            name={member.name}
+            intro={member.intro}
+            github={member.github}
+            instagram={member.instagram}
+            blog={member.blog}
+            profile={member.profile}
+          />
+        ))}
       </div>
       <Footer />
     </>

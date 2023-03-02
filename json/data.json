@@ -1,0 +1,172 @@
+{
+  "member": [
+    {
+      "name": "최지원",
+      "intro": "Front-end Developer",
+      "github": "https://github.com/Choi-Jiwon-38",
+      "instagram": "https://www.instagram.com/aid_choi",
+      "blog": "https://what-time.tistory.com/",
+      "profile": true
+    },
+    {
+      "name": "홍승현",
+      "intro": "Developer가 아님",
+      "github": "https://github.com/superh0ng",
+      "instagram": "https://www.instagram.com/superh0ng_",
+      "blog": "",
+      "profile": false
+    },
+    {
+      "name": "박정명",
+      "intro": "WINK 대장",
+      "github": "https://github.com/j-myeong",
+      "instagram": "https://www.instagram.com/j.myeong_",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "김지성",
+      "intro": "무려 8대 회장",
+      "github": "https://github.com/JisuuungKim",
+      "instagram": "https://www.instagram.com/z_is_2",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "장수미",
+      "intro": "WINK 디자이너",
+      "github": "https://github.com/jangsumi",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "성정규",
+      "intro": "소융대 부회장",
+      "github": "https://github.com/seongjeongkyu1",
+      "instagram": "https://www.instagram.com/sj_k.23/",
+      "blog": "https://sjkdev.tistory.com/",
+      "profile": true
+    },
+    {
+      "name": "임혜진",
+      "intro": "imagine",
+      "github": "https://github.com/ima9ine4",
+      "instagram": "https://www.instagram.com/ima9ine4",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "이수혁",
+      "intro": "생초보 프로그래밍 꿈나무",
+      "github": "https://github.com/cg10036",
+      "instagram": "https://www.instagram.com/cg10036",
+      "blog": "https://cg10036.tistory.com",
+      "profile": true
+    },
+    {
+      "name": "이지원",
+      "intro": "20학번 웹뉴비",
+      "github": "https://github.com/easyandones",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "이현승",
+      "intro": "영차영차",
+      "github": "https://github.com/hyeonseung-lee",
+      "instagram": "https://www.instagram.com/hyeonseung.2/",
+      "blog": "https://theconcentrationoftime.tistory.com/",
+      "profile": false
+    },
+    {
+      "name": "이다은",
+      "intro": "💡 지존짱멋진 개발자",
+      "github": "https://github.com/dan-2ee",
+      "instagram": "https://www.instagram.com/__dan_n",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "조현상",
+      "intro": "웹 꿈나무",
+      "github": "https://github.com/hyeonsang010716",
+      "instagram": "https://instagram.com/bird_pheno?igshid=ZDdkNTZiNTM=",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "윤상원",
+      "intro": "뒷방 늙은이가 된 AI 개발자",
+      "github": "https://github.com/SangwonYoon",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "유승우",
+      "intro": "백엔드 개발자",
+      "github": "https://github.com/Seung-Woo-kmu",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "사민주",
+      "intro": "Wink's Say",
+      "github": "https://github.com/MJspace",
+      "instagram": "https://www.instagram.com/say_mij",
+      "blog": "",
+      "profile": false
+    },
+    {
+      "name": "동승환",
+      "intro": "22학번 02년생",
+      "github": "https://github.com/jerome132",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "김호",
+      "intro": "윙크의 힙함을 담당 중",
+      "github": "https://github.com/kimho0304",
+      "instagram": "https://www.instagram.com/ho_k2mo",
+      "blog": "https://blog.naver.com/mfkimho0304",
+      "profile": true
+    },
+    {
+      "name": "김민선",
+      "intro": "윙크 지원부 대장",
+      "github": "https://github.com/CLM-BONNY",
+      "instagram": "https://www.instagram.com/clm_bonny/",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "양나래",
+      "intro": "22학번",
+      "github": "https://github.com/didskfo",
+      "instagram": "",
+      "blog": "",
+      "profile": false
+    },
+    {
+      "name": "손건",
+      "intro": "삶은 악전고투다",
+      "github": "https://github.com/jen6",
+      "instagram": "https://www.instagram.com/ijen6m",
+      "blog": "https://www.linkedin.com/in/jen6/",
+      "profile": true
+    },
+    {
+      "name": "유태근",
+      "intro": "JDD",
+      "github": "https://github.com/TaegeunYou",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    }
+  ]
+}
