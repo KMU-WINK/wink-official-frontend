@@ -1,7 +1,7 @@
 import Footer from "components/Footer";
 import TopBar from "components/TopBar";
-import Image, { StaticImageData } from "next/image";
-import profile from "../../public/profile.png";
+import Image from "next/image";
+import icon_profile from "../../public/profile.png";
 import icon_github from "../../public/github.png";
 import icon_instagram from "../../public/instagram.png";
 import icon_tistory from "../../public/tistory.png";
@@ -12,10 +12,17 @@ interface userInfo {
   github: string;
   instagram: string;
   blog: string;
-  image: StaticImageData | undefined;
+  profile: boolean;
 }
 
-const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
+const Profile = ({
+  name,
+  role,
+  github,
+  instagram,
+  blog,
+  profile,
+}: userInfo) => {
   const websiteList = [
     [github, icon_github],
     [instagram, icon_instagram],
@@ -28,7 +35,7 @@ const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
         className="rounded-full border border-gray-300 bg-[#B0C6FF] mb-2"
         width={128}
         height={128}
-        src={`${github}.png`}
+        src={profile ? `${github}.png` : icon_profile}
         alt={`${name}'s profile image`}
       />
       <div className="flex flex-col items-center">
@@ -63,6 +70,7 @@ export default function Member() {
   return (
     <>
       <TopBar />
+      <div className="h-16" />
       <div className="grid justify-center gap-5 px-10 py-2.5 grid-cols-1 xl:grid-cols-[repeat(4,_250px)] lg:grid-cols-[repeat(3,_250px)] md:grid-cols-[repeat(2,_250px)]">
         <Profile
           name={"최지원"}
@@ -70,7 +78,7 @@ export default function Member() {
           github={"https://github.com/Choi-Jiwon-38"}
           instagram={"https://www.instagram.com/aid_choi/"}
           blog={"https://what-time.tistory.com/"}
-          image={undefined}
+          profile={false}
         />
         <Profile
           name={"장수미"}
@@ -78,7 +86,7 @@ export default function Member() {
           github={"https://github.com/jangsumi"}
           instagram={""}
           blog={""}
-          image={undefined}
+          profile={true}
         />
         <Profile
           name={"이보현"}
@@ -86,7 +94,7 @@ export default function Member() {
           github={"https://github.com/250b"}
           instagram={""}
           blog={""}
-          image={undefined}
+          profile={false}
         />
         <Profile
           name={"박정명"}
@@ -94,7 +102,7 @@ export default function Member() {
           github={"https://github.com/j-myeong"}
           instagram={""}
           blog={""}
-          image={undefined}
+          profile={true}
         />
         <Profile
           name={"하준혁"}
@@ -102,7 +110,7 @@ export default function Member() {
           github={"https://github.com/sirldev"}
           instagram={""}
           blog={""}
-          image={undefined}
+          profile={true}
         />
       </div>
       <Footer />
