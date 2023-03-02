@@ -25,7 +25,7 @@ const Footer = () => {
   ];
 
   return (
-    <div className="flex mt-10 flex-col py-16 bg-[#f3f6ff] items-center">
+    <div className="flex flex-col py-16 bg-[#f3f6ff] items-center">
       <div className="flex justify-center mb-4">
         <Image src={logo} alt={"WINK small logo"} width={89} />
         <p>WINK</p>
