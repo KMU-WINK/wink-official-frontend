@@ -1,57 +1,68 @@
 import Footer from "components/Footer";
 import TopBar from "components/TopBar";
-import Image, { StaticImageData } from "next/image";
-import profile from "../../public/profile.png";
-import icon_github from "../../public/github.png";
-import icon_instagram from "../../public/instagram.png";
-import icon_tistory from "../../public/tistory.png";
+import Image from "next/image";
+import styles from "@/styles/Member.module.css";
+import cloud from "../../public/cloud_3d.png";
+import icon_profile from "../../public/profile.png";
+import dataJson from "../../json/data.json";
 
 interface userInfo {
   name: string;
-  role: string;
+  intro: string;
   github: string;
   instagram: string;
   blog: string;
-  image: StaticImageData | undefined;
+  profile: boolean;
 }
 
-const Profile = ({ name, role, github, instagram, blog, image }: userInfo) => {
+const Profile = ({
+  name,
+  intro,
+  github,
+  instagram,
+  blog,
+  profile,
+}: userInfo) => {
   const websiteList = [
-    [github, icon_github],
-    [instagram, icon_instagram],
-    [blog, icon_tistory],
+    [github, "GITHUB"],
+    [instagram, "INSTAGRAM"],
+    [blog, "BLOG"],
   ];
 
   return (
-    <div className="flex flex-col items-center py-10 border border-[#808080] rounded-2xl">
-      <Image
-        className="w-32 h-32 rounded-full border border-gray-300 bg-[#B0C6FF] mb-2"
-        src={image ? image : profile}
-        alt={`${name}'s profile image`}
-      />
-      <div className="flex flex-col items-center">
-        <h1 className="text-lg font-extrabold">{name}</h1>
-        <h2>{role}</h2>
-        <li className="flex gap-2.5 p-4">
-          {websiteList.map((info, index) => {
-            if (info[0] !== "") {
-              return (
+    <div>
+      <div className="flex gap-5 w-[340px] h-[128px] p-5 border-[1.5px] border-[#9DB8FF] rounded-t-lg items-center">
+        <Image
+          className="rounded-full border border-gray-300 bg-[#B0C6FF]"
+          width={80}
+          height={80}
+          src={profile ? `${github}.png` : icon_profile}
+          alt={`${name}'s profile image`}
+        />
+        <div className="flex flex-col gap-1 justify-center">
+          <h1 className="text-xl font-semibold">{name}</h1>
+          <h2 className="text-lg">{intro}</h2>
+        </div>
+      </div>
+      <div className="flex w-[340px] h-[58px] pl-5 pr-7 items-center justify-between border-[1.5px] border-[#9DB8FF] rounded-b-lg border-t-0">
+        {websiteList.map((info, index) => {
+          return (
+            <div key={index}>
+              {info[0] !== "" ? (
                 <a
-                  key={index}
+                  className="italic text-[#3A70FF] font-black"
                   target="_blank"
                   href={info[0].toString()}
                   rel="noreferrer"
                 >
-                  <Image
-                    className="w-8 h-8"
-                    src={info[1]}
-                    alt={`${name}'s github`}
-                  />
+                  {info[1]}
                 </a>
-              );
-            }
-          })}
-        </li>
+              ) : (
+                <p className="italic text-[#B6CDFF] font-black">{info[1]}</p>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -61,47 +72,35 @@ export default function Member() {
   return (
     <>
       <TopBar />
-      <div className="grid justify-center gap-5 px-10 py-2.5 grid-cols-1 xl:grid-cols-[repeat(4,_250px)] lg:grid-cols-[repeat(3,_250px)] md:grid-cols-[repeat(2,_250px)]">
-        <Profile
-          name={"최지원"}
-          role={"21학번 프론트엔드 개발자"}
-          github={"https://github.com/Choi-Jiwon-38"}
-          instagram={"https://www.instagram.com/aid_choi/"}
-          blog={"https://what-time.tistory.com/"}
-          image={undefined}
+      <div className="h-16" />
+      <div className="flex flex-col items-center">
+        <Image
+          className="animate-updown py-8"
+          src={cloud}
+          alt={"cloud_3d.png"}
+          width={216}
         />
-        <Profile
-          name={"장수미"}
-          role={"윙크 유일무이 디자이너"}
-          github={"https://github.com/Choi-Jiwon-38"}
-          instagram={""}
-          blog={""}
-          image={undefined}
-        />
-        <Profile
-          name={"이보현"}
-          role={"프론트엔드 공장장"}
-          github={"https://github.com/Choi-Jiwon-38"}
-          instagram={""}
-          blog={""}
-          image={undefined}
-        />
-        <Profile
-          name={"박정명"}
-          role={"최고존엄 10대 회장"}
-          github={"https://github.com/Choi-Jiwon-38"}
-          instagram={""}
-          blog={""}
-          image={undefined}
-        />
-        <Profile
-          name={"하준혁"}
-          role={"최고존엄 9대, 10대 부회장"}
-          github={"https://github.com/Choi-Jiwon-38"}
-          instagram={""}
-          blog={""}
-          image={undefined}
-        />
+        <h1 className={`font-black text-5xl lg:text-8xl text-[#D5DFFD] ${styles.text_border} whitespace-nowrap`}>
+          NEW WAVE IN US
+        </h1>
+        <h2 className="font-light italic text-lg lg:text-4xl text-[#5c80df] p-3">
+          Introduction of WINK team members
+        </h2>
+        <div className="mt-8 mb-[124px] animate-updown-shadow h-2 bg-[#bec7e5] blur rounded-full" />
+        <div />
+      </div>
+      <div className="grid justify-center gap-7 px-10 py-2.5 grid-cols-[repeat(1,_340px)] 2xl:grid-cols-[repeat(4,_340px)] xl:grid-cols-[repeat(3,_340px)] md:grid-cols-[repeat(2,_340px)]">
+        {dataJson.member.map((member, index) => (
+          <Profile
+            key={index}
+            name={member.name}
+            intro={member.intro}
+            github={member.github}
+            instagram={member.instagram}
+            blog={member.blog}
+            profile={member.profile}
+          />
+        ))}
       </div>
       <Footer />
     </>
