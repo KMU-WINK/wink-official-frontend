@@ -13,7 +13,7 @@ module.exports = {
             width: "184px",
             "-webkit-filter": "blur(6px)",
           },
-          to: { 
+          to: {
             width: "240px",
             "-webkit-filter": "blur(10px)",
           },
@@ -22,6 +22,10 @@ module.exports = {
       animation: {
         updown: "updown 1.4s infinite ease-in-out alternate",
         "updown-shadow": "updown-shadow 1.4s infinite ease-in-out alternate",
+      },
+      fontFamily: {
+        pretendard: ["pretendard"],
+        roboto: ["Roboto"],
       },
     },
   },
