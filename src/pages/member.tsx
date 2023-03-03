@@ -40,8 +40,8 @@ const Profile = ({
           alt={`${name}'s profile image`}
         />
         <div className="flex flex-col gap-1 justify-center">
-          <h1 className="text-xl font-semibold">{name}</h1>
-          <h2 className="text-lg">{intro}</h2>
+          <h1 className="font-pretendard text-xl font-bold">{name}</h1>
+          <h2 className="font-pretendard text-lg">{intro}</h2>
         </div>
       </div>
       <div className="flex w-[340px] h-[58px] pl-5 pr-7 items-center justify-between border-[1.5px] border-[#9DB8FF] rounded-b-lg border-t-0">
@@ -50,7 +50,7 @@ const Profile = ({
             <div key={index}>
               {info[0] !== "" ? (
                 <a
-                  className="italic text-[#3A70FF] font-black"
+                  className="font-roboto italic text-[#3A70FF] font-black"
                   target="_blank"
                   href={info[0].toString()}
                   rel="noreferrer"
@@ -58,7 +58,7 @@ const Profile = ({
                   {info[1]}
                 </a>
               ) : (
-                <p className="italic text-[#B6CDFF] font-black">{info[1]}</p>
+                <p className="font-roboto italic text-[#B6CDFF] font-black">{info[1]}</p>
               )}
             </div>
           );
@@ -80,16 +80,16 @@ export default function Member() {
           alt={"cloud_3d.png"}
           width={216}
         />
-        <h1 className={`font-black text-5xl lg:text-8xl text-[#D5DFFD] ${styles.text_border} whitespace-nowrap`}>
+        <h1 className={`font-roboto font-black text-5xl lg:text-8xl text-[#D5DFFD] ${styles.text_border} tracking-wider whitespace-nowrap`}>
           NEW WAVE IN US
         </h1>
-        <h2 className="font-light italic text-lg lg:text-4xl text-[#5c80df] p-3">
+        <h2 className="font-roboto font-light italic text-lg lg:text-4xl text-[#5c80df] p-3">
           Introduction of WINK team members
         </h2>
         <div className="mt-8 mb-[124px] animate-updown-shadow h-2 bg-[#bec7e5] blur rounded-full" />
         <div />
       </div>
-      <div className="grid justify-center gap-7 px-10 py-2.5 grid-cols-[repeat(1,_340px)] 2xl:grid-cols-[repeat(4,_340px)] xl:grid-cols-[repeat(3,_340px)] md:grid-cols-[repeat(2,_340px)]">
+      <div className="grid justify-center gap-7 px-10 py-2.5 mb-[110px] grid-cols-[repeat(1,_340px)] 2xl:grid-cols-[repeat(4,_340px)] xl:grid-cols-[repeat(3,_340px)] md:grid-cols-[repeat(2,_340px)]">
         {dataJson.member.map((member, index) => (
           <Profile
             key={index}
