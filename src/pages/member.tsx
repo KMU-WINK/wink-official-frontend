@@ -80,10 +80,10 @@ export default function Member() {
           alt={"cloud_3d.png"}
           width={216}
         />
-        <h1 className={`text-[100px] text-[#D5DFFD] ${styles.text_border}`}>
+        <h1 className={`font-black text-5xl lg:text-8xl text-[#D5DFFD] ${styles.text_border} whitespace-nowrap`}>
           NEW WAVE IN US
         </h1>
-        <h2 className="italic text-4xl text-[#5c80df] p-3">
+        <h2 className="font-light italic text-lg lg:text-4xl text-[#5c80df] p-3">
           Introduction of WINK team members
         </h2>
         <div className="mt-8 mb-[124px] animate-updown-shadow h-2 bg-[#bec7e5] blur rounded-full" />
