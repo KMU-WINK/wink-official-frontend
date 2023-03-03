@@ -167,6 +167,30 @@
       "instagram": "",
       "blog": "",
       "profile": true
+    },
+    {
+      "name": "조다운",
+      "intro": "22학번 말하는 감자",
+      "github": "https://github.com/daun-up",
+      "instagram": "https://www.instagram.com/daun_up",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "이보현",
+      "intro": "(능력 37% 개방 중•••)",
+      "github": "https://github.com/250b",
+      "instagram": "https://www.instagram.com/250b_",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "곽희건",
+      "intro": "윙크 출석부 부장",
+      "github": "https://github.com/VarGun",
+      "instagram": "https://www.instagram.com/h_guun",
+      "blog": "",
+      "profile": true
     }
   ]
 }
