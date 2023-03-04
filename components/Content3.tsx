@@ -23,7 +23,7 @@ const Content3 = ({
         reverse ? "md:flex-row-reverse" : ""
       }`}
     >
-      <div className="flex flex-col w-[400px]">
+      <div className="flex flex-col w-full md:w-[400px]">
         {subject !== null ? (
           <h2 className="text-[#3a70ff] text-2xl md:text-3xl font-medium">{subject}</h2>
         ) : null}
@@ -53,10 +53,9 @@ const Content3 = ({
         </h3>
       </div>
       <Image
-        className="rounded-3xl"
+        className="rounded-3xl w-full md:w-[400px]"
         src={imageSrc}
         alt={imageAlt}
-        width={400}
       />
     </div>
   );
