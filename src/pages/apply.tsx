@@ -16,7 +16,6 @@ const Apply: NextPage = () => {
         <div className="flex flex-col items-center justify-around w-full h-screen bg-[#000000] bg-[url('../../public/apply_bottom.png')] bg-no-repeat bg-left-bottom">
           <Image
             data-aos="fade-up-right"
-            data-aos-offset="800"
             data-aos-once="true"
             className="w-[98px] lg:w-[136px] pt-6"
             src={rocket}
