@@ -110,7 +110,7 @@ export default function Home() {
           imageAlt={"Image 2-1"}
         />
         <div>
-          <h1 className="font-pretendard font-bold text-5xl leading-[65px] py-[26px] md:py-[52px]">
+          <h1 className="font-pretendard font-bold text-4xl md:text-5xl leading-[52px] md:leading-[65px] py-[26px] md:py-[52px]">
             우리는 어떤 길을
             <br />
             걸어 왔을까요?
@@ -130,14 +130,14 @@ export default function Home() {
           </div>
         </div>
         <div className="mt-[192px] md:mt-[386px] mb-[138px] md:mb-[276px]">
-          <Image className="w-full md:w-[900px]" src={active_5} alt="STUDY" />
+          <Image className="w-screen md:w-[900px]" src={active_5} alt="STUDY" />
           <div className="flex flex-col md:flex-row gap-4 justify-between py-[28px] mb:py-[56px]">
-            <p className="font-pretendard font-bold text-4xl">
+            <p className="font-pretendard font-bold text-3xl md:text-4xl">
               <span className="text-[#6B7684]">더 나은 우리를 위해서</span>
               <br />
               자율적인 스터디 진행
             </p>
-            <p className="font-pretendard font-medium text-xl">
+            <p className="font-pretendard font-medium text-base md:text-xl">
               기초 스터디부터 React, Django, Express 등
               <br />
               다양한 기술 스택을 배워보며 개발 능력을 쌓아요.
