@@ -32,9 +32,10 @@ const Apply: NextPage = () => {
             alt={"scroll button"}
           />
         </div>
-        <div ref={element} className="relative w-full">
+        <div className="h-[80px] bg-[#f4f7ff]" ref={element} />
+        <div className="relative w-full">
           <iframe
-            className="relative top-0 left-0 w-full h-[800px] bg-[#f4f7ff] border border-[#e4e4e4]"
+            className="relative top-0 left-0 w-full h-[800px] bg-[#f4f7ff] border-b border-[#e4e4e4]"
             src="https://docs.google.com/forms/d/e/1FAIpQLSc_qbE0qf78S5MS-GW4pfRlnT7B_vbRogfsLcabjnM0i-0sQQ/viewform?embedded=true"
             allowFullScreen
           />
