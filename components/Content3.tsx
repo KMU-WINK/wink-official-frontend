@@ -1,4 +1,3 @@
-import styles from "@/styles/Content.module.css";
 import Image, { StaticImageData } from "next/image";
 
 interface ContentProps {
@@ -19,20 +18,34 @@ const Content3 = ({
   imageAlt,
 }: ContentProps) => {
   return (
-    <div className={`${styles.content_3} ${reverse ? styles.content_3_r : ""}`}>
-      <div className={subject === null ? styles.type1 : styles.type2}>
-        {subject !== null ? <h2>{subject}</h2> : null}
-        <h1>
+    <div
+      className={`flex flex-col-reverse md:flex-row md:justify-center gap-2 md:gap-[80px] md:px-10 ${
+        reverse ? "md:flex-row-reverse" : ""
+      }`}
+    >
+      <div className="flex flex-col w-[400px]">
+        {subject !== null ? (
+          <h2 className="text-[#3a70ff] text-3xl font-medium">{subject}</h2>
+        ) : null}
+        <h1
+          className={`font-pretendard text-xl md:text-4xl py-1 ${
+            subject === null ? "md:py-3" : "md:py-2"
+          }`}
+        >
           {title.split("\n").map((txt, index) => (
-            <p className={styles.reset} key={index}>
+            <p key={index}>
               {txt}
               <br />
             </p>
           ))}
         </h1>
-        <h3>
+        <h3
+          className={`font-pretendard text-lg md:text-xl ${
+            subject === null ? "" : "text-[#6b7684]"
+          }`}
+        >
           {text.split("\n").map((txt, index) => (
-            <p className={styles.reset} key={index}>
+            <p key={index}>
               {txt}
               <br />
             </p>
@@ -40,7 +53,7 @@ const Content3 = ({
         </h3>
       </div>
       <Image
-        className={styles.image}
+        className="rounded-3xl"
         src={imageSrc}
         alt={imageAlt}
         width={400}
