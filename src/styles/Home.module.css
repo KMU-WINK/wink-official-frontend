@@ -36,28 +36,6 @@
   animation-duration: 15s;
 }
 
-.wave > p {
-  z-index: 10;
-  text-align: center;
-}
-
-.wave > p {
-  font-size: 48px;
-  font-weight: 800;
-  color: #000000;
-}
-
-.wave > p:last-of-type {
-  font-size: 21px;
-  font-weight: 700;
-  color: #3a70ff;
-  cursor: pointer;
-}
-
-.wave > p > span {
-  color: #3a70ff;
-}
-
 @keyframes rotate {
   0% {
     transform: translate(-50%, 0) rotateZ(0deg);
