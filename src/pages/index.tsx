@@ -89,22 +89,24 @@ export default function Home() {
           imageAlt={"Image 2-1"}
         />
         <div>
-          <h1 className="font-pretendard font-bold text-5xl leading-[65px]">
+          <h1 className="font-pretendard font-bold text-5xl leading-[65px] py-[26px] md:py-[52px]">
             우리는 어떤 길을
             <br />
             걸어 왔을까요?
           </h1>
-          {contentList.map((content, index) => (
-            <Content3
-              key={index}
-              subject={content.subject}
-              title={content.title}
-              text={content.text}
-              reverse={content.reverse}
-              imageSrc={content.imageSrc}
-              imageAlt={content.imageAlt}
-            />
-          ))}
+          <div className="flex flex-col gap-[60px] md:gap-[120px]">
+            {contentList.map((content, index) => (
+              <Content3
+                key={index}
+                subject={content.subject}
+                title={content.title}
+                text={content.text}
+                reverse={content.reverse}
+                imageSrc={content.imageSrc}
+                imageAlt={content.imageAlt}
+              />
+            ))}
+          </div>
         </div>
       </div>
       <Footer />
