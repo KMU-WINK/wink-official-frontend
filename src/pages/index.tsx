@@ -6,54 +6,49 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Content1 from "components/Content1";
 import Content2 from "components/Content2";
-import image2_1 from "../../public/content2_1.png";
 import Footer from "components/Footer";
 import Content3 from "components/Content3";
 import Link from "next/link";
+import intro_1 from "../../public/intro_1.jpg";
+import intro_2 from "../../public/intro_2.jpg";
+import active_0 from "../../public/activity_2022wink.jpg";
+import active_1 from "../../public/activity_winkathon.jpg";
+import active_2 from "../../public/activity_precourse.jpg";
+import active_3 from "../../public/activity_weminar.png";
+import active_4 from "../../public/activity_linked.jpg";
 
-const contentList_1 = [
-  {
-    subject: null,
-    title: "저도 잘 몰라요. 개발하면서\n알았어요. 이런걸 했었나?",
-    text: "이미지 넣으면서 알았어요. 이러면서 배우는거죠. 저도 동아리 들어온지 1년 됐어요.",
-    reverse: false,
-    imageSrc: image2_1,
-    imageAlt: "image 1",
-  },
-  {
-    subject: null,
-    title: "오, 이런 것도 했네요.\n짱이다. 너무 멋진 동아리다.",
-    text: "이번에는 반대 방향으로 이미지를 보여줘요.",
-    reverse: true,
-    imageSrc: image2_1,
-    imageAlt: "image 1",
-  },
-];
-
-const contentList_2 = [
+const contentList = [
   {
     subject: "윙커톤",
-    title: "저도 잘 몰라요. 개발하면서\n알았어요. 이런걸 했었나?",
-    text: "이미지 넣으면서 알았어요. 이러면서 배우는거죠. 저도 동아리 들어온지 1년 됐어요.",
+    title: "서로의 우정이 두터워지는\n무박 2일 해커톤 여정",
+    text: "부원들과 함께 밤을 새며 새로운 서비스를 만들었어요. 지난 대회에서는 UN 지속가능 발전 목표를 주제로 총 5개의 서비스를 만들었답니다.",
     reverse: false,
-    imageSrc: image2_1,
-    imageAlt: "image 1",
+    imageSrc: active_1,
+    imageAlt: "WINKATHON",
   },
   {
-    subject: "모각코",
-    title: "오, 이런 것도 했네요.\n짱이다. 너무 멋진 동아리다.",
-    text: "이번에는 반대 방향으로 이미지를 보여줘요.",
+    subject: "프리코스",
+    title: "햇병아리 웹 개발자를 위한\nWINK만의 커리큘럼",
+    text: "WINK 소속 개발자들이 만든 웹 기초 커리큘럼으로 재학생들과 함께 했어요.",
     reverse: true,
-    imageSrc: image2_1,
-    imageAlt: "image 1",
+    imageSrc: active_2,
+    imageAlt: "PRECOURSE",
   },
   {
-    subject: "강연",
-    title: "멋쟁이가 되는 방법",
-    text: "윙크에 들어온 사람들은 멋쟁이가 돼서 나간다는 소문이 있어요.",
+    subject: "위미나",
+    title: "현업 개발자 선배님들과 함께\n하는 유익한 세미나",
+    text: "WINK 출신의 멋진 선배님들을 초청하여 다양한 주제로 세미나를 진행하고 있어요.",
     reverse: false,
-    imageSrc: image2_1,
-    imageAlt: "image 1",
+    imageSrc: active_3,
+    imageAlt: "WEMINAR",
+  },
+  {
+    subject: "연계 활동",
+    title: "활발한 동아리 연계 활동",
+    text: "연구실 연계 활동 및 학부 연구생 활동이 활발히 진행되고 있어요. SW중심대학 관련 사업에도 다양하게 참여하고 있습니다.",
+    reverse: true,
+    imageSrc: active_4,
+    imageAlt: "LINKED",
   },
 ];
 
@@ -85,51 +80,42 @@ export default function Home() {
           <Link href={"/apply"}>지원하기 {`>`}</Link>
         </p>
       </div>
-      <div className={styles.content_container}>
-        <div className={styles.container1}>
-          <Content1 />
-        </div>
-        <div className={styles.container1_end}></div>
+      <div className="flex flex-col items-center px-5 w-full bg-[#C8D7FF] py-[132px] md:py-[264px]">
+        <Content1
+          text1={"자꾸만 눈이 가는\n멋진 모습"}
+          text2={
+            "국민대학교 소프트웨어융합대학의\n유일무이 웹 학술 동아리.\n친목부터 대외활동까지 한 번에 챙겨요."
+          }
+          imageSrc1={intro_1}
+          imageSrc2={intro_2}
+        />
+      </div>
+      <div className="bg-gradient-to-b from-[#c8d7ff] to-[#ffffff] h-[128px] md:h-[260px]" />
+      <div className="px-5 flex flex-col items-center">
         <Content2
-          title={"당연히 여긴 제목이죠!\n제트자로 보도록 유도해요."}
-          imageSrc={image2_1}
+          title={"안녕하세요. 우리는 WINK입니다."}
+          imageSrc={active_0}
           imageAlt={"Image 2-1"}
         />
-        <div className={styles.container3}>
-          <h1>
+        <div>
+          <h1 className="font-pretendard font-bold text-5xl leading-[65px] py-[26px] md:py-[52px]">
             우리는 어떤 길을
             <br />
             걸어 왔을까요?
           </h1>
-          {contentList_1.map((content, index) => (
-            <Content3
-              key={index}
-              subject={content.subject}
-              title={content.title}
-              text={content.text}
-              reverse={content.reverse}
-              imageSrc={content.imageSrc}
-              imageAlt={content.imageAlt}
-            />
-          ))}
-        </div>
-        <div className={styles.container3}>
-          <h1>
-            반복.
-            <br />
-            강약을 주면서...
-          </h1>
-          {contentList_2.map((content, index) => (
-            <Content3
-              key={index}
-              subject={content.subject}
-              title={content.title}
-              text={content.text}
-              reverse={content.reverse}
-              imageSrc={content.imageSrc}
-              imageAlt={content.imageAlt}
-            />
-          ))}
+          <div className="flex flex-col gap-[60px] md:gap-[120px]">
+            {contentList.map((content, index) => (
+              <Content3
+                key={index}
+                subject={content.subject}
+                title={content.title}
+                text={content.text}
+                reverse={content.reverse}
+                imageSrc={content.imageSrc}
+                imageAlt={content.imageAlt}
+              />
+            ))}
+          </div>
         </div>
       </div>
       <Footer />
