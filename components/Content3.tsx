@@ -19,16 +19,16 @@ const Content3 = ({
 }: ContentProps) => {
   return (
     <div
-      className={`flex flex-col-reverse md:flex-row md:justify-center gap-2 md:gap-[80px] md:px-10 ${
+      className={`flex flex-col-reverse md:flex-row md:justify-center gap-2 md:gap-[80px] ${
         reverse ? "md:flex-row-reverse" : ""
       }`}
     >
       <div className="flex flex-col w-[400px]">
         {subject !== null ? (
-          <h2 className="text-[#3a70ff] text-3xl font-medium">{subject}</h2>
+          <h2 className="text-[#3a70ff] text-2xl md:text-3xl font-medium">{subject}</h2>
         ) : null}
         <h1
-          className={`font-pretendard text-xl md:text-4xl py-1 ${
+          className={`font-pretendard text-xl md:text-4xl py-1 font-medium ${
             subject === null ? "md:py-3" : "md:py-2"
           }`}
         >
