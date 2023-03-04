@@ -9,6 +9,8 @@ import Content2 from "components/Content2";
 import Footer from "components/Footer";
 import Content3 from "components/Content3";
 import Link from "next/link";
+import intro_1 from "../../public/intro_1.jpg";
+import intro_2 from "../../public/intro_2.jpg";
 import active_0 from "../../public/activity_2022wink.jpg";
 import active_1 from "../../public/activity_winkathon.jpg";
 import active_2 from "../../public/activity_precourse.jpg";
@@ -79,7 +81,14 @@ export default function Home() {
         </p>
       </div>
       <div className="flex flex-col items-center px-5 w-full bg-[#C8D7FF] py-[132px] md:py-[264px]">
-        <Content1 />
+        <Content1
+          text1={"자꾸만 눈이 가는\n멋진 모습"}
+          text2={
+            "국민대학교 소프트웨어융합대학의\n유일무이 웹 학술 동아리.\n친목부터 대외활동까지 한 번에 챙겨요."
+          }
+          imageSrc1={intro_1}
+          imageSrc2={intro_2}
+        />
       </div>
       <div className="bg-gradient-to-b from-[#c8d7ff] to-[#ffffff] h-[128px] md:h-[260px]" />
       <div className="px-5 flex flex-col items-center">
