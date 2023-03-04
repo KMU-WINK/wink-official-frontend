@@ -16,6 +16,8 @@ import active_1 from "../../public/activity_winkathon.jpg";
 import active_2 from "../../public/activity_precourse.jpg";
 import active_3 from "../../public/activity_weminar.png";
 import active_4 from "../../public/activity_linked.jpg";
+import active_5 from "../../public/activity_study.jpeg";
+import Image from "next/image";
 
 const contentList = [
   {
@@ -115,6 +117,23 @@ export default function Home() {
                 imageAlt={content.imageAlt}
               />
             ))}
+          </div>
+        </div>
+        <div className="mt-[192px] md:mt-[386px] mb-[138px] md:mb-[276px]">
+          <Image className="w-full md:w-[900px]" src={active_5} alt="STUDY" />
+          <div className="flex flex-col md:flex-row gap-4 justify-between py-[28px] mb:py-[56px]">
+            <p className="font-pretendard font-bold text-4xl">
+              <span className="text-[#6B7684]">더 나은 우리를 위해서</span>
+              <br />
+              자율적인 스터디 진행
+            </p>
+            <p className="font-pretendard font-medium text-xl">
+              기초 스터디부터 React, Django, Express 등
+              <br />
+              다양한 기술 스택을 배워보며 개발 능력을 쌓아요.
+              <br />
+              스터디원끼리 돈독해지는 건 덤이에요.
+            </p>
           </div>
         </div>
       </div>
