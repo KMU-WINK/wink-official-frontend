@@ -1,8 +1,8 @@
 import Image from "next/image";
-import icon_github from "../public/github.png";
-import icon_instagram from "../public/instagram.png";
-import icon_tistory from "../public/tistory.png";
-import logo from "../public/logo.png";
+import icon_github from "../public/wink_github.svg";
+import icon_instagram from "../public/wink_instagram.svg";
+import icon_tistory from "../public/wink_tistory.svg";
+import logo from "../public/wink_footer_logo.svg";
 import Link from "next/link";
 
 const Footer = () => {
@@ -25,22 +25,22 @@ const Footer = () => {
   ];
 
   return (
-    <div className="flex flex-col py-16 bg-[#f3f6ff] items-center">
-      <div className="flex justify-center mb-4">
-        <Image src={logo} alt={"WINK small logo"} width={89} />
-        <p>WINK</p>
+    <div className="flex flex-col py-20 bg-[#f3f6ff] items-center">
+      <div className="flex gap-1 mb-[60px]">
+        <Image src={logo} alt={"WINK small logo"} width={36} />
+        <p className="font-roboto text-lg text-[#6B7684]">WINK</p>
       </div>
-      <ul className="flex list-none gap-2 mb-4">
+      <ul className="flex list-none gap-5 mb-10">
         {links.map((link) => (
           <li className="inline" key={link.id}>
             <Link href={link.href}>
-              <Image className="h-10 w-10" src={link.icon} alt={link.id} />
+              <Image className="h-[55px]" src={link.icon} alt={link.id} />
             </Link>
           </li>
         ))}
         <li></li>
       </ul>
-      <p className="text-sm font-normal">@ WINK 2023 All rights reserved.</p>
+      <p className="font-pretendard text-xl text-[#6B7684]">@ WINK 2023 All rights reserved.</p>
     </div>
   );
 };
