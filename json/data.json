@@ -2,19 +2,19 @@
   "member": [
     {
       "name": "최지원",
-      "intro": "Front-end Developer",
+      "intro": "척척고졸 개발자",
       "github": "https://github.com/Choi-Jiwon-38",
       "instagram": "https://www.instagram.com/aid_choi",
       "blog": "https://what-time.tistory.com/",
       "profile": true
     },
     {
-      "name": "홍승현",
-      "intro": "Developer가 아님",
-      "github": "https://github.com/superh0ng",
-      "instagram": "https://www.instagram.com/superh0ng_",
+      "name": "장수미",
+      "intro": "WINK 디자이너",
+      "github": "https://github.com/jangsumi",
+      "instagram": "",
       "blog": "",
-      "profile": false
+      "profile": true
     },
     {
       "name": "박정명",
@@ -33,12 +33,12 @@
       "profile": true
     },
     {
-      "name": "장수미",
-      "intro": "WINK 디자이너",
-      "github": "https://github.com/jangsumi",
-      "instagram": "",
+      "name": "홍승현",
+      "intro": "Developer가 아님",
+      "github": "https://github.com/superh0ng",
+      "instagram": "https://www.instagram.com/superh0ng_",
       "blog": "",
-      "profile": true
+      "profile": false
     },
     {
       "name": "성정규",
@@ -190,6 +190,14 @@
       "github": "https://github.com/VarGun",
       "instagram": "https://www.instagram.com/h_guun",
       "blog": "",
+      "profile": true
+    },
+    {
+      "name": "하준혁",
+      "intro": "ᴄᴏᴅᴇ. ᴄᴏғғᴇᴇ. ᴄᴏᴅᴇ.",
+      "github": "https://github.com/sirldev",
+      "instagram": "https://www.instagram.com/si._.rl",
+      "blog": "https://velog.io/@sirl",
       "profile": true
     }
   ]
