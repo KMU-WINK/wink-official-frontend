@@ -1,5 +1,5 @@
-import Footer from "components/Footer";
-import TopBar from "components/TopBar";
+import Footer from "@/components/Footer";
+import TopBar from "@/components/TopBar";
 import Image from "next/image";
 import styles from "@/styles/Member.module.css";
 import cloud from "../../public/cloud_3d.png";

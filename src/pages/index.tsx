@@ -1,13 +1,13 @@
 import Head from "next/head";
-import TopBar from "components/TopBar";
+import TopBar from "@/components/TopBar";
 import AOS from "aos";
 import styles from "@/styles/Home.module.css";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-import Content1 from "components/Content1";
-import Content2 from "components/Content2";
-import Footer from "components/Footer";
-import Content3 from "components/Content3";
+import Content1 from "@/components/Content1";
+import Content2 from "@/components/Content2";
+import Footer from "@/components/Footer";
+import Content3 from "@/components/Content3";
 import Link from "next/link";
 import intro_1 from "../../public/intro_1.jpg";
 import intro_2 from "../../public/intro_2.jpg";
@@ -92,7 +92,10 @@ export default function Home() {
           <Link href={"/apply"}>지원하기 {`>`}</Link>
         </p>
       </div>
-      <div className="flex flex-col items-center px-5 w-full bg-[#C8D7FF] py-[132px] md:py-[264px]">
+      <div
+        id="introduce"
+        className="flex flex-col items-center px-5 w-full bg-[#C8D7FF] py-[132px] md:py-[264px]"
+      >
         <Content1
           text1={"자꾸만 눈이 가는\n멋진 모습"}
           text2={
@@ -110,7 +113,10 @@ export default function Home() {
           imageAlt={"Image 2-1"}
         />
         <div>
-          <h1 className="font-pretendard font-bold text-4xl md:text-5xl leading-[52px] md:leading-[65px] py-[26px] md:py-[52px]">
+          <h1
+            id="activity"
+            className="font-pretendard font-bold text-4xl md:text-5xl leading-[52px] md:leading-[65px] py-[26px] md:py-[52px]"
+          >
             우리는 어떤 길을
             <br />
             걸어 왔을까요?
