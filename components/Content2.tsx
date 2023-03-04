@@ -9,7 +9,7 @@ interface ContentProps {
 
 const Content2 = ({ title, imageSrc, imageAlt }: ContentProps) => {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-12 py-[98px] md:py-[198px]">
       <h1 className="font-pretendard text-black font-medium text-5xl" data-aos="fade-right">
         {title.split("\n").map((txt, index) => (
           <p key={index}>
