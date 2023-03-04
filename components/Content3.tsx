@@ -25,10 +25,10 @@ const Content3 = ({
     >
       <div className="flex flex-col w-full md:w-[400px]">
         {subject !== null ? (
-          <h2 className="text-[#3a70ff] text-2xl md:text-3xl font-medium mt-6">{subject}</h2>
+          <h2 className="text-[#3a70ff] text-2xl md:text-3xl font-medium mt-3 md:mt-6">{subject}</h2>
         ) : null}
         <h1
-          className={`font-pretendard text-xl md:text-4xl py-3 font-medium ${
+          className={`font-pretendard text-xl md:text-4xl py-1 font-medium ${
             subject === null ? "md:py-3" : "md:py-2"
           }`}
         >
@@ -40,7 +40,7 @@ const Content3 = ({
           ))}
         </h1>
         <h3
-          className={`font-pretendard text-lg md:text-xl py-5 ${
+          className={`font-pretendard text-lg md:text-xl py-2 md:py-5 ${
             subject === null ? "" : "text-[#6b7684]"
           }`}
         >

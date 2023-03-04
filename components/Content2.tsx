@@ -9,8 +9,8 @@ interface ContentProps {
 
 const Content2 = ({ title, imageSrc, imageAlt }: ContentProps) => {
   return (
-    <div className="flex flex-col gap-12 py-[98px] md:py-[198px]">
-      <h1 className="font-pretendard text-black font-medium text-5xl" data-aos="fade-right">
+    <div className="flex flex-col gap-8 md:gap-12 py-[98px] md:py-[198px]">
+      <h1 className="font-pretendard text-black font-medium text-4xl md:text-5xl" data-aos="fade-right">
         {title.split("\n").map((txt, index) => (
           <p key={index}>
             {txt}
@@ -24,7 +24,7 @@ const Content2 = ({ title, imageSrc, imageAlt }: ContentProps) => {
         data-aos-delay="200"
         src={imageSrc}
         alt={imageAlt}
-        width={878}
+        width={880}
       />
     </div>
   );
