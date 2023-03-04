@@ -1,6 +1,6 @@
 import { NextPage } from "next";
-import TopBar from "components/TopBar";
-import Footer from "components/Footer";
+import TopBar from "@/components/TopBar";
+import Footer from "@/components/Footer";
 import Image from "next/image";
 import rocket from "../../public/rocket.png";
 import arrow from "../../public/arrow.svg";

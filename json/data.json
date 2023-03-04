@@ -25,6 +25,14 @@
       "profile": true
     },
     {
+      "name": "하준혁",
+      "intro": "CODE. COFFEE. CODE.",
+      "github": "https://github.com/sirldev",
+      "instagram": "https://www.instagram.com/si._.rl",
+      "blog": "https://velog.io/@sirl",
+      "profile": true
+    },
+    {
       "name": "김지성",
       "intro": "무려 8대 회장",
       "github": "https://github.com/JisuuungKim",
@@ -190,14 +198,6 @@
       "github": "https://github.com/VarGun",
       "instagram": "https://www.instagram.com/h_guun",
       "blog": "",
-      "profile": true
-    },
-    {
-      "name": "하준혁",
-      "intro": "ᴄᴏᴅᴇ. ᴄᴏғғᴇᴇ. ᴄᴏᴅᴇ.",
-      "github": "https://github.com/sirldev",
-      "instagram": "https://www.instagram.com/si._.rl",
-      "blog": "https://velog.io/@sirl",
       "profile": true
     }
   ]

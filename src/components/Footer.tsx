@@ -1,8 +1,8 @@
 import Image from "next/image";
-import icon_github from "../public/wink_github.svg";
-import icon_instagram from "../public/wink_instagram.svg";
-import icon_tistory from "../public/wink_tistory.svg";
-import logo from "../public/wink_footer_logo.svg";
+import icon_github from "../../public/wink_github.svg";
+import icon_instagram from "../../public/wink_instagram.svg";
+import icon_tistory from "../../public/wink_tistory.svg";
+import logo from "../../public/wink_footer_logo.svg";
 import Link from "next/link";
 
 const Footer = () => {
