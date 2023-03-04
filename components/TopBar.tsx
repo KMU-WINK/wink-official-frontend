@@ -48,7 +48,7 @@ function TopBar() {
         scrollY !== 0 && " border-b"
       }`}
     >
-<div className="w-full max-w-6xl flex justify-between p-4 lg:p-6">
+      <div className="w-full max-w-6xl flex justify-between p-4 lg:p-6">
         <Link href={"/"} replace>
           <Image
             className="object-contain h-6"
@@ -64,7 +64,7 @@ function TopBar() {
             {navigations.map((link) => (
               <li
                 key={link.title}
-                className={`font-bold text-sm last:text-[#3a70ff] ${
+                className={`font-pretendard  font-medium text-sm last:text-[#3a70ff] ${
                   link.mobileHide && "hidden sm:block"
                 }`}
               >
