@@ -1,14 +1,16 @@
-import styles from "@/styles/Content.module.css";
 import Image from "next/image";
-import image1 from "../public/content1_1.png";
-import image2 from "../public/content1_2.png";
+import image1 from "../public/intro_1.jpg";
+import image2 from "../public/intro_2.jpg";
 import "aos/dist/aos.css";
 
 const Content1 = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <h1 data-aos="fade-right">
+    <div className="flex flex-col md:flex-row gap-12 md:gap-[80px]">
+      <div className="flex flex-col gap-[58px]">
+        <h1
+          className="font-pretendard text-4xl md:text-5xl font-medium"
+          data-aos="fade-right"
+        >
           무시 못할,
           <br />
           자꾸만 눈이 가는
@@ -16,23 +18,22 @@ const Content1 = () => {
         </h1>
         <Image
           data-aos="fade-up"
-          className={styles.image}
+          className="rounded-3xl w-screen md:w-[400px]"
           src={image1}
           alt={"Image 1"}
-          width={400}
-          height={670}
         />
       </div>
-      <div className={styles.content}>
+      <div className="flex flex-col gap-[62px]">
         <Image
           data-aos="fade-left"
-          className={styles.image}
+          className="rounded-3xl w-screen md:w-[400px]"
           src={image2}
           alt={"Image 2"}
-          width={400}
-          height={670}
         />
-        <p data-aos="fade-right">
+        <p
+          className="font-pretendard text-xl md:text-2xl font-medium"
+          data-aos="fade-right"
+        >
           내용은 세 줄 정도면 좋겠어요.
           <br />
           솔직히 작은 글씨라 읽을까 싶기도 하지만,
