@@ -78,8 +78,11 @@ export default function Home() {
           <Link href={"/apply"}>지원하기 {`>`}</Link>
         </p>
       </div>
-      <div className="px-5 flex flex-col items-center">
+      <div className="flex flex-col items-center px-5 w-full bg-[#C8D7FF] py-[132px] md:py-[264px]">
         <Content1 />
+      </div>
+      <div className="bg-gradient-to-b from-[#c8d7ff] to-[#ffffff] h-[128px] md:h-[260px]" />
+      <div className="px-5 flex flex-col items-center">
         <Content2
           title={"안녕하세요. 우리는 WINK입니다."}
           imageSrc={active_0}
