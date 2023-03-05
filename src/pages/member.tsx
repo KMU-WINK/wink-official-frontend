@@ -58,7 +58,7 @@ const Profile = ({
                   {info[1]}
                 </a>
               ) : (
-                <p className="font-roboto italic text-[#B6CDFF] font-black">{info[1]}</p>
+                <p className="font-roboto italic text-[#B6CDFF] font-black cursor-default">{info[1]}</p>
               )}
             </div>
           );
