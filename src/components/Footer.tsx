@@ -14,7 +14,7 @@ const Footer = () => {
     },
     {
       id: "instagram",
-      href: "https://www.instagram.com/kmu_wink_7_0/",
+      href: "https://www.instagram.com/kmu_wink/",
       icon: icon_instagram,
     },
     {
