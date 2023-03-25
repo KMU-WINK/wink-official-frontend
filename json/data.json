@@ -46,7 +46,7 @@
       "github": "https://github.com/superh0ng",
       "instagram": "https://www.instagram.com/superh0ng_",
       "blog": "",
-      "profile": false
+      "profile": true
     },
     {
       "name": "성정규",
@@ -206,6 +206,158 @@
       "github": "https://github.com/okpyo12",
       "instagram": "https://www.instagram.com/okpyo11",
       "blog": "https://okpyo11.tistory.com",
+      "profile": true
+    },
+    {
+      "name": "도승준",
+      "intro": "카페인러버",
+      "github": "https://github.com/kmu20203059",
+      "instagram": "https://www.instagram.com/szxn9.joon/",
+      "blog": "",
+      "profile": false
+    },
+    {
+      "name": "박민규",
+      "intro": "부산 싸나이",
+      "github": "https://github.com/Micalla",
+      "instagram": "https://www.instagram.com/micall._.a/",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "이정욱",
+      "intro": "욱농욱농욱",
+      "github": "https://github.com/ukly",
+      "instagram": "https://www.instagram.com/lju213",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "정찬우",
+      "intro": "소융대 총무부장",
+      "github": "https://github.com/chanwoo000",
+      "instagram": "https://www.instagram.com/chanu_un/",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "목진협",
+      "intro": "Aim 1st;",
+      "github": "https://github.com/Jinhyup-Mok",
+      "instagram": "https://www.instagram.com/",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "최종은",
+      "intro": "(찡긋)",
+      "github": "https://github.com/SilVerBell0109",
+      "instagram": "https://www.instagram.com/_jongeun04/",
+      "blog": "",
+      "profile": false
+    },
+    {
+      "name": "한준교",
+      "intro": "WINK 인턴",
+      "github": "https://github.com/Ready-Bridge",
+      "instagram": "https://www.instagram.com/hjungyo",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "박승환",
+      "intro": "기타치는 코린이",
+      "github": "https://github.com/ParkSeungHwan01",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "신진욱",
+      "intro": "The Eli",
+      "github": "https://github.com/jen454",
+      "instagram": "https://www.instagram.com/j_wxxk__",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "조상혁",
+      "intro": "개발자 되고픈 감자",
+      "github": "https://github.com/p0tat019",
+      "instagram": "",
+      "blog": "",
+      "profile": false
+    },
+    {
+      "name": "유건",
+      "intro": "“류”건",
+      "github": "https://github.com/Pr0d0",
+      "instagram": "https://www.instagram.com/ryu_gxxn",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "정호용",
+      "intro": "소융 헌내기 WINK 새내기",
+      "github": "https://github.com/ghdyd586",
+      "instagram": "https://www.instagram.com/yongthehuman/",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "박지민",
+      "intro": "WINK Park",
+      "github": "https://github.com/qkrwlalss",
+      "instagram": "https://www.instagram.com/gminii__/",
+      "blog": "https://blog.naver.com/cecilywhite",
+      "profile": false
+    },
+    {
+      "name": "김승혁",
+      "intro": "개발희망자",
+      "github": "https://github.com/seung116",
+      "instagram": "https://instagram.com/seunghyeog116/",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "황현진",
+      "intro": "얼렁뚱땅 왕연진",
+      "github": "https://github.com/hyeonjin6530",
+      "instagram": "https://www.instagram.com/h__jx_xn",
+      "blog": "https://m.blog.naver.com/cola1876",
+      "profile": true
+    },
+    {
+      "name": "이총명",
+      "intro": "intelligent",
+      "github": "https://github.com/kekemaster",
+      "instagram": "https://www.instagram.com/intelligent04",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "박성훈",
+      "intro": "유사프로그래머 코더빡",
+      "github": "https://github.com/Koderpark",
+      "instagram": "https://instagram.com/koder_park/",
+      "blog": "https://blog.koderpark.dev",
+      "profile": true
+    },
+    {
+      "name": "김찬중",
+      "intro": "#FFFFFF Snake",
+      "github": "https://github.com/whitecirclesnake",
+      "instagram": "",
+      "blog": "",
+      "profile": true
+    },
+    {
+      "name": "김윤희",
+      "intro": "국민유니브 짱구",
+      "github": "https://github.com/kyunhui",
+      "instagram": "https://www.instagram.com/y_unique__/",
+      "blog": "",
       "profile": true
     }
   ]
