@@ -35,7 +35,7 @@ const Apply: NextPage = () => {
         <div className="relative w-full">
           <iframe
             className="relative top-0 left-0 w-full h-[800px] bg-[#f4f7ff] border-b border-[#e4e4e4]"
-            src="https://docs.google.com/forms/d/e/1FAIpQLSc_qbE0qf78S5MS-GW4pfRlnT7B_vbRogfsLcabjnM0i-0sQQ/viewform?embedded=true"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSdDqiUO8vbEpjjpa-f6JE0kZW-poby8kPihsZNdDfb13Sy8MA/viewform?embedded=true"
             allowFullScreen
           />
         </div>
