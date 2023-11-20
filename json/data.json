@@ -86,7 +86,7 @@
       "github": "https://github.com/hyeonseung-lee",
       "instagram": "https://www.instagram.com/hyeonseung.2/",
       "blog": "https://theconcentrationoftime.tistory.com/",
-      "profile": false
+      "profile": true
     },
     {
       "name": "이다은",
@@ -334,14 +334,6 @@
       "github": "https://github.com/kekemaster",
       "instagram": "https://www.instagram.com/intelligent04",
       "blog": "",
-      "profile": true
-    },
-    {
-      "name": "박성훈",
-      "intro": "유사프로그래머 코더빡",
-      "github": "https://github.com/Koderpark",
-      "instagram": "https://instagram.com/koder_park/",
-      "blog": "https://blog.koderpark.dev",
       "profile": true
     },
     {
