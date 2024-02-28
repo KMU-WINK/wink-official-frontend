@@ -22,7 +22,7 @@ const Apply: NextPage = () => {
             alt={"rocket iamge"}
             width={500}
           />
-          <Image className="pb-[82px]" src={title} alt={"2023 WINK RECRUITMENT"} />
+          <Image className="pb-[82px]" src={title} alt={"2024 WINK RECRUITMENT"} />
           <div/>
           <Image
             className="absolute bottom-1 lg:bottom-7 animate-bounce h-12 cursor-pointer"
