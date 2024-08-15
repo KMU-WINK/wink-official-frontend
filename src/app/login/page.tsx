@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
 import Link from "next/link";
 import Image from "next/image";
 import TopBar from "@/components/TopBar";
@@ -19,6 +21,14 @@ const inputFields = [
 ];
 
 export default function Login() {
+    const router = useRouter();
+    const [cookies, setCookie] = useCookies(['token']); // 유저 사용 토큰
+
+    const onClickLoginButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        // 로그인 api 처리
+    };
+
     return (
         <>
             <TopBar />
@@ -47,7 +57,7 @@ export default function Login() {
                         ))}
                     </div>
                     <div className="flex flex-col items-center gap-[5px]">
-                        <Button type="submit" label="로그인"/>
+                        <Button type="submit" label="로그인" onClick={onClickLoginButton} />
                         <div className="text-center text-[11px]">
                             회원이 아니신가요?
                             <Link href="/signup" className="text-[#9DB8FF] hover:underline ml-1.5">
