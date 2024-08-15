@@ -5,9 +5,11 @@ import Image from "next/image";
 import logo from "../../public/logo.png";
 import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
+import { useCookies } from 'react-cookie';
 
 function TopBar() {
   const [scrollY, setScrollY] = useState(0);
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const pathName = usePathname() as string;
 
   const updateScroll = () => {
@@ -34,10 +36,10 @@ function TopBar() {
       useLink: true,
     },
     {
-      title: "login",
-      href: "/login",
+      title: cookies.token ? "Logout" : "Login",
+      href: cookies.token ? "#" : "/login",
       mobileHide: true,
-      useLink: true,
+      useLink: !cookies.token,
     },
   ];
 
@@ -52,8 +54,17 @@ function TopBar() {
   }, []);
 
   const getActiveNav = () => {
-    const currentNav = navigations.find(nav => pathName.startsWith(nav.href.replace('/#', '/')));
+    // 현재 경로와 네비게이션 링크의 경로를 정확히 비교
+    const currentNav = navigations.find(nav =>
+        pathName === nav.href || pathName === nav.href.split('#')[0] // 정확히 비교하거나 '#항목' 제거
+    );
     return currentNav ? currentNav.title : "about us";
+  };
+
+  const onClickLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    removeCookie('token');
+    window.location.reload();
   };
 
   return (
@@ -84,14 +95,24 @@ function TopBar() {
                               : "text-black" // 비활성화된 링크는 검정색
                       } ${link.mobileHide && "hidden sm:block"}`}
                   >
-                    {link.useLink ? (
-                        <Link href={link.href}>
-                          {link.title}
-                        </Link>
-                    ) : (
-                        <a href={link.href}>
+                    {link.title === "Logout" ? (
+                        <a
+                            href={link.href}
+                            onClick={onClickLogout}
+                            className="cursor-pointer"
+                        >
                           {link.title}
                         </a>
+                    ) : (
+                        link.useLink ? (
+                            <Link href={link.href}>
+                              {link.title}
+                            </Link>
+                        ) : (
+                            <a href={link.href}>
+                              {link.title}
+                            </a>
+                        )
                     )}
                   </li>
               ))}
