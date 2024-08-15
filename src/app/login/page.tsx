@@ -1,5 +1,7 @@
-import { useRouter } from 'next/router';
+'use client';
+
 import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import Image from "next/image";
 import TopBar from "@/components/TopBar";
@@ -21,7 +23,7 @@ const inputFields = [
 ];
 
 export default function Login() {
-    const router = useRouter();
+    const router = useRouter(); // useRouter 훅 가져오기
     const [cookies, setCookie] = useCookies(['token']); // 유저 사용 토큰
 
     const onClickLoginButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
