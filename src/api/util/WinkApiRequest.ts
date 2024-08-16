@@ -46,6 +46,22 @@ export class WinkApiRequest {
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
 
+  public constructor() {
+    if (typeof window !== "undefined") {
+      document.cookie
+        .split(";")
+        .map((cookie) => cookie.split("="))
+        .map(([key, value]) => [key.trim(), value.trim()])
+        .forEach(([key, value]) => {
+          if (key === "accessToken") {
+            this.accessToken = value;
+          } else if (key === "refreshToken") {
+            this.refreshToken = value;
+          }
+        });
+    }
+  }
+
   private async request<T>(
     url: string,
     options: RequestInit,
@@ -115,5 +131,13 @@ export class WinkApiRequest {
   public setToken(accessToken: string, refreshToken: string) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
+
+    if (typeof window !== "undefined") {
+      const permute = (key: string, value: string) =>
+        `${key}=${value}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+
+      document.cookie = permute("accessToken", accessToken);
+      document.cookie = permute("refreshToken", refreshToken);
+    }
   }
 }
