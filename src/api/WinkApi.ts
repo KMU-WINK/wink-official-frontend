@@ -1,5 +1,5 @@
 import { Auth, Member, Activity, MemberAdmin } from "@/api/domain";
-import { WinkApiRequest, WinkApiResponse } from "@/api/util";
+import { WinkApiRequest } from "@/api/util";
 
 export class WinkApi {
   private static instance: WinkApi | null = null;

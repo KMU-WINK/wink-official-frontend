@@ -156,6 +156,7 @@ export interface MyInfoLinks {
   blog: string | null;
 }
 
+// noinspection JSUnusedGlobalSymbols
 export enum Role {
   PRESIDENT = "PRESIDENT",
   VICE_PRESIDENT = "VICE_PRESIDENT",
