@@ -59,7 +59,7 @@ export default function Login() {
                         ))}
                     </div>
                     <div className="flex flex-col items-center gap-[5px]">
-                        <Button type="submit" label="로그인" onClick={onClickLoginButton} />
+                        <Button type="submit" label="로그인" onClick={onClickLoginButton} className="w-full py-2 text-[14px]" />
                         <div className="text-center text-[11px]">
                             회원이 아니신가요?
                             <Link href="/signup" className="text-[#9DB8FF] hover:underline ml-1.5">
