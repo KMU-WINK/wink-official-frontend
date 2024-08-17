@@ -12,10 +12,6 @@ function TopBar() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const pathName = usePathname() as string;
 
-  const updateScroll = () => {
-    setScrollY(window.scrollY);
-  };
-
   const navigations = [
     {
       title: "about us",
@@ -43,6 +39,10 @@ function TopBar() {
     },
   ];
 
+  const updateScroll = () => {
+    setScrollY(window.scrollY);
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       window.addEventListener("scroll", updateScroll);
@@ -54,6 +54,9 @@ function TopBar() {
   }, []);
 
   const getActiveNav = () => {
+    if (pathName === '/signup' || pathName === '/login') {
+      return "Login";
+    }
     // 현재 경로와 네비게이션 링크의 경로를 정확히 비교
     const currentNav = navigations.find(nav =>
         pathName === nav.href || pathName === nav.href.split('#')[0] // 정확히 비교하거나 '#항목' 제거
