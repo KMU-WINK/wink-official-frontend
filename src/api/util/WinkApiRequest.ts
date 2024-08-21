@@ -113,23 +113,32 @@ export class WinkApiRequest {
     return this.request(url, { method: "GET" });
   }
 
-  public async post<T>(url: string, body: any): Promise<WinkApiResponse<T>> {
-    return this.request(url, { method: "POST", body: JSON.stringify(body) });
+  public async post<T>(url: string, body?: any): Promise<WinkApiResponse<T>> {
+    return this.request(url, {
+      method: "POST",
+      body: body && JSON.stringify(body),
+    });
   }
 
-  public async put<T>(url: string, body: any): Promise<WinkApiResponse<T>> {
-    return this.request(url, { method: "PUT", body: JSON.stringify(body) });
+  public async put<T>(url: string, body?: any): Promise<WinkApiResponse<T>> {
+    return this.request(url, {
+      method: "PUT",
+      body: body && JSON.stringify(body),
+    });
   }
 
-  public async patch<T>(url: string, body: any): Promise<WinkApiResponse<T>> {
-    return this.request(url, { method: "PATCH", body: JSON.stringify(body) });
+  public async patch<T>(url: string, body?: any): Promise<WinkApiResponse<T>> {
+    return this.request(url, {
+      method: "PATCH",
+      body: body && JSON.stringify(body),
+    });
   }
 
   public async delete<T>(url: string): Promise<WinkApiResponse<T>> {
     return this.request(url, { method: "DELETE" });
   }
 
-  public setToken(accessToken: string, refreshToken: string) {
+  public setToken(accessToken: string | null, refreshToken: string | null) {
     if (typeof window === "undefined") {
       throw new Error("This method is only available in the browser.");
     }
