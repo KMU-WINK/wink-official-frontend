@@ -1,4 +1,4 @@
-import { Auth, Member, Activity, MemberAdmin } from "@/api/domain";
+import { Activity, Auth, Member, MemberAdmin } from "@/api/domain";
 import { WinkApiRequest } from "@/api/util";
 
 export class WinkApi {
