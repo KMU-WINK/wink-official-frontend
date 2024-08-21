@@ -66,9 +66,7 @@ export class WinkApiRequest {
     url: string,
     options: RequestInit,
   ): Promise<WinkApiResponse<T>> {
-    const base = "API_URL" in process.env ? process.env.API_URL : "";
-
-    const response = await fetch(`${base}/api${url}`, {
+    const response = await fetch(`http://localhost:3000/api${url}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
