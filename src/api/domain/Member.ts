@@ -1,4 +1,5 @@
 import { WinkApiRequest, WinkApiResponse } from "@/api/util/WinkApiRequest";
+import { MyInfoResponseDto } from "@/api/domain/Auth";
 
 export class Member {
   constructor(private readonly request: WinkApiRequest) {}
@@ -170,3 +171,5 @@ export enum Role {
 }
 
 export type RoleString = keyof typeof Role;
+
+export type User = MyInfoResponseDto;
