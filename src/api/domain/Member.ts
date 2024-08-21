@@ -1,5 +1,5 @@
-import { WinkApiRequest, WinkApiResponse } from "@/api/util/WinkApiRequest";
 import { MyInfoResponseDto } from "@/api/domain/Auth";
+import { WinkApiRequest, WinkApiResponse } from "@/api/util/WinkApiRequest";
 
 export class Member {
   constructor(private readonly request: WinkApiRequest) {}
