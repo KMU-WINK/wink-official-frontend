@@ -21,12 +21,12 @@ export default function ProjectCard({ title, imageUrl, tags, year, link }: Proje
                 <Image
                     src={imageUrl}
                     alt={title}
-                    width={300}
+                    width={360}
                     height={160}
                     className="object-cover w-full h-48"
                 />
             ) : (
-                <div className="w-full h-40 bg-[#D9D9D9] flex items-center justify-center">
+                <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
                     <Image
                         src={logo}
                         alt={'이미지 없음'}
