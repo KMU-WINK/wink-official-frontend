@@ -115,7 +115,7 @@ export interface EachGetMembersResponseDto {
   updatedAt: Date;
   name: string;
   avatar: string;
-  description?: string;
+  description: string | null;
   link: MyInfoLinks;
   role: RoleString;
 }

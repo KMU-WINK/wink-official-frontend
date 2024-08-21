@@ -13,7 +13,7 @@ export class WinkApi {
 
   private constructor() {
     if (WinkApi.instance !== null) {
-      throw new Error("Already initialized.");
+      return;
     }
 
     WinkApi.instance = this;
@@ -21,10 +21,10 @@ export class WinkApi {
 
   private static get Instance(): WinkApi {
     if (WinkApi.instance === null) {
-      throw new Error("Not initialized.");
+      new WinkApi();
     }
 
-    return WinkApi.instance;
+    return WinkApi.instance!;
   }
 
   public static init(): void {
