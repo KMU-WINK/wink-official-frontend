@@ -1,7 +1,7 @@
 import { Cookies } from "react-cookie";
 
 import { WinkApi } from "@/api/WinkApi";
-import { RefreshResponseDto } from "@/api/domain";
+import { RefreshResponseDto, User } from "@/api/domain";
 import useUserStore from "@/api/store/useUserStore";
 
 interface WinkRawApiResponse<T> {
@@ -160,14 +160,14 @@ export class WinkApiRequest {
       return;
     }
 
-    WinkApi.Auth.myInfo().then((response) => {
+    this.get("/auth/me").then((response) => {
       if (response.error) {
         this.cookies.remove("accessToken");
         this.cookies.remove("refreshToken");
         return;
       }
 
-      useUserStore.setState({ user: response.content.unwrap() });
+      useUserStore.setState({ user: response.content.unwrap() as User });
     });
   }
 }
