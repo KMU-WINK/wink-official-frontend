@@ -11,18 +11,32 @@ export class WinkApi {
   private readonly memberAdmin: MemberAdmin = new MemberAdmin(this.request);
   private readonly activity: Activity = new Activity(this.request);
 
-  private constructor() {}
+  private constructor() {
+    if (WinkApi.instance !== null) {
+      throw new Error("Already initialized.");
+    }
+
+    WinkApi.instance = this;
+  }
 
   private static get Instance(): WinkApi {
     if (WinkApi.instance === null) {
-      WinkApi.instance = new WinkApi();
+      throw new Error("Not initialized.");
     }
 
     return WinkApi.instance;
   }
 
-  public static setToken(accessToken: string, refreshToken: string): void {
-    WinkApi.Instance.request.setToken(accessToken, refreshToken);
+  public static init(): void {
+    if (WinkApi.instance !== null) {
+      return;
+    }
+
+    new WinkApi();
+  }
+
+  public static get Request(): WinkApiRequest {
+    return WinkApi.Instance.request;
   }
 
   public static get Auth(): Auth {
