@@ -1,4 +1,5 @@
 import { RefreshResponseDto } from "@/api/domain";
+import { Cookies } from "react-cookie";
 
 interface WinkRawApiResponse<T> {
   code: number;
@@ -46,19 +47,18 @@ export class WinkApiRequest {
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
 
+  private readonly cookies = new Cookies();
+
   public constructor() {
-    if (typeof window !== "undefined") {
-      document.cookie
-        .split(";")
-        .map((cookie) => cookie.split("="))
-        .map(([key, value]) => [key.trim(), value.trim()])
-        .forEach(([key, value]) => {
-          if (key === "accessToken") {
-            this.accessToken = value;
-          } else if (key === "refreshToken") {
-            this.refreshToken = value;
-          }
-        });
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const accessToken: string | null = this.cookies.get("accessToken");
+    const refreshToken: string | null = this.cookies.get("refreshToken");
+
+    if (accessToken && refreshToken) {
+      this.setToken(accessToken, refreshToken);
     }
   }
 
@@ -127,15 +127,25 @@ export class WinkApiRequest {
   }
 
   public setToken(accessToken: string, refreshToken: string) {
+    if (typeof window === "undefined") {
+      throw new Error("This method is only available in the browser.");
+    }
+
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
 
-    if (typeof window !== "undefined") {
-      const permute = (key: string, value: string) =>
-        `${key}=${value}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-
-      document.cookie = permute("accessToken", accessToken);
-      document.cookie = permute("refreshToken", refreshToken);
+    if (accessToken === null || refreshToken === null) {
+      this.cookies.remove("accessToken");
+      this.cookies.remove("refreshToken");
+    } else {
+      this.cookies.set("accessToken", accessToken, {
+        path: "/",
+        expires: new Date(9999, 11, 31),
+      });
+      this.cookies.set("refreshToken", refreshToken, {
+        path: "/",
+        expires: new Date(9999, 11, 31),
+      });
     }
   }
 }
