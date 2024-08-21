@@ -1,18 +1,26 @@
-# Wink Official Backend API - [5ea348c](https://github.com/KMU-WINK/wink-official-backend/tree/5ea348c50daff532b7f9f3350d0b16fa3b4fbaf2)
+# Wink Official Backend API
 
 만약 Access Token이 만료되었을 경우, 쿠키의 Refresh Token을 사용하여 새로운 Access Token을 발급받은 후, 쿠키에 다시 저장합니다.
 
 ## Common
 
+### Wrapper
+
+RootLayout에 아래 코드를 추가하세요.
+```tsx
+<WinkApiApplication>{children}</WinkApiApplication>
+```
+
 ### Set Access/Refresh Token
 
-WinkApiRequest가 초기화될 때, 알아서 쿠키로부터 Access Token과 Refresh Token을 가져옵니다.
+WinkApi가 초기화될 때, 쿠키에 저장된 Token을 사용합니다.
 
-만약 로그인같이, 수동으로 Access Token과 Refresh Token을 설정하고 싶다면, 다음과 같이 사용합니다.
-(이 때, setToken의 인자로 전달된 토큰은 알아서 쿠키에 저장됩니다.)
+만약 로그인 및 로그아웃과 같이 수동으로 Token을 설정해야 한다면, 아래와 같이 사용하세요.
 
-```javascript
-WinkApi.setToken({
+(쿠키는 자동으로 업데이트됩니다.)
+
+```ts
+WinkApi.Request.setToken({
   accessToken: '',
   refreshToken: '',
 });
@@ -20,8 +28,48 @@ WinkApi.setToken({
 
 ## Client-Side API
 
-```javascript
-const MemberList = () => {
+```tsx
+'use client';
+
+const LoginPage = () => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  
+  const onLogin = async () => {
+    const { code, error, content } = await WinkApi.Auth.login({ email, password });
+
+    if (error) {
+      alert(`Error: ${code} - ${content.unwrapError()}`);
+      return;
+    }
+    
+    const { accessToken, refreshToken } = content.unwrap();
+    
+    WinkApi.Request.setToken({ accessToken, refreshToken });
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={onLogin}>Login</button>
+    </div>
+  );
+}
+```
+---
+```tsx
+'use client';
+
+const MemberPage = () => {
   const {fetching, code, error, content} = useWinkApi(
     WinkApi.Member.getMembers()
   );
@@ -45,7 +93,7 @@ const MemberList = () => {
 
 ## Server-Side API
 
-```javascript
+```tsx
 const MemberList = async () => {
   const {code, error, content} = await WinkApi.Member.getMembers();
 
@@ -59,6 +107,25 @@ const MemberList = async () => {
           <li key={member.memberId}>{member.name}</li>
         ))}
       </ul>
+    </div>
+  );
+}
+```
+
+## User Store
+
+```tsx
+const MyPage = () => {
+  const { user } = useUserStore();
+
+  return (
+    <div>
+      <h1>My Info</h1>
+        
+      <div>
+        <span>Name: {user.name}</span>
+        <span>Email: {user.email}</span>
+      </div>
     </div>
   );
 }
