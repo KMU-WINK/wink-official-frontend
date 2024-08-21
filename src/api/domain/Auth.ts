@@ -10,6 +10,10 @@ export class Auth {
     return this.request.post("/auth/login", data);
   }
 
+  public async logout(): Promise<WinkApiResponse<void>> {
+    return this.request.post("/auth/logout");
+  }
+
   public async refresh(
     data: RefreshRequestDto,
   ): Promise<WinkApiResponse<RefreshResponseDto>> {
