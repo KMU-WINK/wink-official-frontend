@@ -1,8 +1,8 @@
 import { Cookies } from "react-cookie";
 
-import { WinkApi } from "@/api/WinkApi";
 import { RefreshResponseDto, User } from "@/api/domain";
-import useUserStore from "@/api/store/useUserStore";
+
+import useUserStore from "@/store/useUserStore";
 
 interface WinkRawApiResponse<T> {
   code: number;

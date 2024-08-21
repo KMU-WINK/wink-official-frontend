@@ -1,5 +1,5 @@
 import { MyInfoLinks, RoleString } from "@/api/domain/Member";
-import { WinkApiRequest, WinkApiResponse } from "@/api/util/WinkApiRequest";
+import { WinkApiRequest, WinkApiResponse } from "@/api/request";
 
 export class Auth {
   constructor(private readonly request: WinkApiRequest) {}

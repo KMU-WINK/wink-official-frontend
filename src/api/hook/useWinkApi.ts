@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { WinkApiContent, WinkApiResponse } from "@/api/util";
+import { WinkApiContent, WinkApiResponse } from "@/api/request";
 
 export interface WinkApiHookResponse<T> {
   fetching: boolean;
