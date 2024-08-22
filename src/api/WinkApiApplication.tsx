@@ -1,14 +1,16 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { WinkApi } from "@/api/WinkApi";
+import { WinkApi } from '@/api';
 
-export const WinkApiApplication = ({
-  children,
-}: {
+interface WinkApiApplicationProps {
   children: React.ReactNode;
-}) => {
+}
+
+export const WinkApiApplication: React.FC<WinkApiApplicationProps> = ({
+  children,
+}: WinkApiApplicationProps) => {
   useEffect(() => {
     WinkApi.init();
   }, []);
