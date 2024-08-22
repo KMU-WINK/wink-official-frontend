@@ -1,5 +1,4 @@
-import { Activity, Auth, Member, MemberAdmin } from "@/api/domain";
-import { WinkApiRequest } from "@/api/request";
+import { WinkApiRequest, Activity, Auth, Member, MemberAdmin } from '@/api';
 
 export class WinkApi {
   private static instance: WinkApi | null = null;
@@ -13,7 +12,7 @@ export class WinkApi {
 
   private constructor() {
     if (WinkApi.instance !== null) {
-      return;
+      throw new Error('WinkApi is already initialized');
     }
 
     WinkApi.instance = this;
@@ -21,7 +20,7 @@ export class WinkApi {
 
   private static get Instance(): WinkApi {
     if (WinkApi.instance === null) {
-      new WinkApi();
+      throw new Error('WinkApi is not initialized');
     }
 
     return WinkApi.instance!;

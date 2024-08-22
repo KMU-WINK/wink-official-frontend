@@ -1,5 +1,0 @@
-/* 'text-shadow' is not supported in tailwind */
-.text_border {
-  text-shadow: -1px -1px 0 #424f73, 1px -1px 0 #424f73, -1px 1px 0 #424f73,
-    1px 1px 0 #424f73;
-}
