@@ -1,1 +1,1 @@
-export * from "./useWinkApi";
+export * from './useWinkApi';
