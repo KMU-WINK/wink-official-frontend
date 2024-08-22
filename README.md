@@ -72,12 +72,7 @@ docker build -t wink-official-frontend:local .
 Run the Docker container
 
 ```bash
-docker run \
-           --name (CONTAINER_NAME) \
-           
-           -e API_URL=(API_URL) \
-           
-           -p 3000:3000 -d wink-official-frontend:local
+docker run --name (CONTAINER_NAME) -p 3000:3000 -d wink-official-frontend:local
 ```
 
 
