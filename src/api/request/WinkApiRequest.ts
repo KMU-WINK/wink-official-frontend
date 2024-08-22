@@ -132,7 +132,7 @@ export class WinkApiRequest {
     return this.request(url, { method: 'DELETE' });
   }
 
-  public setToken(accessToken: string | null, refreshToken: string | null) {
+  public setToken(accessToken: string, refreshToken: string) {
     if (typeof window === 'undefined') {
       throw new Error('This method is only available in the browser.');
     }
@@ -140,19 +140,28 @@ export class WinkApiRequest {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
 
-    if (accessToken === null || refreshToken === null) {
-      this.cookies.remove('accessToken');
-      this.cookies.remove('refreshToken');
-    } else {
-      this.cookies.set('accessToken', accessToken, {
-        path: '/',
-        expires: new Date(9999, 11, 31),
-      });
-      this.cookies.set('refreshToken', refreshToken, {
-        path: '/',
-        expires: new Date(9999, 11, 31),
-      });
+    this.cookies.set('accessToken', accessToken, {
+      path: '/',
+      expires: new Date(9999, 11, 31),
+    });
+    this.cookies.set('refreshToken', refreshToken, {
+      path: '/',
+      expires: new Date(9999, 11, 31),
+    });
+
+    this.updateUser();
+  }
+
+  public removeToken() {
+    if (typeof window === 'undefined') {
+      throw new Error('This method is only available in the browser.');
     }
+
+    this.accessToken = null;
+    this.refreshToken = null;
+
+    this.cookies.remove('accessToken');
+    this.cookies.remove('refreshToken');
 
     this.updateUser();
   }
