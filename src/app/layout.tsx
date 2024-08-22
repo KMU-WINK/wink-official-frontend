@@ -1,30 +1,37 @@
-// src/app/layout.tsx
-import "@/styles/globals.css";
-import { ReactNode } from "react";
-import { WinkApiApplication } from "@/api/WinkApiApplication";
+'use client';
 
-export const metadata = {
-  title: "WINK",
-  description: "국민대학교 소프트웨어융합대학 웹 학술 동아리 윙크 😉",
-};
+import React from 'react';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+import { usePathname } from 'next/navigation';
+
+import { WinkApiApplication } from '@/api';
+import { Header, Footer } from '@/components';
+
+import '@/styles/globals.css';
+
+const HIDE_FOOTER_PATHS = ['/login', '/signup'];
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  const hideFooter = HIDE_FOOTER_PATHS.includes(pathname);
+
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          type="text/css"
-          rel="stylesheet"
-        />
+        <title>WINK: Web IN Kookmin</title>
+
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
-        <WinkApiApplication>{children}</WinkApiApplication>
+        <WinkApiApplication>
+          <Header />
+          {children}
+          {!hideFooter && <Footer />}
+        </WinkApiApplication>
       </body>
     </html>
   );

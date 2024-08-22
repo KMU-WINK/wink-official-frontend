@@ -1,0 +1,44 @@
+name: Update to Deploy Repository
+run-name: Update to Deploy Repository (${{ github.ref_name }})
+
+on:
+    push:
+        branches:
+            - master
+            - develop
+
+concurrency:
+    group: update-${{ github.ref_name }}
+    cancel-in-progress: true
+
+jobs:
+    update-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Set up Git
+              run: |
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+            - name: Set up Github SSH
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_GITHUB_KEY }}" > ~/.ssh/id_ed25519
+                  chmod 600 ~/.ssh/id_ed25519
+                  ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+            - name: Checkout code
+              run: |
+                  git clone --branch ${{ github.ref_name }} --recursive git@github.com:kmu-wink/wink-official-deploy.git deploy
+
+            - name: Update Submodule
+              run: |
+                  cd deploy
+                  git submodule update --remote frontend
+
+            - name: Commit and Push
+              run: |
+                  cd deploy
+                  git add frontend
+                  git commit -m "update: frontend"
+                  git push -f origin ${{ github.ref_name }}

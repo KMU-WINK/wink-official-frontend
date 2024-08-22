@@ -1,73 +1,60 @@
-import { MyInfoResponseDto } from "@/api/domain/Auth";
-import { WinkApiRequest, WinkApiResponse } from "@/api/request";
+import { MyInfoResponseDto, WinkApiRequest, WinkApiResponse } from '@/api';
 
 export class Member {
   constructor(private readonly request: WinkApiRequest) {}
 
   public async getMembers(): Promise<WinkApiResponse<GetMembersResponseDto>> {
-    return this.request.get("/member");
+    return this.request.get('/member');
   }
 
-  public async updateMyInfo(
-    data: UpdateMyInfoRequestDto,
-  ): Promise<WinkApiResponse<void>> {
-    return this.request.put("/member/me/info", data);
+  public async updateMyInfo(data: UpdateMyInfoRequestDto): Promise<WinkApiResponse<void>> {
+    return this.request.put('/member/me/info', data);
   }
 
-  public async updateMyPassword(
-    data: UpdateMyPasswordRequestDto,
-  ): Promise<WinkApiResponse<void>> {
-    return this.request.patch("/member/me/password", data);
+  public async updateMyPassword(data: UpdateMyPasswordRequestDto): Promise<WinkApiResponse<void>> {
+    return this.request.patch('/member/me/password', data);
   }
 
   public async updateMyAvatar(
     data: UpdateMyAvatarRequestDto,
   ): Promise<WinkApiResponse<UpdateMyAvatarResponseDto>> {
-    return this.request.patch("/member/me/avatar", data);
+    return this.request.patch('/member/me/avatar', data);
   }
 
   public async deleteMyAvatar(): Promise<WinkApiResponse<void>> {
-    return this.request.delete("/member/me/avatar");
+    return this.request.delete('/member/me/avatar');
   }
 }
 
 export class MemberAdmin {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async getWaitingMembers(): Promise<
-    WinkApiResponse<GetMembersForAdminResponseDto>
-  > {
-    return this.request.get("/member/admin/waiting");
+  public async getWaitingMembers(): Promise<WinkApiResponse<GetMembersForAdminResponseDto>> {
+    return this.request.get('/member/admin/waiting');
   }
 
   public async approveWaitingMember(
     data: ApproveWaitingMemberRequestDto,
   ): Promise<WinkApiResponse<void>> {
-    return this.request.post("/member/admin/waiting/approve", data);
+    return this.request.post('/member/admin/waiting/approve', data);
   }
 
   public async rejectWaitingMember(
     data: RejectWaitingMemberRequestDto,
   ): Promise<WinkApiResponse<void>> {
-    return this.request.post("/member/admin/waiting/reject", data);
+    return this.request.post('/member/admin/waiting/reject', data);
   }
 
-  public async getMembers(): Promise<
-    WinkApiResponse<GetMembersForAdminResponseDto>
-  > {
-    return this.request.get("/member/admin");
+  public async getMembers(): Promise<WinkApiResponse<GetMembersForAdminResponseDto>> {
+    return this.request.get('/member/admin');
   }
 
-  public async updateMemberRole(
-    data: UpdateMemberRoleRequestDto,
-  ): Promise<WinkApiResponse<void>> {
-    return this.request.patch("/member/admin/role", data);
+  public async updateMemberRole(data: UpdateMemberRoleRequestDto): Promise<WinkApiResponse<void>> {
+    return this.request.patch('/member/admin/role', data);
   }
 
-  public async updateMemberFee(
-    data: UpdateMemberFeeRequestDto,
-  ): Promise<WinkApiResponse<void>> {
-    return this.request.patch("/member/admin/fee", data);
+  public async updateMemberFee(data: UpdateMemberFeeRequestDto): Promise<WinkApiResponse<void>> {
+    return this.request.patch('/member/admin/fee', data);
   }
 }
 
@@ -92,7 +79,7 @@ export interface UpdateMemberRoleRequestDto {
 }
 
 export interface UpdateMyAvatarRequestDto {
-  avatar: any;
+  avatar: unknown;
 }
 
 export interface UpdateMyInfoRequestDto {
@@ -120,8 +107,7 @@ export interface EachGetMembersResponseDto {
   role: RoleString;
 }
 
-export interface EachGetMembersForAdminResponseDto
-  extends EachGetMembersResponseDto {
+export interface EachGetMembersForAdminResponseDto extends EachGetMembersResponseDto {
   email: string;
   studentId: string;
   fee: boolean;
@@ -159,15 +145,15 @@ export interface MyInfoLinks {
 
 // noinspection JSUnusedGlobalSymbols
 export enum Role {
-  PRESIDENT = "PRESIDENT",
-  VICE_PRESIDENT = "VICE_PRESIDENT",
-  TREASURY_HEAD = "TREASURY_HEAD",
-  TREASURY_ASSISTANT = "TREASURY_ASSISTANT",
-  PUBLIC_RELATIONS_HEAD = "PUBLIC_RELATIONS_HEAD",
-  PUBLIC_RELATIONS_ASSISTANT = "PUBLIC_RELATIONS_ASSISTANT",
-  PLANNING_HEAD = "PLANNING_HEAD",
-  PLANNING_ASSISTANT = "PLANNING_ASSISTANT",
-  MEMBER = "MEMBER",
+  PRESIDENT = 'PRESIDENT',
+  VICE_PRESIDENT = 'VICE_PRESIDENT',
+  TREASURY_HEAD = 'TREASURY_HEAD',
+  TREASURY_ASSISTANT = 'TREASURY_ASSISTANT',
+  PUBLIC_RELATIONS_HEAD = 'PUBLIC_RELATIONS_HEAD',
+  PUBLIC_RELATIONS_ASSISTANT = 'PUBLIC_RELATIONS_ASSISTANT',
+  PLANNING_HEAD = 'PLANNING_HEAD',
+  PLANNING_ASSISTANT = 'PLANNING_ASSISTANT',
+  MEMBER = 'MEMBER',
 }
 
 export type RoleString = keyof typeof Role;
