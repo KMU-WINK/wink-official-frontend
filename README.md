@@ -1,5 +1,3 @@
-![Logo](https://avatars.githubusercontent.com/u/69004745?s=100)
-
 # Wink Official Frontend
 
 ## Tech Stack
@@ -10,11 +8,6 @@
 
 **Frontend:**
 - ![nextjs](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
-
-**Convention:**
-- ![eslint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
-- ![prettier](https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white)
-- ![husky](https://img.shields.io/badge/husky-5D4F85?style=for-the-badge&logoColor=white)
 
 
 ## Related
@@ -61,6 +54,7 @@ Start the server
 yarn start:dev
 ```
 
+
 ## Run Locally with Docker
 
 Build the Docker image
@@ -69,10 +63,20 @@ Build the Docker image
 docker build -t wink-official-frontend:local .
 ```
 
+Or pull the Docker image from Docker Hub
+
+```bash
+# master branch
+docker pull kmuwink/wink-official-frontend:master
+
+# develop branch
+docker pull kmuwink/wink-official-frontend:develop
+```
+
 Run the Docker container
 
 ```bash
-docker run --name (CONTAINER_NAME) -p 3000:3000 -d wink-official-frontend:local
+docker run --name (CONTAINER_NAME) -p 3000:3000 -d (IMAGE_NAME)
 ```
 
 
