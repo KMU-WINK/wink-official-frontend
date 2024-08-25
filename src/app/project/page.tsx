@@ -65,7 +65,6 @@ export default function Project() {
                 link={project.link}
               />
             ))}
-            ç
           </div>
         </div>
         {/* 더보기 버튼 */}
