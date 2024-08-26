@@ -60,8 +60,11 @@ export const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', updateScroll);
+    const timer = setInterval(() => {
+      window.addEventListener('scroll', updateScroll);
+    }, 200);
     return () => {
+      clearInterval(timer);
       window.removeEventListener('scroll', updateScroll);
     };
   }, []);
@@ -93,7 +96,6 @@ export const Header: React.FC = () => {
   const getActiveDropdownItem = (dropdownItems: { title: string; href: string }[]) => {
     const activeItem = dropdownItems.find((item) => item.href === pathName);
     return activeItem ? activeItem.title : '';
-  };
 
   const onClickLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
