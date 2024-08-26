@@ -96,6 +96,7 @@ export const Header: React.FC = () => {
   const getActiveDropdownItem = (dropdownItems: { title: string; href: string }[]) => {
     const activeItem = dropdownItems.find((item) => item.href === pathName);
     return activeItem ? activeItem.title : '';
+  };
 
   const onClickLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
