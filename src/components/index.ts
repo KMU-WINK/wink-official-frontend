@@ -6,3 +6,4 @@ export * from './InputField';
 
 export * from './Carousel';
 export * from './ProjectCard';
+export * from './StudyCard';
