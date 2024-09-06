@@ -1,13 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-
+import React, { useState } from 'react';
+import { WinkApi } from '@/api';
+import { Button, InputField } from '@/components';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-
-import { Button, InputField } from '@/components';
-
 import web_in_kookmin from '@/public/web_in_kookmin.svg';
 
 type InputFieldId =
@@ -46,6 +44,7 @@ const inputFields: InputField[] = [
     id: 'verificationCode',
     type: 'text',
     placeholder: '인증번호',
+    withButton: true,
   },
   {
     id: 'password',
@@ -61,7 +60,6 @@ const inputFields: InputField[] = [
 
 export default function SignUp() {
   const router = useRouter();
-
   const [formData, setFormData] = useState({
     studentId: '',
     name: '',
@@ -70,6 +68,7 @@ export default function SignUp() {
     password: '',
     confirmPassword: '',
   });
+  const [verifyToken, setVerifyToken] = useState<string>('');
   const [verificationComplete, setVerificationComplete] = useState(false);
   const [showPasswordWarning, setShowPasswordWarning] = useState(false);
 
@@ -88,15 +87,51 @@ export default function SignUp() {
 
   const onClickSignUpButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // 회원가입 api 처리
+
+    const { code, error, content } = await WinkApi.Auth.register({
+      name: formData.name,
+      studentId: formData.studentId,
+      password: formData.password,
+      verifyToken,
+    });
+
+    if (error) {
+      alert('회원가입 요청에 실패했습니다.');
+      return;
+    }
+
     alert('회원가입 요청에 성공하셨습니다.');
-    router.push('/');
+    router.push('/login');
   };
 
-  const onSendVerificationCode = () => {
-    // 인증번호 전송 API 처리
+  const onSendVerificationCode = async () => {
+    const { code, error, content } = await WinkApi.Auth.sendCode({
+      email: formData.email,
+    });
+
+    if (error) {
+      alert('인증번호 전송에 실패했습니다.');
+      return;
+    }
+
     alert('인증번호가 전송되었습니다.');
     setVerificationComplete(false);
+  };
+
+  const onConfirmVerifyCode = async () => {
+    const { code, error, content } = await WinkApi.Auth.verifyCode({
+      email: formData.email,
+      code: formData.verificationCode,
+    });
+
+    if (error) {
+      alert('인증번호 확인에 실패했습니다.');
+      return;
+    }
+
+    setVerifyToken(content.unwrap().verifyToken);
+    setVerificationComplete(true);
+    alert('인증번호 확인 성공!');
   };
 
   const onFocusPasswordInput = () => {
@@ -107,7 +142,7 @@ export default function SignUp() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center gap-[50px]">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-[50px] mt-[56px]">
         <Image src={web_in_kookmin} alt="WINK Authentication" width={610} height={110} priority />
 
         <div className="flex flex-col items-center justify-center gap-[10px]">
@@ -137,12 +172,20 @@ export default function SignUp() {
                         : undefined
                     }
                   />
-                  {field.withButton && (
+                  {field.withButton && field.id === 'email' && (
                     <Button
                       type="button"
-                      label="인증번호 전송"
+                      label="인증번호 발송"
                       onClick={onSendVerificationCode}
-                      className="text-[13px] px-1.5 py-1"
+                      className="text-[13px] px-1.5 py-3 min-w-[100px]"
+                    />
+                  )}
+                  {field.withButton && field.id === 'verificationCode' && (
+                    <Button
+                      type="button"
+                      label="확인"
+                      onClick={onConfirmVerifyCode}
+                      className="text-[13px] px-1.5 py-3 min-w-[68px]"
                     />
                   )}
                 </div>

@@ -1,17 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
-
+import { WinkApi } from '@/api';
+import { useUserStore } from '@/store/useUserStore';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-
 import logo from '@/public/logo.png';
 
 export const Header: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [cookies, , removeCookie] = useCookies(['token']);
+  const { user, setUser } = useUserStore();
   const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false);
   const [isAboutUsDropdownOpen, setIsAboutUsDropdownOpen] = useState(false);
   const pathName = usePathname() as string;
@@ -36,10 +35,10 @@ export const Header: React.FC = () => {
       useLink: true,
     },
     {
-      title: cookies.token ? 'logout' : 'login',
-      href: cookies.token ? '#' : '/login',
+      title: user ? 'logout' : 'login',
+      href: user ? '#' : '/login',
       mobileHide: true,
-      useLink: !cookies.token,
+      useLink: !user,
     },
   ];
 
@@ -100,8 +99,8 @@ export const Header: React.FC = () => {
 
   const onClickLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    removeCookie('token');
-    window.location.reload();
+    WinkApi.Request.removeToken();
+    setUser(null);
   };
 
   const toggleDropdown = (type: string) => {
