@@ -1,14 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { useCookies } from 'react-cookie';
-
+import React, { useState } from 'react';
+import { WinkApi } from '@/api';
+import { Button, InputField } from '@/components';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-
-import { Button, InputField } from '@/components';
-
 import web_in_kookmin from '@/public/web_in_kookmin.svg';
 
 interface InputFieldType {
@@ -30,11 +27,8 @@ const inputFields: InputFieldType[] = [
   },
 ];
 
-export default function Login() {
-  const router = useRouter(); // useRouter 훅 가져오기
-  const [cookies, setCookie] = useCookies(['token']); // 유저 사용 토큰
-
-  // useState를 사용하여 form 데이터 관리
+export default function LoginPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -50,9 +44,21 @@ export default function Login() {
 
   const onClickLoginButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // formData를 사용하여 로그인 API 호출 처리
-    console.log(formData);
-    // 로그인 api 처리 후, 성공 시 페이지 이동 등 처리
+
+    const { code, error, content } = await WinkApi.Auth.login({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (error) {
+      alert(`Error: ${code} - ${content.unwrapError()}`);
+      return;
+    }
+
+    const { accessToken, refreshToken } = content.unwrap();
+    WinkApi.Request.setToken(accessToken, refreshToken);
+
+    router.push('/');
   };
 
   return (
