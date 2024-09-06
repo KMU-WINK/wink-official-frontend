@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { WinkApi } from '@/api';
 import { Button, InputField } from '@/components';
+import { useUserStore } from '@/store/useUserStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -33,6 +34,7 @@ export default function LoginPage() {
     email: '',
     password: '',
   });
+  const { setUser } = useUserStore.getState();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
