@@ -18,11 +18,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'kmu-wink-dev.s3.ap-northeast-2.amazonaws.com',
       },
-      // TODO: Remove this after the production release
-      {
-        protocol: 'https',
-        hostname: 'github.com',
-      },
     ],
   },
 };
