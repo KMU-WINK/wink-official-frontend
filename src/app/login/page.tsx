@@ -1,13 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import { WinkApi } from '@/api';
-import { Button, InputField } from '@/components';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import web_in_kookmin from '@/public/web_in_kookmin.svg';
 import { toast } from 'react-toastify';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import { Button, InputField } from '@/components';
+
+import { WinkApi } from '@/api';
+
+import web_in_kookmin from '@/public/web_in_kookmin.svg';
 
 interface InputFieldType {
   id: 'email' | 'password';
@@ -64,7 +68,7 @@ export default function LoginPage() {
         <div className="text-center gap-6">
           <Image src={web_in_kookmin} alt="WINK Authentication" width={610} height={110} priority />
 
-          <p className="mt-[38px] text-xl font-normal font-roboto">
+          <p className="mt-[38px] text-xl font-normal font-pretendard">
             국민대학교 소프트웨어융합대학 유일무이 Web 동아리
           </p>
         </div>

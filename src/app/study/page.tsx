@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import { StudyCard } from '@/components';
 
 interface StudyType {

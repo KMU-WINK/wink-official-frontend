@@ -1,19 +1,24 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { WinkApi } from '@/api';
-import { useUserStore } from '@/store/useUserStore';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { WinkApi } from '@/api';
+
+import { useUserStore } from '@/store/useUserStore';
+
 import logo from '@/public/logo.png';
 
 export const Header: React.FC = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const { user, setUser } = useUserStore();
+  const { user } = useUserStore();
+
+  const pathName = usePathname();
+
   const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false);
   const [isAboutUsDropdownOpen, setIsAboutUsDropdownOpen] = useState(false);
-  const pathName = usePathname() as string;
 
   const navigations = [
     {
@@ -53,20 +58,6 @@ export const Header: React.FC = () => {
     { title: '스터디', href: '/study' },
     { title: '친목활동', href: '/social' },
   ];
-
-  const updateScroll = () => {
-    setScrollY(window.scrollY);
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      window.addEventListener('scroll', updateScroll);
-    }, 200);
-    return () => {
-      clearInterval(timer);
-      window.removeEventListener('scroll', updateScroll);
-    };
-  }, []);
 
   useEffect(() => {
     // 페이지가 이동할 때 드롭다운 닫기

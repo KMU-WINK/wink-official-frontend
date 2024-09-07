@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 import { RefreshResponseDto, User } from '@/api';
 
 import { useUserStore } from '@/store';
-import { toast } from 'react-toastify';
 
 interface WinkRawApiResponse<T> {
   code: number;

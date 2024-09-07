@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
+import Link from 'next/link';
 
 import logo from '@/public/wink_footer_logo.svg';
 import icon_github from '@/public/wink_github.svg';
@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
     <div className="flex flex-col py-20 items-center">
       <div className="flex gap-1 mb-[30px]">
         <Image src={logo} alt={'WINK small logo'} width={36} />
-        <p className="font-roboto text-lg text-[#8D9DB0]">WINK</p>
+        <p className="font-pretendard text-lg text-[#8D9DB0]">WINK</p>
       </div>
 
       <ul className="flex list-none gap-5 mb-7">
