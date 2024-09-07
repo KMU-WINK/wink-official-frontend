@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { RefreshResponseDto, User } from '@/api';
 
-import { useUserStore } from '@/store';
+import { useUserStore, useApplicationState } from '@/store';
 
 interface WinkRawApiResponse<T> {
   code: number;
@@ -29,6 +29,8 @@ export class WinkApiRequest {
 
     if (accessToken && refreshToken) {
       this.setToken(accessToken, refreshToken);
+    } else {
+      useApplicationState.setState({ loaded: true });
     }
   }
 
@@ -141,6 +143,10 @@ export class WinkApiRequest {
 
     this.get('/auth/me').then((user) => {
       useUserStore.setState({ user: user as User });
+
+      if (!useApplicationState.getState().loaded) {
+        useApplicationState.setState({ loaded: true });
+      }
     });
   }
 }
