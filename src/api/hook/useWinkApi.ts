@@ -1,28 +1,20 @@
 import { useEffect, useState } from 'react';
 
-import { WinkApiContent, WinkApiResponse } from '@/api';
-
 interface WinkApiHookResponse<T> {
   fetching: boolean;
-  code: number;
-  error: boolean;
-  content: WinkApiContent<T>;
+  content: T;
 }
 
-export function useWinkApi<T>(result: Promise<WinkApiResponse<T>>): WinkApiHookResponse<T> {
+export function useWinkApi<T>(result: Promise<T>): WinkApiHookResponse<T> {
   const [fetching, setFetching] = useState<boolean>(true);
-  const [code, setCode] = useState<number>(0);
-  const [error, setError] = useState<boolean>(false);
-  const [content, setContent] = useState<WinkApiContent<T>>(new WinkApiContent<T>(''));
+  const [content, setContent] = useState<T>({} as T);
 
   useEffect(() => {
     result.then((response) => {
-      setCode(response.code);
-      setError(response.error);
-      setContent(response.content);
+      setContent(response);
       setFetching(false);
     });
   }, []);
 
-  return { fetching, code, error, content };
+  return { fetching, content };
 }

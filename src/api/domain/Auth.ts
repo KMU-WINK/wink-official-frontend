@@ -1,31 +1,29 @@
-import { MyInfoLinks, RoleString, WinkApiRequest, WinkApiResponse } from '@/api';
+import { MyInfoLinks, RoleString, WinkApiRequest } from '@/api';
 
 export class Auth {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async login(data: LoginRequestDto): Promise<WinkApiResponse<LoginResponseDto>> {
+  public async login(data: LoginRequestDto): Promise<LoginResponseDto> {
     return this.request.post('/auth/login', data);
   }
 
-  public async refresh(data: RefreshRequestDto): Promise<WinkApiResponse<RefreshResponseDto>> {
+  public async refresh(data: RefreshRequestDto): Promise<RefreshResponseDto> {
     return this.request.post('/auth/refresh', data);
   }
 
-  public async register(data: RegisterRequestDto): Promise<WinkApiResponse<void>> {
+  public async register(data: RegisterRequestDto): Promise<void> {
     return this.request.post('/auth/register', data);
   }
 
-  public async sendCode(data: SendCodeRequestDto): Promise<WinkApiResponse<void>> {
+  public async sendCode(data: SendCodeRequestDto): Promise<void> {
     return this.request.post('/auth/register/code', data);
   }
 
-  public async verifyCode(
-    data: VerifyCodeRequestDto,
-  ): Promise<WinkApiResponse<VerifyCodeResponseDto>> {
+  public async verifyCode(data: VerifyCodeRequestDto): Promise<VerifyCodeResponseDto> {
     return this.request.post('/auth/register/code/verify', data);
   }
 
-  public async myInfo(): Promise<WinkApiResponse<MyInfoResponseDto>> {
+  public async myInfo(): Promise<MyInfoResponseDto> {
     return this.request.get('/auth/me');
   }
 }

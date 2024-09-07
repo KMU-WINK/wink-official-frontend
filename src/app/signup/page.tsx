@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import web_in_kookmin from '@/public/web_in_kookmin.svg';
+import { toast } from 'react-toastify';
 
 type InputFieldId =
   | 'studentId'
@@ -88,50 +89,37 @@ export default function SignUp() {
   const onClickSignUpButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const { code, error, content } = await WinkApi.Auth.register({
+    await WinkApi.Auth.register({
       name: formData.name,
       studentId: formData.studentId,
       password: formData.password,
       verifyToken,
     });
 
-    if (error) {
-      alert('회원가입 요청에 실패했습니다.');
-      return;
-    }
+    toast.success('회원 가입 요청이 완료되었습니다.');
 
-    alert('회원가입 요청에 성공하셨습니다.');
-    router.push('/login');
+    router.push('/');
   };
 
   const onSendVerificationCode = async () => {
-    const { code, error, content } = await WinkApi.Auth.sendCode({
+    await WinkApi.Auth.sendCode({
       email: formData.email,
     });
 
-    if (error) {
-      alert('인증번호 전송에 실패했습니다.');
-      return;
-    }
-
-    alert('인증번호가 전송되었습니다.');
+    toast.success('인증번호가 전송되었습니다.');
     setVerificationComplete(false);
   };
 
   const onConfirmVerifyCode = async () => {
-    const { code, error, content } = await WinkApi.Auth.verifyCode({
+    const { verifyToken } = await WinkApi.Auth.verifyCode({
       email: formData.email,
       code: formData.verificationCode,
     });
 
-    if (error) {
-      alert('인증번호 확인에 실패했습니다.');
-      return;
-    }
-
-    setVerifyToken(content.unwrap().verifyToken);
+    setVerifyToken(verifyToken);
     setVerificationComplete(true);
-    alert('인증번호 확인 성공!');
+
+    toast.success('인증이 완료되었습니다.');
   };
 
   const onFocusPasswordInput = () => {
