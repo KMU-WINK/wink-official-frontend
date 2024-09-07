@@ -19,7 +19,13 @@ type InputFieldId = 'email' | 'password';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+
+  const [formData, setFormData] = useState<Record<InputFieldId, string>>({
+    email: '',
+    password: '',
+  });
+
+  const [error, setError] = useState<Record<InputFieldId, string>>({
     email: '',
     password: '',
   });
@@ -39,8 +45,30 @@ export default function LoginPage() {
     },
   ];
 
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const validateAllField = async (): Promise<boolean> => {
+    let hasError = false;
+
+    for (let inputField of inputFields) {
+      try {
+        await inputField?.validation?.validate(formData[inputField.id]);
+      } catch (error) {
+        if (error instanceof yup.ValidationError) {
+          hasError = true;
+
+          setError((prevState) => ({
+            ...prevState,
+            [inputField.id]: error.message,
+          }));
+        }
+      }
+    }
+
+    return !hasError;
+  };
+
+  const onChangeInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
+
     setFormData((prevState) => ({
       ...prevState,
       [id]: value,
@@ -49,6 +77,10 @@ export default function LoginPage() {
 
   const onClickLoginButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    if (!(await validateAllField())) {
+      return;
+    }
 
     try {
       await Promise.all(
@@ -89,12 +121,10 @@ export default function LoginPage() {
         <div className="bg-white px-9 rounded-lg w-full max-w-md flex flex-col gap-[50px]">
           <div className="flex flex-col gap-[15px]">
             {inputFields.map((field) => (
-              <InputField
-                key={field.id}
-                {...field}
-                value={formData[field.id]}
-                onChange={onChangeInput}
-              />
+              <div key={field.id} className="flex flex-col gap-[3px]">
+                <InputField {...field} value={formData[field.id]} onChange={onChangeInput} />
+                {error[field.id] && <p className="text-[11px] text-[#FF0000]">{error[field.id]}</p>}
+              </div>
             ))}
           </div>
 
