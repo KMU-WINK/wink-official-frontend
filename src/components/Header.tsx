@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 
 import { WinkApi } from '@/api';
 
-import { useUserStore } from '@/store/useUserStore';
+import { useUserStore } from '@/store';
 
 import logo from '@/public/logo.png';
 
