@@ -24,8 +24,7 @@ module.exports = {
         'updown-shadow': 'updown-shadow 1.4s infinite ease-in-out alternate',
       },
       fontFamily: {
-        pretendard: ['pretendard'],
-        roboto: ['Roboto'],
+        sans: ['pretendard', 'sans-serif'],
       },
     },
   },
