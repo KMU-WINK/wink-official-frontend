@@ -26,7 +26,7 @@ type InputFieldId =
 export default function SignUp() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Record<InputFieldId, string>>({
     studentId: '',
     name: '',
     email: '',
@@ -34,6 +34,16 @@ export default function SignUp() {
     password: '',
     confirmPassword: '',
   });
+
+  const [error, setError] = useState<Record<InputFieldId, string>>({
+    studentId: '',
+    name: '',
+    email: '',
+    verificationCode: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const [sendCode, setSendCode] = useState<boolean>(false);
   const [verifyToken, setVerifyToken] = useState<string>('');
 
@@ -149,26 +159,53 @@ export default function SignUp() {
       }
     }
 
+    inputFields
+      .find((field) => field.id === id)
+      ?.validation?.validate(value)
+      .then(() => {
+        setError((prevState) => ({
+          ...prevState,
+          [id]: '',
+        }));
+      })
+      .catch((error) => {
+        setError((prevState) => ({
+          ...prevState,
+          [id]: error.message,
+        }));
+      });
+
     setFormData((prevState) => ({
       ...prevState,
       [id]: value,
     }));
   };
 
+  const validateAllField = async (): Promise<boolean> => {
+    let hasError = false;
+
+    for (let inputField of inputFields) {
+      try {
+        await inputField?.validation?.validate(formData[inputField.id]);
+      } catch (error) {
+        if (error instanceof yup.ValidationError) {
+          hasError = true;
+
+          setError((prevState) => ({
+            ...prevState,
+            [inputField.id]: error.message,
+          }));
+        }
+      }
+    }
+
+    return !hasError;
+  };
   const onClickSignUpButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    try {
-      await Promise.all(
-        inputFields.map(async (field) => {
-          await field.validation?.validate(formData[field.id]);
-        }),
-      );
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        toast.error(error.message);
-        return;
-      }
+    if (!(await validateAllField())) {
+      return;
     }
 
     if (!verifyToken) {
@@ -211,6 +248,9 @@ export default function SignUp() {
                     <InputField {...field} value={formData[field.id]} onChange={onChangeInput} />
                     {field.button && field.button}
                   </div>
+                  {error[field.id] && (
+                    <p className="text-[11px] text-[#FF0000]">{error[field.id]}</p>
+                  )}
                 </div>
               ))}
           </div>
