@@ -41,10 +41,8 @@ export default function Project() {
     <>
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center pt-[128px]">
-          <h1 className="font-pretendard font-bold text-[40px] text-center mb-6">
-            WINK, 우리들의 파도
-          </h1>
-          <p className="font-pretendard font-regular text-[20px] text-center text-[#4D4D4D]">
+          <h1 className=" font-bold text-[40px] text-center mb-6">WINK, 우리들의 파도</h1>
+          <p className=" font-regular text-[20px] text-center text-[#4D4D4D]">
             나날히 성장해 가는 우리
           </p>
         </div>
@@ -72,7 +70,7 @@ export default function Project() {
           <div className="flex justify-center mb-10">
             <button
               onClick={loadMore}
-              className="px-[15px] py-2 bg-white rounded-[15px] border border-[#DADADA] hover:bg-gray-100 font-pretendard text-lg font-semibold"
+              className="px-[15px] py-2 bg-white rounded-[15px] border border-[#DADADA] hover:bg-gray-100  text-lg font-semibold"
             >
               목록 더 보기
             </button>

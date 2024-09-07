@@ -18,7 +18,6 @@ interface CarouselProps {
 
 export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
-  const [angle, setAngle] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -38,13 +37,12 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
 
   const rotateCarousel = (index: number) => {
     const rotateAngle = 360 / cards.length;
-    setAngle((prevAngle) => {
-      const newAngle = index * rotateAngle;
-      if (carouselRef.current) {
-        carouselRef.current.style.transform = `rotateY(${-newAngle}deg)`;
-      }
-      return newAngle;
-    });
+    const newAngle = index * rotateAngle;
+
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `rotateY(${-newAngle}deg)`;
+    }
+
     setCurrentIndex(index);
   };
 
@@ -81,10 +79,8 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
       {/* 클릭한 카드의 정보 표시 */}
       {cards.length > 0 && currentIndex !== null && (
         <div className="flex flex-col items-center pt-32 pb-12">
-          <h2 className="font-pretendard font-bold text-3xl mb-2">{cards[currentIndex].title}</h2>
-          <p className="font-pretendard font-medium text-[#737373] text-xl">
-            {cards[currentIndex].content}
-          </p>
+          <h2 className=" font-bold text-3xl mb-2">{cards[currentIndex].title}</h2>
+          <p className=" font-medium text-[#737373] text-xl">{cards[currentIndex].content}</p>
         </div>
       )}
 

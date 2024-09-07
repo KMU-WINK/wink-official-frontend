@@ -11,9 +11,13 @@ import { Header, Footer } from '@/components';
 import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
 const HIDE_FOOTER_PATHS = ['/login', '/signup'];
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const RootLayout = ({ children }: RootLayoutProps) => {
   const pathname = usePathname();
 
   const hideFooter = HIDE_FOOTER_PATHS.includes(pathname);
@@ -45,4 +49,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

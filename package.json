@@ -11,9 +11,9 @@
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
   "dependencies": {
+    "js-cookie": "^3.0.5",
     "next": "^14.2.6",
     "react": "^18.3.1",
-    "react-cookie": "^7.2.0",
     "react-dom": "^18.3.1",
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.5",
@@ -27,6 +27,7 @@
     "@eslint/js": "^9.8.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.16.1",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
