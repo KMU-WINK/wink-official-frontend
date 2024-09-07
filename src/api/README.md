@@ -36,15 +36,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>('');
   
   const onLogin = async () => {
-    const { code, error, content } = await WinkApi.Auth.login({ email, password });
+    const { accessToken, refreshToken } = await WinkApi.Auth.login({ email, password });
 
-    if (error) {
-      alert(`Error: ${code} - ${content.unwrapError()}`);
-      return;
-    }
-    
-    const { accessToken, refreshToken } = content.unwrap();
-    
     WinkApi.Request.setToken({ accessToken, refreshToken });
   };
 
@@ -70,19 +63,17 @@ const LoginPage = () => {
 'use client';
 
 const MemberPage = () => {
-  const {fetching, code, error, content} = useWinkApi(
+  const { fetching, content: { members } } = useWinkApi(
     WinkApi.Member.getMembers()
   );
 
   if (fetching) return <div>Loading...</div>;
 
-  if (error) return <div>Error: {code} - {content.unwrapError()}</div>;
-
   return (
     <div>
       <h1>Members</h1>
       <ul>
-        {content.unwrap().map((member) => (
+        {members.map((member) => (
           <li key={member.memberId}>{member.name}</li>
         ))}
       </ul>
@@ -95,15 +86,13 @@ const MemberPage = () => {
 
 ```tsx
 const MemberList = async () => {
-  const {code, error, content} = await WinkApi.Member.getMembers();
-
-  if (error) return <div>Error: {code} - {content.unwrapError()}</div>;
+  const { members } = await WinkApi.Member.getMembers();
 
   return (
     <div>
       <h1>Members</h1>
       <ul>
-        {content.unwrap().map((member) => (
+        {members.map((member) => (
           <li key={member.memberId}>{member.name}</li>
         ))}
       </ul>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 import { usePathname } from 'next/navigation';
 
@@ -8,6 +9,7 @@ import { WinkApiApplication } from '@/api';
 import { Header, Footer } from '@/components';
 
 import '@/styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HIDE_FOOTER_PATHS = ['/login', '/signup'];
 
@@ -31,6 +33,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           {children}
           {!hideFooter && <Footer />}
+
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            pauseOnHover={false}
+            theme="light"
+            transition={Bounce}
+          />
         </WinkApiApplication>
       </body>
     </html>

@@ -3,47 +3,12 @@ import { Cookies } from 'react-cookie';
 import { RefreshResponseDto, User } from '@/api';
 
 import { useUserStore } from '@/store';
+import { toast } from 'react-toastify';
 
 interface WinkRawApiResponse<T> {
   code: number;
   error: boolean;
   content: string | T;
-}
-
-export class WinkApiContent<T> {
-  public constructor(private readonly content: string | T) {}
-
-  public unwrap(): T {
-    return this.content as T;
-  }
-
-  public unwrapError(): string {
-    return this.content as string;
-  }
-}
-
-export class WinkApiResponse<T> {
-  private readonly _code: number;
-  private readonly _error: boolean;
-  private readonly _content: WinkApiContent<T>;
-
-  constructor(code: number, error: boolean, content: string | T) {
-    this._code = code;
-    this._error = error;
-    this._content = new WinkApiContent(content);
-  }
-
-  public get code(): number {
-    return this._code;
-  }
-
-  public get error(): boolean {
-    return this._error;
-  }
-
-  public get content(): WinkApiContent<T> {
-    return this._content;
-  }
 }
 
 export class WinkApiRequest {
@@ -69,7 +34,7 @@ export class WinkApiRequest {
     }
   }
 
-  private async request<T>(url: string, options: RequestInit): Promise<WinkApiResponse<T>> {
+  private async request<T>(url: string, options: RequestInit): Promise<T> {
     const response = await fetch(`${this.baseUrl}/api${url}`, {
       ...options,
       headers: {
@@ -82,57 +47,63 @@ export class WinkApiRequest {
 
     if (
       apiResponse.error &&
-      apiResponse.content === '접근 토큰이 만료되었습니다.' &&
+      apiResponse.content === 'Refresh Token이 만료되었습니다.' &&
       (await this.refresh())
     ) {
       return this.request(url, options);
+    } else {
+      this.removeToken();
     }
 
-    return new WinkApiResponse(apiResponse.code, apiResponse.error, apiResponse.content);
+    if (apiResponse.error) {
+      toast.error(apiResponse.content as string);
+
+      throw new Error(`${url} [${apiResponse.code}] ${apiResponse.content}`);
+    }
+
+    return apiResponse.content as T;
   }
 
   private async refresh(): Promise<boolean> {
-    const refreshResponse: WinkApiResponse<RefreshResponseDto> = await this.post('/auth/refresh', {
-      refreshToken: this.refreshToken,
-    });
+    try {
+      const { accessToken, refreshToken } = await this.post<RefreshResponseDto>('/auth/refresh', {
+        refreshToken: this.refreshToken,
+      });
 
-    if (!refreshResponse.error) {
+      this.setToken(accessToken, refreshToken);
+
+      return true;
+    } catch (_) {
       return false;
     }
-
-    const { accessToken, refreshToken } = refreshResponse.content.unwrap();
-
-    this.setToken(accessToken, refreshToken);
-
-    return true;
   }
 
-  public async get<T>(url: string): Promise<WinkApiResponse<T>> {
+  public async get<T>(url: string): Promise<T> {
     return this.request(url, { method: 'GET' });
   }
 
-  public async post<T>(url: string, body?: object): Promise<WinkApiResponse<T>> {
+  public async post<T>(url: string, body?: object): Promise<T> {
     return this.request(url, {
       method: 'POST',
       body: body && JSON.stringify(body),
     });
   }
 
-  public async put<T>(url: string, body?: object): Promise<WinkApiResponse<T>> {
+  public async put<T>(url: string, body?: object): Promise<T> {
     return this.request(url, {
       method: 'PUT',
       body: body && JSON.stringify(body),
     });
   }
 
-  public async patch<T>(url: string, body?: object): Promise<WinkApiResponse<T>> {
+  public async patch<T>(url: string, body?: object): Promise<T> {
     return this.request(url, {
       method: 'PATCH',
       body: body && JSON.stringify(body),
     });
   }
 
-  public async delete<T>(url: string): Promise<WinkApiResponse<T>> {
+  public async delete<T>(url: string): Promise<T> {
     return this.request(url, { method: 'DELETE' });
   }
 
@@ -177,13 +148,11 @@ export class WinkApiRequest {
     }
 
     this.get('/auth/me').then((response) => {
-      if (response.error) {
-        this.cookies.remove('accessToken');
-        this.cookies.remove('refreshToken');
-        return;
+      try {
+        useUserStore.setState({ user: response as User });
+      } catch (_) {
+        this.removeToken();
       }
-
-      useUserStore.setState({ user: response.content.unwrap() as User });
     });
   }
 }

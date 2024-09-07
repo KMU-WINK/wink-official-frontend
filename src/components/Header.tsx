@@ -99,8 +99,8 @@ export const Header: React.FC = () => {
 
   const onClickLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+
     WinkApi.Request.removeToken();
-    setUser(null);
   };
 
   const toggleDropdown = (type: string) => {
