@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -92,6 +93,8 @@ export const Header: React.FC = () => {
     e.preventDefault();
 
     WinkApi.Request.removeToken();
+
+    toast.info('로그아웃 되었습니다.');
   };
 
   const toggleDropdown = (type: string) => {
