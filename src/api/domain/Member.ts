@@ -1,27 +1,25 @@
-import { MyInfoResponseDto, WinkApiRequest, WinkApiResponse } from '@/api';
+import { MyInfoResponseDto, WinkApiRequest } from '@/api';
 
 export class Member {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async getMembers(): Promise<WinkApiResponse<GetMembersResponseDto>> {
+  public async getMembers(): Promise<GetMembersResponseDto> {
     return this.request.get('/member');
   }
 
-  public async updateMyInfo(data: UpdateMyInfoRequestDto): Promise<WinkApiResponse<void>> {
+  public async updateMyInfo(data: UpdateMyInfoRequestDto): Promise<void> {
     return this.request.put('/member/me/info', data);
   }
 
-  public async updateMyPassword(data: UpdateMyPasswordRequestDto): Promise<WinkApiResponse<void>> {
+  public async updateMyPassword(data: UpdateMyPasswordRequestDto): Promise<void> {
     return this.request.patch('/member/me/password', data);
   }
 
-  public async updateMyAvatar(
-    data: UpdateMyAvatarRequestDto,
-  ): Promise<WinkApiResponse<UpdateMyAvatarResponseDto>> {
+  public async updateMyAvatar(data: UpdateMyAvatarRequestDto): Promise<UpdateMyAvatarResponseDto> {
     return this.request.patch('/member/me/avatar', data);
   }
 
-  public async deleteMyAvatar(): Promise<WinkApiResponse<void>> {
+  public async deleteMyAvatar(): Promise<void> {
     return this.request.delete('/member/me/avatar');
   }
 }
@@ -29,31 +27,27 @@ export class Member {
 export class MemberAdmin {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async getWaitingMembers(): Promise<WinkApiResponse<GetMembersForAdminResponseDto>> {
+  public async getWaitingMembers(): Promise<GetMembersForAdminResponseDto> {
     return this.request.get('/member/admin/waiting');
   }
 
-  public async approveWaitingMember(
-    data: ApproveWaitingMemberRequestDto,
-  ): Promise<WinkApiResponse<void>> {
+  public async approveWaitingMember(data: ApproveWaitingMemberRequestDto): Promise<void> {
     return this.request.post('/member/admin/waiting/approve', data);
   }
 
-  public async rejectWaitingMember(
-    data: RejectWaitingMemberRequestDto,
-  ): Promise<WinkApiResponse<void>> {
+  public async rejectWaitingMember(data: RejectWaitingMemberRequestDto): Promise<void> {
     return this.request.post('/member/admin/waiting/reject', data);
   }
 
-  public async getMembers(): Promise<WinkApiResponse<GetMembersForAdminResponseDto>> {
+  public async getMembers(): Promise<GetMembersForAdminResponseDto> {
     return this.request.get('/member/admin');
   }
 
-  public async updateMemberRole(data: UpdateMemberRoleRequestDto): Promise<WinkApiResponse<void>> {
+  public async updateMemberRole(data: UpdateMemberRoleRequestDto): Promise<void> {
     return this.request.patch('/member/admin/role', data);
   }
 
-  public async updateMemberFee(data: UpdateMemberFeeRequestDto): Promise<WinkApiResponse<void>> {
+  public async updateMemberFee(data: UpdateMemberFeeRequestDto): Promise<void> {
     return this.request.patch('/member/admin/fee', data);
   }
 }

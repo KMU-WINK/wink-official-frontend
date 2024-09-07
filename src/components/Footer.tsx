@@ -47,7 +47,7 @@ export const Footer: React.FC = () => {
           </Link>
         ))}
       </ul>
-      
+
       <div className="flex flex-col gap-7">
         <h3 className="font-pretendard text-xl text-[#8D9DB0]">
           서울 성북구 정릉로 77 미래관 605-1

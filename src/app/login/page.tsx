@@ -34,7 +34,6 @@ export default function LoginPage() {
     email: '',
     password: '',
   });
-  const { setUser } = useUserStore.getState();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -47,17 +46,11 @@ export default function LoginPage() {
   const onClickLoginButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const { code, error, content } = await WinkApi.Auth.login({
+    const { accessToken, refreshToken } = await WinkApi.Auth.login({
       email: formData.email,
       password: formData.password,
     });
 
-    if (error) {
-      alert(`Error: ${code} - ${content.unwrapError()}`);
-      return;
-    }
-
-    const { accessToken, refreshToken } = content.unwrap();
     WinkApi.Request.setToken(accessToken, refreshToken);
 
     router.push('/');

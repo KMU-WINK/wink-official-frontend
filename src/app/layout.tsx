@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 import { usePathname } from 'next/navigation';
 
@@ -34,7 +34,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           {!hideFooter && <Footer />}
 
-          <ToastContainer />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            pauseOnHover={false}
+            theme="light"
+            transition={Bounce}
+          />
         </WinkApiApplication>
       </body>
     </html>
