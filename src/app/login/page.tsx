@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import { WinkApi } from '@/api';
 import { Button, InputField } from '@/components';
-import { useUserStore } from '@/store/useUserStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import web_in_kookmin from '@/public/web_in_kookmin.svg';
+import { toast } from 'react-toastify';
 
 interface InputFieldType {
   id: 'email' | 'password';
@@ -52,6 +52,8 @@ export default function LoginPage() {
     });
 
     WinkApi.Request.setToken(accessToken, refreshToken);
+
+    toast.success('로그인에 성공했습니다.');
 
     router.push('/');
   };

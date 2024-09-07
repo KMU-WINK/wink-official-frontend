@@ -96,7 +96,7 @@ export default function SignUp() {
       verifyToken,
     });
 
-    toast('회원 가입 요청이 완료되었습니다.');
+    toast.success('회원 가입 요청이 완료되었습니다.');
 
     router.push('/');
   };
@@ -106,7 +106,7 @@ export default function SignUp() {
       email: formData.email,
     });
 
-    toast('인증번호가 전송되었습니다.');
+    toast.success('인증번호가 전송되었습니다.');
     setVerificationComplete(false);
   };
 
@@ -119,7 +119,7 @@ export default function SignUp() {
     setVerifyToken(verifyToken);
     setVerificationComplete(true);
 
-    toast('인증이 완료되었습니다.');
+    toast.success('인증이 완료되었습니다.');
   };
 
   const onFocusPasswordInput = () => {
