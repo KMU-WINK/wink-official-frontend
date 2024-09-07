@@ -7,30 +7,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { Button, InputField } from '@/components';
+import { Button, InputField, InputFieldProps } from '@/components';
 
 import { WinkApi } from '@/api';
 
 import web_in_kookmin from '@/public/web_in_kookmin.svg';
 
-interface InputFieldType {
-  id: 'email' | 'password';
-  type: string;
-  placeholder: string;
-}
+import * as yup from 'yup';
+import { logStartInfo } from 'next/dist/server/lib/app-info-log';
 
-const inputFields: InputFieldType[] = [
-  {
-    id: 'email',
-    type: 'email',
-    placeholder: '학교 이메일',
-  },
-  {
-    id: 'password',
-    type: 'password',
-    placeholder: '비밀번호',
-  },
-];
+type InputFieldId = 'email' | 'password';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -38,6 +24,21 @@ export default function LoginPage() {
     email: '',
     password: '',
   });
+
+  const inputFields: InputFieldProps<InputFieldId>[] = [
+    {
+      id: 'email',
+      type: 'email',
+      placeholder: '이메일',
+      validation: yup.string().required('이메일을 입력해주세요.').email('이메일 형식이 아닙니다.'),
+    },
+    {
+      id: 'password',
+      type: 'password',
+      placeholder: '비밀번호',
+      validation: yup.string().required('비밀번호를 입력해주세요.'),
+    },
+  ];
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -49,6 +50,19 @@ export default function LoginPage() {
 
   const onClickLoginButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    try {
+      await Promise.all(
+        inputFields.map(async (field) => {
+          await field.validation?.validate(formData[field.id]);
+        }),
+      );
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        toast.error(error.message);
+        return;
+      }
+    }
 
     const { accessToken, refreshToken } = await WinkApi.Auth.login({
       email: formData.email,
@@ -78,9 +92,7 @@ export default function LoginPage() {
             {inputFields.map((field) => (
               <InputField
                 key={field.id}
-                id={field.id}
-                type={field.type}
-                placeholder={field.placeholder}
+                {...field}
                 value={formData[field.id]}
                 onChange={onChangeInput}
               />
