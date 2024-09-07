@@ -124,7 +124,7 @@ export const Header: React.FC = () => {
             {navigations.map((link) => (
               <li
                 key={link.title}
-                className={`font-pretendard font-bold text-sm relative ${
+                className={` font-bold text-sm relative ${
                   getActiveNav() === link.title ? 'text-[#3a70ff]' : 'text-black'
                 } ${link.mobileHide && 'hidden sm:block'}`}
               >

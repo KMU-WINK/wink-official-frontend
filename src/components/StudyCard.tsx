@@ -30,11 +30,11 @@ export const StudyCard: React.FC<StudyCardProps> = ({
     >
       {/* 스터디 제목 및 설명 */}
       <div className="flex flex-col gap-[9px] my-[16.22px]">
-        <h2 className="font-pretendard font-bold text-xl max-w-screen-sm truncate">{title}</h2>
-        <p className="font-pretendard font-medium text-base text-[#868686] max-w-screen-sm truncate">
+        <h2 className=" font-bold text-xl max-w-screen-sm truncate">{title}</h2>
+        <p className=" font-medium text-base text-[#868686] max-w-screen-sm truncate">
           {description}
         </p>
-        <p className="font-pretendard font-medium text-base max-w-screen-sm truncate">{link}</p>
+        <p className=" font-medium text-base max-w-screen-sm truncate">{link}</p>
       </div>
 
       {/* 이미지 영역 */}

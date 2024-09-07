@@ -138,11 +138,9 @@ export default function SignUp() {
         <Image src={web_in_kookmin} alt="WINK Authentication" width={610} height={110} priority />
 
         <div className="flex flex-col items-center justify-center gap-[10px]">
-          <p className="text-xl font-normal font-pretendard">
-            국민대학교 소프트웨어융합대학 유일무이 Web 동아리
-          </p>
+          <p className="text-xl font-normal">국민대학교 소프트웨어융합대학 유일무이 Web 동아리</p>
 
-          <p className="text-lg text-[#757575] font-normal font-pretendard">
+          <p className="text-lg text-[#757575] font-normal">
             부원 확인을 위하여 회원 가입 요청 후 승인 까지 수 일이 소요될 수 있습니다.
           </p>
         </div>

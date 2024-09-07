@@ -157,20 +157,26 @@ export default function Study() {
     <>
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center pt-[128px]">
-          <h1 className="font-pretendard font-bold text-[40px] text-center mb-6">
-            WINK, 우리들의 파도
-          </h1>
-          <p className="font-pretendard font-regular text-[20px] text-center text-[#4D4D4D]">
+          <h1 className=" font-bold text-[40px] text-center mb-6">WINK, 우리들의 파도</h1>
+          <p className=" font-regular text-[20px] text-center text-[#4D4D4D]">
             나날히 성장해 가는 우리
           </p>
         </div>
 
         {/* 주목할 글 */}
         <div className="w-full max-w-[880px] mx-auto mt-[75px] mb-[144px]">
-          <h2 className="font-pretendard font-semibold text-3xl mb-4">🔥 주목할 글</h2>
+          <h2 className=" font-semibold text-3xl mb-4">🔥 주목할 글</h2>
           <div className="flex flex-col items-center w-full gap-[28px]">
-            {featuredStudies.map((study) => (
-              <StudyCard key={study.id} study={study} />
+            {featuredStudies.map(({ id, image, link, title, description, category }) => (
+              <StudyCard
+                key={id}
+                id={id}
+                image={image}
+                link={link}
+                title={title}
+                description={description}
+                category={category}
+              />
             ))}
           </div>
         </div>
@@ -178,7 +184,7 @@ export default function Study() {
         {/* 최신글 */}
         <div className="w-full max-w-[880px] mx-auto mt-[50px] mb-[107.43px]">
           <div className="flex w-full justify-between gap-[28px] mb-16">
-            <h2 className="font-pretendard font-semibold text-xl">🌱 최신글</h2>
+            <h2 className=" font-semibold text-xl">🌱 최신글</h2>
             <select
               value={selectedCategory}
               onChange={handleCategoryChange}
@@ -192,9 +198,19 @@ export default function Study() {
             </select>
           </div>
           <div className="flex flex-col items-center gap-[28px]">
-            {filteredStudies.slice(0, visibleStudyCards).map((study) => (
-              <StudyCard key={study.id} study={study} />
-            ))}
+            {filteredStudies
+              .slice(0, visibleStudyCards)
+              .map(({ id, image, link, title, description, category }) => (
+                <StudyCard
+                  key={id}
+                  id={id}
+                  image={image}
+                  link={link}
+                  title={title}
+                  description={description}
+                  category={category}
+                />
+              ))}
           </div>
         </div>
 
@@ -203,7 +219,7 @@ export default function Study() {
           <div className="flex justify-center mb-72">
             <button
               onClick={loadMore}
-              className="px-[15px] py-2 bg-white rounded-[15px] border border-[#DADADA] hover:bg-gray-100 font-pretendard text-lg font-semibold"
+              className="px-[15px] py-2 bg-white rounded-[15px] border border-[#DADADA] hover:bg-gray-100  text-lg font-semibold"
             >
               더 보기
             </button>

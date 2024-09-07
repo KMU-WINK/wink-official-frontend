@@ -43,16 +43,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <div className="flex flex-col">
           <div className="flex justify-between items-center mb-[23.4px]">
             <h2
-              className="font-pretendard font-bold text-lg flex-1 overflow-hidden whitespace-nowrap text-ellipsis"
+              className=" font-bold text-lg flex-1 overflow-hidden whitespace-nowrap text-ellipsis"
               style={{ maxWidth: 'calc(100% - 100px)' }}
             >
               {title}
             </h2>
             <div className="flex justify-center items-center bg-[#E8E8E8] text-center rounded-[12.6px] px-[12.6px] py-[4.5px]">
-              <h2 className="font-pretendard text-[16px] font-medium text-center">{year}년</h2>
+              <h2 className=" text-[16px] font-medium text-center">{year}년</h2>
             </div>
           </div>
-          <div className="text-[#696969] font-pretendard text-[12.6px] font-bold">
+          <div className="text-[#696969]  text-[12.6px] font-bold">
             {tags.map((tag, index) => (
               <span key={index} className="mr-1">
                 #{tag}

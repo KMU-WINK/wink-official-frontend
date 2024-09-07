@@ -68,7 +68,7 @@ export default function LoginPage() {
         <div className="text-center gap-6">
           <Image src={web_in_kookmin} alt="WINK Authentication" width={610} height={110} priority />
 
-          <p className="mt-[38px] text-xl font-normal font-pretendard">
+          <p className="mt-[38px] text-xl font-normal">
             국민대학교 소프트웨어융합대학 유일무이 Web 동아리
           </p>
         </div>
