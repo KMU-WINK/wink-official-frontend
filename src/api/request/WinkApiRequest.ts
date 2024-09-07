@@ -47,6 +47,8 @@ export class WinkApiResponse<T> {
 }
 
 export class WinkApiRequest {
+  private readonly baseUrl: string = 'http://localhost:3000';
+
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
 
@@ -57,6 +59,8 @@ export class WinkApiRequest {
       return;
     }
 
+    this.baseUrl = window.origin;
+
     const accessToken: string | null = this.cookies.get('accessToken');
     const refreshToken: string | null = this.cookies.get('refreshToken');
 
@@ -66,7 +70,7 @@ export class WinkApiRequest {
   }
 
   private async request<T>(url: string, options: RequestInit): Promise<WinkApiResponse<T>> {
-    const response = await fetch(`http://localhost:3000/api${url}`, {
+    const response = await fetch(`${this.baseUrl}/api${url}`, {
       ...options,
       headers: {
         'Content-Type': 'application/json',
