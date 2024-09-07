@@ -1,9 +1,9 @@
-import { Cookies } from 'react-cookie';
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 import { RefreshResponseDto, User } from '@/api';
 
 import { useUserStore } from '@/store';
-import { toast } from 'react-toastify';
 
 interface WinkRawApiResponse<T> {
   code: number;
@@ -17,8 +17,6 @@ export class WinkApiRequest {
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
 
-  private readonly cookies = new Cookies();
-
   public constructor() {
     if (typeof window === 'undefined') {
       return;
@@ -26,8 +24,8 @@ export class WinkApiRequest {
 
     this.baseUrl = window.origin;
 
-    const accessToken: string | null = this.cookies.get('accessToken');
-    const refreshToken: string | null = this.cookies.get('refreshToken');
+    const accessToken: string | undefined = Cookies.get('accessToken');
+    const refreshToken: string | undefined = Cookies.get('refreshToken');
 
     if (accessToken && refreshToken) {
       this.setToken(accessToken, refreshToken);
@@ -51,8 +49,6 @@ export class WinkApiRequest {
       (await this.refresh())
     ) {
       return this.request(url, options);
-    } else {
-      this.removeToken();
     }
 
     if (apiResponse.error) {
@@ -74,6 +70,8 @@ export class WinkApiRequest {
 
       return true;
     } catch (_) {
+      this.removeToken();
+
       return false;
     }
   }
@@ -115,14 +113,8 @@ export class WinkApiRequest {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
 
-    this.cookies.set('accessToken', accessToken, {
-      path: '/',
-      expires: new Date(9999, 11, 31),
-    });
-    this.cookies.set('refreshToken', refreshToken, {
-      path: '/',
-      expires: new Date(9999, 11, 31),
-    });
+    Cookies.set('accessToken', accessToken, { expires: (1 / 24 / 60) * 15 });
+    Cookies.set('refreshToken', refreshToken, { expires: 30 });
 
     this.updateUser();
   }
@@ -135,24 +127,20 @@ export class WinkApiRequest {
     this.accessToken = null;
     this.refreshToken = null;
 
-    this.cookies.remove('accessToken');
-    this.cookies.remove('refreshToken');
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
 
     this.updateUser();
   }
 
   private updateUser() {
-    if (this.accessToken === null) {
+    if (!this.accessToken) {
       useUserStore.setState({ user: null });
       return;
     }
 
-    this.get('/auth/me').then((response) => {
-      try {
-        useUserStore.setState({ user: response as User });
-      } catch (_) {
-        this.removeToken();
-      }
+    this.get('/auth/me').then((user) => {
+      useUserStore.setState({ user: user as User });
     });
   }
 }

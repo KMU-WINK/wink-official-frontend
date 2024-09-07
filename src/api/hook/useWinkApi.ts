@@ -5,7 +5,7 @@ interface WinkApiHookResponse<T> {
   content: T;
 }
 
-export function useWinkApi<T>(result: Promise<T>): WinkApiHookResponse<T> {
+export const useWinkApi = <T>(result: Promise<T>): WinkApiHookResponse<T> => {
   const [fetching, setFetching] = useState<boolean>(true);
   const [content, setContent] = useState<T>({} as T);
 
@@ -17,4 +17,4 @@ export function useWinkApi<T>(result: Promise<T>): WinkApiHookResponse<T> {
   }, []);
 
   return { fetching, content };
-}
+};
