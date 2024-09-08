@@ -3,15 +3,12 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { Button, InputFieldProps, InputField } from '@/components';
+import { Button, InputFieldProps, InputField, WebInKookmin } from '@/components';
 
 import { WinkApi } from '@/api';
-
-import web_in_kookmin from '@/public/web_in_kookmin.svg';
 
 import * as yup from 'yup';
 
@@ -228,7 +225,7 @@ export default function SignUp() {
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center gap-[50px] mt-[56px]">
-        <Image src={web_in_kookmin} alt="WINK Authentication" width={610} height={110} priority />
+        <WebInKookmin />
 
         <div className="flex flex-col items-center justify-center gap-[10px]">
           <p className="text-xl font-normal">국민대학교 소프트웨어융합대학 유일무이 Web 동아리</p>
