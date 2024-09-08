@@ -6,215 +6,153 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { Button, InputFieldProps, InputField, WebInKookmin } from '@/components';
+import { Button, WebInKookmin, Fields, FormContainer, TextField } from '@/components';
 
 import { WinkApi } from '@/api';
 
+import { useForm } from '@/hook';
+
 import * as yup from 'yup';
 
-type InputFieldId =
+type Inputs =
   | 'studentId'
   | 'name'
   | 'email'
-  | 'verificationCode'
+  | 'verifyCode'
+  | 'verifyToken'
   | 'password'
   | 'confirmPassword';
 
 export default function SignUp() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState<Record<InputFieldId, string>>({
-    studentId: '',
-    name: '',
-    email: '',
-    verificationCode: '',
-    password: '',
-    confirmPassword: '',
-  });
+  const [isSendCode, setSendCode] = useState(false);
 
-  const [error, setError] = useState<Record<InputFieldId, string>>({
-    studentId: '',
-    name: '',
-    email: '',
-    verificationCode: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const [sendCode, setSendCode] = useState<boolean>(false);
-  const [verifyToken, setVerifyToken] = useState<string>('');
-
-  const inputFields: InputFieldProps<InputFieldId>[] = [
-    {
-      id: 'studentId',
-      type: 'text',
-      placeholder: '학번',
-      maxLength: 8,
-      validation: yup.string().required('학번을 입력해주세요.').length(8, '학번은 8자리입니다.'),
-    },
-    {
-      id: 'name',
-      type: 'text',
-      placeholder: '이름',
-      maxLength: 4,
-      validation: yup
+  const { values, setValues, errors, validate, onChange } = useForm<Inputs, string>(
+    yup.object({
+      studentId: yup
+        .string()
+        .required('학번을 입력해주세요.')
+        .test('is-number', '학번은 숫자로만 입력해주세요.', (value) => !isNaN(Number(value)))
+        .length(8, '학번은 8자리 입니다.'),
+      name: yup
         .string()
         .required('이름을 입력해주세요.')
         .min(2, '이름은 2자리 이상입니다.')
         .max(4, '이름은 4자리 이하입니다.')
-        .matches(/^[가-힣]+$/, '이름은 한글로 입력해주세요.'),
-    },
-    {
-      id: 'email',
-      type: 'email',
-      placeholder: '학교 이메일',
-      disabled: verifyToken !== '',
-      validation: yup
+        .matches(/^[가-힣]+$/, '이름은 한글만 입력 가능합니다.'),
+      email: yup
         .string()
         .required('이메일을 입력해주세요.')
         .email('이메일 형식이 아닙니다.')
-        .matches(/^[a-zA-Z0-9._%+-]+@kookmin\.ac\.kr$/i, '국민대학교 이메일을 입력해주세요.'),
-      button: (
-        <Button
-          type="button"
-          label="인증번호 발송"
-          onClick={async () => {
-            await WinkApi.Auth.sendCode({
-              email: formData.email,
-            });
-
-            setSendCode(true);
-
-            toast.success('인증번호가 전송되었습니다.');
-          }}
-          className="text-[13px] px-1.5 py-3 w-28"
-        />
-      ),
-    },
-    {
-      id: 'verificationCode',
-      type: 'text',
-      placeholder: '인증번호',
-      maxLength: 6,
-      hidden: !sendCode || verifyToken !== '',
-      validation: yup
+        .matches(/^[a-zA-Z0-9._%+-]+@kookmin\.ac\.kr$/i, '국민대학교 이메일 형식이어야 합니다.'),
+      verifyCode: yup
         .string()
-        .required('인증번호를 입력해주세요.')
-        .length(6, '인증번호는 6자리입니다.'),
-      button: (
-        <Button
-          type="button"
-          label="확인"
-          onClick={async () => {
-            const { verifyToken } = await WinkApi.Auth.verifyCode({
-              email: formData.email,
-              code: formData.verificationCode,
-            });
-
-            setVerifyToken(verifyToken);
-
-            toast.success('인증이 완료되었습니다.');
-          }}
-          className="text-[13px] px-1.5 py-3 w-28"
-        />
-      ),
-    },
-    {
-      id: 'password',
-      type: 'password',
-      placeholder: '비밀번호',
-      validation: yup
+        .required('인증 코드를 입력해주세요.')
+        .test('is-number', '인증 코드는 숫자로만 입력해주세요.', (value) => !isNaN(Number(value)))
+        .length(6, '인증 코드는 6자리 입니다.'),
+      verifyToken: yup.string().required('인증 토큰을 입력해주세요.'),
+      password: yup
         .string()
         .required('비밀번호를 입력해주세요.')
         .min(8, '비밀번호는 8자리 이상입니다.')
         .matches(
           /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#.~_-])[A-Za-z\d@$!%*?&#.~_-]{8,}$/,
-          '비밀번호는 영문, 숫자, 특수문자를 포함해야합니다.',
+          '비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.',
         ),
+      confirmPassword: yup
+        .string()
+        .required('비밀번호 확인을 입력해주세요.')
+        .test(
+          'password-match',
+          '비밀번호가 일치하지 않습니다.',
+          (value): boolean => value === values.password,
+        ),
+    }),
+  );
+
+  const fields: Fields<Inputs>[] = [
+    { id: 'studentId', type: 'text', placeholder: '학번', maxLength: 8 },
+    { id: 'name', type: 'text', placeholder: '이름', maxLength: 4 },
+    {
+      id: 'email',
+      type: 'email',
+      placeholder: '이메일',
+      disabled: !!values.verifyToken,
+      button: (
+        <Button
+          className="w-28 py-2 text-[14px]"
+          type="button"
+          label="인증번호 요청"
+          hidden={!!values.verifyToken}
+          disabled={!values.email || !!errors.email}
+          onClick={onVerifyCodeSendButtonClick}
+        />
+      ),
     },
     {
-      id: 'confirmPassword',
-      type: 'password',
-      placeholder: '비밀번호 재확인',
-      validation: yup
-        .string()
-        .required('비밀번호를 입력해주세요.')
-        .test(
-          'passwords-match',
-          '비밀번호가 일치하지 않습니다.',
-          (value) => value === formData.password,
-        ),
+      id: 'verifyCode',
+      placeholder: '인증 코드',
+      maxLength: 6,
+      hidden: !isSendCode || !!values.verifyToken,
+      button: (
+        <Button
+          className="w-28 py-2 text-[14px]"
+          type="button"
+          label="인증번호 확인"
+          disabled={!values.verifyCode || !!errors.verifyCode}
+          onClick={onVerifyCodeButtonClick}
+        />
+      ),
     },
+    { id: 'verifyToken', type: 'text', placeholder: '인증 토큰', hidden: true },
+    { id: 'password', type: 'password', placeholder: '비밀번호' },
+    { id: 'confirmPassword', type: 'password', placeholder: '비밀번호 확인' },
   ];
 
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const proxyOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
 
-    if (id === 'studentId' || id === 'verificationCode') {
+    if (id === 'studentId' || id === 'verifyCode') {
       if (isNaN(Number(value))) {
         return;
       }
     }
 
-    inputFields
-      .find((field) => field.id === id)
-      ?.validation?.validate(value)
-      .then(() => {
-        setError((prevState) => ({
-          ...prevState,
-          [id]: '',
-        }));
-      })
-      .catch((error) => {
-        setError((prevState) => ({
-          ...prevState,
-          [id]: error.message,
-        }));
-      });
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
+    onChange(e);
   };
 
-  const validateAllField = async (): Promise<boolean> => {
-    let hasError = false;
+  async function onVerifyCodeSendButtonClick() {
+    await WinkApi.Auth.sendCode({
+      email: values.email,
+    });
 
-    for (let inputField of inputFields) {
-      try {
-        await inputField?.validation?.validate(formData[inputField.id]);
-      } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          hasError = true;
+    setSendCode(true);
 
-          setError((prevState) => ({
-            ...prevState,
-            [inputField.id]: error.message,
-          }));
-        }
-      }
-    }
+    toast.success('인증 코드가 전송되었습니다.');
+  }
 
-    return !hasError;
-  };
-  const onClickSignUpButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  async function onVerifyCodeButtonClick() {
+    const { verifyToken } = await WinkApi.Auth.verifyCode({
+      email: values.email,
+      code: values.verifyCode,
+    });
 
-    if (!(await validateAllField())) {
-      return;
-    }
+    setValues((prev) => ({ ...prev, verifyToken }));
 
-    if (!verifyToken) {
-      toast.error('이메일 인증을 완료해주세요.');
+    toast.success('인증 코드가 확인되었습니다.');
+  }
+
+  const onSignUpButtonClick = async () => {
+    if (!(await validate())) {
       return;
     }
 
     await WinkApi.Auth.register({
-      name: formData.name,
-      studentId: formData.studentId,
-      password: formData.password,
-      verifyToken,
+      name: values.name,
+      studentId: values.studentId,
+      password: values.password,
+      verifyToken: values.verifyToken,
     });
 
     toast.success('회원 가입 요청이 완료되었습니다.');
@@ -237,26 +175,29 @@ export default function SignUp() {
 
         <div className="bg-white px-9 rounded-lg w-full max-w-md flex flex-col gap-[50px]">
           <div className="flex flex-col gap-[15px]">
-            {inputFields
-              .filter((field) => !field.hidden)
-              .map((field) => (
-                <div key={field.id} className="flex flex-col gap-[3px]">
-                  <div className="flex items-center gap-[10px]">
-                    <InputField {...field} value={formData[field.id]} onChange={onChangeInput} />
-                    {field.button && field.button}
+            <FormContainer
+              values={values}
+              errors={errors}
+              onChange={proxyOnChange}
+              onEnter={onSignUpButtonClick}
+            >
+              {fields
+                .filter((options) => !options.hidden)
+                .map(({ id, button, ...rest }) => (
+                  <div key={id} className="flex items-center gap-[10px] ">
+                    <TextField id={id} {...rest} />
+
+                    {button && button}
                   </div>
-                  {error[field.id] && (
-                    <p className="text-[11px] text-[#FF0000]">{error[field.id]}</p>
-                  )}
-                </div>
-              ))}
+                ))}
+            </FormContainer>
           </div>
 
           <div className="flex flex-col items-center gap-[5px]">
             <Button
-              type="submit"
+              type="button"
               label="회원 가입 요청"
-              onClick={onClickSignUpButton}
+              onClick={onSignUpButtonClick}
               className="w-full py-2 text-[14px]"
             />
 
