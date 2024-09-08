@@ -1,18 +1,14 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps {
-  type: 'submit' | 'button' | 'reset';
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ type, label, onClick, className }) => {
+export const Button: React.FC<ButtonProps> = ({ className, label, ...rest }) => {
   return (
     <button
-      type={type}
       className={`text-white bg-[#9DB8FF] hover:bg-[#8aa7ff] rounded focus:outline-none focus:ring-2 focus:ring-[#9DB8FF] ${className}`}
-      onClick={onClick}
+      {...rest}
     >
       {label}
     </button>

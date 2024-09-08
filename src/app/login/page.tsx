@@ -1,100 +1,48 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { Button, InputField, InputFieldProps, WebInKookmin } from '@/components';
+import { Button, WebInKookmin, FormContainer, TextField, Fields } from '@/components';
+
+import { useForm } from '@/hook';
 
 import { WinkApi } from '@/api';
 
 import * as yup from 'yup';
 
-type InputFieldId = 'email' | 'password';
+type Inputs = 'email' | 'password';
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState<Record<InputFieldId, string>>({
-    email: '',
-    password: '',
-  });
+  const { values, errors, validate, onChange } = useForm<Inputs, string>(
+    yup.object({
+      email: yup.string().required('이메일을 입력해주세요.').email('이메일 형식이 아닙니다.'),
+      password: yup.string().required('비밀번호를 입력해주세요.'),
+    }),
+  );
 
-  const [error, setError] = useState<Record<InputFieldId, string>>({
-    email: '',
-    password: '',
-  });
-
-  const inputFields: InputFieldProps<InputFieldId>[] = [
-    {
-      id: 'email',
-      type: 'email',
-      placeholder: '이메일',
-      validation: yup.string().required('이메일을 입력해주세요.').email('이메일 형식이 아닙니다.'),
-    },
+  const fields: Fields<Inputs>[] = [
+    { id: 'email', type: 'email', placeholder: '이메일' },
     {
       id: 'password',
       type: 'password',
       placeholder: '비밀번호',
-      validation: yup.string().required('비밀번호를 입력해주세요.'),
     },
   ];
 
-  const validateAllField = async (): Promise<boolean> => {
-    let hasError = false;
-
-    for (let inputField of inputFields) {
-      try {
-        await inputField?.validation?.validate(formData[inputField.id]);
-      } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          hasError = true;
-
-          setError((prevState) => ({
-            ...prevState,
-            [inputField.id]: error.message,
-          }));
-        }
-      }
-    }
-
-    return !hasError;
-  };
-
-  const onChangeInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
-  };
-
-  const onClickLoginButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (!(await validateAllField())) {
+  const onLoginButtonClick = async () => {
+    if (!(await validate())) {
       return;
     }
 
-    try {
-      await Promise.all(
-        inputFields.map(async (field) => {
-          await field.validation?.validate(formData[field.id]);
-        }),
-      );
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        toast.error(error.message);
-        return;
-      }
-    }
-
     const { accessToken, refreshToken } = await WinkApi.Auth.login({
-      email: formData.email,
-      password: formData.password,
+      email: values.email,
+      password: values.password,
     });
 
     WinkApi.Request.setToken(accessToken, refreshToken);
@@ -117,19 +65,23 @@ export default function LoginPage() {
 
         <div className="bg-white px-9 rounded-lg w-full max-w-md flex flex-col gap-[50px]">
           <div className="flex flex-col gap-[15px]">
-            {inputFields.map((field) => (
-              <div key={field.id} className="flex flex-col gap-[3px]">
-                <InputField {...field} value={formData[field.id]} onChange={onChangeInput} />
-                {error[field.id] && <p className="text-[11px] text-[#FF0000]">{error[field.id]}</p>}
-              </div>
-            ))}
+            <FormContainer
+              values={values}
+              errors={errors}
+              onChange={onChange}
+              onEnter={onLoginButtonClick}
+            >
+              {fields.map(({ id, ...rest }) => (
+                <TextField key={id} id={id} {...rest} />
+              ))}
+            </FormContainer>
           </div>
 
           <div className="flex flex-col items-center gap-[5px]">
             <Button
-              type="submit"
+              type="button"
               label="로그인"
-              onClick={onClickLoginButton}
+              onClick={onLoginButtonClick}
               className="w-full py-2 text-[14px]"
             />
 
