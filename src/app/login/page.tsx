@@ -3,15 +3,12 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { Button, InputField, InputFieldProps } from '@/components';
+import { Button, InputField, InputFieldProps, WebInKookmin } from '@/components';
 
 import { WinkApi } from '@/api';
-
-import web_in_kookmin from '@/public/web_in_kookmin.svg';
 
 import * as yup from 'yup';
 
@@ -111,7 +108,7 @@ export default function LoginPage() {
     <>
       <div className="min-h-screen flex flex-col items-center justify-center gap-[50px]">
         <div className="text-center gap-6">
-          <Image src={web_in_kookmin} alt="WINK Authentication" width={610} height={110} priority />
+          <WebInKookmin />
 
           <p className="mt-[38px] text-xl font-normal">
             국민대학교 소프트웨어융합대학 유일무이 Web 동아리
