@@ -35,22 +35,22 @@ const LINKS: Link[] = [
 export const Footer: React.FC = () => {
   return (
     <div className="flex flex-col py-20 items-center">
-      <div className="flex gap-1 mb-[30px]">
-        <Image src={logo} alt={'WINK small logo'} width={36} />
-        <p className=" text-lg text-[#8D9DB0]">WINK</p>
+      <div className="flex gap-1 mb-7">
+        <Image src={logo} alt={'logo'} width={36} />
+        <p className="text-lg text-slate-400">WINK</p>
       </div>
 
       <ul className="flex list-none gap-5 mb-7">
         {LINKS.map((link) => (
           <Link key={link.id} href={link.href}>
-            <Image className="h-[55px]" src={link.icon} alt={link.id} />
+            <Image className="h-14" src={link.icon} alt={link.id} />
           </Link>
         ))}
       </ul>
 
       <div className="flex flex-col gap-7">
-        <h3 className=" text-xl text-[#8D9DB0]">서울 성북구 정릉로 77 미래관 605-1</h3>
-        <p className=" text-xl text-[#6B7684]">@ WINK 2024 All rights reserved.</p>
+        <h3 className="text-xl text-slate-400">서울 성북구 정릉로 77 미래관 605-1</h3>
+        <p className="text-xl text-gray-500">© WINK 2024 All rights reserved.</p>
       </div>
     </div>
   );

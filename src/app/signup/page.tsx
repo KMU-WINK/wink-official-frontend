@@ -81,7 +81,7 @@ export default function SignUp() {
       disabled: !!values.verifyToken,
       button: (
         <Button
-          className="w-28 py-2 text-[14px]"
+          className="w-28 py-2 text-sm"
           type="button"
           label="인증번호 요청"
           hidden={!!values.verifyToken}
@@ -97,7 +97,7 @@ export default function SignUp() {
       hidden: !isSendCode || !!values.verifyToken,
       button: (
         <Button
-          className="w-28 py-2 text-[14px]"
+          className="w-28 py-2 text-sm"
           type="button"
           label="인증번호 확인"
           disabled={!values.verifyCode || !!errors.verifyCode}
@@ -162,19 +162,18 @@ export default function SignUp() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center gap-[50px] mt-[56px]">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-12 mt-14">
         <WebInKookmin />
 
-        <div className="flex flex-col items-center justify-center gap-[10px]">
+        <div className="flex flex-col items-center justify-center gap-2.5">
           <p className="text-xl font-normal">국민대학교 소프트웨어융합대학 유일무이 Web 동아리</p>
-
-          <p className="text-lg text-[#757575] font-normal">
+          <p className="text-lg text-zinc-500 font-normal">
             부원 확인을 위하여 회원 가입 요청 후 승인 까지 수 일이 소요될 수 있습니다.
           </p>
         </div>
 
-        <div className="bg-white px-9 rounded-lg w-full max-w-md flex flex-col gap-[50px]">
-          <div className="flex flex-col gap-[15px]">
+        <div className="bg-white px-9 rounded-lg w-full max-w-md flex flex-col gap-12">
+          <div className="flex flex-col gap-4">
             <FormContainer
               values={values}
               errors={errors}
@@ -184,7 +183,7 @@ export default function SignUp() {
               {fields
                 .filter((options) => !options.hidden)
                 .map(({ id, button, ...rest }) => (
-                  <div key={id} className="flex items-center gap-[10px] ">
+                  <div key={id} className="flex items-center gap-2.5">
                     <TextField id={id} {...rest} />
 
                     {button && button}
@@ -193,17 +192,20 @@ export default function SignUp() {
             </FormContainer>
           </div>
 
-          <div className="flex flex-col items-center gap-[5px]">
+          <div className="flex flex-col items-center gap-1">
             <Button
               type="button"
               label="회원 가입 요청"
               onClick={onSignUpButtonClick}
-              className="w-full py-2 text-[14px]"
+              className="w-full py-2 text-sm"
             />
 
-            <div className="text-center text-[11px]">
+            <div className="text-center text-xs">
               이미 회원이신가요?
-              <Link href="/login" className="text-[#9DB8FF] hover:underline ml-1.5">
+              <Link
+                href="/login"
+                className="text-wink-300 hover:underline hover:text-wink-500 ml-1.5"
+              >
                 로그인
               </Link>
             </div>

@@ -24,7 +24,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="border border-[#DADADA] rounded-[45px] overflow-hidden shadow-lg cursor-pointer block"
+      className="border border-border rounded-project-card overflow-hidden shadow-lg cursor-pointer block"
     >
       {imageUrl ? (
         <Image
@@ -39,20 +39,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           <Image src={logo} alt={'이미지 없음'} width={100} height={100} />
         </div>
       )}
-      <div className="p-[13.5px_27px_27px_27px]">
+      <div className="p-7 pt-3.5">
         <div className="flex flex-col">
-          <div className="flex justify-between items-center mb-[23.4px]">
-            <h2
-              className=" font-bold text-lg flex-1 overflow-hidden whitespace-nowrap text-ellipsis"
-              style={{ maxWidth: 'calc(100% - 100px)' }}
-            >
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="max-w-[calc(100% - 100px)] font-bold text-lg flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
               {title}
             </h2>
-            <div className="flex justify-center items-center bg-[#E8E8E8] text-center rounded-[12.6px] px-[12.6px] py-[4.5px]">
-              <h2 className=" text-[16px] font-medium text-center">{year}년</h2>
+            <div className="flex justify-center items-center bg-zinc-200 text-center rounded-xl px-3 py-1">
+              <h2 className="text-base font-medium text-center">{year}년</h2>
             </div>
           </div>
-          <div className="text-[#696969]  text-[12.6px] font-bold">
+          <div className="text-zinc-500 text-3 font-bold">
             {tags.map((tag, index) => (
               <span key={index} className="mr-1">
                 #{tag}

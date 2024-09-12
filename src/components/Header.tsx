@@ -111,12 +111,12 @@ export const Header: React.FC = () => {
     <header
       className={`fixed top-0 z-50 bg-white w-full h-14 flex items-center justify-center border-b`}
     >
-      <div className="w-full max-w-[1440px] flex justify-between p-4 lg:p-6">
+      <div className="w-full max-w-page flex justify-between p-4 lg:p-6">
         <Link href={'/'} replace>
           <Image
             className="object-contain h-6"
             src={logo}
-            alt="Logo of WINK"
+            alt="logo"
             placeholder="blur"
             height={24}
             priority
@@ -127,8 +127,8 @@ export const Header: React.FC = () => {
             {navigations.map((link) => (
               <li
                 key={link.title}
-                className={` font-bold text-sm relative ${
-                  getActiveNav() === link.title ? 'text-[#3a70ff]' : 'text-black'
+                className={`font-bold text-sm relative ${
+                  getActiveNav() === link.title ? 'text-wink-500' : 'text-black'
                 } ${link.mobileHide && 'hidden sm:block'}`}
               >
                 {link.title === 'logout' ? (
@@ -143,13 +143,13 @@ export const Header: React.FC = () => {
                   </a>
                 )}
                 {link.title === 'program' && isProgramDropdownOpen && (
-                  <ul className="flex flex-col items-center absolute mt-[18px] left-[-13px] w-20 bg-white shadow-lg border">
+                  <ul className="flex flex-col items-center absolute mt-4.5 -left-3 w-20 bg-white shadow-lg border">
                     {programDropdownItems.map((item) => (
                       <li
                         key={item.title}
                         className={`py-2 ${
                           getActiveDropdownItem(programDropdownItems) === item.title
-                            ? 'text-[#3a70ff]'
+                            ? 'text-wink-500'
                             : 'text-black'
                         }`}
                       >
@@ -159,13 +159,13 @@ export const Header: React.FC = () => {
                   </ul>
                 )}
                 {link.title === 'about us' && isAboutUsDropdownOpen && (
-                  <ul className="flex flex-col items-center absolute mt-[18px] left-[-18px] w-24 bg-white shadow-lg border">
+                  <ul className="flex flex-col items-center absolute mt-4.5 -left-4.5 w-24 bg-white shadow-lg border">
                     {aboutUsDropdownItems.map((item) => (
                       <li
                         key={item.title}
                         className={`py-2 ${
                           getActiveDropdownItem(aboutUsDropdownItems) === item.title
-                            ? 'text-[#3a70ff]'
+                            ? 'text-wink-500'
                             : 'text-black'
                         }`}
                       >

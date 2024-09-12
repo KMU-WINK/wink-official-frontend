@@ -3,6 +3,35 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      colors: {
+        wink: {
+          50: '#e3ecff',
+          100: '#c8d9ff',
+          200: '#a6c1ff',
+          300: '#83a9ff',
+          400: '#5f8fff',
+          500: '#3a70ff', // Base color
+          600: '#2f5ce6',
+          700: '#2649b3',
+          800: '#1d3680',
+          900: '#14234d',
+        },
+      },
+      width: {
+        page: '1440px',
+        carousel: '895px',
+        project: '1150px',
+        study: '880px',
+      },
+      margin: {
+        4.5: '18px',
+      },
+      spacing: {
+        4.5: '18px',
+      },
+      borderRadius: {
+        'project-card': '45px',
+      },
       keyframes: {
         rotate: {
           '0%': { transform: 'translate(-50%, 0) rotateZ(0deg)' },

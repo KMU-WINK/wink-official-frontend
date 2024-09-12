@@ -79,8 +79,8 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
       {/* 클릭한 카드의 정보 표시 */}
       {cards.length > 0 && currentIndex !== null && (
         <div className="flex flex-col items-center pt-32 pb-12">
-          <h2 className=" font-bold text-3xl mb-2">{cards[currentIndex].title}</h2>
-          <p className=" font-medium text-[#737373] text-xl">{cards[currentIndex].content}</p>
+          <h2 className="font-bold text-3xl mb-2">{cards[currentIndex].title}</h2>
+          <p className="font-medium text-slate-500 text-xl">{cards[currentIndex].content}</p>
         </div>
       )}
 
@@ -90,7 +90,7 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
           <li
             key={index}
             className={`w-3 h-3 rounded-full ${
-              currentIndex === index ? 'bg-[#4D4D4D]' : 'bg-[#D9D9D9]'
+              currentIndex === index ? 'bg-gray-700' : 'bg-gray-300'
             } cursor-pointer`}
             onClick={() => rotateCarousel(index)}
           ></li>
