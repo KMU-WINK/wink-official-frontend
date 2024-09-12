@@ -156,17 +156,15 @@ export default function Study() {
   return (
     <>
       <div className="flex flex-col items-center">
-        <div className="flex flex-col items-center justify-center pt-[128px]">
-          <h1 className=" font-bold text-[40px] text-center mb-6">WINK, 우리들의 파도</h1>
-          <p className=" font-regular text-[20px] text-center text-[#4D4D4D]">
-            나날히 성장해 가는 우리
-          </p>
+        <div className="flex flex-col items-center justify-center pt-32">
+          <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
+          <p className="font-regular text-xl text-center text-zinc-700]">나날히 성장해 가는 우리</p>
         </div>
 
         {/* 주목할 글 */}
-        <div className="w-full max-w-[880px] mx-auto mt-[75px] mb-[144px]">
-          <h2 className=" font-semibold text-3xl mb-4">🔥 주목할 글</h2>
-          <div className="flex flex-col items-center w-full gap-[28px]">
+        <div className="w-full max-w-study mx-auto mt-20 mb-36">
+          <h2 className="font-semibold text-3xl mb-4">🔥 주목할 글</h2>
+          <div className="flex flex-col items-center w-full gap-7">
             {featuredStudies.map(({ id, image, link, title, description, category }) => (
               <StudyCard
                 key={id}
@@ -182,13 +180,13 @@ export default function Study() {
         </div>
 
         {/* 최신글 */}
-        <div className="w-full max-w-[880px] mx-auto mt-[50px] mb-[107.43px]">
-          <div className="flex w-full justify-between gap-[28px] mb-16">
-            <h2 className=" font-semibold text-xl">🌱 최신글</h2>
+        <div className="w-full max-w-study mx-auto mt-12 mb-28">
+          <div className="flex w-full justify-between gap-7 mb-16">
+            <h2 className="font-semibold text-xl">🌱 최신글</h2>
             <select
               value={selectedCategory}
               onChange={handleCategoryChange}
-              className="px-3 py-1 border border-[#DADADA] rounded-md"
+              className="px-3 py-1 border border-gray-400 rounded-md"
             >
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -197,7 +195,7 @@ export default function Study() {
               ))}
             </select>
           </div>
-          <div className="flex flex-col items-center gap-[28px]">
+          <div className="flex flex-col items-center gap-7">
             {filteredStudies
               .slice(0, visibleStudyCards)
               .map(({ id, image, link, title, description, category }) => (
@@ -219,7 +217,7 @@ export default function Study() {
           <div className="flex justify-center mb-72">
             <button
               onClick={loadMore}
-              className="px-[15px] py-2 bg-white rounded-[15px] border border-[#DADADA] hover:bg-gray-100  text-lg font-semibold"
+              className="px-4 py-2 bg-white rounded-2xl border border-gray-400 hover:bg-gray-100  text-lg font-semibold"
             >
               더 보기
             </button>

@@ -40,19 +40,17 @@ export default function Project() {
   return (
     <>
       <div className="flex flex-col items-center">
-        <div className="flex flex-col items-center justify-center pt-[128px]">
-          <h1 className=" font-bold text-[40px] text-center mb-6">WINK, 우리들의 파도</h1>
-          <p className=" font-regular text-[20px] text-center text-[#4D4D4D]">
-            나날히 성장해 가는 우리
-          </p>
+        <div className="flex flex-col items-center justify-center pt-32">
+          <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
+          <p className="font-regular text-xl text-center text-zinc-700">나날히 성장해 가는 우리</p>
         </div>
         {/* Carousel 영역 */}
-        <div className="w-full max-w-[895px] mt-[129px]">
+        <div className="w-full max-w-carousel mt-32">
           <Carousel cards={sampleSliderProjects} />
         </div>
         {/* 프로젝트 목록 */}
-        <div className="w-full max-w-[1150px] mx-auto mt-[199.6px] mb-[85.6px]">
-          <div className="grid grid-cols-3 gap-[34px]">
+        <div className="w-full max-w-project mx-auto mt-48 mb-20">
+          <div className="grid grid-cols-3 gap-8">
             {sampleProjects.slice(0, visibleProjects).map((project) => (
               <ProjectCard
                 key={project.id}
@@ -70,7 +68,7 @@ export default function Project() {
           <div className="flex justify-center mb-10">
             <button
               onClick={loadMore}
-              className="px-[15px] py-2 bg-white rounded-[15px] border border-[#DADADA] hover:bg-gray-100  text-lg font-semibold"
+              className="px-4 py-2 bg-white rounded-2xl border border-gray-400 hover:bg-gray-100 text-lg font-semibold"
             >
               목록 더 보기
             </button>
