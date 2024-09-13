@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
-import { RefreshResponseDto, User } from '@/api';
+import { RefreshResponseDto, MyInfoResponseDto } from '@/api';
 
-import { useUserStore, useApplicationState } from '@/store';
+import { useMemberStore, useApplicationState } from '@/store';
 
 interface WinkRawApiResponse<T> {
   code: number;
@@ -118,7 +118,7 @@ export class WinkApiRequest {
     Cookies.set('accessToken', accessToken, { expires: (1 / 24 / 60) * 15 });
     Cookies.set('refreshToken', refreshToken, { expires: 30 });
 
-    this.updateUser();
+    this.updateMember();
   }
 
   public removeToken() {
@@ -132,21 +132,24 @@ export class WinkApiRequest {
     Cookies.remove('accessToken');
     Cookies.remove('refreshToken');
 
-    this.updateUser();
+    this.updateMember();
   }
 
-  private updateUser() {
+  private updateMember() {
     if (!this.accessToken) {
-      useUserStore.setState({ user: null });
+      useMemberStore.setState({ member: null });
       return;
     }
 
-    this.get('/auth/me').then((user) => {
-      useUserStore.setState({ user: user as User });
+    (async () => {
+      const response: MyInfoResponseDto = await this.get('/auth/me');
+      const { member } = response;
+
+      useMemberStore.setState({ member });
 
       if (!useApplicationState.getState().loaded) {
         useApplicationState.setState({ loaded: true });
       }
-    });
+    })();
   }
 }

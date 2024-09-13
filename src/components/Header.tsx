@@ -9,12 +9,12 @@ import { usePathname } from 'next/navigation';
 
 import { WinkApi } from '@/api';
 
-import { useUserStore } from '@/store';
+import { useMemberStore } from '@/store';
 
 import logo from '@/public/logo.png';
 
 export const Header: React.FC = () => {
-  const { user } = useUserStore();
+  const { member } = useMemberStore();
 
   const pathName = usePathname();
 
@@ -41,10 +41,10 @@ export const Header: React.FC = () => {
       useLink: true,
     },
     {
-      title: user ? 'logout' : 'login',
-      href: user ? '#' : '/login',
+      title: member ? 'logout' : 'login',
+      href: member ? '#' : '/login',
       mobileHide: true,
-      useLink: !user,
+      useLink: !member,
     },
   ];
 
