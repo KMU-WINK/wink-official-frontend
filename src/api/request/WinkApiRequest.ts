@@ -103,8 +103,8 @@ export class WinkApiRequest {
     });
   }
 
-  public async delete<T>(url: string): Promise<T> {
-    return this.request(url, { method: 'DELETE' });
+  public async delete<T>(url: string, body?: object): Promise<T> {
+    return this.request(url, { method: 'DELETE', body: body && JSON.stringify(body) });
   }
 
   public setToken(accessToken: string, refreshToken: string) {
