@@ -78,8 +78,8 @@ export class WinkApiRequest {
     }
   }
 
-  public async get<T>(url: string): Promise<T> {
-    return this.request(url, { method: 'GET' });
+  public async get<T>(url: string, body?: object): Promise<T> {
+    return this.request(url, { method: 'GET', body: body && JSON.stringify(body) });
   }
 
   public async post<T>(url: string, body?: object): Promise<T> {
