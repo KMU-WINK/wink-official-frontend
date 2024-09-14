@@ -1,2 +1,2 @@
-export * from './useUserStore';
+export * from './useMemberStore';
 export * from './useApplicationState';

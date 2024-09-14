@@ -101,19 +101,19 @@ const MemberList = async () => {
 }
 ```
 
-## User Store
+## Member Store
 
 ```tsx
 const MyPage = () => {
-  const { user } = useUserStore();
+  const { member } = useMemberStore();
 
   return (
     <div>
       <h1>My Info</h1>
         
       <div>
-        <span>Name: {user.name}</span>
-        <span>Email: {user.email}</span>
+        <span>Name: {member.name}</span>
+        <span>Email: {member.email}</span>
       </div>
     </div>
   );

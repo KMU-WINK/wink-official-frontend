@@ -91,7 +91,7 @@ export interface UpdateMyPasswordRequestDto {
 //////////////////////////////////////////////////////////////////////////
 
 export interface EachGetMembersResponseDto {
-  memberId: string;
+  _id: string;
   createdAt: Date;
   updatedAt: Date;
   name: string;
@@ -116,7 +116,7 @@ export interface GetMembersForAdminResponseDto {
 }
 
 export interface EachGetWaitingMembersResponseDto {
-  memberId: string;
+  _id: string;
   name: string;
   studentId: string;
 }
@@ -152,4 +152,4 @@ export enum Role {
 
 export type RoleString = keyof typeof Role;
 
-export type User = MyInfoResponseDto;
+export type MemberType = MyInfoResponseDto;
