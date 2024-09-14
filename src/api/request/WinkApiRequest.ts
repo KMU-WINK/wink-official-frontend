@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
-import { RefreshResponseDto, User } from '@/api';
+import { RefreshResponseDto, MyInfoResponseDto } from '@/api';
 
-import { useUserStore, useApplicationState } from '@/store';
+import { useMemberStore, useApplicationState } from '@/store';
 
 interface WinkRawApiResponse<T> {
   code: number;
@@ -38,8 +38,8 @@ export class WinkApiRequest {
     const response = await fetch(`${this.baseUrl}/api${url}`, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${this.accessToken}`,
+        ...(options.headers || {}),
       },
     });
 
@@ -78,33 +78,33 @@ export class WinkApiRequest {
     }
   }
 
-  public async get<T>(url: string): Promise<T> {
-    return this.request(url, { method: 'GET' });
+  public async get<T>(url: string, body?: object | FormData): Promise<T> {
+    return this.request(url, { method: 'GET', body: body && this.generateBody(body) });
   }
 
-  public async post<T>(url: string, body?: object): Promise<T> {
+  public async post<T>(url: string, body?: object | FormData): Promise<T> {
     return this.request(url, {
       method: 'POST',
-      body: body && JSON.stringify(body),
+      body: body && this.generateBody(body),
     });
   }
 
-  public async put<T>(url: string, body?: object): Promise<T> {
+  public async put<T>(url: string, body?: object | FormData): Promise<T> {
     return this.request(url, {
       method: 'PUT',
-      body: body && JSON.stringify(body),
+      body: body && this.generateBody(body),
     });
   }
 
-  public async patch<T>(url: string, body?: object): Promise<T> {
+  public async patch<T>(url: string, body?: object | FormData): Promise<T> {
     return this.request(url, {
       method: 'PATCH',
-      body: body && JSON.stringify(body),
+      body: body && this.generateBody(body),
     });
   }
 
-  public async delete<T>(url: string): Promise<T> {
-    return this.request(url, { method: 'DELETE' });
+  public async delete<T>(url: string, body?: object | FormData): Promise<T> {
+    return this.request(url, { method: 'DELETE', body: body && this.generateBody(body) });
   }
 
   public setToken(accessToken: string, refreshToken: string) {
@@ -118,7 +118,7 @@ export class WinkApiRequest {
     Cookies.set('accessToken', accessToken, { expires: (1 / 24 / 60) * 15 });
     Cookies.set('refreshToken', refreshToken, { expires: 30 });
 
-    this.updateUser();
+    this.updateMember();
   }
 
   public removeToken() {
@@ -132,21 +132,32 @@ export class WinkApiRequest {
     Cookies.remove('accessToken');
     Cookies.remove('refreshToken');
 
-    this.updateUser();
+    this.updateMember();
   }
 
-  private updateUser() {
+  private updateMember() {
     if (!this.accessToken) {
-      useUserStore.setState({ user: null });
+      useMemberStore.setState({ member: null });
       return;
     }
 
-    this.get('/auth/me').then((user) => {
-      useUserStore.setState({ user: user as User });
+    (async () => {
+      const response: MyInfoResponseDto = await this.get('/auth/me');
+      const { member } = response;
+
+      useMemberStore.setState({ member });
 
       if (!useApplicationState.getState().loaded) {
         useApplicationState.setState({ loaded: true });
       }
-    });
+    })();
+  }
+
+  private generateBody(body: object | FormData): string | FormData {
+    if (body instanceof FormData) {
+      return body;
+    }
+
+    return JSON.stringify(body);
   }
 }

@@ -1,4 +1,4 @@
-import { MyInfoLinks, RoleString, WinkApiRequest } from '@/api';
+import { MemberType, WinkApiRequest } from '@/api';
 
 export class Auth {
   constructor(private readonly request: WinkApiRequest) {}
@@ -72,15 +72,5 @@ export interface VerifyCodeResponseDto {
 }
 
 export interface MyInfoResponseDto {
-  memberId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  name: string;
-  studentId: string;
-  email: string;
-  avatar: string | null;
-  description: string | null;
-  link: MyInfoLinks;
-  role: RoleString | null;
-  fee: boolean;
+  member: MemberType;
 }
