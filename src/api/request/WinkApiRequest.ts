@@ -41,10 +41,16 @@ export class WinkApiRequest {
 
     if (
       apiResponse.error &&
-      apiResponse.content === 'Refresh Token이 만료되었습니다.' &&
+      apiResponse.content === '접근 토큰이 만료되었습니다.' &&
       (await this.refresh())
     ) {
-      return this.request(url, options);
+      const headers = options.headers as Headers;
+      headers.set('Authorization', `Bearer ${this.accessToken}`);
+
+      return this.request(url, {
+        ...options,
+        headers,
+      });
     }
 
     if (apiResponse.error) {
