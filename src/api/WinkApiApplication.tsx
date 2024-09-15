@@ -2,11 +2,11 @@
 
 import React, { useEffect } from 'react';
 
-import { Loading } from '@/components';
-
-import { WinkApi } from '@/api';
+import { Loading } from '@/component';
 
 import { useApplicationState } from '@/store';
+
+import { WinkApi } from '@/api';
 
 interface WinkApiApplicationProps {
   children: React.ReactNode;
