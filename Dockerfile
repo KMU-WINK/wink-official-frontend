@@ -15,7 +15,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY --from=build /app/package.json /app/yarn.lock ./
-RUN yarn install --production --frozen-lockfile
+RUN yarn install --production --frozen-lockfile && yarn cache clean && rm -rf ./.next/cache
 
 COPY --from=build /app/.next ./.next
 
