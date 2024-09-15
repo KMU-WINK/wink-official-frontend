@@ -6,11 +6,11 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { Button, WebInKookmin, Fields, FormContainer, TextField } from '@/components';
-
-import { WinkApi } from '@/api';
+import { Button, Fields, FormContainer, TextField, WebInKookmin } from '@/component';
 
 import { useForm } from '@/hook';
+
+import { WinkApi } from '@/api';
 
 import * as yup from 'yup';
 

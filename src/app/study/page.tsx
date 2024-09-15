@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { StudyCard } from '@/components';
+import { StudyCard } from '@/component';
 
 interface StudyType {
   id: number; // 유니크한 ID

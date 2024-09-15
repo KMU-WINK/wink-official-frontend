@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-
 import { MemberType } from '@/api';
+
+import { create } from 'zustand';
 
 interface MemberState {
   member: MemberType | null;

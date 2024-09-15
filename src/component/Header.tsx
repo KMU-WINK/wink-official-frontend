@@ -7,9 +7,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { WinkApi } from '@/api';
-
 import { useMemberStore } from '@/store';
+
+import { WinkApi } from '@/api';
 
 import logo from '@/public/logo.png';
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Carousel, ProjectCard } from '@/components';
+import { Carousel, ProjectCard } from '@/component';
 
 interface Project {
   id: number;
