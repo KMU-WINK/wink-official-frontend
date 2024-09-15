@@ -15,7 +15,10 @@ export class Member {
     return this.request.patch('/member/me/password', data);
   }
 
-  public async updateMyAvatar(data: UpdateMyAvatarRequestDto): Promise<UpdateMyAvatarResponseDto> {
+  public async updateMyAvatar(avatar: File): Promise<UpdateMyAvatarResponseDto> {
+    const data = new FormData();
+    data.append('avatar', avatar);
+
     return this.request.patch('/member/me/avatar', data);
   }
 
@@ -70,10 +73,6 @@ export interface UpdateMemberFeeRequestDto {
 export interface UpdateMemberRoleRequestDto {
   memberId: string;
   role: RoleString;
-}
-
-export interface UpdateMyAvatarRequestDto {
-  avatar: unknown;
 }
 
 export interface UpdateMyInfoRequestDto {
