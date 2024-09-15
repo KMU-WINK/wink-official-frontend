@@ -35,22 +35,22 @@ export class WinkApiRequest {
   }
 
   private async request<T>(url: string, options: RequestInit): Promise<T> {
-    const response = await fetch(`${this.baseUrl}/api${url}`, {
-      ...options,
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-        ...(options.headers || {}),
-      },
-    });
+    const response = await fetch(`${this.baseUrl}/api${url}`, options);
 
     const apiResponse: WinkRawApiResponse<T> = await response.json();
 
     if (
       apiResponse.error &&
-      apiResponse.content === 'Refresh Token이 만료되었습니다.' &&
+      apiResponse.content === '접근 토큰이 만료되었습니다.' &&
       (await this.refresh())
     ) {
-      return this.request(url, options);
+      const headers = options.headers as Headers;
+      headers.set('Authorization', `Bearer ${this.accessToken}`);
+
+      return this.request(url, {
+        ...options,
+        headers,
+      });
     }
 
     if (apiResponse.error) {
@@ -79,32 +79,43 @@ export class WinkApiRequest {
   }
 
   public async get<T>(url: string, body?: object | FormData): Promise<T> {
-    return this.request(url, { method: 'GET', body: body && this.generateBody(body) });
+    return this.request(url, {
+      method: 'GET',
+      body: this.generateBody(body),
+      headers: this.generateHeaders(body),
+    });
   }
 
   public async post<T>(url: string, body?: object | FormData): Promise<T> {
     return this.request(url, {
       method: 'POST',
-      body: body && this.generateBody(body),
+      body: this.generateBody(body),
+      headers: this.generateHeaders(body),
     });
   }
 
   public async put<T>(url: string, body?: object | FormData): Promise<T> {
     return this.request(url, {
       method: 'PUT',
-      body: body && this.generateBody(body),
+      body: this.generateBody(body),
+      headers: this.generateHeaders(body),
     });
   }
 
   public async patch<T>(url: string, body?: object | FormData): Promise<T> {
     return this.request(url, {
       method: 'PATCH',
-      body: body && this.generateBody(body),
+      body: this.generateBody(body),
+      headers: this.generateHeaders(body),
     });
   }
 
   public async delete<T>(url: string, body?: object | FormData): Promise<T> {
-    return this.request(url, { method: 'DELETE', body: body && this.generateBody(body) });
+    return this.request(url, {
+      method: 'DELETE',
+      body: this.generateBody(body),
+      headers: this.generateHeaders(body),
+    });
   }
 
   public setToken(accessToken: string, refreshToken: string) {
@@ -153,11 +164,32 @@ export class WinkApiRequest {
     })();
   }
 
-  private generateBody(body: object | FormData): string | FormData {
+  private generateBody(body?: object | FormData): string | FormData | null {
+    if (!body) {
+      return null;
+    }
+
     if (body instanceof FormData) {
       return body;
     }
 
     return JSON.stringify(body);
+  }
+
+  private generateHeaders(body?: object | FormData): Headers {
+    const headers = new Headers();
+
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type', 'application/json');
+
+    if (this.accessToken) {
+      headers.set('Authorization', `Bearer ${this.accessToken}`);
+    }
+
+    if (body && body instanceof FormData) {
+      headers.delete('Content-Type');
+    }
+
+    return headers;
   }
 }
