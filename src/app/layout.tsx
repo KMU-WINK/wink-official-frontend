@@ -2,14 +2,15 @@
 
 import React from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { usePathname } from 'next/navigation';
 
-import { WinkApiApplication } from '@/api';
-import { Header, Footer } from '@/components';
+import { Footer, Header } from '@/component';
 
-import '@/styles/globals.css';
-import 'react-toastify/dist/ReactToastify.css';
+import { WinkApiApplication } from '@/api';
+
+import '@/style/globals.css';
 
 interface RootLayoutProps {
   children: React.ReactNode;

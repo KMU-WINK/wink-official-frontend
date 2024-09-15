@@ -1,4 +1,4 @@
-import { WinkApiRequest, Activity, Auth, Member, MemberAdmin } from '@/api';
+import { Activity, Auth, Member, MemberAdmin, WinkApiRequest } from '@/api';
 
 export class WinkApi {
   private static instance: WinkApi | null = null;

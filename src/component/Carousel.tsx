@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import '@/styles/Carousel.css';
+import '@/style/Carousel.css';
 
 interface CarouselCard {
   id: number;

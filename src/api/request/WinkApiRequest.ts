@@ -1,9 +1,10 @@
-import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
-import { RefreshResponseDto, MyInfoResponseDto } from '@/api';
+import { useApplicationState, useMemberStore } from '@/store';
 
-import { useMemberStore, useApplicationState } from '@/store';
+import { MyInfoResponseDto, RefreshResponseDto } from '@/api';
+
+import Cookies from 'js-cookie';
 
 interface WinkRawApiResponse<T> {
   code: number;
