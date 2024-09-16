@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <div className="relative flex flex-col justify-center items-center min-h-[calc(100vh-65px)] bg-wink-100 overflow-hidden gap-8">
@@ -23,4 +23,6 @@ export default function Home() {
       <div className="bg-gradient-to-b from-wink-100 to-white h-32 md:h-64" />
     </>
   );
-}
+};
+
+export default Home;

@@ -135,7 +135,7 @@ const categories = [
   'WINK 공홈 부수기',
 ];
 
-export default function Study() {
+const StudyPage = () => {
   const [visibleStudyCards, setVisibleStudyCards] = useState(8);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
@@ -226,4 +226,6 @@ export default function Study() {
       </div>
     </>
   );
-}
+};
+
+export default StudyPage;

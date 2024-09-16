@@ -16,7 +16,7 @@ import * as yup from 'yup';
 
 type Inputs = 'email' | 'password';
 
-export default function LoginPage() {
+const LoginPage = () => {
   const router = useRouter();
 
   const { values, errors, validate, onChange } = useForm<Inputs, string>(
@@ -99,4 +99,6 @@ export default function LoginPage() {
       </div>
     </>
   );
-}
+};
+
+export default LoginPage;
