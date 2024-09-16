@@ -1,4 +1,4 @@
-import { MyInfoResponseDto, WinkApiRequest } from '@/api';
+import { WinkApiRequest } from '@/api';
 
 export class Member {
   constructor(private readonly request: WinkApiRequest) {}
@@ -151,4 +151,17 @@ export enum Role {
 
 export type RoleString = keyof typeof Role;
 
-export type MemberType = MyInfoResponseDto;
+export interface MemberType {
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  studentId: string;
+  email: string;
+  avatar: string | null;
+  description: string | null;
+  link: MyInfoLinks;
+  role: RoleString;
+  fee: boolean;
+  approved: boolean;
+}
