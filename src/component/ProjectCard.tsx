@@ -1,44 +1,40 @@
 import React from 'react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import logo from '@/public/logo.png';
 
 interface ProjectCardProps {
+  id: string;
+  createdAt: Date;
   title: string;
-  imageUrl: string | null;
   tags: string[];
-  year: number;
-  link: string; // 추가된 props
+  image: string;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
+  id,
+  createdAt,
   title,
-  imageUrl,
   tags,
-  year,
-  link,
+  image,
 }: ProjectCardProps) => {
+  console.log(image);
   return (
-    <a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/activity/project/${id}`}
+      passHref
       className="border border-border rounded-project-card overflow-hidden shadow-lg cursor-pointer block"
     >
-      {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt={title}
-          width={360}
-          height={160}
-          className="object-cover w-full h-48"
-        />
-      ) : (
-        <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
-          <Image src={logo} alt={'이미지 없음'} width={100} height={100} />
-        </div>
-      )}
+      <Image
+        src={image}
+        alt={title}
+        width={360}
+        height={160}
+        className="object-cover w-full h-48"
+      />
+
       <div className="p-7 pt-3.5">
         <div className="flex flex-col">
           <div className="flex justify-between items-center mb-6">
@@ -46,7 +42,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               {title}
             </h2>
             <div className="flex justify-center items-center bg-zinc-200 text-center rounded-xl px-3 py-1">
-              <h2 className="text-base font-medium text-center">{year}년</h2>
+              <h2 className="text-base font-medium text-center">
+                {new Date(createdAt).getFullYear()}년
+              </h2>
             </div>
           </div>
 
@@ -59,6 +57,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
