@@ -30,8 +30,8 @@ export const AdminSideBar: React.FC = () => {
   const pathname = usePathname();
 
   return (
-    <div className="w-72">
-      <nav className="space-y-1 p-4">
+    <div className="w-60">
+      <nav className="space-y-4">
         {ITEM.map(({ title, description, items }) => (
           <div key={title}>
             <h2 className="flex items-center justify-between text-lg font-semibold px-6 py-3 border-b">
