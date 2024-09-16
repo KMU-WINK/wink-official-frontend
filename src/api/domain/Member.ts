@@ -139,6 +139,7 @@ export interface GetMembersForAdminResponseDto {
 export interface EachGetWaitingMembersResponseDto {
   _id: string;
   name: string;
+  email: string;
   studentId: string;
 }
 

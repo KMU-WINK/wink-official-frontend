@@ -7,7 +7,6 @@ import { AdminDropdown, AdminSearchBar, AdminTablePage, AdminTitle } from '@/com
 
 import {
   EachGetMembersForAdminResponseDto,
-  Role,
   RoleKorean,
   RoleKoreanMap,
   RoleKoreanToRole,
@@ -44,23 +43,21 @@ const AdminMemberListPage = () => {
     }
   }
 
-  const handleRoleChange = async (memberId: string, rawRole: string) => {
-    const { name } = members.find((m) => m._id === memberId)!;
-    const role: Role = RoleKoreanToRole(rawRole);
-
-    await WinkApi.MemberAdmin.updateMemberRole({ memberId, role });
+  const handleRoleChange = async (member: EachGetMembersForAdminResponseDto, rawRole: string) => {
+    await WinkApi.MemberAdmin.updateMemberRole({
+      memberId: member._id,
+      role: RoleKoreanToRole(rawRole),
+    });
     await fetchMembers();
 
-    toast.success(`${name}님의 역할을 "${rawRole}"로 변경하였습니다.`);
+    toast.success(`${member.name}님의 역할을 "${rawRole}"로 변경하였습니다.`);
   };
 
-  const handleFeeChange = async (memberId: string, fee: boolean) => {
-    const { name } = members.find((m) => m._id === memberId)!;
-
-    await WinkApi.MemberAdmin.updateMemberFee({ memberId, fee });
+  const handleFeeChange = async (member: EachGetMembersForAdminResponseDto, fee: boolean) => {
+    await WinkApi.MemberAdmin.updateMemberFee({ memberId: member._id, fee });
     await fetchMembers();
 
-    toast.success(`${name}님의 회비 정보를 "${fee ? '납부' : '미납부'}"로 변경하였습니다.`);
+    toast.success(`${member.name}님의 회비 정보를 "${fee ? '납부' : '미납부'}"로 변경하였습니다.`);
   };
 
   return (
@@ -98,14 +95,14 @@ const AdminMemberListPage = () => {
             <AdminDropdown
               value={RoleKoreanMap[member.role]}
               options={RoleKorean}
-              onChange={(value) => handleRoleChange(member._id, value)}
+              onChange={(value) => handleRoleChange(member, value)}
             />
           </div>
           <div className="py-4 px-4 col-span-1 text-sm">
             <AdminDropdown
               value={member.fee ? '납부' : '미납부'}
               options={['납부', '미납부']}
-              onChange={(value) => handleFeeChange(member._id, value === '납부')}
+              onChange={(value) => handleFeeChange(member, value === '납부')}
             />
           </div>
         </div>
