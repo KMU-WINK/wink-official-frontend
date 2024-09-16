@@ -81,7 +81,7 @@ const SignUpPage = () => {
       disabled: !!values.verifyToken,
       button: (
         <Button
-          className="w-28 py-2 text-sm"
+          className="w-32 py-4.5 px-2 text-sm"
           type="button"
           label="인증번호 요청"
           hidden={!!values.verifyToken}
@@ -204,7 +204,7 @@ const SignUpPage = () => {
               이미 회원이신가요?
               <Link
                 href="/auth/login"
-                className="text-wink-300 hover:underline hover:text-wink-500 ml-1.5"
+                className="text-wink-500 hover:underline hover:text-wink-600 ml-1.5"
               >
                 로그인
               </Link>

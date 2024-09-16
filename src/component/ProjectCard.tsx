@@ -49,7 +49,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               <h2 className="text-base font-medium text-center">{year}년</h2>
             </div>
           </div>
-          <div className="text-zinc-500 text-3 font-bold">
+
+          <div className="text-zinc-500 text-3 font-semibold">
             {tags.map((tag, index) => (
               <span key={index} className="mr-1">
                 #{tag}
