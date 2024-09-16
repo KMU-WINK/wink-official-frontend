@@ -14,7 +14,7 @@ export const AnonymousGuard: React.FC<AnonymousGuardProps> = ({ children }) => {
   const { member } = useMemberStore();
 
   if (member) {
-    router.back();
+    router.push('/');
 
     return null;
   }

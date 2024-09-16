@@ -14,10 +14,10 @@ const AdminLayout = ({ children }: AuthLayoutProps) => {
   return (
     <AdminGuard>
       <div className="flex mt-12">
-        <div className="mt-36 mx-6">
+        <div className="mt-36 ml-6">
           <AdminSideBar />
         </div>
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 p-6">{children}</div>
       </div>
     </AdminGuard>
   );

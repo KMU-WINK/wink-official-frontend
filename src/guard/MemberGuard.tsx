@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { useMemberStore } from '@/store';
+import { useApplicationState, useMemberStore } from '@/store';
 
 interface MemberGuardProps {
   children: React.ReactNode;
@@ -11,9 +11,10 @@ interface MemberGuardProps {
 export const MemberGuard: React.FC<MemberGuardProps> = ({ children }) => {
   const router = useRouter();
 
+  const { refreshing } = useApplicationState();
   const { member } = useMemberStore();
 
-  if (!member) {
+  if (!refreshing && !member) {
     router.back();
 
     return null;

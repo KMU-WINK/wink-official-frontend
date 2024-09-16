@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { useMemberStore } from '@/store';
+import { useApplicationState, useMemberStore } from '@/store';
 
 const PERMIT_ROLES = [
   'PRESIDENT',
@@ -22,9 +22,10 @@ interface AdminGuardProps {
 export const AdminGuard: React.FC<AdminGuardProps> = ({ children }) => {
   const router = useRouter();
 
+  const { refreshing } = useApplicationState();
   const { member } = useMemberStore();
 
-  if (!member || !PERMIT_ROLES.includes(member.role)) {
+  if (!refreshing && (!member || !PERMIT_ROLES.includes(member.role))) {
     router.back();
 
     return null;
