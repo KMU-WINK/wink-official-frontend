@@ -42,7 +42,7 @@ export const Header: React.FC = () => {
     },
     {
       title: member ? 'logout' : 'login',
-      href: member ? '#' : '/login',
+      href: member ? '#' : '/auth/login',
       mobileHide: true,
       useLink: !member,
     },

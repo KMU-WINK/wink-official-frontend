@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 
 import * as yup from 'yup';
 import { AnyObject } from 'yup';

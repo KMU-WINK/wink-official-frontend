@@ -16,7 +16,7 @@ const Home = () => {
         </h1>
 
         <p className="font-bold text-base md:text-xl text-wink-500 z-10">
-          <Link href={'/apply'}>지원하기 {'>'}</Link>
+          <Link href="/apply">지원하기 {'>'}</Link>
         </p>
       </div>
 

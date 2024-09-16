@@ -1,4 +1,4 @@
-import { MyInfoResponseDto, WinkApiRequest } from '@/api';
+import { WinkApiRequest } from '@/api';
 
 export class Member {
   constructor(private readonly request: WinkApiRequest) {}
@@ -30,28 +30,38 @@ export class Member {
 export class MemberAdmin {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async getWaitingMembers(): Promise<GetMembersForAdminResponseDto> {
-    return this.request.get('/member/admin/waiting');
+  public async getWaitingMembers(): Promise<GetWaitingMembersResponseDto> {
+    return this.request.get('/admin/member/waiting');
   }
 
   public async approveWaitingMember(data: ApproveWaitingMemberRequestDto): Promise<void> {
-    return this.request.post('/member/admin/waiting/approve', data);
+    return this.request.post('/admin/member/waiting/approve', data);
   }
 
   public async rejectWaitingMember(data: RejectWaitingMemberRequestDto): Promise<void> {
-    return this.request.post('/member/admin/waiting/reject', data);
+    return this.request.post('/admin/member/waiting/reject', data);
   }
 
-  public async getMembers(): Promise<GetMembersForAdminResponseDto> {
-    return this.request.get('/member/admin');
+  public async getMembersPage(): Promise<GetMembersForAdminPageResponseDto> {
+    return this.request.get('/admin/member/max');
+  }
+
+  public async getMembers(
+    data: GetMembersForAdminRequestDto,
+  ): Promise<GetMembersForAdminResponseDto> {
+    return this.request.get('/admin/member?page=' + data.page);
+  }
+
+  public async searchMembers(data: SearchMembersRequestDto): Promise<SearchMembersResponseDto> {
+    return this.request.get('/admin/member/search?query=' + data.query);
   }
 
   public async updateMemberRole(data: UpdateMemberRoleRequestDto): Promise<void> {
-    return this.request.patch('/member/admin/role', data);
+    return this.request.patch('/admin/member/role', data);
   }
 
   public async updateMemberFee(data: UpdateMemberFeeRequestDto): Promise<void> {
-    return this.request.patch('/member/admin/fee', data);
+    return this.request.patch('/admin/member/fee', data);
   }
 }
 
@@ -63,6 +73,14 @@ export interface ApproveWaitingMemberRequestDto {
 
 export interface RejectWaitingMemberRequestDto {
   memberId: string;
+}
+
+export interface GetMembersForAdminRequestDto {
+  page: number;
+}
+
+export interface SearchMembersRequestDto {
+  query: string;
 }
 
 export interface UpdateMemberFeeRequestDto {
@@ -110,6 +128,10 @@ export interface GetMembersResponseDto {
   members: EachGetMembersResponseDto[];
 }
 
+export interface GetMembersForAdminPageResponseDto {
+  page: number;
+}
+
 export interface GetMembersForAdminResponseDto {
   members: EachGetMembersForAdminResponseDto[];
 }
@@ -117,11 +139,16 @@ export interface GetMembersForAdminResponseDto {
 export interface EachGetWaitingMembersResponseDto {
   _id: string;
   name: string;
+  email: string;
   studentId: string;
 }
 
 export interface GetWaitingMembersResponseDto {
   members: EachGetWaitingMembersResponseDto[];
+}
+
+export interface SearchMembersResponseDto {
+  members: EachGetMembersForAdminResponseDto[];
 }
 
 export interface UpdateMyAvatarResponseDto {
@@ -136,7 +163,6 @@ export interface MyInfoLinks {
   blog: string | null;
 }
 
-// noinspection JSUnusedGlobalSymbols
 export enum Role {
   PRESIDENT = 'PRESIDENT',
   VICE_PRESIDENT = 'VICE_PRESIDENT',
@@ -151,4 +177,36 @@ export enum Role {
 
 export type RoleString = keyof typeof Role;
 
-export type MemberType = MyInfoResponseDto;
+export const RoleKoreanMap: Record<RoleString, string> = {
+  PRESIDENT: '회장',
+  VICE_PRESIDENT: '부회장',
+  TREASURY_HEAD: '총무부 부장',
+  TREASURY_ASSISTANT: '총무부 차장',
+  PUBLIC_RELATIONS_HEAD: '홍보부 부장',
+  PUBLIC_RELATIONS_ASSISTANT: '홍보부 차장',
+  PLANNING_HEAD: '기획부 부장',
+  PLANNING_ASSISTANT: '기획부 차장',
+  MEMBER: '부원',
+};
+
+export const RoleKorean = Object.values(RoleKoreanMap);
+
+export const RoleKoreanToRole = (role: string): Role => {
+  const key = Object.keys(RoleKoreanMap).find((key) => RoleKoreanMap[key as RoleString] === role);
+  return Role[key as RoleString];
+};
+
+export interface MemberType {
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  studentId: string;
+  email: string;
+  avatar: string | null;
+  description: string | null;
+  link: MyInfoLinks;
+  role: RoleString;
+  fee: boolean;
+  approved: boolean;
+}

@@ -19,6 +19,7 @@ export default {
     '^@/context',
     '^@/store',
     '^@/hook',
+    '^@/guard',
     '^@/api',
     '^@/style',
 
