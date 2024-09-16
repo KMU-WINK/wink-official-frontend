@@ -6,7 +6,7 @@ import { FaAngleDown } from 'react-icons/fa';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { useMemberStore } from '@/store';
 
@@ -21,6 +21,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 export const Header: React.FC = () => {
   const router = useRouter();
 
+  const pathname = usePathname();
+
   const { member } = useMemberStore();
 
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -29,14 +31,16 @@ export const Header: React.FC = () => {
     {
       title: 'about us',
       mobileHide: true,
+      href: '/about-us',
       dropdown: [
-        { title: '동아리 소개', href: '/about-us' },
-        { title: '부원 소개', href: '/member' },
+        { title: '동아리 소개', href: '/about-us/we' },
+        { title: '부원 소개', href: '/about-us/member' },
       ],
     },
     {
       title: 'program',
       mobileHide: true,
+      href: '/activity',
       dropdown: [
         { title: '연혁', href: '/activity/history' },
         { title: '프로젝트', href: '/activity/project' },
@@ -85,7 +89,7 @@ export const Header: React.FC = () => {
               <div key={item.title} className={item.mobileHide ? 'hidden sm:block' : ''}>
                 <li className="font-bold text-sm relative cursor-pointer">
                   <div
-                    className="flex items-center gap-1"
+                    className={`flex items-center gap-1 ${pathname.startsWith(item.href) ? 'text-wink-500' : ''}`}
                     onClick={() => {
                       if (item.dropdown) {
                         handleDropdownToggle(item.title);
@@ -109,8 +113,11 @@ export const Header: React.FC = () => {
                         {item.dropdown.map((subItem) => (
                           <li
                             key={subItem.href}
-                            className="px-4 py-2 hover:bg-gray-100"
-                            onClick={() => router.push(subItem.href)}
+                            className={`px-4 py-2 hover:bg-gray-100 ${pathname.startsWith(subItem.href) ? 'text-wink-500' : ''}`}
+                            onClick={() => {
+                              router.push(subItem.href);
+                              setActiveDropdown(null);
+                            }}
                           >
                             <p>{subItem.title}</p>
                           </li>

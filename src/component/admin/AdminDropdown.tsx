@@ -18,10 +18,10 @@ export const AdminDropdown = ({ value, options, onChange }: AdminDropdownProps) 
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full text-sm bg-white transition-colors duration-200 ease-in-out"
+        className="flex items-center justify-between w-full text-sm bg-white"
       >
         {value}
-        <FaAngleDown className={`w-4 h-4 ml-2 transition-transform duration-200 ease-in-out`} />
+        <FaAngleDown className={`w-4 h-4 ml-2`} />
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -35,7 +35,7 @@ export const AdminDropdown = ({ value, options, onChange }: AdminDropdownProps) 
             {options.map((option) => (
               <div
                 key={option}
-                className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 transition-colors duration-150 ease-in-out"
+                className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
                 onClick={() => {
                   onChange(option);
                   setIsOpen(false);

@@ -44,10 +44,12 @@ const ProjectPage = () => {
           <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
           <p className="font-regular text-xl text-center text-zinc-700">나날히 성장해 가는 우리</p>
         </div>
+
         {/* Carousel 영역 */}
         <div className="w-full max-w-carousel mt-32">
           <Carousel cards={sampleSliderProjects} />
         </div>
+
         {/* 프로젝트 목록 */}
         <div className="w-full max-w-project mx-auto mt-48 mb-20">
           <div className="grid grid-cols-3 gap-8">
@@ -63,6 +65,7 @@ const ProjectPage = () => {
             ))}
           </div>
         </div>
+
         {/* 더보기 버튼 */}
         {visibleProjects < sampleProjects.length && (
           <div className="flex justify-center mb-10">
