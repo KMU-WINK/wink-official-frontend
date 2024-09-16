@@ -11,8 +11,12 @@ export class Study {
     return this.request.get('/activity/study/max');
   }
 
-  public async getStudies(page: number): Promise<GetStudiesResponse> {
-    return this.request.get(`/activity/study/${page}`);
+  public async getStudies(data: GetStudiesRequestDto): Promise<GetStudiesResponse> {
+    return this.request.get('/activity/study?page=' + data.page);
+  }
+
+  public async searchStudies(data: SearchStudiesRequestDto): Promise<GetStudiesResponse> {
+    return this.request.get('/activity/study/search?query=' + data.query);
   }
 }
 
@@ -61,6 +65,14 @@ export interface DeleteStudyRequestDto {
 export interface UpdateCategoryRequestDto {
   categoryId: string;
   category: string;
+}
+
+export interface GetStudiesRequestDto {
+  page: number;
+}
+
+export interface SearchStudiesRequestDto {
+  query: string;
 }
 
 //////////////////////////////////////////////////////////////////////////

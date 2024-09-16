@@ -4,7 +4,7 @@ export class Project {
   constructor(private readonly request: WinkApiRequest) {}
 
   public async getProject(data: GetProjectRequestDto): Promise<GetProjectResponseDto> {
-    return this.request.get('/activity/project/detail', data);
+    return this.request.get('/activity/project/detail?projectId=' + data.projectId);
   }
 
   public async getProjectsPage(): Promise<GetProjectsPageResponseDto> {
@@ -12,7 +12,11 @@ export class Project {
   }
 
   public async getProjects(data: GetProjectsRequestDto): Promise<GetProjectsResponseDto> {
-    return this.request.get('/activity/project', data);
+    return this.request.get('/activity/project?page=' + data.page);
+  }
+
+  public async searchProjects(data: SearchProjectsRequestDto): Promise<GetProjectsResponseDto> {
+    return this.request.get('/activity/project/search?query=' + data.query);
   }
 }
 
@@ -51,6 +55,10 @@ export interface GetProjectRequestDto {
 
 export interface GetProjectsRequestDto {
   page: number;
+}
+
+export interface SearchProjectsRequestDto {
+  query: string;
 }
 
 export interface UpdateProjectRequestDto {

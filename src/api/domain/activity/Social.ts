@@ -4,11 +4,15 @@ export class Social {
   constructor(private readonly request: WinkApiRequest) {}
 
   public async getSocial(data: GetSocialRequestDto): Promise<GetSocialResponseDto> {
-    return this.request.get('/activity/social/detail', data);
+    return this.request.get('/activity/social/detail?socialId=' + data.socialId);
   }
 
-  public async getSocials(): Promise<GetSocialsResponseDto> {
-    return this.request.get('/activity/social');
+  public async getSocials(data: GetSocialsRequestDto): Promise<GetSocialsResponseDto> {
+    return this.request.get('/activity/social?page=' + data.page);
+  }
+
+  public async searchSocials(data: SearchSocialsRequestDto): Promise<GetSocialsResponseDto> {
+    return this.request.get('/activity/social/search?query=' + data.query);
   }
 }
 
@@ -41,6 +45,14 @@ export interface DeleteSocialRequestDto {
 
 export interface GetSocialRequestDto {
   socialId: string;
+}
+
+export interface GetSocialsRequestDto {
+  page: number;
+}
+
+export interface SearchSocialsRequestDto {
+  query: string;
 }
 
 export interface UpdateSocialRequestDto {

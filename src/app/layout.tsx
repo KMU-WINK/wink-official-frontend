@@ -16,12 +16,12 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-const HIDE_FOOTER_PATHS = ['/login', '/signup'];
+const HIDE_FOOTER_PATHS = ['/auth', '/admin'];
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   const pathname = usePathname();
 
-  const hideFooter = HIDE_FOOTER_PATHS.includes(pathname);
+  const hideFooter = HIDE_FOOTER_PATHS.some((path) => pathname.startsWith(path));
 
   return (
     <html lang="ko">

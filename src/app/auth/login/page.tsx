@@ -88,7 +88,7 @@ const LoginPage = () => {
             <div className="text-center text-xs">
               회원이 아니신가요?
               <Link
-                href="/signup"
+                href="/auth/signup"
                 className="text-wink-300 hover:underline hover:text-wink-500 ml-1.5"
               >
                 회원가입
