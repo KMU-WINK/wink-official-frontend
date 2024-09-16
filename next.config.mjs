@@ -19,6 +19,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'wink-official-dev.s3.ap-northeast-2.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 't1.daumcdn.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'blog.kakaocdn.net',
+      },
     ],
   },
 };

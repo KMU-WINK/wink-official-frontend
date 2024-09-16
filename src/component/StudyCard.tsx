@@ -2,25 +2,18 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import { Category } from '@/api';
+
 import logo from '@/public/logo.png';
 
 interface StudyCardProps {
-  id: number;
   image: string | null;
   link: string;
   title: string;
-  description: string;
-  category: string;
+  content: string;
 }
 
-export const StudyCard: React.FC<StudyCardProps> = ({
-  id,
-  image,
-  link,
-  title,
-  description,
-  category,
-}) => {
+export const StudyCard: React.FC<StudyCardProps> = ({ image, link, title, content }) => {
   return (
     <a
       href={link}
@@ -31,9 +24,7 @@ export const StudyCard: React.FC<StudyCardProps> = ({
       {/* 스터디 제목 및 설명 */}
       <div className="flex flex-col gap-2.5 my-4">
         <h2 className="font-bold text-xl max-w-screen-sm truncate">{title}</h2>
-        <p className="font-medium text-base text-slate-500 max-w-screen-sm truncate">
-          {description}
-        </p>
+        <p className="font-medium text-base text-slate-500 max-w-screen-sm truncate">{content}</p>
         <p className="font-medium text-base max-w-screen-sm truncate">{link}</p>
       </div>
 
