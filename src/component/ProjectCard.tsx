@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 interface ProjectCardProps {
   id: string;
-  createdAt: Date;
+  createdAt: string;
   title: string;
   tags: string[];
   image: string;
@@ -18,7 +18,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   tags,
   image,
 }: ProjectCardProps) => {
-  console.log(image);
   return (
     <Link
       href={`/activity/project/${id}`}
