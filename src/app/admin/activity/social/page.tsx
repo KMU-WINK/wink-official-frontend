@@ -21,17 +21,6 @@ const AdminActivitySocialPage = () => {
 
   const [deleteModal, setDeleteModal] = useState<SocialType | null>(null);
 
-  const handleDelete = async () => {
-    if (!deleteModal) return;
-
-    await WinkApi.Activity.SocialAdmin.deleteSocial({ socialId: deleteModal._id });
-    await fetchSocials();
-
-    toast.warn(`"${deleteModal.title}" 친목 활동이 삭제되었습니다.`);
-
-    setDeleteModal(null);
-  };
-
   useEffect(() => {
     async function fetchMaxPage() {
       const { page } = await WinkApi.Activity.Social.getSocialsPage();
@@ -58,6 +47,17 @@ const AdminActivitySocialPage = () => {
       setSocials(socials);
     }
   }
+
+  const handleDelete = async () => {
+    if (!deleteModal) return;
+
+    await WinkApi.Activity.SocialAdmin.deleteSocial({ socialId: deleteModal._id });
+    await fetchSocials();
+
+    toast.warn(`"${deleteModal.title}" 친목 활동이 삭제되었습니다.`);
+
+    setDeleteModal(null);
+  };
 
   return (
     <div className="container mx-auto mt-4">

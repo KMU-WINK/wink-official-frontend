@@ -23,17 +23,6 @@ const AdminActivityProjectPage = () => {
 
   const [deleteModal, setDeleteModal] = useState<ProjectType | null>(null);
 
-  const handleDelete = async () => {
-    if (!deleteModal) return;
-
-    await WinkApi.Activity.ProjectAdmin.deleteProject({ projectId: deleteModal._id });
-    await fetchProjects();
-
-    toast.warn(`"${deleteModal.title}" 프로젝트가 삭제되었습니다.`);
-
-    setDeleteModal(null);
-  };
-
   useEffect(() => {
     async function fetchMaxPage() {
       const { page } = await WinkApi.Activity.Project.getProjectsPage();
@@ -60,6 +49,17 @@ const AdminActivityProjectPage = () => {
       setProjects(projects);
     }
   }
+
+  const handleDelete = async () => {
+    if (!deleteModal) return;
+
+    await WinkApi.Activity.ProjectAdmin.deleteProject({ projectId: deleteModal._id });
+    await fetchProjects();
+
+    toast.warn(`"${deleteModal.title}" 프로젝트가 삭제되었습니다.`);
+
+    setDeleteModal(null);
+  };
 
   return (
     <div className="container mx-auto mt-4">

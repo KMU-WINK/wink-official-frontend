@@ -85,8 +85,14 @@ export interface CreateStudyResponseDto {
   study: StudyType;
 }
 
+export interface EachGetCategoriesResponseDto {
+  _id: string;
+  name: string;
+  dependencies: number;
+}
+
 export interface GetCategoriesResponseDto {
-  categories: Category[];
+  categories: EachGetCategoriesResponseDto[];
 }
 
 export interface GetStudiesResponse {
