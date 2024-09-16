@@ -17,7 +17,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'kmu-wink-dev.s3.ap-northeast-2.amazonaws.com',
+        hostname: 'wink-official-dev.s3.ap-northeast-2.amazonaws.com',
       },
     ],
   },
