@@ -22,7 +22,6 @@ const AdminMemberListPage = () => {
   useEffect(() => {
     (async () => {
       const { page } = await WinkApi.MemberAdmin.getMembersPage();
-
       setMaxPage(page);
     })();
   }, []);
