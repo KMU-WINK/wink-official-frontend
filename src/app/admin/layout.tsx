@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { AdminSideBar } from '@/component';
 
@@ -13,7 +13,7 @@ interface AuthLayoutProps {
 const AdminLayout = ({ children }: AuthLayoutProps) => {
   return (
     <AdminGuard>
-      <div className="flex mt-12">
+      <div className="flex mt-14">
         <div className="mt-36 ml-6">
           <AdminSideBar />
         </div>

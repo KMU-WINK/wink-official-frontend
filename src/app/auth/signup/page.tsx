@@ -203,7 +203,7 @@ const SignUpPage = () => {
             <div className="text-center text-xs">
               이미 회원이신가요?
               <Link
-                href="/login"
+                href="/auth/login"
                 className="text-wink-300 hover:underline hover:text-wink-500 ml-1.5"
               >
                 로그인
