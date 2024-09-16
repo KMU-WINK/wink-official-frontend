@@ -1,5 +1,6 @@
 export * from './AdminSideBar';
 export * from './AdminTitle';
-export * from './AdminTablePage';
+export * from './AdminTablePaging';
+export * from './AdminIconButton';
 export * from './AdminDropdown';
 export * from './AdminSearchBar';
