@@ -2,14 +2,15 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import '@/style/Carousel.css';
 
-interface CarouselCard {
-  id: number;
+export interface CarouselCard {
+  id: string;
   title: string;
-  imageUrl: string | null;
+  image: string;
   content: string;
-  link: string;
 }
 
 interface CarouselProps {
@@ -17,7 +18,10 @@ interface CarouselProps {
 }
 
 export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
+  const router = useRouter();
+
   const carouselRef = useRef<HTMLDivElement | null>(null);
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -31,7 +35,7 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
         card.style.transform = `rotateY(${rotateAngle * idx}deg) translateZ(${colTz}px)`;
       });
     }
-    // 컴포넌트가 처음 렌더링될 때 첫 번째 카드 활성화
+
     rotateCarousel(0);
   }, [cards]);
 
@@ -49,7 +53,7 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
   const handleCardClick = (index: number) => {
     rotateCarousel(index);
     if (index === currentIndex) {
-      window.open(cards[index].link, '_blank');
+      router.push(`/activity/project/${cards[index].id}`);
     }
   };
 
@@ -63,13 +67,12 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
               className={`carousel-card ${currentIndex === index ? 'active' : ''}`}
               onClick={() => handleCardClick(index)}
               style={{
-                backgroundImage: card.imageUrl ? `url(${card.imageUrl})` : undefined,
+                backgroundImage: `url(${card.image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter:
-                  currentIndex !== index && card.imageUrl ? 'brightness(0.5) blur(2px)' : 'none',
+                filter: currentIndex !== index && card.image ? 'brightness(0.5) blur(2px)' : 'none',
                 boxShadow:
-                  currentIndex === index && card.imageUrl ? '0 4px 8px rgba(0, 0, 0, 0.5)' : 'none',
+                  currentIndex === index && card.image ? '0 4px 8px rgba(0, 0, 0, 0.5)' : 'none',
               }}
             />
           ))}
