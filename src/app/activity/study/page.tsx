@@ -1,157 +1,66 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
 
 import { StudyCard } from '@/component';
 
+import { Category, StudyType, WinkApi } from '@/api';
+
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface StudyType {
-  id: number; // 유니크한 ID
-  image: string | null; // 이미지 URL
-  link: string; // 스터디 상세 페이지로 연결되는 링크
-  title: string; // 스터디 제목
-  description: string; // 스터디 설명
-  category: string; // 카테고리 필드
-}
-
-const featuredStudies: StudyType[] = [
-  {
-    id: 1,
-    image: null,
-    link: 'https://example.com/study1',
-    title: '주목할 스터디 1',
-    description: '주목할 스터디 설명 1',
-    category: 'HTML & CSS & JS',
-  },
-  {
-    id: 2,
-    image: null,
-    link: 'https://example.com/study2',
-    title: '주목할 스터디 2',
-    description: '주목할 스터디 설명 2',
-    category: 'HTML & CSS & JS',
-  },
-  {
-    id: 3,
-    image: null,
-    link: 'https://example.com/study3',
-    title: '주목할 스터디 3',
-    description: '주목할 스터디 설명 3',
-    category: 'HTML & CSS & JS',
-  },
-];
-
-const latestStudies: StudyType[] = [
-  {
-    id: 1,
-    image: null,
-    link: 'https://example.com/latest1',
-    title: '최신 스터디 1',
-    description: '최신 스터디 설명 1',
-    category: 'HTML & CSS & JS',
-  },
-  {
-    id: 2,
-    image: null,
-    link: 'https://example.com/latest2',
-    title: '최신 스터디 2',
-    description: '최신 스터디 설명 2',
-    category: 'React',
-  },
-  {
-    id: 3,
-    image: null,
-    link: 'https://example.com/latest3',
-    title: '최신 스터디 3',
-    description: '최신 스터디 설명 3',
-    category: 'React',
-  },
-  {
-    id: 4,
-    image: null,
-    link: 'https://example.com/latest4',
-    title: '최신 스터디 4',
-    description: '최신 스터디 설명 4',
-    category: 'Spring Boot',
-  },
-  {
-    id: 5,
-    image: null,
-    link: 'https://example.com/latest5',
-    title: '최신 스터디 5',
-    description: '최신 스터디 설명 5',
-    category: 'HTML & CSS & JS',
-  },
-  {
-    id: 6,
-    image: null,
-    link: 'https://example.com/latest6',
-    title: '최신 스터디 6',
-    description: '최신 스터디 설명 6',
-    category: 'HTML & CSS & JS',
-  },
-  {
-    id: 7,
-    image: null,
-    link: 'https://example.com/latest7',
-    title: '최신 스터디 7',
-    description: '최신 스터디 설명 7',
-    category: 'Express.js (Node.js)',
-  },
-  {
-    id: 8,
-    image: null,
-    link: 'https://example.com/latest8',
-    title: '최신 스터디 8',
-    description: '최신 스터디 설명 8',
-    category: 'React.js',
-  },
-  {
-    id: 9,
-    image: null,
-    link: 'https://example.com/latest9',
-    title: '최신 스터디 9',
-    description: '최신 스터디 설명 9',
-    category: '알고리즘',
-  },
-  {
-    id: 10,
-    image: null,
-    link: 'https://example.com/latest10',
-    title: '최신 스터디 10',
-    description: '최신 스터디 설명 10',
-    category: 'WINK 공홈 부수기',
-  },
-];
-
-const categories = [
-  'All',
-  'HTML & CSS & JS',
-  'React.js',
-  'Express.js (Node.js)',
-  '알고리즘',
-  '인공지능',
-  '개인 스터디 & 프로젝트',
-  'Spring Boot',
-  'WINK 공홈 부수기',
-];
-
 const StudyPage = () => {
-  const [visibleStudyCards, setVisibleStudyCards] = useState(8);
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [page, setPage] = useState<number>(1);
+  const [maxPage, setMaxPage] = useState<number>(1);
+
+  const [studies, setStudies] = useState<StudyType[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category>({
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    _id: 'all',
+    name: 'All',
+  });
 
-  const loadMore = () => {
-    setVisibleStudyCards((prevVisible) => prevVisible + 8);
-  };
-
-  // 카테고리에 따라 필터링된 최신 스터디
   const filteredStudies =
-    selectedCategory === 'All'
-      ? latestStudies
-      : latestStudies.filter((study) => study.category === selectedCategory);
+    selectedCategory._id === 'all'
+      ? studies
+      : studies.filter((study) => study.category._id === selectedCategory._id);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { categories } = await WinkApi.Activity.Study.getCategories();
+      setCategories([
+        { createdAt: new Date(), updatedAt: new Date(), _id: 'all', name: 'All' },
+        ...categories,
+      ]);
+    };
+
+    const fetchMaxPage = async () => {
+      const { page } = await WinkApi.Activity.Study.getStudiesPage();
+      setMaxPage(page);
+    };
+
+    (async () => {
+      await fetchCategories();
+      await fetchMaxPage();
+    })();
+  }, []);
+
+  useEffect(() => {
+    const fetchStudies = async () => {
+      const { studies } = await WinkApi.Activity.Study.getStudies({
+        page,
+      });
+      setStudies((prev) => [...prev, ...studies]);
+    };
+
+    (async () => {
+      await fetchStudies();
+    })();
+  }, [page]);
 
   return (
     <>
@@ -165,16 +74,8 @@ const StudyPage = () => {
         <div className="w-study mx-auto mt-20 mb-36">
           <h2 className="font-semibold text-3xl mb-4">🔥 주목할 글</h2>
           <div className="flex flex-col items-center w-full gap-7">
-            {featuredStudies.map(({ id, image, link, title, description, category }) => (
-              <StudyCard
-                key={id}
-                id={id}
-                image={image}
-                link={link}
-                title={title}
-                description={description}
-                category={category}
-              />
+            {studies.slice(0, 4).map(({ _id, image, link, title, content }) => (
+              <StudyCard key={_id} image={image} link={link} title={title} content={content} />
             ))}
           </div>
         </div>
@@ -183,12 +84,12 @@ const StudyPage = () => {
         <div className="w-study mx-auto mt-12 mb-28">
           <div className="flex w-full justify-between gap-7 mb-16 relative">
             <h2 className="font-semibold text-xl">🌱 최신글</h2>
-            <div className="relative w-48">
+            <div className="relative w-64">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="px-3 py-1 w-full border border-gray-400 rounded-md flex justify-between items-center bg-white"
               >
-                {selectedCategory}
+                {selectedCategory.name}
                 <FaAngleDown className={`w-4 h-4 ml-2 ${isOpen ? 'rotate-180' : ''}`} />
               </button>
 
@@ -203,14 +104,14 @@ const StudyPage = () => {
                   >
                     {categories.map((category) => (
                       <div
-                        key={category}
+                        key={category._id}
                         className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
                         onClick={() => {
                           setSelectedCategory(category);
                           setIsOpen(false);
                         }}
                       >
-                        {category}
+                        {category.name}
                       </div>
                     ))}
                   </motion.div>
@@ -219,27 +120,19 @@ const StudyPage = () => {
             </div>
           </div>
           <div className="flex flex-col items-center gap-7">
-            {filteredStudies
-              .slice(0, visibleStudyCards)
-              .map(({ id, image, link, title, description, category }) => (
-                <StudyCard
-                  key={id}
-                  id={id}
-                  image={image}
-                  link={link}
-                  title={title}
-                  description={description}
-                  category={category}
-                />
-              ))}
+            {filteredStudies.slice(4).map(({ _id, image, link, title, content }) => (
+              <StudyCard key={_id} image={image} link={link} title={title} content={content} />
+            ))}
           </div>
         </div>
 
         {/* 더보기 버튼 */}
-        {visibleStudyCards < latestStudies.length && (
+        {page < maxPage && (
           <div className="flex justify-center mb-72">
             <button
-              onClick={loadMore}
+              onClick={() => {
+                setPage((prev) => prev + 1);
+              }}
               className="px-4 py-2 bg-white rounded-2xl border border-gray-400 hover:bg-gray-100  text-lg font-semibold"
             >
               더 보기
