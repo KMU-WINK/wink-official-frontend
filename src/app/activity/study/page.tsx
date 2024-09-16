@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { FaAngleDown } from 'react-icons/fa';
 
 import { StudyCard } from '@/component';
+
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface StudyType {
   id: number; // 유니크한 ID
@@ -138,13 +141,10 @@ const categories = [
 const StudyPage = () => {
   const [visibleStudyCards, setVisibleStudyCards] = useState(8);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [isOpen, setIsOpen] = useState(false);
 
   const loadMore = () => {
     setVisibleStudyCards((prevVisible) => prevVisible + 8);
-  };
-
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(event.target.value);
   };
 
   // 카테고리에 따라 필터링된 최신 스터디
@@ -162,7 +162,7 @@ const StudyPage = () => {
         </div>
 
         {/* 주목할 글 */}
-        <div className="w-full max-w-study mx-auto mt-20 mb-36">
+        <div className="w-study mx-auto mt-20 mb-36">
           <h2 className="font-semibold text-3xl mb-4">🔥 주목할 글</h2>
           <div className="flex flex-col items-center w-full gap-7">
             {featuredStudies.map(({ id, image, link, title, description, category }) => (
@@ -180,20 +180,43 @@ const StudyPage = () => {
         </div>
 
         {/* 최신글 */}
-        <div className="w-full max-w-study mx-auto mt-12 mb-28">
-          <div className="flex w-full justify-between gap-7 mb-16">
+        <div className="w-study mx-auto mt-12 mb-28">
+          <div className="flex w-full justify-between gap-7 mb-16 relative">
             <h2 className="font-semibold text-xl">🌱 최신글</h2>
-            <select
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-              className="px-3 py-1 border border-gray-400 rounded-md"
-            >
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+            <div className="relative w-48">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="px-3 py-1 w-full border border-gray-400 rounded-md flex justify-between items-center bg-white"
+              >
+                {selectedCategory}
+                <FaAngleDown className={`w-4 h-4 ml-2 ${isOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, maxHeight: 0 }}
+                    animate={{ opacity: 1, maxHeight: '10rem' }}
+                    exit={{ opacity: 0, maxHeight: 0 }}
+                    transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg overflow-y-auto"
+                  >
+                    {categories.map((category) => (
+                      <div
+                        key={category}
+                        className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          setIsOpen(false);
+                        }}
+                      >
+                        {category}
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
           <div className="flex flex-col items-center gap-7">
             {filteredStudies

@@ -82,14 +82,14 @@ const LoginPage = () => {
               type="button"
               label="로그인"
               onClick={onLoginButtonClick}
-              className="w-full py-2 text-base"
+              className="w-full py-2 text-base "
             />
 
             <div className="text-center text-xs">
               회원이 아니신가요?
               <Link
                 href="/auth/signup"
-                className="text-wink-300 hover:underline hover:text-wink-500 ml-1.5"
+                className="text-wink-500 hover:underline hover:text-wink-600 ml-1.5"
               >
                 회원가입
               </Link>
