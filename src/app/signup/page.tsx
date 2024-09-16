@@ -23,7 +23,7 @@ type Inputs =
   | 'password'
   | 'confirmPassword';
 
-export default function SignUp() {
+const SignUpPage = () => {
   const router = useRouter();
 
   const [isSendCode, setSendCode] = useState(false);
@@ -214,4 +214,6 @@ export default function SignUp() {
       </div>
     </>
   );
-}
+};
+
+export default SignUpPage;

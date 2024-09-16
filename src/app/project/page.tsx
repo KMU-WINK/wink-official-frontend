@@ -30,7 +30,7 @@ const sampleSliderProjects = Array.from({ length: 6 }, (_, index) => ({
   link: `https://example.com`,
 }));
 
-export default function Project() {
+const ProjectPage = () => {
   const [visibleProjects, setVisibleProjects] = useState(18);
 
   const loadMore = () => {
@@ -77,4 +77,6 @@ export default function Project() {
       </div>
     </>
   );
-}
+};
+
+export default ProjectPage;
