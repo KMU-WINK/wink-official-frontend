@@ -16,7 +16,7 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-const HIDE_FOOTER_PATHS = ['/auth'];
+const HIDE_FOOTER_PATHS = ['/auth', '/admin'];
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   const pathname = usePathname();
