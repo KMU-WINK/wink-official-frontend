@@ -6,11 +6,11 @@ import { AdminSideBar } from '@/component';
 
 import { AdminGuard } from '@/guard';
 
-interface RootLayoutProps {
+interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
-const AdminLayout = ({ children }: RootLayoutProps) => {
+const AdminLayout = ({ children }: AuthLayoutProps) => {
   return (
     <AdminGuard>
       <div className="flex mt-12">
