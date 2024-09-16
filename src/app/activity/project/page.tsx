@@ -1,41 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Carousel, ProjectCard } from '@/component';
 
-interface Project {
-  id: number;
-  title: string;
-  imageUrl: string | null;
-  tags: string[];
-  year: number;
-  link: string;
-}
-
-const sampleProjects: Project[] = Array.from({ length: 24 }, (_, index) => ({
-  id: index + 1,
-  title: `Project ${index + 1}`,
-  imageUrl: null,
-  tags: [`태그${(index % 3) + 1}`, `태그${(index % 3) + 2}`],
-  year: 2020 + (index % 4),
-  link: 'https://example.com',
-}));
-
-const sampleSliderProjects = Array.from({ length: 6 }, (_, index) => ({
-  id: index,
-  title: `Project ${index + 1}`,
-  imageUrl: null,
-  content: '프로젝트 간단한 설명',
-  link: `https://example.com`,
-}));
+import { ProjectType, WinkApi } from '@/api';
 
 const ProjectPage = () => {
-  const [visibleProjects, setVisibleProjects] = useState(18);
+  const [page, setPage] = useState<number>(1);
+  const [maxPage, setMaxPage] = useState<number>(1);
 
-  const loadMore = () => {
-    setVisibleProjects((prevVisible) => prevVisible + 18);
-  };
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+
+  useEffect(() => {
+    const fetchMaxPage = async () => {
+      const { page } = await WinkApi.Activity.Project.getProjectsPage();
+      setMaxPage(page);
+    };
+
+    (async () => {
+      await fetchMaxPage();
+    })();
+  }, []);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { projects } = await WinkApi.Activity.Project.getProjects({
+        page,
+      });
+      setProjects((prev) => [...prev, ...projects]);
+    };
+
+    (async () => {
+      await fetchProjects();
+    })();
+  }, [page]);
 
   return (
     <>
@@ -46,31 +45,36 @@ const ProjectPage = () => {
         </div>
 
         {/* Carousel 영역 */}
-        <div className="w-full max-w-carousel mt-32">
-          <Carousel cards={sampleSliderProjects} />
+        <div className="w-carousel mt-32">
+          <Carousel
+            cards={projects.slice(0, 6).map(({ _id, ...rest }) => ({
+              id: _id,
+              ...rest,
+            }))}
+          />
         </div>
 
         {/* 프로젝트 목록 */}
-        <div className="w-full max-w-project mx-auto mt-48 mb-20">
+        <div className="w-project mx-auto mt-48 mb-20">
           <div className="grid grid-cols-3 gap-8">
-            {sampleProjects.slice(0, visibleProjects).map((project) => (
+            {projects.slice(6).map(({ _id, createdAt, title, tags, image }) => (
               <ProjectCard
-                key={project.id}
-                title={project.title}
-                imageUrl={project.imageUrl}
-                tags={project.tags}
-                year={project.year}
-                link={project.link}
+                key={_id}
+                id={_id}
+                createdAt={createdAt}
+                title={title}
+                tags={tags}
+                image={image}
               />
             ))}
           </div>
         </div>
 
         {/* 더보기 버튼 */}
-        {visibleProjects < sampleProjects.length && (
+        {page < maxPage && (
           <div className="flex justify-center mb-10">
             <button
-              onClick={loadMore}
+              onClick={() => setPage((prev) => prev + 1)}
               className="px-4 py-2 bg-white rounded-2xl border border-gray-400 hover:bg-gray-100 text-lg font-semibold"
             >
               목록 더 보기

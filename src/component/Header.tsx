@@ -79,7 +79,7 @@ export const Header: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 bg-white w-full h-14 flex items-center justify-center border-b">
-      <div className="w-full max-w-page flex justify-between p-4 lg:p-6">
+      <div className="w-page flex justify-between p-4 lg:p-6">
         <Link href={'/'} replace>
           <Image className="object-contain h-6 mt-1" src={logo} alt="logo" height={24} priority />
         </Link>
