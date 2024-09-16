@@ -22,6 +22,7 @@ export default {
     '^@/guard',
     '^@/api',
     '^@/style',
+    '^@/util',
     '^@/',
 
     '^[./]',

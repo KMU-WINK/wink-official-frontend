@@ -12,5 +12,6 @@ export * from './form';
 export * from './Carousel';
 export * from './ProjectCard';
 export * from './StudyCard';
+export * from './Modal';
 
 export * from './admin';
