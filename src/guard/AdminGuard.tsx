@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { useApplicationState, useMemberStore } from '@/store';
 
-const PERMIT_ROLES = [
+export const PERMIT_ROLES = [
   'PRESIDENT',
   'VICE_PRESIDENT',
   'TREASURY_HEAD',
