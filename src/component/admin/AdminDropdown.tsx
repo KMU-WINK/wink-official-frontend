@@ -1,6 +1,4 @@
-'use client';
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -11,7 +9,7 @@ interface AdminDropdownProps {
   onChange: (value: string) => void;
 }
 
-export const AdminDropdown = ({ value, options, onChange }: AdminDropdownProps) => {
+export const AdminDropdown: React.FC<AdminDropdownProps> = ({ value, options, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

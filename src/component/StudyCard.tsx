@@ -2,8 +2,6 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import { Category } from '@/api';
-
 import logo from '@/public/logo.png';
 
 interface StudyCardProps {

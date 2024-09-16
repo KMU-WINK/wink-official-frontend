@@ -1,5 +1,3 @@
-'use client';
-
 import React, { Dispatch, SetStateAction } from 'react';
 
 interface AdminTablePageProps {
@@ -8,7 +6,7 @@ interface AdminTablePageProps {
   maxPage: number;
 }
 
-export const AdminTablePage: React.FC<AdminTablePageProps> = ({ page, setPage, maxPage }) => {
+export const AdminTablePaging: React.FC<AdminTablePageProps> = ({ page, setPage, maxPage }) => {
   const getPaginationRange = (current: number, max: number) => {
     if (max <= 5) return Array.from({ length: max }, (_, i) => i + 1);
     if (current === 1 || current == 2) return [1, 2, 3, 4, 5];

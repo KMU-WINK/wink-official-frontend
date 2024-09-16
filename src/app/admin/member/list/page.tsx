@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { AdminDropdown, AdminSearchBar, AdminTablePage, AdminTitle } from '@/component';
+import { AdminDropdown, AdminSearchBar, AdminTablePaging, AdminTitle } from '@/component';
 
 import {
   EachGetMembersForAdminResponseDto,
@@ -107,7 +107,7 @@ const AdminMemberListPage = () => {
         </div>
       ))}
 
-      {!query && <AdminTablePage page={page} setPage={setPage} maxPage={maxPage} />}
+      {!query && <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />}
     </div>
   );
 };
