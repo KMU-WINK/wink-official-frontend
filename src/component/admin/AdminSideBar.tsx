@@ -16,6 +16,7 @@ const ITEM = [
     description: '동아리 활동 관리',
     items: [
       { title: '스터디', href: '/admin/activity/study' },
+      { title: '스터디 - 카테고리', href: '/admin/activity/study/category' },
       { title: '프로젝트', href: '/admin/activity/project' },
       { title: '친목 활동', href: '/admin/activity/social' },
     ],

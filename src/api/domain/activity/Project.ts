@@ -91,8 +91,8 @@ export interface GetProjectsPageResponseDto {
 
 export interface ProjectType {
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   type: 'Project' | 'Study' | 'Social';
   author: MemberType;
   title: string;

@@ -5,7 +5,7 @@ import { FaAngleDown } from 'react-icons/fa';
 
 import { StudyCard } from '@/component';
 
-import { Category, StudyType, WinkApi } from '@/api';
+import { EachGetCategoriesResponseDto, StudyType, WinkApi } from '@/api';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -14,14 +14,13 @@ const StudyPage = () => {
   const [maxPage, setMaxPage] = useState<number>(1);
 
   const [studies, setStudies] = useState<StudyType[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<EachGetCategoriesResponseDto[]>([]);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<Category>({
-    createdAt: new Date(),
-    updatedAt: new Date(),
+  const [selectedCategory, setSelectedCategory] = useState<EachGetCategoriesResponseDto>({
     _id: 'all',
     name: 'All',
+    dependencies: 0,
   });
 
   const filteredStudies =
@@ -32,10 +31,7 @@ const StudyPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const { categories } = await WinkApi.Activity.Study.getCategories();
-      setCategories([
-        { createdAt: new Date(), updatedAt: new Date(), _id: 'all', name: 'All' },
-        ...categories,
-      ]);
+      setCategories([{ _id: 'all', name: 'All', dependencies: 0 }, ...categories]);
     };
 
     const fetchMaxPage = async () => {

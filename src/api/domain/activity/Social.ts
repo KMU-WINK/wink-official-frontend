@@ -7,6 +7,10 @@ export class Social {
     return this.request.get('/activity/social/detail?socialId=' + data.socialId);
   }
 
+  public async getSocialsPage(): Promise<GetSocialsPageResponseDto> {
+    return this.request.get('/activity/social/max');
+  }
+
   public async getSocials(data: GetSocialsRequestDto): Promise<GetSocialsResponseDto> {
     return this.request.get('/activity/social?page=' + data.page);
   }
@@ -71,6 +75,10 @@ export interface GetSocialResponseDto {
   social: SocialType;
 }
 
+export interface GetSocialsPageResponseDto {
+  page: number;
+}
+
 export interface GetSocialsResponseDto {
   socials: SocialType[];
 }
@@ -79,8 +87,8 @@ export interface GetSocialsResponseDto {
 
 export interface SocialType {
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   type: 'Project' | 'Study' | 'Social';
   title: string;
   contents: Content[];
