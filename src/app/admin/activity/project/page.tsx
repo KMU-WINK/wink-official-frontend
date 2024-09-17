@@ -17,7 +17,7 @@ const AdminActivityProjectPage = () => {
   const [projects, setProjects] = useState<ProjectType[]>([]);
 
   const [page, setPage] = useState<number>(1);
-  const [maxPage, setMaxPage] = useState<number>(1);
+  const [maxPage, setMaxPage] = useState<number>(0);
 
   const [query, setQuery] = useState<string>('');
 
@@ -133,7 +133,9 @@ const AdminActivityProjectPage = () => {
         </div>
       </Modal>
 
-      {!query && <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />}
+      {!query && maxPage > 0 && (
+        <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />
+      )}
     </div>
   );
 };
