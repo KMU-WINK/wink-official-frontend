@@ -15,6 +15,7 @@ import { PERMIT_ROLES } from '@/guard';
 import { WinkApi } from '@/api';
 
 import logo from '@/public/logo.png';
+import avatar from '@/public/profile.svg';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -136,7 +137,7 @@ export const Header: React.FC = () => {
                   onClick={() => handleDropdownToggle('profile')}
                 >
                   <Image
-                    src={member.avatar || '/profile.svg'}
+                    src={member.avatar || avatar}
                     alt="Profile"
                     width={32}
                     height={32}

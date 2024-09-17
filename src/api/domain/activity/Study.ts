@@ -85,8 +85,14 @@ export interface CreateStudyResponseDto {
   study: StudyType;
 }
 
+export interface EachGetCategoriesResponseDto {
+  _id: string;
+  name: string;
+  dependencies: number;
+}
+
 export interface GetCategoriesResponseDto {
-  categories: Category[];
+  categories: EachGetCategoriesResponseDto[];
 }
 
 export interface GetStudiesResponse {
@@ -101,21 +107,21 @@ export interface GetStudiesPageResponse {
 
 export interface StudyType {
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   type: 'Project' | 'Study' | 'Social';
   title: string;
   content: string;
   author: string;
   image: string;
   link: string;
-  uploadedAt: Date;
+  uploadedAt: string;
   category: Category;
 }
 
 export interface Category {
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
 }

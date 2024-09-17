@@ -109,8 +109,8 @@ export interface UpdateMyPasswordRequestDto {
 
 export interface EachGetMembersResponseDto {
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   avatar: string;
   description: string | null;
@@ -198,8 +198,8 @@ export const RoleKoreanToRole = (role: string): Role => {
 
 export interface MemberType {
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   studentId: string;
   email: string;
