@@ -31,7 +31,7 @@ const ActivityProjectViewPage = ({ params }: ActivityProjectViewPageProps) => {
   }
 
   return (
-    <div className="container mx-auto mt-24">
+    <div className="container mx-auto mt-24 px-4 md:px-0 md:w-3/5">
       <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
       <div className="mb-4 flex items-center justify-between">
         <div>
@@ -39,7 +39,7 @@ const ActivityProjectViewPage = ({ params }: ActivityProjectViewPageProps) => {
           <span className="text-gray-400 ml-4">{formatDate(project.createdAt)}</span>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="mt-4 mb-8">
         {project.tags.map((tag) => (
           <span
             key={tag}
