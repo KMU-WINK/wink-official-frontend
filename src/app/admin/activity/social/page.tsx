@@ -15,7 +15,7 @@ const AdminActivitySocialPage = () => {
   const [socials, setSocials] = useState<SocialType[]>([]);
 
   const [page, setPage] = useState<number>(1);
-  const [maxPage, setMaxPage] = useState<number>(1);
+  const [maxPage, setMaxPage] = useState<number>(0);
 
   const [query, setQuery] = useState<string>('');
 
@@ -126,7 +126,9 @@ const AdminActivitySocialPage = () => {
         </div>
       </Modal>
 
-      {!query && <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />}
+      {!query && maxPage > 0 && (
+        <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />
+      )}
     </div>
   );
 };
