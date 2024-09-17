@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import '@/style/Carousel.css';
 
+import * as cheerio from 'cheerio';
+
 export interface CarouselCard {
   id: string;
   title: string;
@@ -83,7 +85,9 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
       {cards.length > 0 && currentIndex !== null && (
         <div className="flex flex-col items-center pt-32 pb-12">
           <h2 className="font-bold text-3xl mb-2">{cards[currentIndex].title}</h2>
-          <p className="font-medium text-slate-500 text-xl">{cards[currentIndex].content}</p>
+          <p className="font-medium text-slate-500 text-xl max-w-md truncate">
+            {cheerio.load(cards[currentIndex].content).root().text()}
+          </p>
         </div>
       )}
 
