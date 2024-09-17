@@ -5,7 +5,7 @@ import { FaEdit } from 'react-icons/fa';
 import { FaTrashCan } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
 
-import { AdminIconButton, AdminTitle, FormContainer, Modal, TextField } from '@/component';
+import { FormContainer, IconButton, Modal, TextField, Title } from '@/component';
 
 import { useForm } from '@/hook';
 
@@ -87,10 +87,10 @@ const AdminActivityStudyCategoryPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <AdminTitle title="Activity" subtitle="스터디 - 카테고리" />
+      <Title title="Activity" subtitle="스터디 - 카테고리" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <AdminIconButton
+        <IconButton
           icon={<FaEdit />}
           text="카테고리 추가"
           className="bg-wink-500 hover:bg-wink-600 border-0 text-white"

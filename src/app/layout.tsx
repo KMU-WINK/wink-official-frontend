@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import 'react-quill/dist/quill.snow.css';
 import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -1,12 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-interface AdminTablePageProps {
+interface TablePagingProps {
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
   maxPage: number;
 }
 
-export const AdminTablePaging: React.FC<AdminTablePageProps> = ({ page, setPage, maxPage }) => {
+export const TablePaging: React.FC<TablePagingProps> = ({ page, setPage, maxPage }) => {
   const getPaginationRange = (current: number, max: number) => {
     if (max <= 5) return Array.from({ length: max }, (_, i) => i + 1);
     if (current === 1 || current == 2) return [1, 2, 3, 4, 5];
@@ -22,7 +22,7 @@ export const AdminTablePaging: React.FC<AdminTablePageProps> = ({ page, setPage,
       <button
         onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
         disabled={page === 1}
-        className="px-3 py-1 rounded-md transition duration-300 bg-white text-blue-500 hover:bg-blue-100 disabled:opacity-50"
+        className="px-3 py-1 rounded-md transition duration-300 bg-white text-wink-500 hover:bg-wink-100 disabled:opacity-50"
       >
         &lt;
       </button>
@@ -31,7 +31,7 @@ export const AdminTablePaging: React.FC<AdminTablePageProps> = ({ page, setPage,
           key={number}
           onClick={() => setPage(number)}
           className={`px-3 py-1 rounded-md transition duration-300 ${
-            page === number ? 'bg-blue-500 text-white' : 'bg-white text-blue-500 hover:bg-blue-100'
+            page === number ? 'bg-wink-500 text-white' : 'bg-white text-wink-500 hover:bg-wink-100'
           }`}
         >
           {number}
@@ -40,7 +40,7 @@ export const AdminTablePaging: React.FC<AdminTablePageProps> = ({ page, setPage,
       <button
         onClick={() => setPage((prev) => Math.min(prev + 1, maxPage))}
         disabled={page === maxPage}
-        className="px-3 py-1 rounded-md transition duration-300 bg-white text-blue-500 hover:bg-blue-100 disabled:opacity-50"
+        className="px-3 py-1 rounded-md transition duration-300 bg-white text-wink-500 hover:bg-wink-100 disabled:opacity-50"
       >
         &gt;
       </button>

@@ -1,18 +1,13 @@
 import React from 'react';
 
-interface AdminPostButtonProps {
+interface IconButtonProps {
   icon: React.ReactNode;
   text?: string;
   className?: string;
   onClick: () => void;
 }
 
-export const AdminIconButton: React.FC<AdminPostButtonProps> = ({
-  icon,
-  text,
-  className,
-  onClick,
-}) => {
+export const IconButton: React.FC<IconButtonProps> = ({ icon, text, className, onClick }) => {
   return (
     <button
       onClick={onClick}
