@@ -2,7 +2,6 @@ export * from './AdminSideBar';
 export * from './Button';
 export * from './Carousel';
 export * from './Dropdown';
-export * from './Editor';
 export * from './Footer';
 export * from './FormContainer';
 export * from './Header';
