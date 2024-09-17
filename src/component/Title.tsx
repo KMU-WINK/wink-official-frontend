@@ -2,12 +2,12 @@
 
 import React from 'react';
 
-interface AdminTitleProps {
+interface TitleProps {
   title: string;
   subtitle: string;
 }
 
-export const AdminTitle: React.FC<AdminTitleProps> = ({ title, subtitle }) => {
+export const Title: React.FC<TitleProps> = ({ title, subtitle }) => {
   return (
     <>
       <h1 className="text-3xl font-bold">{title}</h1>

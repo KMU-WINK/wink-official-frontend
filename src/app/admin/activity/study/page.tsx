@@ -8,13 +8,13 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 
 import {
-  AdminIconButton,
-  AdminSearchBar,
-  AdminTablePaging,
-  AdminTitle,
   FormContainer,
+  IconButton,
   Modal,
+  SearchBar,
+  TablePaging,
   TextField,
+  Title,
 } from '@/component';
 
 import { useForm } from '@/hook';
@@ -106,12 +106,12 @@ const AdminActivityStudyPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <AdminTitle title="Activity" subtitle="스터디" />
+      <Title title="Activity" subtitle="스터디" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <AdminSearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
+        <SearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
 
-        <AdminIconButton
+        <IconButton
           icon={<FaEdit />}
           text="스터디 추가"
           className="bg-wink-500 hover:bg-wink-600 border-0 text-white"
@@ -165,7 +165,7 @@ const AdminActivityStudyPage = () => {
               type="url"
               id="link"
               placeholder="스터디 링크를 입력해주세요."
-              className="p-2 text-sm"
+              className="p-2 text-sm border"
             />
           </div>
         </FormContainer>
@@ -207,9 +207,7 @@ const AdminActivityStudyPage = () => {
         </div>
       </Modal>
 
-      {!query && maxPage > 0 && (
-        <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />
-      )}
+      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
     </div>
   );
 };

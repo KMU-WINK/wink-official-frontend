@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { AdminSearchBar, AdminTitle } from '@/component';
+import { SearchBar, Title } from '@/component';
 
 import { EachGetWaitingMembersResponseDto, WinkApi } from '@/api';
 
@@ -38,10 +38,10 @@ const AdminMemberWaitingPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <AdminTitle title="Member" subtitle="회원가입 승인" />
+      <Title title="Member" subtitle="회원가입 승인" />
 
       <div className="flex justify-end mb-4">
-        <AdminSearchBar value={query} placeholder="이름을 검색해주세요." onChange={setQuery} />
+        <SearchBar value={query} placeholder="이름을 검색해주세요." onChange={setQuery} />
       </div>
 
       <div className="min-w-full grid grid-cols-5 gap-2 border-b">

@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-interface AdminSearchBarProps {
+interface SearchBarProps {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
 }
 
-export const AdminSearchBar: React.FC<AdminSearchBarProps> = ({ value, placeholder, onChange }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, onChange }) => {
   const onProxyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 

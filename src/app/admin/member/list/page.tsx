@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { AdminDropdown, AdminSearchBar, AdminTablePaging, AdminTitle } from '@/component';
+import { Dropdown, SearchBar, TablePaging, Title } from '@/component';
 
 import {
   EachGetMembersForAdminResponseDto,
@@ -61,10 +61,10 @@ const AdminMemberListPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <AdminTitle title="Member" subtitle="회원 정보 수정" />
+      <Title title="Member" subtitle="회원 정보 수정" />
 
       <div className="flex justify-end mb-4">
-        <AdminSearchBar value={query} placeholder="이름을 검색해주세요." onChange={setQuery} />
+        <SearchBar value={query} placeholder="이름을 검색해주세요." onChange={setQuery} />
       </div>
 
       <div className="min-w-full grid grid-cols-6 gap-2 border-b">
@@ -91,14 +91,14 @@ const AdminMemberListPage = () => {
           <div className="py-4 px-4 col-span-1 text-sm">{member.studentId}</div>
           <div className="py-4 px-4 col-span-2 text-sm">{member.email}</div>
           <div className="py-4 px-4 col-span-1 text-sm">
-            <AdminDropdown
+            <Dropdown
               value={RoleKoreanMap[member.role]}
               options={RoleKorean}
               onChange={(value) => handleRoleChange(member, value)}
             />
           </div>
           <div className="py-4 px-4 col-span-1 text-sm">
-            <AdminDropdown
+            <Dropdown
               value={member.fee ? '납부' : '미납부'}
               options={['납부', '미납부']}
               onChange={(value) => handleFeeChange(member, value === '납부')}
@@ -107,9 +107,7 @@ const AdminMemberListPage = () => {
         </div>
       ))}
 
-      {!query && maxPage > 0 && (
-        <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />
-      )}
+      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
     </div>
   );
 };

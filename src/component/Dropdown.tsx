@@ -3,13 +3,13 @@ import { FaAngleDown } from 'react-icons/fa';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface AdminDropdownProps {
+interface DropdownProps {
   value: string;
   options: string[];
   onChange: (value: string) => void;
 }
 
-export const AdminDropdown: React.FC<AdminDropdownProps> = ({ value, options, onChange }) => {
+export const Dropdown: React.FC<DropdownProps> = ({ value, options, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

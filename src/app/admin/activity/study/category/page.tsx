@@ -5,7 +5,7 @@ import { FaEdit } from 'react-icons/fa';
 import { FaTrashCan } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
 
-import { AdminIconButton, AdminTitle, FormContainer, Modal, TextField } from '@/component';
+import { FormContainer, IconButton, Modal, TextField, Title } from '@/component';
 
 import { useForm } from '@/hook';
 
@@ -87,10 +87,10 @@ const AdminActivityStudyCategoryPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <AdminTitle title="Activity" subtitle="스터디 - 카테고리" />
+      <Title title="Activity" subtitle="스터디 - 카테고리" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <AdminIconButton
+        <IconButton
           icon={<FaEdit />}
           text="카테고리 추가"
           className="bg-wink-500 hover:bg-wink-600 border-0 text-white"
@@ -139,7 +139,7 @@ const AdminActivityStudyCategoryPage = () => {
       ))}
 
       <Modal isOpen={createModal} onClose={() => setCreateModal(false)}>
-        <h2 className="text-xl font-bold mb-4">스터디 추가</h2>
+        <h2 className="text-xl font-bold mb-4">카테고리 추가</h2>
 
         <FormContainer values={values} errors={errors} onChange={onChange}>
           <div className="flex items-center gap-2.5">
@@ -147,7 +147,7 @@ const AdminActivityStudyCategoryPage = () => {
               type="text"
               id="category"
               placeholder="카테고리 이름을 입력해주세요."
-              className="p-2 text-sm"
+              className="p-2 text-sm border"
             />
           </div>
         </FormContainer>
@@ -170,7 +170,7 @@ const AdminActivityStudyCategoryPage = () => {
       </Modal>
 
       <Modal isOpen={!!modifyModal} onClose={() => setModifyModal(null)}>
-        <h2 className="text-xl font-bold mb-4">스터디 변경</h2>
+        <h2 className="text-xl font-bold mb-4">카테고리 변경</h2>
 
         <FormContainer values={values} errors={errors} onChange={onChange}>
           <div className="flex items-center gap-2.5">
@@ -178,7 +178,7 @@ const AdminActivityStudyCategoryPage = () => {
               type="text"
               id="category"
               placeholder="카테고리 이름을 입력해주세요."
-              className="p-2 text-sm"
+              className="p-2 text-sm border"
             />
           </div>
         </FormContainer>
@@ -202,10 +202,13 @@ const AdminActivityStudyCategoryPage = () => {
 
       <Modal isOpen={!!deleteModal} onClose={() => setDeleteModal(null)}>
         <h2 className="text-xl font-bold mb-4">정말로 삭제하시겠습니까?</h2>
-        <p>
-          이 카테고리({deleteModal?.name})를 삭제하면{' '}
-          <strong>{deleteModal?.dependencies}개의 스터디가 모두 삭제</strong>됩니다.
-        </p>
+        <p>{deleteModal?.name}</p>
+        {deleteModal && deleteModal.dependencies > 0 && (
+          <p className="mt-2">
+            이 카테고리를 삭제하면{' '}
+            <strong>{deleteModal.dependencies}개의 스터디가 모두 삭제</strong>됩니다.
+          </p>
+        )}
         <div className="flex justify-end mt-4">
           <button
             className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md"

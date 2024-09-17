@@ -5,7 +5,7 @@ import { FaEdit } from 'react-icons/fa';
 import { FaTrashCan } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
 
-import { AdminIconButton, AdminSearchBar, AdminTablePaging, AdminTitle, Modal } from '@/component';
+import { IconButton, Modal, SearchBar, TablePaging, Title } from '@/component';
 
 import { SocialType, WinkApi } from '@/api';
 
@@ -61,12 +61,12 @@ const AdminActivitySocialPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <AdminTitle title="Activity" subtitle="친목 활동" />
+      <Title title="Activity" subtitle="친목 활동" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <AdminSearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
+        <SearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
 
-        <AdminIconButton
+        <IconButton
           icon={<FaEdit />}
           text="친목 활동 추가"
           className="bg-wink-500 hover:bg-wink-600 border-0 text-white"
@@ -126,9 +126,7 @@ const AdminActivitySocialPage = () => {
         </div>
       </Modal>
 
-      {!query && maxPage > 0 && (
-        <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />
-      )}
+      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
     </div>
   );
 };
