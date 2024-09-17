@@ -6,6 +6,7 @@ import { FaTrashCan } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { IconButton, Modal, SearchBar, TablePaging, Title } from '@/component';
 
@@ -14,6 +15,8 @@ import { ProjectType, WinkApi } from '@/api';
 import { formatDate } from '@/util';
 
 const AdminActivityProjectPage = () => {
+  const router = useRouter();
+
   const [projects, setProjects] = useState<ProjectType[]>([]);
 
   const [page, setPage] = useState<number>(1);
@@ -72,7 +75,7 @@ const AdminActivityProjectPage = () => {
           icon={<FaEdit />}
           text="프로젝트 추가"
           className="bg-wink-500 hover:bg-wink-600 border-0 text-white"
-          onClick={() => {}}
+          onClick={() => router.push('/admin/activity/project/editor/new')}
         />
       </div>
 
@@ -101,7 +104,11 @@ const AdminActivityProjectPage = () => {
           </Link>
           <div className="py-4 px-4 col-span-3 text-sm">{formatDate(project.createdAt)}</div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
-            <FaEdit size={18} className="cursor-pointer" onClick={() => {}} />
+            <FaEdit
+              size={18}
+              className="cursor-pointer"
+              onClick={() => router.push(`/admin/activity/project/editor/${project._id}`)}
+            />
           </div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
             <FaTrashCan
