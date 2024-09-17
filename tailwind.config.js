@@ -25,6 +25,7 @@ module.exports = {
       },
       margin: {
         4.5: '18px',
+        'admin-sidebar': '120px',
       },
       spacing: {
         4.5: '18px',

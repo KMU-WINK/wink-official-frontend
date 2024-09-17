@@ -13,11 +13,11 @@ interface AuthLayoutProps {
 const AdminLayout = ({ children }: AuthLayoutProps) => {
   return (
     <AdminGuard>
-      <div className="flex mt-14">
-        <div className="mt-36 ml-6">
+      <div className="flex mt-14 gap-6 p-6">
+        <div className="mt-admin-sidebar">
           <AdminSideBar />
         </div>
-        <div className="flex-1 p-6">{children}</div>
+        <div className="flex-1">{children}</div>
       </div>
     </AdminGuard>
   );
