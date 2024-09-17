@@ -6,7 +6,7 @@ import { Carousel, ProjectCard } from '@/component';
 
 import { ProjectType, WinkApi } from '@/api';
 
-const ProjectPage = () => {
+const ActivityProjectPage = () => {
   const [page, setPage] = useState<number>(1);
   const [maxPage, setMaxPage] = useState<number>(1);
 
@@ -86,4 +86,4 @@ const ProjectPage = () => {
   );
 };
 
-export default ProjectPage;
+export default ActivityProjectPage;

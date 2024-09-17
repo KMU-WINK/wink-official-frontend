@@ -9,7 +9,7 @@ import { EachGetCategoriesResponseDto, StudyType, WinkApi } from '@/api';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-const StudyPage = () => {
+const ActivityStudyPage = () => {
   const [page, setPage] = useState<number>(1);
   const [maxPage, setMaxPage] = useState<number>(1);
 
@@ -154,4 +154,4 @@ const StudyPage = () => {
   );
 };
 
-export default StudyPage;
+export default ActivityStudyPage;
