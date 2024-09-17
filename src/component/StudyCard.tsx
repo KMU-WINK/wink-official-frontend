@@ -2,10 +2,8 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import logo from '@/public/logo.png';
-
 interface StudyCardProps {
-  image: string | null;
+  image: string;
   link: string;
   title: string;
   content: string;
@@ -32,7 +30,7 @@ export const StudyCard: React.FC<StudyCardProps> = ({ image, link, title, conten
 
       {/* 이미지 영역 */}
       <div className="flex items-center flex-shrink-0 w-36 h-28">
-        <Image src={image || logo} alt={title} width={139} height={112} />
+        <Image src={image} alt={title} width={139} height={112} />
       </div>
     </a>
   );
