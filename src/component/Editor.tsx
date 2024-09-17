@@ -7,9 +7,10 @@ const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 interface EditorProps {
   content: string;
   setContent: (content: string) => void;
+  readonly?: boolean;
 }
 
-export const Editor: React.FC<EditorProps> = ({ content, setContent }) => {
+export const Editor: React.FC<EditorProps> = ({ content, setContent, readonly }) => {
   const editor = useRef(null);
 
   const config = useMemo(
@@ -30,11 +31,26 @@ export const Editor: React.FC<EditorProps> = ({ content, setContent }) => {
     [],
   );
 
+  const readonlyConfig = useMemo(
+    () => ({
+      useSearch: false,
+      toolbar: false,
+      readonly: true,
+      showCharsCounter: false,
+      showWordsCounter: false,
+      showXPathInStatusbar: false,
+      inline: true,
+      toolbarInlineForSelection: true,
+      showPlaceholder: false,
+    }),
+    [],
+  );
+
   return (
     <JoditEditor
       ref={editor}
       value={content}
-      config={config}
+      config={readonly ? readonlyConfig : config}
       onChange={(newContent) => setContent(newContent)}
     />
   );
