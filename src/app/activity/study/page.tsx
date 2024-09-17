@@ -70,8 +70,15 @@ const StudyPage = () => {
         <div className="w-study mx-auto mt-20 mb-36">
           <h2 className="font-semibold text-3xl mb-4">🔥 주목할 글</h2>
           <div className="flex flex-col items-center w-full gap-7">
-            {studies.slice(0, 4).map(({ _id, image, link, title, content }) => (
-              <StudyCard key={_id} image={image} link={link} title={title} content={content} />
+            {studies.slice(0, 4).map(({ _id, image, link, title, content, author }) => (
+              <StudyCard
+                key={_id}
+                image={image}
+                link={link}
+                title={title}
+                content={content}
+                author={author}
+              />
             ))}
           </div>
         </div>
@@ -116,8 +123,15 @@ const StudyPage = () => {
             </div>
           </div>
           <div className="flex flex-col items-center gap-7">
-            {filteredStudies.slice(4).map(({ _id, image, link, title, content }) => (
-              <StudyCard key={_id} image={image} link={link} title={title} content={content} />
+            {filteredStudies.slice(4).map(({ _id, image, link, title, content, author }) => (
+              <StudyCard
+                key={_id}
+                image={image}
+                link={link}
+                title={title}
+                content={content}
+                author={author}
+              />
             ))}
           </div>
         </div>

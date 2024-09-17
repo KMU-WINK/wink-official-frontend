@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import Link from 'next/link';
 
-import { AdminIconButton, AdminSearchBar, AdminTablePaging, AdminTitle, Modal } from '@/component';
+import { IconButton, Modal, SearchBar, TablePaging, Title } from '@/component';
 
 import { ProjectType, WinkApi } from '@/api';
 
@@ -63,12 +63,12 @@ const AdminActivityProjectPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <AdminTitle title="Activity" subtitle="프로젝트" />
+      <Title title="Activity" subtitle="프로젝트" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <AdminSearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
+        <SearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
 
-        <AdminIconButton
+        <IconButton
           icon={<FaEdit />}
           text="프로젝트 추가"
           className="bg-wink-500 hover:bg-wink-600 border-0 text-white"
@@ -133,9 +133,7 @@ const AdminActivityProjectPage = () => {
         </div>
       </Modal>
 
-      {!query && maxPage > 0 && (
-        <AdminTablePaging page={page} setPage={setPage} maxPage={maxPage} />
-      )}
+      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
     </div>
   );
 };
