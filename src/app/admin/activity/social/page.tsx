@@ -5,6 +5,8 @@ import { FaEdit } from 'react-icons/fa';
 import { FaTrashCan } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
 
+import { useRouter } from 'next/navigation';
+
 import { IconButton, Modal, SearchBar, TablePaging, Title } from '@/component';
 
 import { SocialType, WinkApi } from '@/api';
@@ -12,6 +14,8 @@ import { SocialType, WinkApi } from '@/api';
 import { formatDate } from '@/util';
 
 const AdminActivitySocialPage = () => {
+  const router = useRouter();
+
   const [socials, setSocials] = useState<SocialType[]>([]);
 
   const [page, setPage] = useState<number>(1);
@@ -70,7 +74,7 @@ const AdminActivitySocialPage = () => {
           icon={<FaEdit />}
           text="친목 활동 추가"
           className="bg-wink-500 hover:bg-wink-600 border-0 text-white"
-          onClick={() => {}}
+          onClick={() => router.push('/admin/activity/social/editor/new')}
         />
       </div>
 
@@ -94,7 +98,11 @@ const AdminActivitySocialPage = () => {
           <div className="py-4 px-4 col-span-7 text-sm truncate">{social.title}</div>
           <div className="py-4 px-4 col-span-3 text-sm">{formatDate(social.createdAt)}</div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
-            <FaEdit size={18} className="cursor-pointer" onClick={() => {}} />
+            <FaEdit
+              size={18}
+              className="cursor-pointer"
+              onClick={() => router.push(`/admin/activity/project/editor/${social._id}`)}
+            />
           </div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
             <FaTrashCan
