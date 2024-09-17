@@ -1,24 +1,46 @@
-# Build
-FROM node:20-alpine AS build
+FROM node:20-alpine AS base
+
+FROM base AS deps
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN apk add --no-cache libc6-compat
 
+COPY package.json yarn.lock* ./
+
+RUN yarn --frozen-lockfile
+RUN yarn cache clean
+
+FROM base AS builder
+
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
 RUN yarn build
 
-# Runtime
-FROM node:20-alpine
-
+FROM base AS runner
 WORKDIR /app
 
-COPY --from=build /app/package.json /app/yarn.lock ./
-RUN yarn install --production --frozen-lockfile && yarn cache clean && rm -rf ./.next/cache
+ENV NODE_ENV=production
 
-COPY --from=build /app/.next ./.next
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+ENV HOSTNAME="0.0.0.0"
+ENV PORT=3000
+
+CMD ["node", "server.js"]
