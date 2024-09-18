@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { FaAngleDown, FaAngleUp, FaCircle } from 'react-icons/fa';
+import { FaCircle } from 'react-icons/fa';
+
+import ArrowDown from '@/public/assets/arrow-down.svg';
+import ArrowUp from '@/public/assets/arrow-up.svg';
 
 import Image, { StaticImageData } from 'next/image';
 
@@ -86,9 +89,9 @@ const ActivityHistoryPage = () => {
                       </span>
                     </span>
                     {openItems.includes(`${yearData.year}-${index}`) ? (
-                      <FaAngleUp />
+                      <ArrowUp />
                     ) : (
-                      <FaAngleDown />
+                      <ArrowDown />
                     )}
                   </button>
 
