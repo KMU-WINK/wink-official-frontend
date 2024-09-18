@@ -24,6 +24,9 @@ module.exports = {
         study: '880px',
         history: '600px',
       },
+      height: {
+        recruit: '800px',
+      },
       margin: {
         4.5: '18px',
         'admin-sidebar': '120px',
@@ -40,9 +43,18 @@ module.exports = {
           '50%': { transform: 'translate(-50%, -2%) rotateZ(180deg)' },
           '100%': { transform: 'translate(-50%, 0%) rotateZ(360deg)' },
         },
+        moveDiagonally: {
+          '0%, 100%': {
+            transform: 'translateX(0) translateY(0)',
+          },
+          '50%': {
+            transform: 'translateX(20px) translateY(-20px)',
+          },
+        },
       },
       animation: {
         rotate: 'rotate 15s linear infinite',
+        rocket: 'moveDiagonally 3s ease-in-out infinite',
       },
       fontFamily: {
         sans: ['pretendard', 'sans-serif'],
