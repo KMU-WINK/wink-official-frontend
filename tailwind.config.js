@@ -22,6 +22,7 @@ module.exports = {
         carousel: '895px',
         project: '1150px',
         study: '880px',
+        history: '600px',
       },
       margin: {
         4.5: '18px',
