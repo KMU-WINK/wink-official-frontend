@@ -72,9 +72,14 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
                 backgroundImage: `url(${card.image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter: currentIndex !== index && card.image ? 'brightness(0.5) blur(2px)' : 'none',
+                filter:
+                  currentIndex !== index && card.image
+                    ? 'brightness(0.5) blur(2px)'
+                    : 'none',
                 boxShadow:
-                  currentIndex === index && card.image ? '0 4px 8px rgba(0, 0, 0, 0.5)' : 'none',
+                  currentIndex === index && card.image
+                    ? '0 4px 8px rgba(0, 0, 0, 0.5)'
+                    : 'none',
               }}
             />
           ))}
@@ -84,7 +89,9 @@ export const Carousel: React.FC<CarouselProps> = ({ cards }: CarouselProps) => {
       {/* 클릭한 카드의 정보 표시 */}
       {cards.length > 0 && currentIndex !== null && (
         <div className="flex flex-col items-center pt-32 pb-12">
-          <h2 className="font-bold text-3xl mb-2">{cards[currentIndex].title}</h2>
+          <h2 className="font-bold text-3xl mb-2">
+            {cards[currentIndex].title}
+          </h2>
           <p className="font-medium text-slate-500 text-xl max-w-md truncate">
             {cheerio.load(cards[currentIndex].content).root().text()}
           </p>

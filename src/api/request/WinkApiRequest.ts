@@ -65,9 +65,12 @@ export class WinkApiRequest {
 
   private async refresh(): Promise<boolean> {
     try {
-      const { accessToken, refreshToken } = await this.post<RefreshResponseDto>('/auth/refresh', {
-        refreshToken: this.refreshToken,
-      });
+      const { accessToken, refreshToken } = await this.post<RefreshResponseDto>(
+        '/auth/refresh',
+        {
+          refreshToken: this.refreshToken,
+        },
+      );
 
       this.setToken(accessToken, refreshToken);
 

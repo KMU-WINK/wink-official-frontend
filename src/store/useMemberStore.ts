@@ -7,7 +7,7 @@ interface MemberState {
   setMember: (member: MemberType | null) => void;
 }
 
-export const useMemberStore = create<MemberState>((set) => ({
+export const useMemberStore = create<MemberState>(set => ({
   member: null,
   setMember: (member: MemberType | null) =>
     set(() => ({

@@ -18,7 +18,7 @@ export const TextField: React.FC<TextFieldProps> = ({ id, ...rest }) => {
         id={id}
         value={values[id]}
         onChange={onChange}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === 'Enter' && onEnter) {
             onEnter();
           }

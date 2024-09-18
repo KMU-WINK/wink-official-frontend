@@ -10,7 +10,13 @@ interface StudyCardProps {
   author: string;
 }
 
-export const StudyCard: React.FC<StudyCardProps> = ({ image, link, title, content, author }) => {
+export const StudyCard: React.FC<StudyCardProps> = ({
+  image,
+  link,
+  title,
+  content,
+  author,
+}) => {
   return (
     <a
       href={link}
@@ -21,10 +27,16 @@ export const StudyCard: React.FC<StudyCardProps> = ({ image, link, title, conten
       {/* 스터디 제목 및 설명 */}
       <div className="flex flex-col gap-2.5 my-4">
         <h2 className="font-bold text-xl max-w-screen-sm truncate">{title}</h2>
-        <p className="font-regular text-base text-slate-500 max-w-screen-sm truncate">{content}</p>
+        <p className="font-regular text-base text-slate-500 max-w-screen-sm truncate">
+          {content}
+        </p>
         <div className="flex flex-row justify-between">
-          <p className="font-regular text-base max-w-screen-sm truncate">{link}</p>
-          <p className="font-regular text-base text-slate-500 max-w-screen-sm truncate">{author}</p>
+          <p className="font-regular text-base max-w-screen-sm truncate">
+            {link}
+          </p>
+          <p className="font-regular text-base text-slate-500 max-w-screen-sm truncate">
+            {author}
+          </p>
         </div>
       </div>
 

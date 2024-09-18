@@ -38,7 +38,10 @@ const AdminActivityStudyPage = () => {
   const [createModal, setCreateModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<StudyType | null>(null);
 
-  const { values, setValues, errors, setErrors, onChange, validate } = useForm<Inputs, string>(
+  const { values, setValues, errors, setErrors, onChange, validate } = useForm<
+    Inputs,
+    string
+  >(
     yup.object({
       link: yup
         .string()
@@ -109,7 +112,11 @@ const AdminActivityStudyPage = () => {
       <Title title="Activity" subtitle="스터디" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <SearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
+        <SearchBar
+          value={query}
+          placeholder="제목을 검색해주세요."
+          onChange={setQuery}
+        />
 
         <IconButton
           icon={<FaEdit />}
@@ -134,15 +141,25 @@ const AdminActivityStudyPage = () => {
         </div>
       </div>
 
-      {studies.map((study) => (
-        <div key={study._id} className="grid grid-cols-12 gap-2 border-b border-gray-200">
-          <div className="py-4 px-4 col-span-2 text-sm truncate">{study.category.name}</div>
+      {studies.map(study => (
+        <div
+          key={study._id}
+          className="grid grid-cols-12 gap-2 border-b border-gray-200"
+        >
+          <div className="py-4 px-4 col-span-2 text-sm truncate">
+            {study.category.name}
+          </div>
 
-          <Link href={study.link} className="py-4 px-4 col-span-6 text-sm truncate">
+          <Link
+            href={study.link}
+            className="py-4 px-4 col-span-6 text-sm truncate"
+          >
             {study.title}
           </Link>
 
-          <div className="py-4 px-4 col-span-3 text-sm">{formatDate(study.uploadedAt)}</div>
+          <div className="py-4 px-4 col-span-3 text-sm">
+            {formatDate(study.uploadedAt)}
+          </div>
 
           <div className="col-span-1 flex items-center justify-center space-x-8">
             <FaTrashCan
@@ -207,7 +224,9 @@ const AdminActivityStudyPage = () => {
         </div>
       </Modal>
 
-      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
+      {!query && maxPage > 0 && (
+        <TablePaging page={page} setPage={setPage} maxPage={maxPage} />
+      )}
     </div>
   );
 };

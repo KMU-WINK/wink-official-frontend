@@ -3,19 +3,27 @@ import { WinkApiRequest } from '@/api';
 export class Social {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async getSocial(data: GetSocialRequestDto): Promise<GetSocialResponseDto> {
-    return this.request.get('/activity/social/detail?socialId=' + data.socialId);
+  public async getSocial(
+    data: GetSocialRequestDto,
+  ): Promise<GetSocialResponseDto> {
+    return this.request.get(
+      '/activity/social/detail?socialId=' + data.socialId,
+    );
   }
 
   public async getSocialsPage(): Promise<GetSocialsPageResponseDto> {
     return this.request.get('/activity/social/max');
   }
 
-  public async getSocials(data: GetSocialsRequestDto): Promise<GetSocialsResponseDto> {
+  public async getSocials(
+    data: GetSocialsRequestDto,
+  ): Promise<GetSocialsResponseDto> {
     return this.request.get('/activity/social?page=' + data.page);
   }
 
-  public async searchSocials(data: SearchSocialsRequestDto): Promise<GetSocialsResponseDto> {
+  public async searchSocials(
+    data: SearchSocialsRequestDto,
+  ): Promise<GetSocialsResponseDto> {
     return this.request.get('/activity/social/search?query=' + data.query);
   }
 }
@@ -23,7 +31,9 @@ export class Social {
 export class SocialAdmin {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async createSocial(data: CreateSocialRequestDto): Promise<CreateSocialResponseDto> {
+  public async createSocial(
+    data: CreateSocialRequestDto,
+  ): Promise<CreateSocialResponseDto> {
     return this.request.put('/admin/activity/social', data);
   }
 
