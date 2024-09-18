@@ -7,7 +7,11 @@ interface SearchBarProps {
   onChange: (value: string) => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, onChange }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({
+  value,
+  placeholder,
+  onChange,
+}) => {
   const onProxyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 

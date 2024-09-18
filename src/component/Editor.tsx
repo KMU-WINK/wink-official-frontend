@@ -10,7 +10,11 @@ interface EditorProps {
   readonly?: boolean;
 }
 
-export const Editor: React.FC<EditorProps> = ({ content, setContent, readonly }) => {
+export const Editor: React.FC<EditorProps> = ({
+  content,
+  setContent,
+  readonly,
+}) => {
   const editor = useRef(null);
 
   const config = useMemo(
@@ -51,7 +55,7 @@ export const Editor: React.FC<EditorProps> = ({ content, setContent, readonly })
       ref={editor}
       value={content}
       config={readonly ? readonlyConfig : config}
-      onChange={(newContent) => setContent(newContent)}
+      onChange={newContent => setContent(newContent)}
     />
   );
 };

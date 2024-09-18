@@ -27,7 +27,12 @@ const RecruitPage = () => {
         </div>
 
         <div className="absolute w-28 top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl animate-rocket">
-          <Image src={rocketImage} alt={'recruit-rocket'} width={150} height={170} />
+          <Image
+            src={rocketImage}
+            alt={'recruit-rocket'}
+            width={150}
+            height={170}
+          />
         </div>
       </div>
 
@@ -59,20 +64,26 @@ const RecruitPage = () => {
       <div>
         <h1 className="text-3xl font-bold text-center mb-2">모집 대상</h1>
         <p className="text-center mb-8">
-          함께 활동을 적극적으로 진행할 준비가 되어 있는 웹에 진심인 국민대학교 학생을 모두
-          환영합니다.
+          함께 활동을 적극적으로 진행할 준비가 되어 있는 웹에 진심인 국민대학교
+          학생을 모두 환영합니다.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold text-wink-500">Frontend</h2>
             <p className="mb-2 font-semibold">프론트엔드 개발자</p>
-            <p>React.js, Vue.js, Next.js, JavaScript 사용에 능한 프론트엔드 개발자를 환영합니다.</p>
+            <p>
+              React.js, Vue.js, Next.js, JavaScript 사용에 능한 프론트엔드
+              개발자를 환영합니다.
+            </p>
           </div>
           <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold text-wink-500">Backend</h2>
             <p className="mb-2 font-semibold">백엔드 개발자</p>
-            <p>Spring Boot, ExpressJS, NestJS 사용에 능한 백엔드 개발자를 환영합니다.</p>
+            <p>
+              Spring Boot, ExpressJS, NestJS 사용에 능한 백엔드 개발자를
+              환영합니다.
+            </p>
           </div>
           <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold text-wink-500">Design/PM</h2>
@@ -83,18 +94,26 @@ const RecruitPage = () => {
       </div>
 
       <div className="w-full bg-wink-50/50">
-        <h2 className="text-3xl font-bold text-center mt-12 mb-6">자주 묻는 질문</h2>
+        <h2 className="text-3xl font-bold text-center mt-12 mb-6">
+          자주 묻는 질문
+        </h2>
         <div className="flex flex-col space-y-4 items-center pb-24">
           <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold">Q. 타과생도 지원할 수 있나요?</h2>
+            <h2 className="mb-2 font-semibold">
+              Q. 타과생도 지원할 수 있나요?
+            </h2>
             <p>A. ㅐㅐㅐㅐㅐㅐㅐㅐ.</p>
           </div>
           <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold">Q. 프로젝트 경험이 없어도 괜찮나요?</h2>
+            <h2 className="mb-2 font-semibold">
+              Q. 프로젝트 경험이 없어도 괜찮나요?
+            </h2>
             <p>A. ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ.</p>
           </div>
           <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold">Q. 면접 때 기술 많이 물어보나요?</h2>
+            <h2 className="mb-2 font-semibold">
+              Q. 면접 때 기술 많이 물어보나요?
+            </h2>
             <p>A. 지원자 님의 지원서와 학년을 모두 고려하여 질문 드립니다.</p>
           </div>
         </div>

@@ -45,7 +45,9 @@ const AdminActivityProjectPage = () => {
 
   async function fetchProjects() {
     if (query) {
-      const { projects } = await WinkApi.Activity.Project.searchProjects({ query });
+      const { projects } = await WinkApi.Activity.Project.searchProjects({
+        query,
+      });
       setProjects(projects);
     } else {
       const { projects } = await WinkApi.Activity.Project.getProjects({ page });
@@ -56,7 +58,9 @@ const AdminActivityProjectPage = () => {
   const handleDelete = async () => {
     if (!deleteModal) return;
 
-    await WinkApi.Activity.ProjectAdmin.deleteProject({ projectId: deleteModal._id });
+    await WinkApi.Activity.ProjectAdmin.deleteProject({
+      projectId: deleteModal._id,
+    });
     await fetchProjects();
 
     toast.warn(`"${deleteModal.title}" 프로젝트가 삭제되었습니다.`);
@@ -69,7 +73,11 @@ const AdminActivityProjectPage = () => {
       <Title title="Activity" subtitle="프로젝트" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <SearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
+        <SearchBar
+          value={query}
+          placeholder="제목을 검색해주세요."
+          onChange={setQuery}
+        />
 
         <IconButton
           icon={<FaEdit />}
@@ -94,20 +102,27 @@ const AdminActivityProjectPage = () => {
         </div>
       </div>
 
-      {projects.map((project) => (
-        <div key={project._id} className="grid grid-cols-12 gap-2 border-b border-gray-200">
+      {projects.map(project => (
+        <div
+          key={project._id}
+          className="grid grid-cols-12 gap-2 border-b border-gray-200"
+        >
           <Link
             href={`/activity/project/${project._id}`}
             className="py-4 px-4 col-span-7 text-sm truncate"
           >
             {project.title}
           </Link>
-          <div className="py-4 px-4 col-span-3 text-sm">{formatDate(project.createdAt)}</div>
+          <div className="py-4 px-4 col-span-3 text-sm">
+            {formatDate(project.createdAt)}
+          </div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
             <FaEdit
               size={18}
               className="cursor-pointer"
-              onClick={() => router.push(`/admin/activity/project/editor/${project._id}`)}
+              onClick={() =>
+                router.push(`/admin/activity/project/editor/${project._id}`)
+              }
             />
           </div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
@@ -140,7 +155,9 @@ const AdminActivityProjectPage = () => {
         </div>
       </Modal>
 
-      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
+      {!query && maxPage > 0 && (
+        <TablePaging page={page} setPage={setPage} maxPage={maxPage} />
+      )}
     </div>
   );
 };
