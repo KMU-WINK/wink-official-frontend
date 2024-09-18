@@ -51,13 +51,30 @@ module.exports = {
             transform: 'translateX(20px) translateY(-20px)',
           },
         },
+        updown: {
+          from: { transform: 'translatey(0px)' },
+          to: { transform: 'translatey(-20px)' },
+        },
+        'updown-shadow': {
+          from: {
+            width: '184px',
+            '-webkit-filter': 'blur(6px)',
+          },
+          to: {
+            width: '240px',
+            '-webkit-filter': 'blur(10px)',
+          },
+        },
       },
       animation: {
         rotate: 'rotate 15s linear infinite',
         rocket: 'moveDiagonally 3s ease-in-out infinite',
+        updown: 'updown 1.4s infinite ease-in-out alternate',
+        'updown-shadow': 'updown-shadow 1.4s infinite ease-in-out alternate',
       },
       fontFamily: {
         sans: ['pretendard', 'sans-serif'],
+        roboto: ['Roboto'],
       },
     },
   },
