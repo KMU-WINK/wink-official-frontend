@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
           <ul className="flex justify-center items-center list-none gap-8">
             {ITEMS.filter((item) => !item.hide).map((item) => (
               <div key={item.title} className={item.mobileHide ? 'hidden sm:block' : ''}>
-                <li className="font-bold text-sm relative cursor-pointer">
+                <li className="font-medium text-sm relative cursor-pointer">
                   <div
                     className={`flex items-center gap-1 ${pathname.startsWith(item.href) ? 'text-wink-500' : ''}`}
                     onClick={() => {

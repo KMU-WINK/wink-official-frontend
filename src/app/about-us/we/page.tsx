@@ -9,8 +9,8 @@ const AboutUsWePage = () => {
         <div className="absolute bottom-[15vh] left-1/2 w-[300vw] h-[300vw] bg-white rounded-[45%] animate-rotate"></div>
         <div className="absolute bottom-[12vh] left-1/2 w-[300vw] h-[300vw] bg-white rounded-[47%] opacity-50 animate-rotate"></div>
 
-        <h1 className="z-10 text-center font-bold text-3xl md:text-5xl md:leading-[64px]">
-          <span className="font-medium text-2xl md:text-5xl mb-8">나만의 서비스. 기획. 개발</span>
+        <h1 className="z-10 text-center font-semibold text-3xl md:text-5xl md:leading-[64px]">
+          <span className="font-regular text-2xl md:text-5xl mb-8">나만의 서비스. 기획. 개발</span>
           <br />
           우리 안의 새로운 물결 WINK
         </h1>
