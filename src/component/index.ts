@@ -9,6 +9,7 @@ export * from './Header';
 export * from './IconButton';
 export * from './Loading';
 export * from './Modal';
+export * from './ProfileCard';
 export * from './ProjectCard';
 export * from './SearchBar';
 export * from './StudyCard';
