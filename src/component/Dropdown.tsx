@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
+// import { FaAngleDown } from 'react-icons/fa';
+import DropDown from '@/public/assets/arrow-down.svg';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -23,7 +24,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         className="flex items-center justify-between w-full text-sm bg-white"
       >
         {value}
-        <FaAngleDown className={`w-4 h-4 ml-2`} />
+        <DropDown className={`w-4 h-4 ml-2`} />
       </button>
       <AnimatePresence>
         {isOpen && (

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { CiLogout } from 'react-icons/ci';
-import { FaAngleDown } from 'react-icons/fa';
 
+import Dropdown from '@/public/assets/arrow-down.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -81,7 +81,7 @@ export const Header: React.FC = () => {
   return (
     <header className="fixed top-0 z-50 bg-white w-full h-14 flex items-center justify-center border-b">
       <div className="w-page flex justify-between p-4 lg:p-6">
-        <Link href={'/'} replace>
+        <Link href={'/about-us/we'} replace>
           <Image
             className="object-contain h-6 mt-1"
             src={logo}
@@ -109,7 +109,7 @@ export const Header: React.FC = () => {
                     }}
                   >
                     {item.title}
-                    {item.dropdown && <FaAngleDown size={16} />}
+                    {item.dropdown && <Dropdown />}
                   </div>
                   <AnimatePresence>
                     {activeDropdown === item.title && item.dropdown && (
@@ -153,7 +153,7 @@ export const Header: React.FC = () => {
                     className="rounded-full"
                   />
                   <span className="font-bold text-sm">{member.name}</span>
-                  <FaAngleDown size={14} />
+                  <Dropdown />
                 </div>
                 <AnimatePresence>
                   {activeDropdown === 'profile' && (

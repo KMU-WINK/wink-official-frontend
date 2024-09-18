@@ -9,6 +9,7 @@ import ActivityCard from '@/app/about-us/_components/ActivicyCard';
 import AboutUsImage1 from '@/public/about-us/we/image 25.png';
 import AboutUsImage2 from '@/public/about-us/we/image 24.png';
 import AboutUsImage3 from '@/public/about-us/we/aboutus_1.jpeg';
+import AboutUsImage4 from '@/public/about-us/we/aboutus_0.jpeg';
 
 const AboutUsWePage = () => {
   return (
@@ -33,7 +34,7 @@ const AboutUsWePage = () => {
       <div className="bg-wink-100 min-h-96 flex gap-8 justify-center">
         <div>
           <h1 className="font-medium text-xl md:text-2xl">
-            자꾸만 눈이가는
+            자꾸만 눈이 가는
             <br />
             멋진 모습
           </h1>
@@ -56,12 +57,12 @@ const AboutUsWePage = () => {
       </div>
       <div className="bg-gradient-to-b from-wink-100 to-white h-32 md:h-64"></div>
       <div className="flex justify-center">
-        <div className="min-w-96 flex flex-col">
+        <div className="max-w-2xl flex flex-col">
           <h1 className="font-medium text-2xl md:text-4xl">
             안녕하세요. 우리는 WINK 입니다.
           </h1>
           <div className="flex justify-center pt-4">
-            <Image src={AboutUsImage3} alt="thumbnail" width={600} />
+            <Image src={AboutUsImage3} alt="thumbnail" width={672} />
           </div>
 
           <h1 className="font-medium text-2xl md:text-4xl pt-14">
@@ -69,33 +70,37 @@ const AboutUsWePage = () => {
           </h1>
           <div>
             <ActivityCard
-              imageSrc="/path-to-your-image.jpg"
+              imageSrc={AboutUsImage4}
               title="윙커톤"
-              description="이 카드는 왼쪽에 이미지가 있고 오른쪽에 텍스트가 있습니다."
+              description="서로의 우정이 두터워지는 무박 2 일 해커톤 여정"
+              description2="부원들과 함께 밤을 새며 새로운 서비스를 만들었어요. 지난 대회에서는 1 등을 차지했습니다."
               isImageRight={false}
             />
           </div>
           <div>
             <ActivityCard
-              imageSrc="/path-to-your-image.jpg"
+              imageSrc={AboutUsImage4}
               title="윙커톤"
-              description="이 카드는 왼쪽에 이미지가 있고 오른쪽에 텍스트가 있습니다."
+              description="서로의 우정이 두터워지는 무박 2 일 해커톤 여정"
+              description2="부원들과 함께 밤을 새며 새로운 서비스를 만들었어요. 지난 대회에서는 1 등을 차지했습니다."
               isImageRight
             />
           </div>
           <div>
             <ActivityCard
-              imageSrc="/path-to-your-image.jpg"
+              imageSrc={AboutUsImage4}
               title="윙커톤"
-              description="이 카드는 왼쪽에 이미지가 있고 오른쪽에 텍스트가 있습니다."
+              description="서로의 우정이 두터워지는 무박 2 일 해커톤 여정"
+              description2="부원들과 함께 밤을 새며 새로운 서비스를 만들었어요. 지난 대회에서는 1 등을 차지했습니다."
               isImageRight={false}
             />
           </div>
           <div>
             <ActivityCard
-              imageSrc="/path-to-your-image.jpg"
+              imageSrc={AboutUsImage4}
               title="윙커톤"
-              description="이 카드는 왼쪽에 이미지가 있고 오른쪽에 텍스트가 있습니다."
+              description="서로의 우정이 두터워지는 무박 2 일 해커톤 여정"
+              description2="부원들과 함께 밤을 새며 새로운 서비스를 만들었어요. 지난 대회에서는 1 등을 차지했습니다."
               isImageRight
             />
           </div>
