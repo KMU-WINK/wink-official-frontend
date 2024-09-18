@@ -41,8 +41,8 @@ export const useForm = <K extends string, V>(
       await schema.validate(values, { abortEarly: false });
     } catch (error) {
       if (error instanceof yup.ValidationError) {
-        error.inner.forEach((err) => {
-          setErrors((prev) => ({
+        error.inner.forEach(err => {
+          setErrors(prev => ({
             ...prev,
             [err.path as K]: err.message,
           }));
@@ -60,10 +60,12 @@ export const useForm = <K extends string, V>(
 
     schema
       .validateAt(id as K, { [id]: value })
-      .then(() => setErrors((prev) => ({ ...prev, [id as K]: '' })))
-      .catch((error) => setErrors((prev) => ({ ...prev, [id as K]: error.message })));
+      .then(() => setErrors(prev => ({ ...prev, [id as K]: '' })))
+      .catch(error =>
+        setErrors(prev => ({ ...prev, [id as K]: error.message })),
+      );
 
-    setValues((prev) => ({ ...prev, [id as K]: value }));
+    setValues(prev => ({ ...prev, [id as K]: value }));
   };
 
   return {

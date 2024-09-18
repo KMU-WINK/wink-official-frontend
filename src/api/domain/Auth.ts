@@ -19,7 +19,9 @@ export class Auth {
     return this.request.post('/auth/register/code', data);
   }
 
-  public async verifyCode(data: VerifyCodeRequestDto): Promise<VerifyCodeResponseDto> {
+  public async verifyCode(
+    data: VerifyCodeRequestDto,
+  ): Promise<VerifyCodeResponseDto> {
     return this.request.post('/auth/register/code/verify', data);
   }
 

@@ -6,7 +6,11 @@ interface TablePagingProps {
   maxPage: number;
 }
 
-export const TablePaging: React.FC<TablePagingProps> = ({ page, setPage, maxPage }) => {
+export const TablePaging: React.FC<TablePagingProps> = ({
+  page,
+  setPage,
+  maxPage,
+}) => {
   const getPaginationRange = (current: number, max: number) => {
     if (max <= 5) return Array.from({ length: max }, (_, i) => i + 1);
     if (current === 1 || current == 2) return [1, 2, 3, 4, 5];
@@ -20,25 +24,27 @@ export const TablePaging: React.FC<TablePagingProps> = ({ page, setPage, maxPage
   return (
     <div className="mt-4 flex justify-center items-center space-x-2">
       <button
-        onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+        onClick={() => setPage(prev => Math.max(prev - 1, 1))}
         disabled={page === 1}
         className="px-3 py-1 rounded-md transition duration-300 bg-white text-wink-500 hover:bg-wink-100 disabled:opacity-50"
       >
         &lt;
       </button>
-      {paginationRange.map((number) => (
+      {paginationRange.map(number => (
         <button
           key={number}
           onClick={() => setPage(number)}
           className={`px-3 py-1 rounded-md transition duration-300 ${
-            page === number ? 'bg-wink-500 text-white' : 'bg-white text-wink-500 hover:bg-wink-100'
+            page === number
+              ? 'bg-wink-500 text-white'
+              : 'bg-white text-wink-500 hover:bg-wink-100'
           }`}
         >
           {number}
         </button>
       ))}
       <button
-        onClick={() => setPage((prev) => Math.min(prev + 1, maxPage))}
+        onClick={() => setPage(prev => Math.min(prev + 1, maxPage))}
         disabled={page === maxPage}
         className="px-3 py-1 rounded-md transition duration-300 bg-white text-wink-500 hover:bg-wink-100 disabled:opacity-50"
       >

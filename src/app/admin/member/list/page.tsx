@@ -14,7 +14,9 @@ import {
 } from '@/api';
 
 const AdminMemberListPage = () => {
-  const [members, setMembers] = useState<EachGetMembersForAdminResponseDto[]>([]);
+  const [members, setMembers] = useState<EachGetMembersForAdminResponseDto[]>(
+    [],
+  );
   const [page, setPage] = useState<number>(1);
   const [maxPage, setMaxPage] = useState<number>(0);
   const [query, setQuery] = useState<string>('');
@@ -42,7 +44,10 @@ const AdminMemberListPage = () => {
     }
   }
 
-  const handleRoleChange = async (member: EachGetMembersForAdminResponseDto, rawRole: string) => {
+  const handleRoleChange = async (
+    member: EachGetMembersForAdminResponseDto,
+    rawRole: string,
+  ) => {
     await WinkApi.MemberAdmin.updateMemberRole({
       memberId: member._id,
       role: RoleKoreanToRole(rawRole),
@@ -52,11 +57,16 @@ const AdminMemberListPage = () => {
     toast.success(`${member.name}님의 역할을 "${rawRole}"로 변경하였습니다.`);
   };
 
-  const handleFeeChange = async (member: EachGetMembersForAdminResponseDto, fee: boolean) => {
+  const handleFeeChange = async (
+    member: EachGetMembersForAdminResponseDto,
+    fee: boolean,
+  ) => {
     await WinkApi.MemberAdmin.updateMemberFee({ memberId: member._id, fee });
     await fetchMembers();
 
-    toast.success(`${member.name}님의 회비 정보를 "${fee ? '납부' : '미납부'}"로 변경하였습니다.`);
+    toast.success(
+      `${member.name}님의 회비 정보를 "${fee ? '납부' : '미납부'}"로 변경하였습니다.`,
+    );
   };
 
   return (
@@ -64,7 +74,11 @@ const AdminMemberListPage = () => {
       <Title title="Member" subtitle="회원 정보 수정" />
 
       <div className="flex justify-end mb-4">
-        <SearchBar value={query} placeholder="이름을 검색해주세요." onChange={setQuery} />
+        <SearchBar
+          value={query}
+          placeholder="이름을 검색해주세요."
+          onChange={setQuery}
+        />
       </div>
 
       <div className="min-w-full grid grid-cols-6 gap-2 border-b">
@@ -85,8 +99,11 @@ const AdminMemberListPage = () => {
         </div>
       </div>
 
-      {members.map((member) => (
-        <div key={member._id} className="grid grid-cols-6 gap-2 border-b border-gray-200">
+      {members.map(member => (
+        <div
+          key={member._id}
+          className="grid grid-cols-6 gap-2 border-b border-gray-200"
+        >
           <div className="py-4 px-4 col-span-1 text-sm">{member.name}</div>
           <div className="py-4 px-4 col-span-1 text-sm">{member.studentId}</div>
           <div className="py-4 px-4 col-span-2 text-sm">{member.email}</div>
@@ -94,20 +111,22 @@ const AdminMemberListPage = () => {
             <Dropdown
               value={RoleKoreanMap[member.role]}
               options={RoleKorean}
-              onChange={(value) => handleRoleChange(member, value)}
+              onChange={value => handleRoleChange(member, value)}
             />
           </div>
           <div className="py-4 px-4 col-span-1 text-sm">
             <Dropdown
               value={member.fee ? '납부' : '미납부'}
               options={['납부', '미납부']}
-              onChange={(value) => handleFeeChange(member, value === '납부')}
+              onChange={value => handleFeeChange(member, value === '납부')}
             />
           </div>
         </div>
       ))}
 
-      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
+      {!query && maxPage > 0 && (
+        <TablePaging page={page} setPage={setPage} maxPage={maxPage} />
+      )}
     </div>
   );
 };

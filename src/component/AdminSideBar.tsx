@@ -35,7 +35,9 @@ export const AdminSideBar: React.FC = () => {
           <div key={title}>
             <h2 className="flex items-center justify-between text-lg font-semibold px-6 py-3 border-b">
               <span>{title}</span>
-              <span className="text-sm font-normal text-gray-500">{description}</span>
+              <span className="text-sm font-normal text-gray-500">
+                {description}
+              </span>
             </h2>
             <ul className="mt-2">
               {items.map(({ title, href }) => (

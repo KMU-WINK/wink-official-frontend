@@ -7,7 +7,13 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { Editor, FormContainer, IconButton, TextField, Title } from '@/component';
+import {
+  Editor,
+  FormContainer,
+  IconButton,
+  TextField,
+  Title,
+} from '@/component';
 
 import { useForm } from '@/hook';
 
@@ -21,10 +27,15 @@ interface AdminActivityProjectEditorPageProps {
   params: { id: string };
 }
 
-const AdminActivityProjectEditorPage = ({ params }: AdminActivityProjectEditorPageProps) => {
+const AdminActivityProjectEditorPage = ({
+  params,
+}: AdminActivityProjectEditorPageProps) => {
   const router = useRouter();
 
-  const { values, setValues, errors, onChange, validate } = useForm<Inputs, string>(
+  const { values, setValues, errors, onChange, validate } = useForm<
+    Inputs,
+    string
+  >(
     yup.object({
       title: yup
         .string()
@@ -39,7 +50,9 @@ const AdminActivityProjectEditorPage = ({ params }: AdminActivityProjectEditorPa
   useEffect(() => {
     if (params.id !== 'new') {
       (async () => {
-        const { project } = await WinkApi.Activity.Project.getProject({ projectId: params.id });
+        const { project } = await WinkApi.Activity.Project.getProject({
+          projectId: params.id,
+        });
 
         setValues({
           title: project.title,
@@ -56,7 +69,7 @@ const AdminActivityProjectEditorPage = ({ params }: AdminActivityProjectEditorPa
 
     if (file) {
       const { link } = await WinkApi.Activity.CommonAdmin.upload(file);
-      setValues((prev) => ({ ...prev, image: link }));
+      setValues(prev => ({ ...prev, image: link }));
     }
   };
 
@@ -68,7 +81,7 @@ const AdminActivityProjectEditorPage = ({ params }: AdminActivityProjectEditorPa
     if (params.id === 'new') {
       const { project } = await WinkApi.Activity.ProjectAdmin.createProject({
         title: values.title,
-        tags: values.tags.split(',').map((tag) => tag.trim()),
+        tags: values.tags.split(',').map(tag => tag.trim()),
         content: values.content,
         image: values.image,
       });
@@ -80,7 +93,7 @@ const AdminActivityProjectEditorPage = ({ params }: AdminActivityProjectEditorPa
       await WinkApi.Activity.ProjectAdmin.updateProject({
         projectId: params.id,
         title: values.title,
-        tags: values.tags.split(',').map((tag) => tag.trim()),
+        tags: values.tags.split(',').map(tag => tag.trim()),
         content: values.content,
         image: values.image,
       });
@@ -135,7 +148,10 @@ const AdminActivityProjectEditorPage = ({ params }: AdminActivityProjectEditorPa
               document.getElementById('fileInput')?.click();
             }}
           >
-            <label htmlFor="fileInput" className="flex flex-col items-center justify-center">
+            <label
+              htmlFor="fileInput"
+              className="flex flex-col items-center justify-center"
+            >
               <FaUpload className="text-4xl text-gray-400 mb-1" size={24} />
               <span className="text-gray-600">Upload Image</span>
             </label>
@@ -162,7 +178,7 @@ const AdminActivityProjectEditorPage = ({ params }: AdminActivityProjectEditorPa
 
         <Editor
           content={values.content}
-          setContent={(value) => setValues((prev) => ({ ...prev, content: value }))}
+          setContent={value => setValues(prev => ({ ...prev, content: value }))}
         />
       </div>
     </div>
