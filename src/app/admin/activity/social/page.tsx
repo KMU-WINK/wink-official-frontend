@@ -101,7 +101,7 @@ const AdminActivitySocialPage = () => {
             <FaEdit
               size={18}
               className="cursor-pointer"
-              onClick={() => router.push(`/admin/activity/project/editor/${social._id}`)}
+              onClick={() => router.push(`/admin/activity/social/editor/${social._id}`)}
             />
           </div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
