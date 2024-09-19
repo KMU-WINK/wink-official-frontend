@@ -11,15 +11,11 @@ export class Study {
     return this.request.get('/activity/study/max');
   }
 
-  public async getStudies(
-    data: GetStudiesRequestDto,
-  ): Promise<GetStudiesResponse> {
+  public async getStudies(data: GetStudiesRequestDto): Promise<GetStudiesResponse> {
     return this.request.get('/activity/study?page=' + data.page);
   }
 
-  public async searchStudies(
-    data: SearchStudiesRequestDto,
-  ): Promise<GetStudiesResponse> {
+  public async searchStudies(data: SearchStudiesRequestDto): Promise<GetStudiesResponse> {
     return this.request.get('/activity/study/search?query=' + data.query);
   }
 }
@@ -27,9 +23,7 @@ export class Study {
 export class StudyAdmin {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async createCategory(
-    data: CreateCategoryRequestDto,
-  ): Promise<CreateCategoryResponseDto> {
+  public async createCategory(data: CreateCategoryRequestDto): Promise<CreateCategoryResponseDto> {
     return this.request.put('/admin/activity/study/category', data);
   }
 
@@ -41,9 +35,7 @@ export class StudyAdmin {
     return this.request.delete('/admin/activity/study/category', data);
   }
 
-  public async createStudy(
-    data: CreateStudyRequestDto,
-  ): Promise<CreateStudyResponseDto> {
+  public async createStudy(data: CreateStudyRequestDto): Promise<CreateStudyResponseDto> {
     return this.request.put('/admin/activity/study', data);
   }
 

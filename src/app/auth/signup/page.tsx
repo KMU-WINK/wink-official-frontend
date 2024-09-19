@@ -6,13 +6,7 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import {
-  Button,
-  Fields,
-  FormContainer,
-  TextField,
-  WebInKookmin,
-} from '@/component';
+import { Button, Fields, FormContainer, TextField, WebInKookmin } from '@/component';
 
 import { useForm } from '@/hook';
 
@@ -34,19 +28,12 @@ const SignUpPage = () => {
 
   const [isSendCode, setSendCode] = useState(false);
 
-  const { values, setValues, errors, validate, onChange } = useForm<
-    Inputs,
-    string
-  >(
+  const { values, setValues, errors, validate, onChange } = useForm<Inputs, string>(
     yup.object({
       studentId: yup
         .string()
         .required('학번을 입력해주세요.')
-        .test(
-          'is-number',
-          '학번은 숫자로만 입력해주세요.',
-          value => !isNaN(Number(value)),
-        )
+        .test('is-number', '학번은 숫자로만 입력해주세요.', (value) => !isNaN(Number(value)))
         .length(8, '학번은 8자리 입니다.'),
       name: yup
         .string()
@@ -58,18 +45,11 @@ const SignUpPage = () => {
         .string()
         .required('이메일을 입력해주세요.')
         .email('이메일 형식이 아닙니다.')
-        .matches(
-          /^[a-zA-Z0-9._%+-]+@kookmin\.ac\.kr$/i,
-          '국민대학교 이메일 형식이어야 합니다.',
-        ),
+        .matches(/^[a-zA-Z0-9._%+-]+@kookmin\.ac\.kr$/i, '국민대학교 이메일 형식이어야 합니다.'),
       verifyCode: yup
         .string()
         .required('인증 코드를 입력해주세요.')
-        .test(
-          'is-number',
-          '인증 코드는 숫자로만 입력해주세요.',
-          value => !isNaN(Number(value)),
-        )
+        .test('is-number', '인증 코드는 숫자로만 입력해주세요.', (value) => !isNaN(Number(value)))
         .length(6, '인증 코드는 6자리 입니다.'),
       verifyToken: yup.string().required('인증 토큰을 입력해주세요.'),
       password: yup
@@ -158,7 +138,7 @@ const SignUpPage = () => {
       code: values.verifyCode,
     });
 
-    setValues(prev => ({ ...prev, verifyToken }));
+    setValues((prev) => ({ ...prev, verifyToken }));
 
     toast.success('인증 코드가 확인되었습니다.');
   }
@@ -186,12 +166,9 @@ const SignUpPage = () => {
         <WebInKookmin />
 
         <div className="flex flex-col items-center justify-center gap-2.5">
-          <p className="text-xl font-normal">
-            국민대학교 소프트웨어융합대학 유일무이 Web 동아리
-          </p>
+          <p className="text-xl font-normal">국민대학교 소프트웨어융합대학 유일무이 Web 동아리</p>
           <p className="text-lg text-zinc-500 font-normal">
-            부원 확인을 위하여 회원 가입 요청 후 승인 까지 수 일이 소요될 수
-            있습니다.
+            부원 확인을 위하여 회원 가입 요청 후 승인 까지 수 일이 소요될 수 있습니다.
           </p>
         </div>
 
@@ -204,7 +181,7 @@ const SignUpPage = () => {
               onEnter={onSignUpButtonClick}
             >
               {fields
-                .filter(options => !options.hidden)
+                .filter((options) => !options.hidden)
                 .map(({ id, button, ...rest }) => (
                   <div key={id} className="flex items-center gap-2.5">
                     <TextField id={id} {...rest} />
