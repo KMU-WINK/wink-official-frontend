@@ -54,7 +54,7 @@ const ActivityHistoryPage = () => {
     <div className="flex flex-col items-center mt-32">
       <div className="flex flex-col items-center justify-center">
         <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
-        <p className="font-regular text-xl text-center text-zinc-700">
+        <p className="font-normal text-xl text-center text-zinc-700">
           행사 / 세미나 / 대회 활동 기록을 년도 별로 볼 수 있습니다.
         </p>
       </div>
@@ -78,7 +78,7 @@ const ActivityHistoryPage = () => {
                     <span className="flex items-center">
                       <FaCircle size={6} className="w-4" />
                       <span className="w-20 text-left font-medium">{item.date}</span>
-                      <span className="flex-grow text-left font-regular">{item.title}</span>
+                      <span className="flex-grow text-left font-normal">{item.title}</span>
                     </span>
                     {openItems.includes(`${yearData.year}-${index}`) ? <ArrowUp /> : <ArrowDown />}
                   </button>
