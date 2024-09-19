@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // import { FaAngleDown } from 'react-icons/fa';
-import DropDown from '@/public/icon/arrow-down.svg';
+import DropDown from '@/public/assets/arrow-down.svg';
 
 import { AnimatePresence, motion } from 'framer-motion';
 

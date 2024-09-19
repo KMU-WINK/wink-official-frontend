@@ -15,17 +15,14 @@ import { WinkApi } from '@/api';
 
 import Dropdown from '@/public/icon/arrow-down.svg';
 import logo from '@/public/logo.png';
-import avatar from '@/public/profile.svg?url';
+import AvatarPlaceholder from '@/public/profile.svg';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Header: React.FC = () => {
   const router = useRouter();
-
   const pathname = usePathname();
-
   const { member } = useMemberStore();
-
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const ITEMS = [
@@ -74,7 +71,6 @@ export const Header: React.FC = () => {
 
   const handleLogout = () => {
     WinkApi.Request.removeToken();
-
     setActiveDropdown(null);
   };
 
@@ -90,7 +86,9 @@ export const Header: React.FC = () => {
               <div key={item.title} className={item.mobileHide ? 'hidden sm:block' : ''}>
                 <li className="font-medium text-sm relative cursor-pointer">
                   <div
-                    className={`flex items-center gap-1 ${pathname.startsWith(item.href) ? 'text-wink-500' : ''}`}
+                    className={`flex items-center gap-1 ${
+                      pathname.startsWith(item.href) ? 'text-wink-500' : ''
+                    }`}
                     onClick={() => {
                       if (item.dropdown) {
                         handleDropdownToggle(item.title);
@@ -114,7 +112,9 @@ export const Header: React.FC = () => {
                         {item.dropdown.map((subItem) => (
                           <li
                             key={subItem.href}
-                            className={`px-4 py-2 hover:bg-gray-100 ${pathname.startsWith(subItem.href) ? 'text-wink-500' : ''}`}
+                            className={`px-4 py-2 hover:bg-gray-100 ${
+                              pathname.startsWith(subItem.href) ? 'text-wink-500' : ''
+                            }`}
                             onClick={() => {
                               router.push(subItem.href);
                               setActiveDropdown(null);
@@ -136,13 +136,17 @@ export const Header: React.FC = () => {
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={() => handleDropdownToggle('profile')}
                 >
-                  <Image
-                    src={member.avatar || avatar}
-                    alt="Profile"
-                    width={32}
-                    height={32}
-                    className="rounded-full"
-                  />
+                  {member.avatar ? (
+                    <Image
+                      src={member.avatar}
+                      alt="Profile"
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <AvatarPlaceholder className="w-8 h-8 rounded-full" /> // SVG 로드
+                  )}
                   <span className="font-bold text-sm">{member.name}</span>
                   <Dropdown />
                 </div>
