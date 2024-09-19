@@ -2,10 +2,10 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import Logo from '@/public/wink_footer_logo.svg';
-import Github from '@/public/wink_github.svg';
-import Instagram from '@/public/wink_instagram.svg';
-import Tistory from '@/public/wink_tistory.svg';
+import Logo from '@/public/footer/logo.svg';
+import Github from '@/public/icon/footer/github.svg';
+import Instagram from '@/public/icon/footer/instagram.svg';
+import Tistory from '@/public/icon/footer/tistory.svg';
 
 interface Link {
   id: string;
