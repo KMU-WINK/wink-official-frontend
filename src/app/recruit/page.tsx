@@ -67,17 +67,19 @@ const RecruitPage = () => {
           <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold text-wink-500">Frontend</h2>
             <p className="mb-2 font-semibold">프론트엔드 개발자</p>
-            <p>React.js, Vue.js, Next.js, JavaScript 사용에 능한 프론트엔드 개발자를 환영합니다.</p>
+            <p>
+              React.js, Vue.js, Next.js, JavaScript 사용이 가능한 프론트엔드 개발자를 환영합니다.
+            </p>
           </div>
           <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold text-wink-500">Backend</h2>
             <p className="mb-2 font-semibold">백엔드 개발자</p>
-            <p>Spring Boot, ExpressJS, NestJS 사용에 능한 백엔드 개발자를 환영합니다.</p>
+            <p>Spring Boot, ExpressJS, NestJS 사용이 가능한 백엔드 개발자를 환영합니다.</p>
           </div>
           <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold text-wink-500">Design/PM</h2>
             <p className="mb-2 font-semibold">디자이너/PM</p>
-            <p>??? 여기 뭐 써야해요 ???</p>
+            <p>Figma 를 사용하여 모바일/웹 디자인이 가능한 디자이너를 환영합니다.</p>
           </div>
         </div>
       </div>
@@ -87,11 +89,11 @@ const RecruitPage = () => {
         <div className="flex flex-col space-y-4 items-center pb-24">
           <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold">Q. 타과생도 지원할 수 있나요?</h2>
-            <p>A. ㅐㅐㅐㅐㅐㅐㅐㅐ.</p>
+            <p>A. WINK 는 모두에게 열려 있습니다.</p>
           </div>
           <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold">Q. 프로젝트 경험이 없어도 괜찮나요?</h2>
-            <p>A. ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ.</p>
+            <p>A. 괜찮습니다! WINK 와 프로젝트를 쌓아갈 마음이 있다면 충분합니다..</p>
           </div>
           <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
             <h2 className="mb-2 font-semibold">Q. 면접 때 기술 많이 물어보나요?</h2>
