@@ -38,15 +38,15 @@ const AboutUsMemberPage = () => {
   const [members, setMembers] = useState<EachGetMembersResponseDto[]>([]);
 
   useEffect(() => {
-    const fetchMembers = async () => {
-      const { members } = await WinkApi.Member.getMembers();
-      setMembers(members);
-    };
-
     (async () => {
       await fetchMembers();
     })();
   }, []);
+
+  async function fetchMembers() {
+    const { members } = await WinkApi.Member.getMembers();
+    setMembers(members);
+  }
 
   return (
     <div className="flex flex-col items-center mt-32">
@@ -76,6 +76,7 @@ const AboutUsMemberPage = () => {
                 .map(({ _id, name, avatar, description, link, role }) => (
                   <ProfileCard
                     key={_id}
+                    id={_id}
                     name={name}
                     avatar={avatar}
                     description={description}
@@ -83,6 +84,7 @@ const AboutUsMemberPage = () => {
                     instagram={link.instagram}
                     blog={link.blog}
                     role={RoleKoreanMap[role]}
+                    onUpdate={fetchMembers}
                   />
                 ))}
             </div>
@@ -91,7 +93,7 @@ const AboutUsMemberPage = () => {
 
         <div className="flex flex-row items-start gap-8">
           {MEMBERS.map(({ title, description, filter, sort }) => (
-            <div className="flex flex-col items-center justify-center gap-6">
+            <div className="flex flex-col items-center justify-center gap-6" key={title}>
               <h1 className="font-bold text-3xl text-center">&lt;{title}&gt;</h1>
               <p className="font-normal text-lg text-center text-zinc-700]">{description}</p>
 
@@ -102,6 +104,7 @@ const AboutUsMemberPage = () => {
                   .map(({ _id, name, avatar, description, link, role }) => (
                     <ProfileCard
                       key={_id}
+                      id={_id}
                       name={name}
                       avatar={avatar}
                       description={description}
@@ -109,6 +112,7 @@ const AboutUsMemberPage = () => {
                       instagram={link.instagram}
                       blog={link.blog}
                       role={role.endsWith('HEAD') ? '부장' : '차장'}
+                      onUpdate={fetchMembers}
                     />
                   ))}
               </div>
@@ -124,6 +128,7 @@ const AboutUsMemberPage = () => {
               .map(({ _id, name, avatar, description, link }) => (
                 <ProfileCard
                   key={_id}
+                  id={_id}
                   name={name}
                   avatar={avatar}
                   description={description}
@@ -131,6 +136,7 @@ const AboutUsMemberPage = () => {
                   instagram={link.instagram}
                   blog={link.blog}
                   role={null}
+                  onUpdate={fetchMembers}
                 />
               ))}
           </div>
