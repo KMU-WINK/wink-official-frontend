@@ -52,7 +52,7 @@ const AboutUsWePage = () => {
           data-aos="fade-left"
           data-aos-easing="ease-out"
           data-aos-duration="1000"
-          data-aos-delay="1000"
+          data-aos-delay="300"
         >
           <div className="flex justify-center pb-4">
             <Image src={AboutUsImage2} alt="thumbnail" width={300} className="rounded-3xl" />
