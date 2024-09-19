@@ -40,7 +40,10 @@ const ActivitySocialPage = () => {
       cache.push(...socials);
     }
 
-    setSocials(cache.reverse().slice(0, 6));
+    const socials_total = cache.reverse().slice(0, 6);
+
+    setSocials(socials_total);
+    setExpanded(socials_total[0]);
   }
 
   return (
@@ -51,9 +54,7 @@ const ActivitySocialPage = () => {
 
         <div className="z-10">
           <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
-          <p className="font-normal text-xl text-center text-zinc-700">
-            행사 / 세미나 / 대회 활동 기록을 년도 별로 볼 수 있습니다.
-          </p>
+          <p className="font-normal text-xl text-center text-zinc-700">다양한 친목 활동</p>
 
           <div className="flex space-x-3 mt-10">
             {socials.map((social) => (
@@ -63,7 +64,7 @@ const ActivitySocialPage = () => {
                   expanded === social ? 'w-72' : 'w-20'
                 }`}
                 onClick={() => {
-                  setExpanded(expanded === social ? null : social);
+                  setExpanded(social);
                   setIndex(0);
                   setChangeIndex('next');
                 }}
@@ -98,7 +99,7 @@ const ActivitySocialPage = () => {
                     initial={{ x: changeIndex === 'next' ? 200 : -200 }}
                     animate={{ x: 0 }}
                     exit={{ x: changeIndex === 'next' ? -200 : 200 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.35 }}
                   >
                     <Image
                       src={expanded.contents[index - 1].image}
@@ -117,7 +118,7 @@ const ActivitySocialPage = () => {
                     initial={{ x: changeIndex === 'next' ? 200 : -200 }}
                     animate={{ x: 0 }}
                     exit={{ x: changeIndex === 'next' ? -200 : 200 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.35 }}
                   >
                     <Image
                       src={expanded.contents[index + 1].image}
@@ -142,22 +143,15 @@ const ActivitySocialPage = () => {
                 ) : (
                   <div className="w-8 h-8" />
                 )}
-                <motion.div
-                  key={`current-${index}`}
-                  initial={{ x: changeIndex === 'next' ? 20 : -20 }}
-                  animate={{ x: 0 }}
-                  exit={{ x: changeIndex === 'next' ? -200 : 200 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-1/2"
-                >
-                  <Image
-                    src={expanded.contents[index].image}
-                    alt="current"
-                    width={800}
-                    height={450}
-                    className="w-full object-cover rounded-3xl"
-                  />
-                </motion.div>
+
+                <Image
+                  src={expanded.contents[index].image}
+                  alt="current"
+                  width={800}
+                  height={450}
+                  className="w-1/2 object-cover rounded-3xl"
+                />
+
                 {index + 1 < expanded.contents.length ? (
                   <FaAngleRight
                     size={32}
