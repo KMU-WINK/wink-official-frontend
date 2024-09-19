@@ -12,6 +12,9 @@ import { WinkApiApplication } from '@/api';
 
 import '@/style/globals.css';
 
+import 'aos/dist/aos.css';
+import 'aos/dist/aos.css';
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -21,7 +24,7 @@ const HIDE_FOOTER_PATHS = ['/auth', '/admin'];
 const RootLayout = ({ children }: RootLayoutProps) => {
   const pathname = usePathname();
 
-  const hideFooter = HIDE_FOOTER_PATHS.some(path => pathname.startsWith(path));
+  const hideFooter = HIDE_FOOTER_PATHS.some((path) => pathname.startsWith(path));
 
   return (
     <html lang="ko">
