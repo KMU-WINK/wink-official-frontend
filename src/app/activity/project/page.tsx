@@ -28,7 +28,7 @@ const ActivityProjectPage = () => {
       const { projects } = await WinkApi.Activity.Project.getProjects({
         page,
       });
-      setProjects(prev => [...prev, ...projects]);
+      setProjects((prev) => [...prev, ...projects]);
     };
 
     (async () => {
@@ -40,12 +40,8 @@ const ActivityProjectPage = () => {
     <>
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center pt-32">
-          <h1 className="font-bold text-4xl text-center mb-6">
-            WINK, 우리들의 파도
-          </h1>
-          <p className="font-regular text-xl text-center text-zinc-700">
-            나날히 성장해 가는 우리
-          </p>
+          <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
+          <p className="font-regular text-xl text-center text-zinc-700">나날히 성장해 가는 우리</p>
         </div>
 
         {/* Carousel 영역 */}
@@ -78,7 +74,7 @@ const ActivityProjectPage = () => {
         {page < maxPage && (
           <div className="flex justify-center mb-10">
             <button
-              onClick={() => setPage(prev => prev + 1)}
+              onClick={() => setPage((prev) => prev + 1)}
               className="px-4 py-2 bg-white rounded-2xl border border-gray-400 hover:bg-gray-100 text-lg font-semibold"
             >
               목록 더 보기

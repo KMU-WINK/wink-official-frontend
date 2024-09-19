@@ -11,15 +11,11 @@ export class Member {
     return this.request.put('/member/me/info', data);
   }
 
-  public async updateMyPassword(
-    data: UpdateMyPasswordRequestDto,
-  ): Promise<void> {
+  public async updateMyPassword(data: UpdateMyPasswordRequestDto): Promise<void> {
     return this.request.patch('/member/me/password', data);
   }
 
-  public async updateMyAvatar(
-    avatar: File,
-  ): Promise<UpdateMyAvatarResponseDto> {
+  public async updateMyAvatar(avatar: File): Promise<UpdateMyAvatarResponseDto> {
     const data = new FormData();
     data.append('avatar', avatar);
 
@@ -38,15 +34,11 @@ export class MemberAdmin {
     return this.request.get('/admin/member/waiting');
   }
 
-  public async approveWaitingMember(
-    data: ApproveWaitingMemberRequestDto,
-  ): Promise<void> {
+  public async approveWaitingMember(data: ApproveWaitingMemberRequestDto): Promise<void> {
     return this.request.post('/admin/member/waiting/approve', data);
   }
 
-  public async rejectWaitingMember(
-    data: RejectWaitingMemberRequestDto,
-  ): Promise<void> {
+  public async rejectWaitingMember(data: RejectWaitingMemberRequestDto): Promise<void> {
     return this.request.post('/admin/member/waiting/reject', data);
   }
 
@@ -60,15 +52,11 @@ export class MemberAdmin {
     return this.request.get('/admin/member?page=' + data.page);
   }
 
-  public async searchMembers(
-    data: SearchMembersRequestDto,
-  ): Promise<SearchMembersResponseDto> {
+  public async searchMembers(data: SearchMembersRequestDto): Promise<SearchMembersResponseDto> {
     return this.request.get('/admin/member/search?query=' + data.query);
   }
 
-  public async updateMemberRole(
-    data: UpdateMemberRoleRequestDto,
-  ): Promise<void> {
+  public async updateMemberRole(data: UpdateMemberRoleRequestDto): Promise<void> {
     return this.request.patch('/admin/member/role', data);
   }
 
@@ -130,8 +118,7 @@ export interface EachGetMembersResponseDto {
   role: RoleString;
 }
 
-export interface EachGetMembersForAdminResponseDto
-  extends EachGetMembersResponseDto {
+export interface EachGetMembersForAdminResponseDto extends EachGetMembersResponseDto {
   email: string;
   studentId: string;
   fee: boolean;
@@ -205,9 +192,7 @@ export const RoleKoreanMap: Record<RoleString, string> = {
 export const RoleKorean = Object.values(RoleKoreanMap);
 
 export const RoleKoreanToRole = (role: string): Role => {
-  const key = Object.keys(RoleKoreanMap).find(
-    key => RoleKoreanMap[key as RoleString] === role,
-  );
+  const key = Object.keys(RoleKoreanMap).find((key) => RoleKoreanMap[key as RoleString] === role);
   return Role[key as RoleString];
 };
 

@@ -38,13 +38,11 @@ const ActivityProjectViewPage = ({ params }: ActivityProjectViewPageProps) => {
       <div className="mb-4 flex items-center justify-between">
         <div>
           <span className="text-gray-600">{project.author.name}</span>
-          <span className="text-gray-400 ml-4">
-            {formatDate(project.createdAt)}
-          </span>
+          <span className="text-gray-400 ml-4">{formatDate(project.createdAt)}</span>
         </div>
       </div>
       <div className="mt-4 mb-8">
-        {project.tags.map(tag => (
+        {project.tags.map((tag) => (
           <span
             key={tag}
             className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
@@ -54,11 +52,7 @@ const ActivityProjectViewPage = ({ params }: ActivityProjectViewPageProps) => {
         ))}
       </div>
       <div>
-        <Editor
-          content={project.content}
-          setContent={() => {}}
-          readonly={true}
-        />
+        <Editor content={project.content} setContent={() => {}} readonly={true} />
       </div>
     </div>
   );

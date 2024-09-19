@@ -8,9 +8,7 @@ import { SearchBar, Title } from '@/component';
 import { EachGetWaitingMembersResponseDto, WinkApi } from '@/api';
 
 const AdminMemberWaitingPage = () => {
-  const [members, setMembers] = useState<EachGetWaitingMembersResponseDto[]>(
-    [],
-  );
+  const [members, setMembers] = useState<EachGetWaitingMembersResponseDto[]>([]);
   const [query, setQuery] = useState<string>('');
 
   useEffect(() => {
@@ -43,11 +41,7 @@ const AdminMemberWaitingPage = () => {
       <Title title="Member" subtitle="회원가입 승인" />
 
       <div className="flex justify-end mb-4">
-        <SearchBar
-          value={query}
-          placeholder="이름을 검색해주세요."
-          onChange={setQuery}
-        />
+        <SearchBar value={query} placeholder="이름을 검색해주세요." onChange={setQuery} />
       </div>
 
       <div className="min-w-full grid grid-cols-5 gap-2 border-b">
@@ -65,11 +59,8 @@ const AdminMemberWaitingPage = () => {
         </div>
       </div>
 
-      {members.map(member => (
-        <div
-          key={member._id}
-          className="grid grid-cols-5 gap-2 border-b border-gray-200"
-        >
+      {members.map((member) => (
+        <div key={member._id} className="grid grid-cols-5 gap-2 border-b border-gray-200">
           <div className="py-4 px-4 col-span-1 text-sm">{member.name}</div>
           <div className="py-4 px-4 col-span-1 text-sm">{member.studentId}</div>
           <div className="py-4 px-4 col-span-2 text-sm">{member.email}</div>

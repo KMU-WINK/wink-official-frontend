@@ -3,10 +3,10 @@ import React from 'react';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 
-import logo from '@/public/wink_footer_logo.svg';
-import icon_github from '@/public/wink_github.svg';
-import icon_instagram from '@/public/wink_instagram.svg';
-import icon_tistory from '@/public/wink_tistory.svg';
+import Logo from '@/public/footer/logo.svg';
+import GithubIcon from '@/public/icon/footer/github.svg';
+import InstagramIcon from '@/public/icon/footer/instagram.svg';
+import TistoryIcon from '@/public/icon/footer/tistory.svg';
 
 interface Link {
   id: string;
@@ -18,17 +18,17 @@ const LINKS: Link[] = [
   {
     id: 'github',
     href: 'https://github.com/KMU-WINK',
-    icon: icon_github,
+    icon: GithubIcon,
   },
   {
     id: 'instagram',
     href: 'https://www.instagram.com/kmu_wink/',
-    icon: icon_instagram,
+    icon: InstagramIcon,
   },
   {
     id: 'tistory',
     href: 'https://cs-kookmin-club.tistory.com/category/WINK-%28Web%20%26%20App%29',
-    icon: icon_tistory,
+    icon: TistoryIcon,
   },
 ];
 
@@ -36,12 +36,12 @@ export const Footer: React.FC = () => {
   return (
     <footer className="flex flex-col py-20 items-center justify-center w-full bg-white mt-auto">
       <div className="flex justify-center gap-1 mb-7">
-        <Image src={logo} alt={'logo'} width={36} />
+        <Image src={Logo} alt={'logo'} width={36} />
         <p className="text-lg text-slate-400">WINK</p>
       </div>
 
       <ul className="flex justify-center list-none gap-5 mb-7">
-        {LINKS.map(link => (
+        {LINKS.map((link) => (
           <Link key={link.id} href={link.href}>
             <Image className="h-14" src={link.icon} alt={link.id} />
           </Link>
@@ -52,9 +52,7 @@ export const Footer: React.FC = () => {
         <h3 className="flex justify-center text-md text-slate-400">
           서울 성북구 정릉로 77 미래관 605-1
         </h3>
-        <p className="text-md text-gray-500">
-          © WINK 2024 All rights reserved.
-        </p>
+        <p className="text-md text-gray-500">© WINK 2024 All rights reserved.</p>
       </div>
     </footer>
   );

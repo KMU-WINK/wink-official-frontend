@@ -72,11 +72,7 @@ const AdminActivitySocialPage = () => {
       <Title title="Activity" subtitle="친목 활동" />
 
       <div className="flex justify-end mb-4 space-x-4">
-        <SearchBar
-          value={query}
-          placeholder="제목을 검색해주세요."
-          onChange={setQuery}
-        />
+        <SearchBar value={query} placeholder="제목을 검색해주세요." onChange={setQuery} />
 
         <IconButton
           icon={<FaEdit />}
@@ -101,24 +97,15 @@ const AdminActivitySocialPage = () => {
         </div>
       </div>
 
-      {socials.map(social => (
-        <div
-          key={social._id}
-          className="grid grid-cols-12 gap-2 border-b border-gray-200"
-        >
-          <div className="py-4 px-4 col-span-7 text-sm truncate">
-            {social.title}
-          </div>
-          <div className="py-4 px-4 col-span-3 text-sm">
-            {formatDate(social.createdAt)}
-          </div>
+      {socials.map((social) => (
+        <div key={social._id} className="grid grid-cols-12 gap-2 border-b border-gray-200">
+          <div className="py-4 px-4 col-span-7 text-sm truncate">{social.title}</div>
+          <div className="py-4 px-4 col-span-3 text-sm">{formatDate(social.createdAt)}</div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
             <FaEdit
               size={18}
               className="cursor-pointer"
-              onClick={() =>
-                router.push(`/admin/activity/social/editor/${social._id}`)
-              }
+              onClick={() => router.push(`/admin/activity/social/editor/${social._id}`)}
             />
           </div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
@@ -151,9 +138,7 @@ const AdminActivitySocialPage = () => {
         </div>
       </Modal>
 
-      {!query && maxPage > 0 && (
-        <TablePaging page={page} setPage={setPage} maxPage={maxPage} />
-      )}
+      {!query && maxPage > 0 && <TablePaging page={page} setPage={setPage} maxPage={maxPage} />}
     </div>
   );
 };
