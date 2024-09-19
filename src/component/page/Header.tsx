@@ -17,7 +17,6 @@ import Dropdown from '@/public/icon/arrow-down.svg';
 import logo from '@/public/logo.png';
 import AvatarPlaceholder from '@/public/profile.svg';
 
-// SVG를 컴포넌트로 사용
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Header: React.FC = () => {
