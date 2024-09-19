@@ -3,12 +3,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import avatarImage from '@/public/profile.svg';
+// SVG 파일은 React 컴포넌트로 사용
+import AvatarSvg from '@/public/profile.svg';
 
 interface ProfileCardProps {
   name: string;
   description: string | null;
-  avatar: string | null;
+  avatar: string | null; // avatar가 URL이면 string
   github: string | null;
   instagram: string | null;
   blog: string | null;
@@ -48,13 +49,18 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
       )}
 
       <div className="flex space-x-2 p-4">
-        <Image
-          src={avatar || avatarImage}
-          alt="Profile"
-          width={32}
-          height={32}
-          className="w-16 h-16 object-cover rounded-full"
-        />
+        {/* avatar가 URL인 경우 next/image 사용, 그렇지 않으면 SVG 컴포넌트 렌더링 */}
+        {avatar ? (
+          <Image
+            src={avatar}
+            alt="Profile"
+            width={64}
+            height={64}
+            className="w-16 h-16 object-cover rounded-full"
+          />
+        ) : (
+          <AvatarSvg className="w-16 h-16 object-cover rounded-full" />
+        )}
         <div className="flex flex-col">
           <h2 className="text-lg font-bold mt-1.5">{name}</h2>
           {description && (

@@ -1,34 +1,33 @@
 import React from 'react';
 
-import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 
-import logo from '@/public/wink_footer_logo.svg';
-import icon_github from '@/public/wink_github.svg';
-import icon_instagram from '@/public/wink_instagram.svg';
-import icon_tistory from '@/public/wink_tistory.svg';
+import Logo from '@/public/wink_footer_logo.svg';
+import Github from '@/public/wink_github.svg';
+import Instagram from '@/public/wink_instagram.svg';
+import Tistory from '@/public/wink_tistory.svg';
 
 interface Link {
   id: string;
   href: string;
-  icon: StaticImageData;
+  icon: React.ReactNode;
 }
 
 const LINKS: Link[] = [
   {
     id: 'github',
     href: 'https://github.com/KMU-WINK',
-    icon: icon_github,
+    icon: <Github />,
   },
   {
     id: 'instagram',
     href: 'https://www.instagram.com/kmu_wink/',
-    icon: icon_instagram,
+    icon: <Instagram />,
   },
   {
     id: 'tistory',
     href: 'https://cs-kookmin-club.tistory.com/category/WINK-%28Web%20%26%20App%29',
-    icon: icon_tistory,
+    icon: <Tistory />,
   },
 ];
 
@@ -36,14 +35,14 @@ export const Footer: React.FC = () => {
   return (
     <footer className="flex flex-col py-20 items-center justify-center w-full bg-white mt-auto">
       <div className="flex justify-center gap-1 mb-7">
-        <Image src={logo} alt={'logo'} width={36} />
+        <Logo />
         <p className="text-lg text-slate-400">WINK</p>
       </div>
 
       <ul className="flex justify-center list-none gap-5 mb-7">
         {LINKS.map(link => (
           <Link key={link.id} href={link.href}>
-            <Image className="h-14" src={link.icon} alt={link.id} />
+            {link.icon}
           </Link>
         ))}
       </ul>
