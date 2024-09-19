@@ -65,7 +65,7 @@ const AboutUsMemberPage = () => {
         <div>
           <div className="flex flex-col items-center justify-center gap-6">
             <h1 className="font-bold text-3xl text-center">&lt;회장단&gt;</h1>
-            <p className="font-regular text-lg text-center text-zinc-700]">
+            <p className="font-normal text-lg text-center text-zinc-700]">
               전체 동아리 운영 기획 및 각 부서 업무 참여
             </p>
 
@@ -93,7 +93,7 @@ const AboutUsMemberPage = () => {
           {MEMBERS.map(({ title, description, filter, sort }) => (
             <div className="flex flex-col items-center justify-center gap-6">
               <h1 className="font-bold text-3xl text-center">&lt;{title}&gt;</h1>
-              <p className="font-regular text-lg text-center text-zinc-700]">{description}</p>
+              <p className="font-normal text-lg text-center text-zinc-700]">{description}</p>
 
               <div className="flex flex-col gap-6">
                 {members

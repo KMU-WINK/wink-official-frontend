@@ -63,7 +63,7 @@ const ActivityStudyPage = () => {
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center pt-32">
           <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
-          <p className="font-regular text-xl text-center text-zinc-700]">나날히 성장해 가는 우리</p>
+          <p className="font-normal text-xl text-center text-zinc-700]">나날히 성장해 가는 우리</p>
         </div>
 
         {/* 주목할 글 */}
