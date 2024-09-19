@@ -76,11 +76,22 @@ const AboutUsWePage = () => {
             </div>
           </div>
 
-          <div data-aos="fade-bottom" data-aos-easing="ease-out" data-aos-duration="700">
+          <div
+            id="aos-anchor"
+            data-aos="fade-bottom"
+            data-aos-easing="ease-out"
+            data-aos-duration="700"
+          >
             <h1 className="font-medium text-2xl md:text-4xl pt-14">
               우리는 어떤 길을 <br /> 걸어왔을까요?{' '}
             </h1>
-            <div data-aos="fade-right" data-aos-easing="ease-out" data-aos-duration="700">
+            <div
+              data-aos="fade-right"
+              data-aos-easing="ease-out"
+              data-aos-duration="700"
+              data-aos-delay="500"
+              data-aos-anchor="#aos-anchor"
+            >
               <ActivityCard
                 image={AboutUsImage4}
                 title="윙커톤"
@@ -89,7 +100,13 @@ const AboutUsWePage = () => {
                 isImageRight={false}
               />
             </div>
-            <div data-aos="fade-left" data-aos-easing="ease-out" data-aos-duration="700">
+            <div
+              data-aos="fade-left"
+              data-aos-easing="ease-out"
+              data-aos-duration="700"
+              data-aos-delay="500"
+              data-aos-anchor="#aos-anchor"
+            >
               <ActivityCard
                 image={AboutUsImage4}
                 title="윙커톤"
@@ -98,7 +115,13 @@ const AboutUsWePage = () => {
                 isImageRight={true}
               />
             </div>
-            <div data-aos="fade-right" data-aos-easing="ease-out" data-aos-duration="700">
+            <div
+              data-aos="fade-right"
+              data-aos-easing="ease-out"
+              data-aos-duration="700"
+              data-aos-delay="500"
+              data-aos-anchor="#aos-anchor"
+            >
               <ActivityCard
                 image={AboutUsImage4}
                 title="윙커톤"
@@ -107,7 +130,13 @@ const AboutUsWePage = () => {
                 isImageRight={false}
               />
             </div>
-            <div data-aos="fade-left" data-aos-easing="ease-out" data-aos-duration="700">
+            <div
+              data-aos="fade-left"
+              data-aos-easing="ease-out"
+              data-aos-duration="700"
+              data-aos-delay="500"
+              data-aos-anchor="#aos-anchor"
+            >
               <ActivityCard
                 image={AboutUsImage4}
                 title="윙커톤"
