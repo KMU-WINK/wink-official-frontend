@@ -12,7 +12,7 @@ import { useForm } from '@/hook';
 
 import { WinkApi } from '@/api';
 
-import avatarImage from '@/public/profile.svg';
+import avatarImage from '@/public/profile.svg?url';
 
 import * as yup from 'yup';
 
