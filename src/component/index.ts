@@ -1,3 +1,4 @@
+export * from './ActivityCard';
 export * from './AdminSideBar';
 export * from './Button';
 export * from './Carousel';
