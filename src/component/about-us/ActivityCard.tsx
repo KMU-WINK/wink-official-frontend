@@ -20,13 +20,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
   return (
     <div className={`flex ${isImageRight ? 'flex-row-reverse' : 'flex-row'} items-center my-8`}>
       <div className="w-1/2">
-        <Image
-          src={image}
-          alt={title}
-          width={500}
-          height={300}
-          className="object-cover rounded-3xl"
-        />
+        <Image src={image} alt={title} width={500} height={300} className="object-cover " />
       </div>
       <div className="w-1/2 px-6">
         <h3 className="text-lg font-medium text-blue-500 mb-4">{title}</h3>
