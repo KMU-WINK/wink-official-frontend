@@ -46,7 +46,7 @@ export const Header: React.FC = () => {
         { title: '연혁', href: '/activity/history' },
         { title: '프로젝트', href: '/activity/project' },
         { title: '스터디', href: '/activity/study' },
-        { title: '친목활동', href: '/activity/social' },
+        { title: '친목 활동', href: '/activity/social' },
       ],
     },
     {
