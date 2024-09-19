@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 // import { FaAngleDown } from 'react-icons/fa';
 import DropDown from '@/public/assets/arrow-down.svg';
 
@@ -10,11 +11,7 @@ interface DropdownProps {
   onChange: (value: string) => void;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({
-  value,
-  options,
-  onChange,
-}) => {
+export const Dropdown: React.FC<DropdownProps> = ({ value, options, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -35,7 +32,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
             transition={{ duration: 0.2, ease: 'easeInOut' }}
             className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg overflow-y-auto"
           >
-            {options.map(option => (
+            {options.map((option) => (
               <div
                 key={option}
                 className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"

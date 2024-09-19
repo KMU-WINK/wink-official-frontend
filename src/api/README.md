@@ -7,6 +7,7 @@
 ### Wrapper
 
 RootLayout에 아래 코드를 추가하세요.
+
 ```tsx
 <WinkApiApplication>{children}</WinkApiApplication>
 ```
@@ -34,7 +35,7 @@ WinkApi.Request.setToken({
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  
+
   const onLogin = async () => {
     const { accessToken, refreshToken } = await WinkApi.Auth.login({ email, password });
 
@@ -58,7 +59,9 @@ const LoginPage = () => {
   );
 }
 ```
+
 ---
+
 ```tsx
 'use client';
 
@@ -110,7 +113,7 @@ const MyPage = () => {
   return (
     <div>
       <h1>My Info</h1>
-        
+
       <div>
         <span>Name: {member.name}</span>
         <span>Email: {member.email}</span>

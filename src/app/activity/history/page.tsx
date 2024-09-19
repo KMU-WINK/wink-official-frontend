@@ -3,11 +3,10 @@
 import { useState } from 'react';
 import { FaCircle } from 'react-icons/fa';
 
-import ArrowDown from '@/public/assets/arrow-down.svg';
-import ArrowUp from '@/public/assets/arrow-up.svg';
-
 import Image, { StaticImageData } from 'next/image';
 
+import ArrowDown from '@/public/icon/arrow-down.svg';
+import ArrowUp from '@/public/icon/arrow-up.svg';
 import placeholder from '@/public/placeholder.png';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -46,19 +45,16 @@ const ActivityHistoryPage = () => {
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const toggleItem = (id: string) => {
-    console.log(id);
-    setOpenItems(prev =>
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id],
+    setOpenItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   };
 
   return (
     <div className="flex flex-col items-center mt-32">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="font-bold text-4xl text-center mb-6">
-          WINK, 우리들의 파도
-        </h1>
-        <p className="font-regular text-xl text-center text-zinc-700">
+        <h1 className="font-bold text-4xl text-center mb-6">WINK, 우리들의 파도</h1>
+        <p className="font-normal text-xl text-center text-zinc-700">
           행사 / 세미나 / 대회 활동 기록을 년도 별로 볼 수 있습니다.
         </p>
       </div>
@@ -66,7 +62,7 @@ const ActivityHistoryPage = () => {
       <div className="relative mt-16">
         <div className="absolute ml-6 transform -translate-x-1/2 h-full mt-3 w-0.5 bg-gray-200"></div>
 
-        {timelineData.map(yearData => (
+        {timelineData.map((yearData) => (
           <div key={yearData.year} className="relative">
             <div className="absolute mt-3 transform -translate-x-full -translate-y-1/2 text-2xl font-bold text-gray-700">
               {yearData.year}
@@ -81,18 +77,10 @@ const ActivityHistoryPage = () => {
                   >
                     <span className="flex items-center">
                       <FaCircle size={6} className="w-4" />
-                      <span className="w-20 text-left font-medium">
-                        {item.date}
-                      </span>
-                      <span className="flex-grow text-left font-regular">
-                        {item.title}
-                      </span>
+                      <span className="w-20 text-left font-medium">{item.date}</span>
+                      <span className="flex-grow text-left font-normal">{item.title}</span>
                     </span>
-                    {openItems.includes(`${yearData.year}-${index}`) ? (
-                      <ArrowUp />
-                    ) : (
-                      <ArrowDown />
-                    )}
+                    {openItems.includes(`${yearData.year}-${index}`) ? <ArrowUp /> : <ArrowDown />}
                   </button>
 
                   <AnimatePresence>

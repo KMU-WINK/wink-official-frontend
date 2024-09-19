@@ -24,10 +24,7 @@ export const FormContainer: React.FC<FormContainerProps> = ({
   );
 };
 
-export type Fields<T extends string> = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'id'
-> & {
+export type Fields<T extends string> = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'id'> & {
   id: T;
   button?: React.ReactNode;
 };

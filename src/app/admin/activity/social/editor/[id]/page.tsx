@@ -15,9 +15,7 @@ interface AdminActivitySocialEditorPageProps {
   params: { id: string };
 }
 
-const AdminActivitySocialEditorPage = ({
-  params,
-}: AdminActivitySocialEditorPageProps) => {
+const AdminActivitySocialEditorPage = ({ params }: AdminActivitySocialEditorPageProps) => {
   const router = useRouter();
   const [title, setTitle] = React.useState<string>('');
   const [contents, setContents] = React.useState<Content[]>([
@@ -40,15 +38,12 @@ const AdminActivitySocialEditorPage = ({
     }
   }, []);
 
-  const handleImageUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const file = e.target.files?.[0];
 
     if (file) {
       const { link } = await WinkApi.Activity.CommonAdmin.upload(file);
-      setContents(prev => {
+      setContents((prev) => {
         prev[index].image = link;
         return [...prev];
       });
@@ -88,9 +83,7 @@ const AdminActivitySocialEditorPage = ({
             icon={<FaPlus />}
             text="페이지 추가"
             className="bg-green-500 hover:bg-green-600 border-0 text-white"
-            onClick={() =>
-              setContents(prev => [...prev, { content: '', image: '' }])
-            }
+            onClick={() => setContents((prev) => [...prev, { content: '', image: '' }])}
           />
 
           <IconButton
@@ -98,7 +91,7 @@ const AdminActivitySocialEditorPage = ({
             text="페이지 삭제"
             disabled={contents.length === 1}
             className="bg-red-500 hover:bg-red-600 border-0 text-white disabled:bg-gray-300"
-            onClick={() => setContents(prev => prev.slice(0, -1))}
+            onClick={() => setContents((prev) => prev.slice(0, -1))}
           />
 
           <IconButton
@@ -116,7 +109,7 @@ const AdminActivitySocialEditorPage = ({
             value={title}
             placeholder="친목 활동을 입력해주세요."
             className="px-3 py-4 border-border rounded focus:outline-none focus:ring-1 focus:ring-wink-300 placeholder-gray-600 p-2 text-sm border"
-            onChange={e => setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
@@ -126,7 +119,7 @@ const AdminActivitySocialEditorPage = ({
               id={`fileInput-${i}`}
               type="file"
               accept="image/*"
-              onChange={e => handleImageUpload(e, i)}
+              onChange={(e) => handleImageUpload(e, i)}
               className="hidden"
             />
 
@@ -152,10 +145,7 @@ const AdminActivitySocialEditorPage = ({
                   document.getElementById(`fileInput-${i}`)?.click();
                 }}
               >
-                <label
-                  htmlFor="fileInput"
-                  className="flex flex-col items-center justify-center"
-                >
+                <label htmlFor="fileInput" className="flex flex-col items-center justify-center">
                   <FaUpload className="text-4xl text-gray-400 mb-1" size={24} />
                   <span className="text-gray-600">Upload Image</span>
                 </label>
@@ -165,8 +155,8 @@ const AdminActivitySocialEditorPage = ({
             <div className="mt-2">
               <Editor
                 content={content.content}
-                setContent={value =>
-                  setContents(prev => {
+                setContent={(value) =>
+                  setContents((prev) => {
                     prev[i].content = value;
                     return [...prev];
                   })
@@ -174,9 +164,7 @@ const AdminActivitySocialEditorPage = ({
               />
             </div>
 
-            {i !== contents.length - 1 && (
-              <div className="border-b border-gray-200 my-4" />
-            )}
+            {i !== contents.length - 1 && <div className="border-b border-gray-200 my-4" />}
           </div>
         ))}
       </div>

@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { CiLogout } from 'react-icons/ci';
 
-import Dropdown from '@/public/assets/arrow-down.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -14,9 +13,11 @@ import { PERMIT_ROLES } from '@/guard';
 
 import { WinkApi } from '@/api';
 
+import Dropdown from '@/public/icon/arrow-down.svg';
 import logo from '@/public/logo.png';
-import AvatarPlaceholder from '@/public/profile.svg'; // SVG를 컴포넌트로 사용
+import AvatarPlaceholder from '@/public/profile.svg';
 
+// SVG를 컴포넌트로 사용
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Header: React.FC = () => {
@@ -78,21 +79,12 @@ export const Header: React.FC = () => {
     <header className="fixed top-0 z-50 bg-white w-full h-14 flex items-center justify-center border-b">
       <div className="w-page flex justify-between p-4 lg:p-6">
         <Link href={'/about-us/we'} replace>
-          <Image
-            className="object-contain h-6 mt-1"
-            src={logo}
-            alt="logo"
-            height={24}
-            priority
-          />
+          <Image className="object-contain h-6 mt-1" src={logo} alt="logo" height={24} priority />
         </Link>
         <nav className="flex justify-center items-center capitalize">
           <ul className="flex justify-center items-center list-none gap-8">
-            {ITEMS.filter(item => !item.hide).map(item => (
-              <div
-                key={item.title}
-                className={item.mobileHide ? 'hidden sm:block' : ''}
-              >
+            {ITEMS.filter((item) => !item.hide).map((item) => (
+              <div key={item.title} className={item.mobileHide ? 'hidden sm:block' : ''}>
                 <li className="font-medium text-sm relative cursor-pointer">
                   <div
                     className={`flex items-center gap-1 ${
@@ -118,13 +110,11 @@ export const Header: React.FC = () => {
                         transition={{ duration: 0.2 }}
                         className="absolute -left-1/4 w-28 top-full transform bg-white font-normal shadow-md rounded-md py-2 mt-4.5"
                       >
-                        {item.dropdown.map(subItem => (
+                        {item.dropdown.map((subItem) => (
                           <li
                             key={subItem.href}
                             className={`px-4 py-2 hover:bg-gray-100 ${
-                              pathname.startsWith(subItem.href)
-                                ? 'text-wink-500'
-                                : ''
+                              pathname.startsWith(subItem.href) ? 'text-wink-500' : ''
                             }`}
                             onClick={() => {
                               router.push(subItem.href);

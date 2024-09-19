@@ -3,27 +3,19 @@ import { MemberType, WinkApiRequest } from '@/api';
 export class Project {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async getProject(
-    data: GetProjectRequestDto,
-  ): Promise<GetProjectResponseDto> {
-    return this.request.get(
-      '/activity/project/detail?projectId=' + data.projectId,
-    );
+  public async getProject(data: GetProjectRequestDto): Promise<GetProjectResponseDto> {
+    return this.request.get('/activity/project/detail?projectId=' + data.projectId);
   }
 
   public async getProjectsPage(): Promise<GetProjectsPageResponseDto> {
     return this.request.get('/activity/project/max');
   }
 
-  public async getProjects(
-    data: GetProjectsRequestDto,
-  ): Promise<GetProjectsResponseDto> {
+  public async getProjects(data: GetProjectsRequestDto): Promise<GetProjectsResponseDto> {
     return this.request.get('/activity/project?page=' + data.page);
   }
 
-  public async searchProjects(
-    data: SearchProjectsRequestDto,
-  ): Promise<GetProjectsResponseDto> {
+  public async searchProjects(data: SearchProjectsRequestDto): Promise<GetProjectsResponseDto> {
     return this.request.get('/activity/project/search?query=' + data.query);
   }
 }
@@ -31,9 +23,7 @@ export class Project {
 export class ProjectAdmin {
   constructor(private readonly request: WinkApiRequest) {}
 
-  public async createProject(
-    data: CreateProjectRequestDto,
-  ): Promise<CreateProjectResponseDto> {
+  public async createProject(data: CreateProjectRequestDto): Promise<CreateProjectResponseDto> {
     return this.request.put('/admin/activity/project', data);
   }
 

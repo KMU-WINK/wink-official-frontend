@@ -7,9 +7,9 @@ interface ApplicationState {
   setRefreshing: (refreshing: boolean) => void;
 }
 
-export const useApplicationState = create<ApplicationState>(set => ({
+export const useApplicationState = create<ApplicationState>((set) => ({
   loaded: false,
-  setLoaded: loaded => set({ loaded }),
+  setLoaded: (loaded) => set({ loaded }),
   refreshing: false,
-  setRefreshing: refreshing => set({ refreshing }),
+  setRefreshing: (refreshing) => set({ refreshing }),
 }));

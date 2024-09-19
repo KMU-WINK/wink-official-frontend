@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
       </div>
 
       <ul className="flex justify-center list-none gap-5 mb-7">
-        {LINKS.map(link => (
+        {LINKS.map((link) => (
           <Link key={link.id} href={link.href}>
             {link.icon}
           </Link>
@@ -51,9 +51,7 @@ export const Footer: React.FC = () => {
         <h3 className="flex justify-center text-md text-slate-400">
           서울 성북구 정릉로 77 미래관 605-1
         </h3>
-        <p className="text-md text-gray-500">
-          © WINK 2024 All rights reserved.
-        </p>
+        <p className="text-md text-gray-500">© WINK 2024 All rights reserved.</p>
       </div>
     </footer>
   );

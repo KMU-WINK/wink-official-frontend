@@ -5,13 +5,7 @@ import { FaEdit } from 'react-icons/fa';
 import { FaTrashCan } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
 
-import {
-  FormContainer,
-  IconButton,
-  Modal,
-  TextField,
-  Title,
-} from '@/component';
+import { FormContainer, IconButton, Modal, TextField, Title } from '@/component';
 
 import { useForm } from '@/hook';
 
@@ -22,20 +16,13 @@ import * as yup from 'yup';
 type Inputs = 'category';
 
 const AdminActivityStudyCategoryPage = () => {
-  const [categories, setCategories] = useState<EachGetCategoriesResponseDto[]>(
-    [],
-  );
+  const [categories, setCategories] = useState<EachGetCategoriesResponseDto[]>([]);
 
   const [createModal, setCreateModal] = useState<boolean>(false);
-  const [modifyModal, setModifyModal] =
-    useState<EachGetCategoriesResponseDto | null>(null);
-  const [deleteModal, setDeleteModal] =
-    useState<EachGetCategoriesResponseDto | null>(null);
+  const [modifyModal, setModifyModal] = useState<EachGetCategoriesResponseDto | null>(null);
+  const [deleteModal, setDeleteModal] = useState<EachGetCategoriesResponseDto | null>(null);
 
-  const { values, setValues, errors, setErrors, onChange, validate } = useForm<
-    Inputs,
-    string
-  >(
+  const { values, setValues, errors, setErrors, onChange, validate } = useForm<Inputs, string>(
     yup.object({
       category: yup.string().required('카테고리 이름을 입력해주세요.'),
     }),
@@ -128,15 +115,10 @@ const AdminActivityStudyCategoryPage = () => {
         </div>
       </div>
 
-      {categories.map(category => (
-        <div
-          key={category._id}
-          className="grid grid-cols-12 gap-2 border-b border-gray-200"
-        >
+      {categories.map((category) => (
+        <div key={category._id} className="grid grid-cols-12 gap-2 border-b border-gray-200">
           <div className="py-4 px-4 col-span-8 text-sm">{category.name}</div>
-          <div className="py-4 px-4 col-span-2 text-sm">
-            {category.dependencies}개
-          </div>
+          <div className="py-4 px-4 col-span-2 text-sm">{category.dependencies}개</div>
           <div className="col-span-1 flex items-center justify-center space-x-8">
             <FaEdit
               size={18}

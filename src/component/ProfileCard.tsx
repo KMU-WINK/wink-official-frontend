@@ -63,14 +63,12 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
         )}
         <div className="flex flex-col">
           <h2 className="text-lg font-bold mt-1.5">{name}</h2>
-          {description && (
-            <p className="w-44 text-gray-600 truncate">{description}</p>
-          )}
+          {description && <p className="w-44 text-gray-600 truncate">{description}</p>}
         </div>
       </div>
 
       <div className="flex justify-around border-t border-wink-400 py-3 px-5">
-        {URL.map(url => (
+        {URL.map((url) => (
           <Link
             key={url.name}
             href={url.url || ''}

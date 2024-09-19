@@ -6,13 +6,7 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import {
-  Button,
-  Fields,
-  FormContainer,
-  TextField,
-  WebInKookmin,
-} from '@/component';
+import { Button, Fields, FormContainer, TextField, WebInKookmin } from '@/component';
 
 import { useForm } from '@/hook';
 
@@ -27,10 +21,7 @@ const LoginPage = () => {
 
   const { values, errors, validate, onChange } = useForm<Inputs, string>(
     yup.object({
-      email: yup
-        .string()
-        .required('이메일을 입력해주세요.')
-        .email('이메일 형식이 아닙니다.'),
+      email: yup.string().required('이메일을 입력해주세요.').email('이메일 형식이 아닙니다.'),
       password: yup.string().required('비밀번호를 입력해주세요.'),
     }),
   );
