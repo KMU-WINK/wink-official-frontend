@@ -3,10 +3,10 @@ import React from 'react';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 
-import Logo from '@/public/footer/logo.svg';
-import GithubIcon from '@/public/icon/footer/github.svg';
-import InstagramIcon from '@/public/icon/footer/instagram.svg';
-import TistoryIcon from '@/public/icon/footer/tistory.svg';
+import Logo from '@/public/footer/logo.svg?url';
+import GithubIcon from '@/public/icon/footer/github.svg?url';
+import InstagramIcon from '@/public/icon/footer/instagram.svg?url';
+import TistoryIcon from '@/public/icon/footer/tistory.svg?url';
 
 interface Link {
   id: string;

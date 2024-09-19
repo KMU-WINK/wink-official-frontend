@@ -15,7 +15,7 @@ import { WinkApi } from '@/api';
 
 import Dropdown from '@/public/icon/arrow-down.svg';
 import logo from '@/public/logo.png';
-import avatar from '@/public/profile.svg';
+import avatar from '@/public/profile.svg?url';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
