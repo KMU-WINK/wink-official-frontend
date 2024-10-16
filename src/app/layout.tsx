@@ -1,58 +1,35 @@
-'use client';
-
 import React from 'react';
-import { Bounce, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-import { usePathname } from 'next/navigation';
+import { Metadata } from 'next';
 
-import { Footer, Header } from '@/component';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import { Toaster } from '@/components/ui/sonner';
 
-import { WinkApiApplication } from '@/api';
+import { WinkApiApplication } from '@/lib/wink-api';
 
-import '@/style/globals.css';
-
-import 'aos/dist/aos.css';
-import 'aos/dist/aos.css';
+import './globals.css';
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-const HIDE_FOOTER_PATHS = ['/auth', '/admin'];
+export const metadata: Metadata = {
+  title: 'WINK',
+};
 
-const RootLayout = ({ children }: RootLayoutProps) => {
-  const pathname = usePathname();
-
-  const hideFooter = HIDE_FOOTER_PATHS.some((path) => pathname.startsWith(path));
-
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko">
-      <head>
-        <title>WINK: Web IN Kookmin</title>
-
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <link rel="icon" href="/favicon.ico" />
-      </head>
       <body>
         <WinkApiApplication>
           <Header />
-          {children}
-          {!hideFooter && <Footer />}
-
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            pauseOnHover={false}
-            theme="light"
-            transition={Bounce}
-          />
+          <div className="mt-14 min-h-[calc(100vh-376px)]">{children}</div>
+          <Footer />
         </WinkApiApplication>
+
+        <Toaster />
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

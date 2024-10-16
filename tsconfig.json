@@ -6,8 +6,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": ".",
     "paths": {
-      "@/public/*": ["public/*"],
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "@/public/*": ["./public/*"]
     },
     "plugins": [
       {
@@ -27,6 +27,6 @@
     "incremental": true,
     "allowJs": true
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "svgr.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

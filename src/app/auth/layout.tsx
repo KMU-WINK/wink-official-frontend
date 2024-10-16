@@ -1,15 +1,16 @@
-'use client';
-
 import React from 'react';
 
-import { AnonymousGuard } from '@/guard';
+import WebInKookmin from '@/app/auth/_components/WebInKookmin';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
-const AuthLayout = ({ children }: AuthLayoutProps) => {
-  return <AnonymousGuard>{children}</AnonymousGuard>;
-};
-
-export default AuthLayout;
+export default function AuthLayout({ children }: AuthLayoutProps) {
+  return (
+    <div className="flex flex-col items-center justify-center pt-36">
+      <WebInKookmin />
+      {children}
+    </div>
+  );
+}
