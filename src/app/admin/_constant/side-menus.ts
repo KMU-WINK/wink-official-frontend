@@ -31,7 +31,7 @@ export const sideItems = [
     items: [
       {
         title: '활동 목록',
-        url: '/admin/program/activity',
+        url: '/admin/activity',
         icon: Waypoints,
       },
     ],

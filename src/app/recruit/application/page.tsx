@@ -68,7 +68,7 @@ export default function RecruitApplicationPage() {
 
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [step, setStep] = useState(7);
+  const [step, setStep] = useState(0);
   const [recruit, setRecruit] = useState<Recruit | null>(null);
 
   const form = useForm<ApplicationRequest>({

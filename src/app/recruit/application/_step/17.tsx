@@ -26,8 +26,11 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const onSubmit = useCallback(async () => {
+    setIsProcessing(true);
+
     await Api.Domain.Recruit.application(recruit.id, {
       ...form.getValues(),
       github: form.getValues('github') || undefined,
@@ -38,6 +41,8 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
     toast.success('지원이 완료되었습니다.');
 
     router.push('/recruit');
+
+    setIsProcessing(false);
   }, [router]);
 
   return (
@@ -195,7 +200,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
             : {}
         }
       >
-        <Button variant="wink" onClick={onSubmit}>
+        <Button variant="wink" disabled={isProcessing} onClick={onSubmit}>
           지원하기
         </Button>
       </motion.div>
