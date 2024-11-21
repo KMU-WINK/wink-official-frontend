@@ -132,7 +132,7 @@ export default function AdminUserPage() {
               <TableHead className="min-w-[150px]">전화번호</TableHead>
               <TableHead className="min-w-[100px]">역할</TableHead>
               <TableHead className="min-w-[75px]">회비 납부</TableHead>
-              <TableHead className="min-w-[75px]">액션</TableHead>
+              <TableHead className="w-[75px]">액션</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

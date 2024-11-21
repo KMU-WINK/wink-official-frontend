@@ -79,13 +79,13 @@ export default function ProgramActivityPage() {
             >
               <CarouselContent>
                 {selectedActivity.images.map((image, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
                     <Image
                       src={image}
                       alt={image}
-                      width={400}
-                      height={200}
-                      className="rounded-xl"
+                      width={500}
+                      height={300}
+                      className="h-[200px] rounded-xl object-cover"
                     />
                   </CarouselItem>
                 ))}

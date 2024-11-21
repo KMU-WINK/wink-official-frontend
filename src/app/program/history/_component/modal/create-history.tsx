@@ -139,10 +139,7 @@ export default function CreateHistoryModal({ open, setOpen, callback }: CreateHi
                             </div>
                           </>
                         ) : (
-                          <div
-                            className="flex items-center justify-center w-full h-full rounded-md border text-neutral-500 hover:text-black"
-                            onClick={() => document.getElementById('image-upload')?.click()}
-                          >
+                          <div className="flex items-center justify-center w-full h-full rounded-md border text-neutral-500 hover:text-black">
                             <Upload className="w-8 h-8" />
                           </div>
                         )}

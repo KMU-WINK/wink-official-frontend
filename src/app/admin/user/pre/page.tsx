@@ -121,7 +121,7 @@ export default function AdminUserPrePage() {
               <TableHead className="min-w-[100px]">학번</TableHead>
               <TableHead className="min-w-[250px]">이메일</TableHead>
               <TableHead className="min-w-[150px]">전화번호</TableHead>
-              <TableHead className="min-w-[75px]">액션</TableHead>
+              <TableHead className="w-[75px]">액션</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

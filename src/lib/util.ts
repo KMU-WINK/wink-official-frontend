@@ -23,9 +23,9 @@ export function now() {
   return new Date();
 }
 
-export function toDate(date: Date | string) {
-  if (date instanceof Date) return date;
-  return new Date(date);
+export function toDate(date: Date | string): Date {
+  const inputDate = date instanceof Date ? date : new Date(date);
+  return new Date(inputDate.getTime() + 9 * 60 * 60 * 1000);
 }
 
 export function formatDateApi(date: Date | string) {

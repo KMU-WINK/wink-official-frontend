@@ -45,10 +45,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <title>WINK: Web IN Kookmin</title>
         <link rel="icon" href="/favicon.ico" />
         <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="국민대학교 소프트웨어융합대학 웹 학술 동아리 WINK" />
       </head>
       <body>
         <Header loading={loading} />

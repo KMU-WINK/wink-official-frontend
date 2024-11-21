@@ -21,6 +21,8 @@ import { Button } from '@/ui/button';
 import Api from '@/api';
 import Recruit from '@/api/type/schema/recruit';
 
+import { useUserStore } from '@/store/user';
+
 import { formatDate, formatDateTime, now, toDate } from '@/util';
 
 import BackgroundImage from '@/public/recruit/background.jpg';
@@ -29,6 +31,8 @@ import { TicketsPlane } from 'lucide-react';
 
 export default function RecruitPage() {
   const router = useRouter();
+
+  const { user } = useUserStore();
 
   const [recruit, setRecruit] = useState<Recruit | null>(null);
   const [loading, setLoading] = useState(true);
@@ -123,7 +127,11 @@ export default function RecruitPage() {
                 {recruit.year}년도 {recruit.semester}학기 WINK 신규 부원
               </p>
             </div>
-            <Button variant="wink" onClick={() => router.push(`/recruit/application`)}>
+            <Button
+              variant="wink"
+              onClick={() => router.push(`/recruit/application`)}
+              disabled={!!user}
+            >
               지원하기
             </Button>
           </div>

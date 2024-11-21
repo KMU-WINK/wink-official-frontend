@@ -22,6 +22,7 @@ export default function Footer() {
       <div className="flex space-x-6">
         {FooterLinks.map(({ name, icon, href }) => (
           <Link
+            title={name}
             key={name}
             href={href}
             target="_blank"

@@ -1,14 +1,17 @@
 import WinkRequest from '@/api/request';
 import {
   CreateActivityRequest,
-  GetActivitiesResponse,
+  GetActivitiesPageableResponse,
   GetActivityResponse,
 } from '@/api/type/domain/program/activity';
 
 export default class AdminActivity {
   constructor(private readonly request: WinkRequest) {}
 
-  public async getActivities(page: number = 0, query: string = ''): Promise<GetActivitiesResponse> {
+  public async getActivities(
+    page: number = 0,
+    query: string = '',
+  ): Promise<GetActivitiesPageableResponse> {
     return this.request.get('/admin/program/activity', { params: { page, query } });
   }
 

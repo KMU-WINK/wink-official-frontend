@@ -17,8 +17,11 @@ export default function Step8({ user, form }: RegisterStepProps) {
   const router = useRouter();
 
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const onSubmit = useCallback(async () => {
+    setIsProcessing(true);
+
     await Api.Domain.Auth.register({
       ...form.getValues(),
       description: form.getValues('description') || undefined,
@@ -30,6 +33,8 @@ export default function Step8({ user, form }: RegisterStepProps) {
     toast.success('가입이 완료되었습니다.');
 
     router.push('/auth/login');
+
+    setIsProcessing(false);
   }, [router]);
 
   return (
@@ -120,7 +125,7 @@ export default function Step8({ user, form }: RegisterStepProps) {
             : {}
         }
       >
-        <Button variant="wink" onClick={onSubmit}>
+        <Button variant="wink" disabled={isProcessing} onClick={onSubmit}>
           가입하기
         </Button>
       </motion.div>
