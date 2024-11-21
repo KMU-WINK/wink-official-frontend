@@ -1,149 +1,110 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import Image from 'next/image';
+import Cloud from '@/app/about-us/member/_component/cloud';
+import UserList from '@/app/about-us/member/_component/user-list';
 
-import { ProfileCard } from '@/component';
+import { Separator } from '@/ui/separator';
 
-import { EachGetMembersResponseDto, RoleKoreanMap, WinkApi } from '@/api';
+import Api from '@/api';
+import User, { Role } from '@/api/type/schema/user';
 
-import cloudImage from '@/public/about-us/member/cloud.png';
+import { useUserStore } from '@/store/user';
 
-const MEMBERS = [
-  {
-    title: '총무부',
-    description: '비품 및 회비 관리, 도서 신청 및 대출 관리',
-    filter: (member: EachGetMembersResponseDto) =>
-      member.role === 'TREASURY_HEAD' || member.role === 'TREASURY_ASSISTANT',
-    sort: (a: EachGetMembersResponseDto) => (a.role === 'TREASURY_HEAD' ? -1 : 1),
-  },
-  {
-    title: '홍보부',
-    description: '동아리 홍보 및 홍보물 제작, SNS 관리',
-    filter: (member: EachGetMembersResponseDto) =>
-      member.role === 'PUBLIC_RELATIONS_HEAD' || member.role === 'PUBLIC_RELATIONS_ASSISTANT',
-    sort: (a: EachGetMembersResponseDto) => (a.role === 'PUBLIC_RELATIONS_HEAD' ? -1 : 1),
-  },
-  {
-    title: '기획부',
-    description: '동아리 행사 기획 및 진행, 회의록 작성',
-    filter: (member: EachGetMembersResponseDto) =>
-      member.role === 'PLANNING_HEAD' || member.role === 'PLANNING_ASSISTANT',
-    sort: (a: EachGetMembersResponseDto) => (a.role === 'PLANNING_HEAD' ? -1 : 1),
-  },
-];
+export default function AboutUsMemberPage() {
+  const { user } = useUserStore();
 
-const AboutUsMemberPage = () => {
-  const [members, setMembers] = useState<EachGetMembersResponseDto[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      await fetchMembers();
+      const { users } = await Api.Domain.User.getUsers();
+
+      setUsers(users);
+      setLoading(false);
     })();
   }, []);
 
-  async function fetchMembers() {
-    const { members } = await WinkApi.Member.getMembers();
-    setMembers(members);
-  }
+  useEffect(() => {
+    setUsers((prev) => prev.map((u) => (u.id === user?.id ? { ...u, ...user } : u)));
+  }, [user]);
+
+  const leaders: User[] = useMemo(
+    () => users.filter((user) => [Role.PRESIDENT, Role.VICE_PRESIDENT].includes(user.role)),
+    [users],
+  );
+
+  const treasuries: User[] = useMemo(
+    () => users.filter((user) => [Role.TREASURY_HEAD, Role.TREASURY_ASSISTANT].includes(user.role)),
+    [users],
+  );
+
+  const publicRelations: User[] = useMemo(
+    () =>
+      users.filter((user) =>
+        [Role.PUBLIC_RELATIONS_HEAD, Role.PUBLIC_RELATIONS_ASSISTANT].includes(user.role),
+      ),
+    [users],
+  );
+
+  const plannings: User[] = useMemo(
+    () => users.filter((user) => [Role.PLANNING_HEAD, Role.PLANNING_ASSISTANT].includes(user.role)),
+    [users],
+  );
+
+  const members: User[] = useMemo(() => users.filter((user) => user.role === Role.MEMBER), [users]);
 
   return (
-    <div className="flex flex-col items-center mt-32">
-      <div className="flex flex-col items-center justify-center gap-2">
-        <Image src={cloudImage} alt="cloud" width={224} className="w-56 animate-updown" />
-        <h1 className="font-roboto font-extrabold text-5xl lg:text-7xl text-wink-200 tracking-wider">
+    <div className="flex flex-col items-center px-6 pt-20 sm:pt-28 space-y-10">
+      <Cloud className="flex flex-col items-center">
+        <p className="text-4xl sm:text-7xl font-bold font-roboto text-center text-wink-200">
           NEW WAVE IN US
-        </h1>
-        <h2 className="font-roboto font-light italic text-lg lg:text-3xl text-wink-400">
+        </p>
+
+        <p className="sm:text-3xl italic font-thin font-roboto text-center text-wink-500">
           Introduction of WINK team members
-        </h2>
-        <div className="mt-8 mb-12 animate-updown-shadow h-2 bg-gray-400 blur rounded-full" />
+        </p>
+      </Cloud>
+
+      <UserList
+        role="회장단"
+        description="전체 동아리 운영 기획 및 각 부서 업무 참여"
+        users={leaders}
+        skeleton={2}
+        loading={loading}
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <UserList
+          role="총무부"
+          description="비품 및 회의 관리, 도서 신청 및 대출 관리"
+          users={treasuries}
+          skeleton={2}
+          loading={loading}
+        />
+
+        <UserList
+          role="홍보부"
+          description="동아리 홍보 및 홍보물 제작, SNS 관리"
+          users={publicRelations}
+          skeleton={2}
+          loading={loading}
+        />
+
+        <UserList
+          role="기획부"
+          description="동아리 활동 기획 및 활동 정리"
+          users={plannings}
+          skeleton={2}
+          loading={loading}
+        />
       </div>
 
-      <div className="flex flex-col items-center gap-12 mt-16">
-        <div>
-          <div className="flex flex-col items-center justify-center gap-6">
-            <h1 className="font-bold text-3xl text-center">&lt;회장단&gt;</h1>
-            <p className="font-normal text-lg text-center text-zinc-700]">
-              전체 동아리 운영 기획 및 각 부서 업무 참여
-            </p>
+      <Separator />
 
-            <div className="flex flex-wrap justify-center gap-4 px-12">
-              {members
-                .filter((member) => member.role === 'PRESIDENT' || member.role === 'VICE_PRESIDENT')
-                .sort((a) => (a.role === 'PRESIDENT' ? -1 : 1))
-                .map(({ _id, name, avatar, description, link, role }) => (
-                  <ProfileCard
-                    key={_id}
-                    id={_id}
-                    name={name}
-                    avatar={avatar}
-                    description={description}
-                    github={link.github}
-                    instagram={link.instagram}
-                    blog={link.blog}
-                    role={RoleKoreanMap[role]}
-                    onUpdate={fetchMembers}
-                  />
-                ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-row items-start gap-8">
-          {MEMBERS.map(({ title, description, filter, sort }) => (
-            <div className="flex flex-col items-center justify-center gap-6" key={title}>
-              <h1 className="font-bold text-3xl text-center">&lt;{title}&gt;</h1>
-              <p className="font-normal text-lg text-center text-zinc-700]">{description}</p>
-
-              <div className="flex flex-col gap-6">
-                {members
-                  .filter(filter)
-                  .sort(sort)
-                  .map(({ _id, name, avatar, description, link, role }) => (
-                    <ProfileCard
-                      key={_id}
-                      id={_id}
-                      name={name}
-                      avatar={avatar}
-                      description={description}
-                      github={link.github}
-                      instagram={link.instagram}
-                      blog={link.blog}
-                      role={role.endsWith('HEAD') ? '부장' : '차장'}
-                      onUpdate={fetchMembers}
-                    />
-                  ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-16">
-          <div className="flex flex-wrap justify-center gap-4 px-12">
-            {members
-              .filter((member) => member.role === 'MEMBER')
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map(({ _id, name, avatar, description, link }) => (
-                <ProfileCard
-                  key={_id}
-                  id={_id}
-                  name={name}
-                  avatar={avatar}
-                  description={description}
-                  github={link.github}
-                  instagram={link.instagram}
-                  blog={link.blog}
-                  role={null}
-                  onUpdate={fetchMembers}
-                />
-              ))}
-          </div>
-        </div>
-      </div>
+      <UserList users={members} skeleton={8} loading={loading} />
     </div>
   );
-};
-
-export default AboutUsMemberPage;
+}

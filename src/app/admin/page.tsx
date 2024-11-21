@@ -4,14 +4,12 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-const AdminPage = () => {
+export default function AdminPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/admin/member/list');
+    router.replace('/admin/user');
   }, []);
 
   return null;
-};
-
-export default AdminPage;
+}
