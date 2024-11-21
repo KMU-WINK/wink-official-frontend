@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import Study from '@/api/type/schema/study';
 
@@ -15,12 +14,10 @@ export default function StudyCard({
   content,
   image,
 }: StudyCardProps) {
-  const router = useRouter();
-
   return (
     <div
       className="flex flex-col-reverse sm:flex-row justify-between w-[300px] sm:w-full sm:max-w-[900px] border border-neutral-200 rounded-xl cursor-pointer"
-      onClick={() => router.push(`https://cs-kookmin-club.tistory.com/${index}`)}
+      onClick={() => window.open(`https://cs-kookmin-club.tistory.com/${index}`, '_blank')}
     >
       <div className="flex flex-col space-y-1 p-4">
         <p className="text-xs text-neutral-500">{category}</p>

@@ -1,91 +1,61 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 
 import { Button } from '@/ui/button';
-import { Calendar } from '@/ui/calendar';
 import { DialogHeader } from '@/ui/dialog';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import Api from '@/api';
 import {
-  CreateHistoryRequest,
-  CreateHistoryRequestSchema,
-} from '@/api/type/domain/program/history';
-import History from '@/api/type/schema/history';
-
-import { formatDate, formatDateApi, toDate } from '@/util';
+  CreateProjectRequest,
+  CreateProjectRequestSchema,
+} from '@/api/type/domain/program/project';
+import Project from '@/api/type/schema/project';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Calendar as CalendarIcon, Upload } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface UpdateHistoryModalProps {
+interface CreateProjectModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  history: History | null;
-  callback: (history: History) => void;
+  callback: (project: Project) => void;
 }
 
-export default function UpdateHistoryModal({
-  open,
-  setOpen,
-  history,
-  callback,
-}: UpdateHistoryModalProps) {
+export default function CreateProjectModal({ open, setOpen, callback }: CreateProjectModalProps) {
   const [isUploading, setIsUploading] = useState(false);
 
-  const form = useForm<CreateHistoryRequest>({
-    resolver: zodResolver(CreateHistoryRequestSchema),
+  const form = useForm<CreateProjectRequest>({
+    resolver: zodResolver(CreateProjectRequestSchema),
     mode: 'onChange',
     defaultValues: {
       title: '',
       image: '',
-      date: '',
+      link: '',
     },
   });
 
-  const onSubmit = useCallback(
-    async (values: CreateHistoryRequest) => {
-      if (!history) return;
+  const onSubmit = useCallback(async (values: CreateProjectRequest) => {
+    const { project } = await Api.Domain.Program.Project.createProject(values);
 
-      const { history: _history } = await Api.Domain.Program.AdminHistory.updateHistory(
-        history.id,
-        values,
-      );
+    setOpen(false);
+    form.reset();
 
-      setOpen(false);
-      form.reset();
+    toast.success('프로젝트를 생성했습니다.');
 
-      toast.success('연혁을 수정했습니다.');
-
-      callback(_history);
-    },
-    [history],
-  );
-
-  useEffect(() => {
-    if (!history) return;
-
-    form.reset({
-      title: history.title,
-      image: history.image,
-      date: formatDateApi(history.date),
-    });
-  }, [history]);
-
-  if (!history) return null;
+    callback(project);
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>연혁 수정</DialogTitle>
-          <DialogDescription>연혁을 수정합니다.</DialogDescription>
+          <DialogTitle>프로젝트 추가</DialogTitle>
+          <DialogDescription>프로젝트를 추가합니다.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-full space-y-4">
@@ -105,32 +75,13 @@ export default function UpdateHistoryModal({
 
             <FormField
               control={form.control}
-              name="date"
+              name="link"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>날짜</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button variant="outline" className="font-normal">
-                          {field.value ? (
-                            formatDate(field.value)
-                          ) : (
-                            <span className="text-neutral-500">날짜를 선택해주세요.</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={toDate(field.value)}
-                        onSelect={(date) => date && field.onChange(formatDateApi(date))}
-                        disabled={(date) => date > new Date()}
-                      />
-                    </PopoverContent>
-                  </Popover>
+                <FormItem className="w-full">
+                  <FormLabel>Github 주소</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Github 주소를 입력해주세요." {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -228,7 +179,7 @@ export default function UpdateHistoryModal({
             />
 
             <Button variant="wink" type="submit" className="w-full">
-              연혁 수정
+              프로젝트 추가
             </Button>
           </form>
         </Form>
