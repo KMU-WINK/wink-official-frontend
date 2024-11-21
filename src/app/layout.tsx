@@ -1,58 +1,73 @@
 'use client';
 
-import React from 'react';
-import { Bounce, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ReactNode, useEffect, useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 
-import { Footer, Header } from '@/component';
+import { Toaster } from '@/ui/sonner';
 
-import { WinkApiApplication } from '@/api';
+import Footer from '@/layout/footer';
+import Header from '@/layout/header';
 
-import '@/style/globals.css';
+import Api from '@/api';
 
-import 'aos/dist/aos.css';
-import 'aos/dist/aos.css';
+import Loading from '@/app/loading';
+import { cn } from '@/lib/util';
+import '@/style/global.css';
 
 interface RootLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const HIDE_FOOTER_PATHS = ['/auth', '/admin'];
+const IGNORE_PATHS = ['/auth', '/recruit/application', '/admin'];
 
-const RootLayout = ({ children }: RootLayoutProps) => {
+export default function RootLayout({ children }: RootLayoutProps) {
   const pathname = usePathname();
 
-  const hideFooter = HIDE_FOOTER_PATHS.some((path) => pathname.startsWith(path));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const accessToken: string | null = localStorage.getItem('accessToken');
+      const refreshToken: string | null = localStorage.getItem('refreshToken');
+
+      if (accessToken && refreshToken) {
+        await Api.Request.setToken(accessToken, refreshToken);
+      }
+
+      setLoading(false);
+    })();
+  }, []);
 
   return (
     <html lang="ko">
       <head>
         <title>WINK: Web IN Kookmin</title>
-
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
         <link rel="icon" href="/favicon.ico" />
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"
+        />
       </head>
       <body>
-        <WinkApiApplication>
-          <Header />
-          {children}
-          {!hideFooter && <Footer />}
+        <Header loading={loading} />
 
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            pauseOnHover={false}
-            theme="light"
-            transition={Bounce}
-          />
-        </WinkApiApplication>
+        <main
+          className={cn(
+            'pt-14',
+            IGNORE_PATHS.find((path) => pathname.startsWith(path))
+              ? 'min-h-[100dvh]'
+              : 'min-h-[calc(100dvh-274px)]',
+          )}
+        >
+          {loading ? <Loading /> : children}
+        </main>
+
+        {!IGNORE_PATHS.find((path) => pathname.startsWith(path)) && <Footer />}
+
+        <Toaster position="top-center" duration={3000} closeButton={true} richColors={true} />
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

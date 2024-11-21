@@ -6,8 +6,18 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": ".",
     "paths": {
-      "@/public/*": ["public/*"],
-      "@/*": ["src/*"]
+      "@/public/*": ["./public/*"],
+
+      "@/ui/*": ["./src/component/ui/*"],
+      "@/layout/*": ["./src/component/layout/*"],
+
+      "@/api": ["./src/lib/api"],
+      "@/api/*": ["./src/lib/api/*"],
+      "@/guard/*": ["./src/lib/guard/*"],
+      "@/store/*": ["./src/lib/store/*"],
+      "@/util": ["./src/lib/util"],
+
+      "@/*": ["./src/*"]
     },
     "plugins": [
       {

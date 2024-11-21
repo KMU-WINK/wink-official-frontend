@@ -4,14 +4,12 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-const Home = () => {
+export default function RootPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/about-us/we');
+    router.replace('/about-us/wink');
   }, []);
 
   return null;
-};
-
-export default Home;
+}

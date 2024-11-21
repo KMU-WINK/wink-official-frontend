@@ -1,114 +1,133 @@
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import background from '@/public/recruit/background.png';
-import rocketImage from '@/public/recruit/rocket.png';
-import titleImage from '@/public/recruit/title.png';
+import { domains } from '@/app/recruit/_constant/domain';
+import { qnas } from '@/app/recruit/_constant/qna';
 
-const RecruitPage = () => {
+import DomainCard from '@/app/recruit/_component/domain-card';
+import InfoCard, { Info } from '@/app/recruit/_component/info-card';
+import Items from '@/app/recruit/_component/items';
+import RecruitTitle from '@/app/recruit/_component/recruit-title';
+import Rocket from '@/app/recruit/_component/rocket';
+import ScrollDown from '@/app/recruit/_component/scroll-down';
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/ui/accordion';
+import { Button } from '@/ui/button';
+
+import Api from '@/api';
+import Recruit from '@/api/type/schema/recruit';
+
+import { formatDate, formatDateTime, now, toDate } from '@/util';
+
+import BackgroundImage from '@/public/recruit/background.jpg';
+
+import { TicketsPlane } from 'lucide-react';
+
+export default function RecruitPage() {
+  const router = useRouter();
+
+  const [recruit, setRecruit] = useState<Recruit | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const infos = useMemo<Info[]>(() => {
+    if (!recruit) return [];
+
+    return [
+      {
+        title: '지원 기간',
+        content: `${formatDateTime(recruit.recruitStartDateTime, true)} ~\n${formatDateTime(recruit.recruitEndDateTime, true)}`,
+      },
+      {
+        title: '면접 일정',
+        content: `${formatDate(recruit.interviewStartDate, true)} ~\n${formatDate(recruit.interviewEndDate, true)}`,
+      },
+    ];
+  }, [recruit]);
+
+  useEffect(() => {
+    (async () => {
+      const { recruit } = await Api.Domain.Recruit.getLatestRecruit();
+
+      setRecruit(recruit);
+      setLoading(false);
+    })();
+  }, []);
+
+  if (loading || !recruit) return null;
+
   return (
-    <div className="flex flex-col items-center gap-16">
-      <div className="relative w-full h-screen">
+    <>
+      <div className="relative w-[100vw] h-[calc(100dvh-56px)] bg-black">
         <Image
-          src={background}
-          alt={'recruit-background'}
-          width={2000}
-          height={500}
-          className="w-full h-screen object-cover"
+          src={BackgroundImage}
+          alt="background"
+          width={1920}
+          height={1080}
+          priority
+          className="w-full h-full object-cover"
         />
 
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Image
-            src={titleImage}
-            alt={'recruit-title'}
-            width={1300}
-            height={200}
-            className="object-contain"
-          />
-        </div>
-
-        <div className="absolute w-28 top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl animate-rocket">
-          <Image src={rocketImage} alt={'recruit-rocket'} width={150} height={170} />
-        </div>
+        <Rocket />
+        <RecruitTitle year={recruit.year} />
+        <ScrollDown />
       </div>
 
-      <div>
-        <h1 className="text-3xl font-bold text-center mb-2">모집 개요</h1>
-        <p className="text-center mb-8">2024 년도 1 학기 WINK 신입부원 모집</p>
+      <div className="flex flex-col space-y-10 sm:space-y-24 py-20 sm:py-28">
+        <Items
+          title="모집 개요"
+          description={`${recruit.year}년도 ${recruit.semester}학기 WINK 신입 부원 모집 개요`}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {infos.map((info) => (
+              <InfoCard key={info.title} {...info} />
+            ))}
+          </div>
+        </Items>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold text-wink-500">지원 기간</h2>
-            <p>2024년 03월 01일(금) ~</p>
-            <p>2024년 03월 09일(토) 14시 까지</p>
-            <p className="mt-2 font-semibold text-wink-500">합격 발표</p>
-            <p>03월 14일 (목)</p>
+        <Items title="모집 분야" description="함께 활동을 적극적으로 할 수 있는 누구나 환영합니다">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {domains.map((domain) => (
+              <DomainCard key={domain.tag} {...domain} />
+            ))}
           </div>
-          <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold text-wink-500">지원 방법</h2>
-            <p className="font-semibold">구글 폼 작성</p>
-            <p className="mt-2">wink.kookmin.ac.kr 접속 후 지원</p>
-          </div>
-          <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold text-wink-500">면접 일자</h2>
-            <p>03월 11일(월) ~</p>
-            <p>03월 13일(수)</p>
-          </div>
-        </div>
+        </Items>
       </div>
 
-      <div>
-        <h1 className="text-3xl font-bold text-center mb-2">모집 대상</h1>
-        <p className="text-center mb-8">
-          함께 활동을 적극적으로 진행할 준비가 되어 있는 웹에 진심인 국민대학교 학생을 모두
-          환영합니다.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold text-wink-500">Frontend</h2>
-            <p className="mb-2 font-semibold">프론트엔드 개발자</p>
-            <p>
-              React.js, Vue.js, Next.js, JavaScript 사용이 가능한 프론트엔드 개발자를 환영합니다.
-            </p>
-          </div>
-          <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold text-wink-500">Backend</h2>
-            <p className="mb-2 font-semibold">백엔드 개발자</p>
-            <p>Spring Boot, ExpressJS, NestJS 사용이 가능한 백엔드 개발자를 환영합니다.</p>
-          </div>
-          <div className="bg-white w-64 border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold text-wink-500">Design/PM</h2>
-            <p className="mb-2 font-semibold">디자이너/PM</p>
-            <p>Figma 를 사용하여 모바일/웹 디자인이 가능한 디자이너를 환영합니다.</p>
-          </div>
-        </div>
+      <div className="flex flex-col items-center py-20 sm:py-28 bg-wink-50">
+        <Items title="자주 묻는 질문">
+          <Accordion
+            type="single"
+            collapsible
+            className="w-[300px] sm:w-[608px] bg-white rounded-3xl px-6"
+          >
+            {qnas.map(({ question, answer }, index) => (
+              <AccordionItem key={index} value={index.toString()}>
+                <AccordionTrigger>{question}</AccordionTrigger>
+                <AccordionContent>{answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </Items>
       </div>
 
-      <div className="w-full bg-wink-50/50">
-        <h2 className="text-3xl font-bold text-center mt-12 mb-6">자주 묻는 질문</h2>
-        <div className="flex flex-col space-y-4 items-center pb-24">
-          <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold">Q. 타과생도 지원할 수 있나요?</h2>
-            <p>A. WINK 는 모두에게 열려 있습니다.</p>
+      {toDate(recruit.recruitStartDateTime) <= now() &&
+        now() <= toDate(recruit.recruitEndDateTime) && (
+          <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <TicketsPlane size={64} />
+              <p className="text-2xl font-bold">
+                {recruit.year}년도 {recruit.semester}학기 WINK 신규 부원
+              </p>
+            </div>
+            <Button variant="wink" onClick={() => router.push(`/recruit/application`)}>
+              지원하기
+            </Button>
           </div>
-          <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold">Q. 프로젝트 경험이 없어도 괜찮나요?</h2>
-            <p>A. 괜찮습니다! WINK 와 프로젝트를 쌓아갈 마음이 있다면 충분합니다..</p>
-          </div>
-          <div className="bg-white w-carousel border border-zinc-500 rounded-2xl p-4">
-            <h2 className="mb-2 font-semibold">Q. 면접 때 기술 많이 물어보나요?</h2>
-            <p>A. 지원자 님의 지원서와 학년을 모두 고려하여 질문 드립니다.</p>
-          </div>
-        </div>
-
-        <iframe
-          className="w-full h-recruit"
-          src="https://docs.google.com/forms/d/e/1FAIpQLSdWLGyNmKexha3Z8LLS7Brx_1fvtTQxqr-Ced3WoIoCm0fAOw/viewform?embedded=true"
-          allowFullScreen
-        />
-      </div>
-    </div>
+        )}
+    </>
   );
-};
-
-export default RecruitPage;
+}
