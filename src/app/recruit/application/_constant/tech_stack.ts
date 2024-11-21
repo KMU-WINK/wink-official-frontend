@@ -178,7 +178,7 @@ export const devOpsTechStacks: TechStack[] = [
     raw: DevOpsTechStack.KUBERNETES,
   },
   {
-    name: 'JENKINS',
+    name: 'Jenkins',
     raw: DevOpsTechStack.JENKINS,
   },
   {

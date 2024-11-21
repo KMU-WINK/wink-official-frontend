@@ -24,8 +24,8 @@ export function now() {
 }
 
 export function toDate(date: Date | string): Date {
-  const inputDate = date instanceof Date ? date : new Date(date);
-  return new Date(inputDate.getTime() + 9 * 60 * 60 * 1000);
+  if (date instanceof Date) return date;
+  return new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
 }
 
 export function formatDateApi(date: Date | string) {
@@ -46,22 +46,6 @@ export function formatDate(date: Date | string, showDayOfWeek = false) {
   const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][d.getDay()];
 
   return `${year}년 ${month}월 ${day}일${showDayOfWeek ? ` (${dayOfWeek})` : ''}`;
-}
-
-export function formatTimeApi(date: Date | string) {
-  const d = toDate(date);
-  const hours = String(d.getHours()).padStart(2, '0');
-  const minutes = String(d.getMinutes()).padStart(2, '0');
-
-  return `${formatDateApi(d)} ${hours}:${minutes}`;
-}
-
-export function formatDateTime(date: Date | string, showDayOfWeek = false) {
-  const d = toDate(date);
-  const hours = String(d.getHours()).padStart(2, '0');
-  const minutes = String(d.getMinutes()).padStart(2, '0');
-
-  return `${formatDate(d, showDayOfWeek)} ${hours}시 ${minutes}분`;
 }
 
 // ############################################################################################

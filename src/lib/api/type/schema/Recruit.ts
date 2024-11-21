@@ -6,8 +6,8 @@ export default interface Recruit extends BaseSchema {
   googleFormId: string;
   googleFormUri: string;
   googleFormResponseEntity: Record<FormEntryKeys, string>;
-  recruitStartDateTime: string;
-  recruitEndDateTime: string;
+  recruitStartDate: string;
+  recruitEndDate: string;
   interviewStartDate: string;
   interviewEndDate: string;
 }

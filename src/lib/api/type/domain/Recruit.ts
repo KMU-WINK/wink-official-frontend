@@ -15,8 +15,6 @@ import {
   PHONE_NUMBER_MESSAGE,
   STUDENT_ID_MESSAGE,
   YYYY_MM_DD_EXPRESSION,
-  YYYY_MM_DD_HH_MM_EXPRESSION,
-  YYYY_MM_DD_HH_MM_MESSAGE,
   YYYY_MM_DD_MESSAGE,
 } from '@/api/validation';
 
@@ -54,8 +52,8 @@ export const CreateRecruitRequestSchema = z.object({
     .min(2000, '연도는 2000년 이상이어야 합니다.')
     .max(2999, '연도는 2999년 이하여야 합니다.'),
   semester: z.number().min(1, '학기는 1 이상이어야 합니다.').max(2, '학기는 2 이하여야 합니다.'),
-  recruitStartDateTime: z.string().regex(YYYY_MM_DD_HH_MM_EXPRESSION, YYYY_MM_DD_HH_MM_MESSAGE),
-  recruitEndDateTime: z.string().regex(YYYY_MM_DD_HH_MM_EXPRESSION, YYYY_MM_DD_HH_MM_MESSAGE),
+  recruitStartDate: z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE),
+  recruitEndDate: z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE),
   interviewStartDate: z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE),
   interviewEndDate: z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE),
 });

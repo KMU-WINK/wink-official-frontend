@@ -26,13 +26,14 @@ import Step10 from '@/app/recruit/application/_step/10';
 import Step11 from '@/app/recruit/application/_step/11';
 import Step12 from '@/app/recruit/application/_step/12';
 import Step13 from '@/app/recruit/application/_step/13';
-import Step14 from '@/app/recruit/application/_step/13';
-import Step15 from '@/app/recruit/application/_step/14';
-import Step16 from '@/app/recruit/application/_step/15';
-import Step17 from '@/app/recruit/application/_step/16';
-import { Step, StepProps, toDate } from '@/lib/util';
+import Step14 from '@/app/recruit/application/_step/14';
+import Step15 from '@/app/recruit/application/_step/15';
+import Step16 from '@/app/recruit/application/_step/16';
+import Step17 from '@/app/recruit/application/_step/17';
+import { Step, StepProps, now, toDate } from '@/lib/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { endOfDay, startOfDay } from 'date-fns';
 import { motion, useAnimationControls } from 'framer-motion';
 import { CircleChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
@@ -68,7 +69,7 @@ export default function RecruitApplicationPage() {
 
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(7);
   const [recruit, setRecruit] = useState<Recruit | null>(null);
 
   const form = useForm<ApplicationRequest>({
@@ -138,8 +139,8 @@ export default function RecruitApplicationPage() {
 
       if (
         !recruit ||
-        toDate(recruit.recruitStartDateTime) > new Date() ||
-        toDate(recruit.recruitEndDateTime) < new Date()
+        now() < startOfDay(toDate(recruit.recruitStartDate)) ||
+        now() > endOfDay(toDate(recruit.recruitEndDate))
       ) {
         toast.error('잘못된 접근입니다.');
         router.replace('/');
