@@ -14,26 +14,41 @@ export default class AdminRecruit {
     return this.request.get('/admin/recruit');
   }
 
+  public async getRecruit(recruitId: string): Promise<GetRecruitResponse> {
+    return this.request.get(`/admin/recruit/${recruitId}`);
+  }
+
   public async createRecruit(data: CreateRecruitRequest): Promise<GetRecruitResponse> {
     return this.request.post('/admin/recruit', data);
   }
 
+  public async updateRecruit(
+    recruitId: string,
+    data: CreateRecruitRequest,
+  ): Promise<GetRecruitResponse> {
+    return this.request.put(`/admin/recruit/${recruitId}`, data);
+  }
+
+  public async deleteRecruit(recruitId: string): Promise<GetRecruitResponse> {
+    return this.request.delete(`/admin/recruit/${recruitId}`);
+  }
+
   public async getApplications(recruitId: string): Promise<GetApplicationsResponse> {
-    return this.request.get(`/admin/recruit/${recruitId}`);
+    return this.request.get(`/admin/recruit/${recruitId}/application`);
   }
 
   public async getApplication(
     recruitId: string,
     applicationId: string,
   ): Promise<GetApplicationResponse> {
-    return this.request.get(`/admin/recruit/${recruitId}/${applicationId}`);
+    return this.request.get(`/admin/recruit/${recruitId}/application/${applicationId}`);
   }
 
   public async passApplication(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(`/admin/recruit/${recruitId}/${applicationId}/pass`);
+    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/pass`);
   }
 
   public async failApplication(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(`/admin/recruit/${recruitId}/${applicationId}/fail`);
+    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/fail`);
   }
 }

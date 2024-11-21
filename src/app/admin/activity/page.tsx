@@ -38,7 +38,7 @@ import Api from '@/api';
 import Activity from '@/api/type/schema/activity';
 import Page from '@/api/type/schema/page';
 
-import { formatDateTime } from '@/util';
+import { formatDate } from '@/util';
 
 import _ from 'lodash';
 import { MoreHorizontal } from 'lucide-react';
@@ -195,7 +195,7 @@ export default function AdminUserPage() {
                     />
                   </TableCell>
                   <TableCell>{activity.title}</TableCell>
-                  <TableCell>{formatDateTime(activity.createdAt)}</TableCell>
+                  <TableCell>{formatDate(activity.createdAt)}</TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

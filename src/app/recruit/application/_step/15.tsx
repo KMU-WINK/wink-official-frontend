@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import { Sparkle } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step16({ go, form }: RecruitStepProps) {
+export default function Step15({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (

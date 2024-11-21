@@ -19,9 +19,9 @@ export default function Step7({ go, recruit, form }: RecruitStepProps) {
 
     let date = toDate(recruit.interviewStartDate);
     while (true) {
-      if (date > toDate(recruit.interviewEndDate)) break;
       dates.push(new Date(date));
       date = new Date(date.setDate(date.getDate() + 1));
+      if (date > toDate(recruit.interviewEndDate)) break;
     }
 
     return dates;

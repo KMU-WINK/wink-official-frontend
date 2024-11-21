@@ -23,10 +23,11 @@ import Recruit from '@/api/type/schema/recruit';
 
 import { useUserStore } from '@/store/user';
 
-import { formatDate, formatDateTime, now, toDate } from '@/util';
+import { formatDate, now, toDate } from '@/util';
 
 import BackgroundImage from '@/public/recruit/background.jpg';
 
+import { endOfDay, startOfDay } from 'date-fns';
 import { TicketsPlane } from 'lucide-react';
 
 export default function RecruitPage() {
@@ -43,7 +44,7 @@ export default function RecruitPage() {
     return [
       {
         title: '지원 기간',
-        content: `${formatDateTime(recruit.recruitStartDateTime, true)} ~\n${formatDateTime(recruit.recruitEndDateTime, true)}`,
+        content: `${formatDate(recruit.recruitStartDate, true)} ~\n${formatDate(recruit.recruitEndDate, true)}`,
       },
       {
         title: '면접 일정',
@@ -118,8 +119,8 @@ export default function RecruitPage() {
         </Items>
       </div>
 
-      {toDate(recruit.recruitStartDateTime) <= now() &&
-        now() <= toDate(recruit.recruitEndDateTime) && (
+      {startOfDay(toDate(recruit.recruitStartDate)) <= now() &&
+        now() <= endOfDay(toDate(recruit.recruitEndDate)) && (
           <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
             <div className="flex flex-col items-center justify-center space-y-4">
               <TicketsPlane size={64} />
