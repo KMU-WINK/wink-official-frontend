@@ -144,7 +144,7 @@ export default function UpdateHistoryModal({
                   <FormLabel>사진</FormLabel>
                   <FormControl>
                     <>
-                      <div className="relative w-[375px] h-[150px] cursor-pointer">
+                      <div className="relative min-w-[375px] h-[150px] cursor-pointer">
                         {field.value ? (
                           <>
                             <Image

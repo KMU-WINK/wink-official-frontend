@@ -62,7 +62,7 @@ export default function Carousel({ loading, projects }: CarouselProps) {
                     height={165}
                     className={cn(
                       'absolute w-[275px] h-[165px] cursor-pointer rounded-3xl',
-                      now ? 'shadow-lg' : 'grayscale brightness-75 blur-sm',
+                      now ? 'shadow-lg' : 'grayscale brightness-75 blur-[2px]',
                     )}
                     style={{
                       transform: `rotateY(${thisAngle}deg) translateZ(${tangent}px)`,
