@@ -57,7 +57,7 @@ export default function ProgramActivityPage() {
               className={cn(
                 'w-[250px] sm:w-full sm:h-[250px] rounded-3xl object-cover cursor-pointer transition-all duration-300',
                 selectedActivity === activity
-                  ? 'h-[250px] sm:w-[250px]'
+                  ? 'h-[150px] sm:w-[250px]'
                   : 'h-[50px] sm:w-[75px] grayscale',
               )}
             />
@@ -65,7 +65,7 @@ export default function ProgramActivityPage() {
         ))}
       </div>
 
-      <p className="text-2xl font-bold">{selectedActivity?.title}</p>
+      <p className="text-xl sm:text-2xl font-bold">{selectedActivity?.title}</p>
 
       <Wave>
         {selectedActivity && (
@@ -85,7 +85,7 @@ export default function ProgramActivityPage() {
                       alt={image}
                       width={500}
                       height={300}
-                      className="h-[200px] rounded-xl object-cover"
+                      className="h-[150px] sm:h-[200px] rounded-xl object-cover"
                     />
                   </CarouselItem>
                 ))}
@@ -93,7 +93,7 @@ export default function ProgramActivityPage() {
               <CarouselPrevious />
               <CarouselNext />
             </Carousel>
-            <p className="sm:text-lg font-medium">{selectedActivity?.description}</p>
+            <p className="text-sm sm:text-lg font-medium">{selectedActivity?.description}</p>
           </div>
         )}
       </Wave>

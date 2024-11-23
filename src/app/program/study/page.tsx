@@ -94,13 +94,13 @@ export default function ProgramStudyPage() {
         </Select>
       </div>
 
-      <div className="flex flex-col space-y-4 w-full items-center">
+      <div className="flex flex-col space-y-6 sm:space-y-4 w-full items-center">
         {loading ? (
           Array.from({ length: 5 }).map((_, index) => (
             <Skeleton
               key={index}
               className={cn(
-                'w-[300px] sm:w-full sm:max-w-[900px] h-[150px] rounded-xl',
+                'w-[300px] sm:w-full sm:max-w-[900px] h-[250px] sm:h-[150px] rounded-xl',
                 !loading && 'hidden',
               )}
             />

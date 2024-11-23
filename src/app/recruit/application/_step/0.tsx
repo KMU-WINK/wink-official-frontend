@@ -9,7 +9,7 @@ import { RecruitStepProps } from '@/app/recruit/application/page';
 import { motion } from 'framer-motion';
 import { Hand } from 'lucide-react';
 
-export default function Step0({ go, recruit }: RecruitStepProps) {
+export default function Step0({ go }: RecruitStepProps) {
   const router = useRouter();
 
   const [iconAnimationComplete, setIconAnimationComplete] = useState(false);
@@ -75,9 +75,7 @@ export default function Step0({ go, recruit }: RecruitStepProps) {
               : {}
           }
         >
-          <p>
-            {recruit.year}년도 {recruit.semester}학기 WINK 신입 부원 모집에 지원하실래요?
-          </p>
+          <p>WINK 신입 부원 모집에 지원하시겠어요?</p>
         </motion.div>
       </div>
 

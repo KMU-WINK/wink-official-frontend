@@ -36,7 +36,7 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
         <p className="font-medium text-lg">
-          좋아요, {form.getValues('name').substring(1)}님! 학번이 어떻게 되나요?
+          좋아요, {form.getValues('name').substring(1)}님! 학번을 알려주세요
         </p>
       </motion.div>
 

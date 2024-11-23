@@ -29,7 +29,7 @@ export default function Step15({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">가장 기억에 남는 프로젝트를 입력해주세요</p>
+        <p className="font-medium text-lg">가장 기억에 남는 프로젝트는 무엇인가요?</p>
       </motion.div>
 
       <motion.div

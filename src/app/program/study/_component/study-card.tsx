@@ -21,10 +21,10 @@ export default function StudyCard({
     >
       <div className="flex flex-col space-y-1 p-4">
         <p className="text-xs text-neutral-500">{category}</p>
-        <p className="sm:text-lg font-bold">{title}</p>
-        <p className="text-sm text-neutral-700 line-clamp-2">{content}</p>
+        <p className="text-sm sm:text-lg font-bold">{title}</p>
+        <p className="text-xs sm:text-sm text-neutral-700 line-clamp-2">{content}</p>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-0.5 sm:space-y-0">
-          <p className="text-xs sm:text-sm text-neutral-500">
+          <p className="hidden sm:block text-xs sm:text-sm text-neutral-500">
             https://cs-kookmin-club.tistory.com/{index}
           </p>
           <p className="text-xs sm:text-sm text-neutral-500">{author}</p>
@@ -41,7 +41,7 @@ export default function StudyCard({
             className="w-full h-[125px] sm:h-[150px] object-cover rounded-tl-xl rounded-tr-xl sm:rounded-tl-none sm:rounded-br-xl"
           />
         ) : (
-          <div className="w-full h-[150px] bg-neutral-200 rounded-tl-xl rounded-tr-xl sm:rounded-tl-none sm:rounded-br-xl flex items-center justify-center">
+          <div className="w-full h-[125px] sm:h-[150px] bg-neutral-200 rounded-tl-xl rounded-tr-xl sm:rounded-tl-none sm:rounded-br-xl flex items-center justify-center">
             <CircleHelp className="w-10 h-10 text-neutral-400" />
           </div>
         )}

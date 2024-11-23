@@ -33,7 +33,7 @@ export default function Step8({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">관심 분야를 선택해주세요</p>
+        <p className="font-medium text-lg">관심이 있는 분야를 선택해주세요</p>
       </motion.div>
 
       <motion.div

@@ -23,7 +23,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         {!IGNORE_PATHS.includes(pathname) && (
           <div className="flex flex-col items-center space-y-1 text-neutral-600">
             <WebInKookmin />
-            <p className="text-lg sm:text-xl text-center">
+            <p className="sm:text-xl text-center">
               국민대학교 소프트웨어융합대학 <br className="block sm:hidden" />
               유일무이 웹 동아리
             </p>

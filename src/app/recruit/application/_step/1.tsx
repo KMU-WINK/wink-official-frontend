@@ -29,7 +29,7 @@ export default function Step1({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">혹시 이름이 어떻게 되나요?</p>
+        <p className="font-medium text-lg">혹시, 이름이 어떻게 되시나요?</p>
       </motion.div>
 
       <motion.div

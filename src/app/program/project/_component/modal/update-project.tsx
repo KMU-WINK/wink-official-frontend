@@ -116,7 +116,7 @@ export default function UpdateProjectModal({
                   <FormLabel>사진</FormLabel>
                   <FormControl>
                     <>
-                      <div className="relative min-w-[375px] h-[150px] cursor-pointer">
+                      <div className="relative sm:min-w-[375px] h-[150px] cursor-pointer">
                         {field.value ? (
                           <>
                             <Image

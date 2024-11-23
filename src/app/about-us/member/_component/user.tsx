@@ -37,19 +37,19 @@ export function User({ user }: UserProps) {
   return (
     <div className="relative">
       {user.role !== Role.MEMBER && (
-        <div className="absolute left-6 top-0 border border-wink-300 rounded-full bg-white px-3 py-0.5 text-sm font-medium">
+        <div className="absolute left-6 top-0 border border-wink-300 rounded-full bg-white px-3 py-0.5 text-xs sm:text-sm font-medium">
           {getKoreanRole(user.role).replace(/^.*(부장|차장)$/, '$1')}
         </div>
       )}
 
       <div
         className={cn(
-          'flex flex-col w-[300px] space-y-4 py-4 border border-wink-300 rounded-3xl mt-3',
-          user.role !== Role.MEMBER ? 'pt-5' : '',
+          'flex flex-col w-[250px] sm:w-[300px] space-y-3 sm:space-y-4 py-3 sm:py-4 border border-wink-300 rounded-3xl mt-3',
+          user.role !== Role.MEMBER ? 'pt-4 sm:pt-5' : '',
         )}
       >
-        <div className="flex items-center gap-4 px-4">
-          <Avatar className="w-16 h-16">
+        <div className="flex items-center gap-3 sm:gap-4 px-4">
+          <Avatar className="w-12 sm:w-16 h-12 sm:h-16">
             <AvatarImage src={user?.avatar} alt="avatar" />
             <AvatarFallback>
               <UserIcon size={32} />
@@ -57,8 +57,10 @@ export function User({ user }: UserProps) {
           </Avatar>
 
           <div className="flex flex-col">
-            <p className="font-medium">{user.name}</p>
-            {user.description && <p className="text-sm line-clamp-2">{user.description}</p>}
+            <p className="text-sm sm:text-base font-medium">{user.name}</p>
+            {user.description && (
+              <p className="text-xs sm:text-sm line-clamp-2">{user.description}</p>
+            )}
           </div>
         </div>
 
@@ -71,12 +73,15 @@ export function User({ user }: UserProps) {
                 key={name}
                 href={url}
                 target="_blank"
-                className="text-wink-500 font-bold italic font-roboto uppercase"
+                className="text-sm sm:text-base text-wink-500 font-bold italic font-roboto uppercase"
               >
                 {name}
               </Link>
             ) : (
-              <p key={name} className="text-wink-200 font-bold italic font-roboto uppercase">
+              <p
+                key={name}
+                className="text-sm sm:text-base text-wink-200 font-bold italic font-roboto uppercase"
+              >
                 {name}
               </p>
             );
