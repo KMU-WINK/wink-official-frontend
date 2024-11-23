@@ -29,7 +29,7 @@ export default function Step5({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">WINK에 왜 지원하는지 설명해주세요!</p>
+        <p className="font-medium text-lg">WINK에 왜 지원하시나요?</p>
       </motion.div>
 
       <motion.div

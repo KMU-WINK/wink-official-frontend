@@ -29,7 +29,7 @@ export default function Step6({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">WINK에 뭘 배워고 싶나요?</p>
+        <p className="font-medium text-lg">WINK에서 어떤걸 배워고 싶나요?</p>
       </motion.div>
 
       <motion.div

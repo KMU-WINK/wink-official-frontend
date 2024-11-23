@@ -8,6 +8,7 @@ interface MenuItemType {
 interface MenuGroupType {
   title: string;
   items: MenuItemType[];
+  mobileHidden?: boolean;
 }
 
 export type NavItemType = MenuItemType | MenuGroupType;

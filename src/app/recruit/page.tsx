@@ -111,8 +111,8 @@ export default function RecruitPage() {
           >
             {qnas.map(({ question, answer }, index) => (
               <AccordionItem key={index} value={index.toString()}>
-                <AccordionTrigger>{question}</AccordionTrigger>
-                <AccordionContent>{answer}</AccordionContent>
+                <AccordionTrigger className="text-sm sm:text-base">{question}</AccordionTrigger>
+                <AccordionContent className="text-xs sm:text-base">{answer}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
@@ -123,8 +123,9 @@ export default function RecruitPage() {
         now() <= endOfDay(toDate(recruit.recruitEndDate)) && (
           <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
             <div className="flex flex-col items-center justify-center space-y-4">
-              <TicketsPlane size={64} />
-              <p className="text-2xl font-bold">
+              <TicketsPlane size={72} className="hidden sm:block" />
+              <TicketsPlane size={48} className="block sm:hidden" />
+              <p className="text-lg sm:text-2xl font-bold">
                 {recruit.year}년도 {recruit.semester}학기 WINK 신규 부원
               </p>
             </div>

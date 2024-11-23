@@ -37,6 +37,7 @@ interface HeaderProps {
 
 export default function Header({ loading }: HeaderProps) {
   const { user } = useUserStore();
+
   const [changeMyPasswordModalOpen, setChangeMyPasswordModalOpen] = useState(false);
   const [changeMyInfoModalOpen, setChangeMyInfoModalOpen] = useState(false);
 

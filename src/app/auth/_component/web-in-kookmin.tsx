@@ -17,7 +17,7 @@ const text = [
 
 export default function WebInKookmin() {
   return (
-    <div className="text-6xl sm:text-7xl text-center font-bold">
+    <div className="text-5xl sm:text-7xl text-center font-bold">
       {text.map(({ text, color }, i) => (
         <span key={i} className={color}>
           {text}

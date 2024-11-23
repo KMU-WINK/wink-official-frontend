@@ -78,6 +78,8 @@ export default function ProgramHistoryPage() {
     setHistories(groupedHistories);
   }, [rawHistories]);
 
+  if (!histories) return null;
+
   return (
     <>
       <Title
@@ -113,22 +115,26 @@ export default function ProgramHistoryPage() {
                         <Separator orientation="vertical" className="h-4 bg-neutral-600" />
                         <p>{history.title}</p>
                       </div>
-                      <div className="flex space-x-2">
-                        <Pencil
-                          className="w-4 h-4 text-neutral-500 hover:text-black"
-                          onClick={() => {
-                            setSelectedHistory(history);
-                            setUpdateHistoryModalOpen(true);
-                          }}
-                        />
-                        <Trash2
-                          className="w-4 h-4 text-neutral-500 hover:text-black"
-                          onClick={() => {
-                            setSelectedHistory(history);
-                            setDeleteHistoryModalOpen(true);
-                          }}
-                        />
-                      </div>
+                      {isAdmin(user?.role) && (
+                        <div className="flex space-x-2">
+                          <Pencil
+                            className="w-4 h-4 text-neutral-500 hover:text-black"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setSelectedHistory(history);
+                              setUpdateHistoryModalOpen(true);
+                            }}
+                          />
+                          <Trash2
+                            className="w-4 h-4 text-neutral-500 hover:text-black"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setSelectedHistory(history);
+                              setDeleteHistoryModalOpen(true);
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="flex flex-col gap-2">

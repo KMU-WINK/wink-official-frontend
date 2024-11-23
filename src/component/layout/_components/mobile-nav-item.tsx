@@ -18,7 +18,7 @@ export default function MobileNavItem({ item, setOpen }: MobileNavItem) {
 
   return (
     <div className="flex flex-col space-y-2">
-      <p className="font-medium">{item.title}</p>
+      <p className="text-sm font-medium">{item.title}</p>
       <div className="flex flex-col space-y-2 pl-2">
         {item.items.map((item) => (
           <Link
