@@ -25,7 +25,7 @@ import { useUserStore } from '@/store/user';
 
 import { formatDate, now, toDate } from '@/util';
 
-import BackgroundImage from '@/public/recruit/background.jpg';
+import BackgroundImage from '@/public/recruit/background.avif';
 
 import { endOfDay, startOfDay } from 'date-fns';
 import { TicketsPlane } from 'lucide-react';

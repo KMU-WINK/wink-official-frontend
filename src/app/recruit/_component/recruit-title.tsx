@@ -1,4 +1,4 @@
-import MaskImage from '@/public/recruit/mask.jpg';
+import MaskImage from '@/public/recruit/mask.avif';
 
 interface RecruitTitleProps {
   year: number;

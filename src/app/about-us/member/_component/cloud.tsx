@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import Image from 'next/image';
 
-import cloud from '@/public/about-us/member/cloud.png';
+import cloud from '@/public/about-us/member/cloud.avif';
 
 import { motion } from 'framer-motion';
 

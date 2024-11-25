@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import RocketImage from '@/public/recruit/rocket.png';
+import RocketImage from '@/public/recruit/rocket.avif';
 
 import { motion } from 'framer-motion';
 
@@ -22,8 +22,9 @@ export default function Rocker() {
       <Image
         src={RocketImage}
         alt="rocket"
-        width={40}
-        height={50}
+        width={80}
+        height={100}
+        priority
         className="-translate-y-28 sm:-translate-y-52 w-[40px] sm:w-[80px] h-[50px] sm:h-[100px]"
       />
     </motion.div>
