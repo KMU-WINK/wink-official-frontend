@@ -26,7 +26,7 @@ import Api from '@/api';
 
 import { useUserStore } from '@/store/user';
 
-import logo from '@/public/logo.png';
+import logo from '@/public/logo.avif';
 
 import { KeyRound, LogOut, UserIcon, UserPen } from 'lucide-react';
 import { toast } from 'sonner';
