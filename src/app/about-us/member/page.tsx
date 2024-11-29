@@ -54,6 +54,11 @@ export default function AboutUsMemberPage() {
     [users],
   );
 
+  const techs: User[] = useMemo(
+    () => users.filter((user) => [Role.TECH_HEAD, Role.TECH_ASSISTANT].includes(user.role)),
+    [users],
+  );
+
   const members: User[] = useMemo(() => users.filter((user) => user.role === Role.MEMBER), [users]);
 
   return (
@@ -76,7 +81,7 @@ export default function AboutUsMemberPage() {
         loading={loading}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <UserList
           role="총무부"
           description="비품 및 회의 관리, 도서 신청 및 대출 관리"
@@ -97,6 +102,14 @@ export default function AboutUsMemberPage() {
           role="기획부"
           description="동아리 활동 기획 및 활동 정리"
           users={plannings}
+          skeleton={2}
+          loading={loading}
+        />
+
+        <UserList
+          role="학술부"
+          description="동아리 학술 담당"
+          users={techs}
           skeleton={2}
           loading={loading}
         />
