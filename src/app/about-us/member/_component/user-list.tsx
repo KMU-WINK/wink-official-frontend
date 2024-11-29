@@ -26,7 +26,7 @@ export default function UserList({
   loading,
 }: UserListProps) {
   return (
-    <div className="flex flex-col space-y-4 items-center justify-center">
+    <div className="flex flex-col space-y-4 items-center justify-center w-[300px]">
       {(role || description) && (
         <div className="flex flex-col space-y-2 items-center justify-center">
           <p className="text-xl sm:text-2xl font-bold">&lt;{role}&gt;</p>
