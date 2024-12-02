@@ -69,7 +69,11 @@ export default class WinkRequest {
       await fetch(`${this.baseUrl}/api${url}`, options)
     ).json();
 
-    if (response.error === '엑세스 토큰이 만료되었습니다.' && (await this.refresh())) {
+    if (response.error === '엑세스 토큰이 만료되었습니다.') {
+      this.removeToken();
+
+      if (!(await this.refresh())) return null as T;
+
       const headers = options.headers as Headers;
       headers.set('Authorization', `Bearer ${this.accessToken}`);
 
