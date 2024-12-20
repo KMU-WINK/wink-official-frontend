@@ -1,7 +1,6 @@
-import BaseSchema from '@/api/type/schema/base-schema';
 import BaseUser from '@/api/type/schema/base-user';
 
-export default interface User extends BaseUser, BaseSchema {
+export default interface User extends BaseUser {
   password: string;
   avatar: string;
   description: string;
