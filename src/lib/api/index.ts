@@ -1,16 +1,16 @@
 import AdminRecruit from '@/api/domain/$recruit';
 import AdminUser from '@/api/domain/$user';
-import Auth from '@/api/domain/auth';
-import AdminActivity from '@/api/domain/program/$activity';
+import Auth from '@/api/domain/Auth';
+import Recruit from '@/api/domain/Recruit';
+import User from '@/api/domain/User';
+import AdminActivity from '@/api/domain/program/$Activity';
 import AdminHistory from '@/api/domain/program/$history';
 import AdminProject from '@/api/domain/program/$project';
-import Activity from '@/api/domain/program/activity';
-import History from '@/api/domain/program/history';
-import Project from '@/api/domain/program/project';
-import Study from '@/api/domain/program/study';
-import Upload from '@/api/domain/program/upload';
-import Recruit from '@/api/domain/recruit';
-import User from '@/api/domain/user';
+import Activity from '@/api/domain/program/Activity';
+import History from '@/api/domain/program/History';
+import Project from '@/api/domain/program/Project';
+import Study from '@/api/domain/program/Study';
+import Upload from '@/api/domain/program/Upload';
 import WinkRequest from '@/api/request';
 
 export default class Api {

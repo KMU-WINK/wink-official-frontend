@@ -1,6 +1,6 @@
 import ApiResponse from '@/api/type/api-response';
-import { LoginResponse } from '@/api/type/domain/auth';
-import { UserResponse } from '@/api/type/domain/user';
+import { LoginResponse } from '@/api/type/domain/Auth';
+import { UserResponse } from '@/api/type/domain/User';
 
 import { useUserStore } from '@/store/user';
 
