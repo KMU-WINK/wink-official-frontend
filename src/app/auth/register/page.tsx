@@ -78,22 +78,22 @@ export default function AuthRegisterPage() {
       setTimeout(() => {
         setStep(page);
         setIsProcessing(false);
-      }, 750);
+      }, 400);
 
       await controls.start({
         opacity: 0,
         transition: {
           ease: 'easeInOut',
-          duration: 0.5,
+          duration: 0.4,
         },
       });
 
       await controls.start({
         opacity: 1,
         transition: {
-          delay: 0.5,
+          delay: 0.4,
           ease: 'easeInOut',
-          duration: 0.5,
+          duration: 0.4,
         },
       });
     },
@@ -142,7 +142,7 @@ export default function AuthRegisterPage() {
           animate={{
             opacity: 1,
             transition: {
-              duration: 0.5,
+              duration: 0.4,
               ease: 'easeInOut',
             },
           }}

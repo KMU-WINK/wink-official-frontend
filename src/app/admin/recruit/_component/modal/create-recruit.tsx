@@ -36,7 +36,7 @@ export default function CreateRecruitModal({ open, setOpen, callback }: CreateRe
     mode: 'onChange',
     defaultValues: {
       year: new Date().getFullYear(),
-      semester: 1,
+      semester: new Date().getMonth() + 1 <= 6 ? 1 : 2,
       recruitStartDate: '',
       recruitEndDate: '',
       interviewStartDate: '',

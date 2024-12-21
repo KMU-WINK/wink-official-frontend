@@ -69,29 +69,33 @@ export default function RecruitApplicationPage() {
 
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(
+    localStorage.getItem('recruit-step') ? Number(localStorage.getItem('recruit-step')) : 0,
+  );
   const [recruit, setRecruit] = useState<Recruit | null>(null);
 
   const form = useForm<ApplicationRequest>({
     resolver: zodResolver(ApplicationRequestSchema),
     mode: 'onChange',
-    defaultValues: {
-      name: '',
-      studentId: '',
-      email: '',
-      phoneNumber: '',
-      jiwonDonggi: '',
-      baeugoSipeunJeom: '',
-      canInterviewDates: [],
-      domains: [],
-      github: '',
-      frontendTechStacks: [],
-      backendTechStacks: [],
-      devOpsTechStacks: [],
-      designTechStacks: [],
-      favoriteProject: '',
-      lastComment: '',
-    },
+    defaultValues: localStorage.getItem('recruit')
+      ? JSON.parse(localStorage.getItem('recruit')!)
+      : {
+          name: '',
+          studentId: '',
+          email: '',
+          phoneNumber: '',
+          jiwonDonggi: '',
+          baeugoSipeunJeom: '',
+          canInterviewDates: [],
+          domains: [],
+          github: '',
+          frontendTechStacks: [],
+          backendTechStacks: [],
+          devOpsTechStacks: [],
+          designTechStacks: [],
+          favoriteProject: '',
+          lastComment: '',
+        },
   });
 
   const go = useCallback(
@@ -102,26 +106,27 @@ export default function RecruitApplicationPage() {
       setTimeout(() => {
         setStep(page);
         setIsProcessing(false);
-      }, 750);
+        localStorage.setItem('recruit-step', (step + 1).toString());
+      }, 400);
 
       await controls.start({
         opacity: 0,
         transition: {
           ease: 'easeInOut',
-          duration: 0.5,
+          duration: 0.4,
         },
       });
 
       await controls.start({
         opacity: 1,
         transition: {
-          delay: 0.5,
+          delay: 0.4,
           ease: 'easeInOut',
-          duration: 0.5,
+          duration: 0.4,
         },
       });
     },
-    [controls, setStep],
+    [controls, setStep, step],
   );
 
   const StepComponent = useMemo(() => {
@@ -132,6 +137,18 @@ export default function RecruitApplicationPage() {
       </motion.div>
     );
   }, [step, recruit]);
+
+  const formValues = form.watch();
+
+  useEffect(() => {
+    if (localStorage.getItem('recruit')) {
+      toast.info('이전에 작성하던 내용을 불러왔습니다.');
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('recruit', JSON.stringify(formValues));
+  }, [formValues]);
 
   useEffect(() => {
     (async () => {
@@ -164,7 +181,7 @@ export default function RecruitApplicationPage() {
           animate={{
             opacity: 1,
             transition: {
-              duration: 0.5,
+              duration: 0.4,
               ease: 'easeInOut',
             },
           }}
