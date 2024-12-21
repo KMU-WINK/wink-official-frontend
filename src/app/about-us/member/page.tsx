@@ -81,11 +81,12 @@ export default function AboutUsMemberPage() {
         loading={loading}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-4 items-start">
         <UserList
           role="총무부"
           description="비품 및 회의 관리, 도서 신청 및 대출 관리"
           users={treasuries}
+          direction="col"
           skeleton={2}
           loading={loading}
         />
@@ -94,6 +95,7 @@ export default function AboutUsMemberPage() {
           role="홍보부"
           description="동아리 홍보 및 홍보물 제작, SNS 관리"
           users={publicRelations}
+          direction="col"
           skeleton={2}
           loading={loading}
         />
@@ -102,6 +104,7 @@ export default function AboutUsMemberPage() {
           role="기획부"
           description="동아리 활동 기획 및 활동 정리"
           users={plannings}
+          direction="col"
           skeleton={2}
           loading={loading}
         />
@@ -110,6 +113,7 @@ export default function AboutUsMemberPage() {
           role="학술부"
           description="동아리 학술 담당"
           users={techs}
+          direction="col"
           skeleton={2}
           loading={loading}
         />

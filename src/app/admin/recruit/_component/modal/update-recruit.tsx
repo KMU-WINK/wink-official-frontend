@@ -196,41 +196,31 @@ export default function UpdateRecruitModal({
               name="interviewStartDate"
               render={() => (
                 <FormItem className="flex flex-col w-full">
-                  <FormLabel>모집 기간</FormLabel>
+                  <FormLabel>면접 기간</FormLabel>
                   <FormControl>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          id="date"
-                          variant="outline"
-                          className={cn(
-                            'justify-start text-left font-normal',
-                            !interviewDate ? 'text-neutral-500' : '',
-                          )}
-                        >
-                          <CalendarIcon />
-                          {interviewDate?.from ? (
-                            interviewDate.to ? (
-                              <>
-                                {formatDate(interviewDate.from, true)} -{' '}
-                                {formatDate(interviewDate.to, true)}
-                              </>
-                            ) : (
-                              formatDate(interviewDate.from, true)
-                            )
-                          ) : (
-                            <span>면접 기간을 선택해주세요.</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="range"
-                          selected={interviewDate}
-                          onSelect={setInterviewDate}
-                        />
-                      </PopoverContent>
-                    </Popover>
+                    <Button
+                      id="date"
+                      variant="outline"
+                      disabled
+                      className={cn(
+                        'justify-start text-left font-normal',
+                        !interviewDate ? 'text-neutral-500' : '',
+                      )}
+                    >
+                      <CalendarIcon />
+                      {interviewDate?.from ? (
+                        interviewDate.to ? (
+                          <>
+                            {formatDate(interviewDate.from, true)} -{' '}
+                            {formatDate(interviewDate.to, true)}
+                          </>
+                        ) : (
+                          formatDate(interviewDate.from, true)
+                        )
+                      ) : (
+                        <span>면접 기간을 선택해주세요.</span>
+                      )}
+                    </Button>
                   </FormControl>
                 </FormItem>
               )}

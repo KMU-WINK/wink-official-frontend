@@ -75,7 +75,7 @@ export default function ProgramActivityPage() {
                 align: 'start',
               }}
               setApi={setApi}
-              className="max-w-[calc(100vw-10rem)]"
+              className="max-w-[calc(100vw-10rem)] min-[1500px]:max-w-[1500px]"
             >
               <CarouselContent>
                 {selectedActivity.images.map((image, index) => (

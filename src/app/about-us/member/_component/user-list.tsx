@@ -36,7 +36,7 @@ export default function UserList({
 
       <div
         className={cn(
-          'flex flex-wrap gap-4 items-center justify-center',
+          'flex gap-4 items-center justify-center',
           direction === 'row' ? 'flex-row' : 'flex-col',
         )}
       >
