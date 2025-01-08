@@ -10,6 +10,7 @@ export default interface Recruit extends BaseSchema {
   recruitEndDate: string;
   interviewStartDate: string;
   interviewEndDate: string;
+  finalized: boolean;
 }
 
 export enum FormEntryKeys {

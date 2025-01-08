@@ -1,21 +1,25 @@
 import { useState } from 'react';
-import { SiGithub } from 'react-icons/si';
+import { SiHtml5 } from 'react-icons/si';
+
+import { frontendTechStacks } from '@/app/recruit/application/_constant/tech_stack';
 
 import { Button } from '@/ui/button';
-import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
-import { Input } from '@/ui/input';
+import { Checkbox } from '@/ui/checkbox';
+import { FormControl, FormField, FormItem, FormLabel } from '@/ui/form';
+
+import { FrontendTechStack } from '@/api/type/schema/application';
 
 import { RecruitStepProps } from '@/app/recruit/application/page';
 
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
-export default function Step10({ go, form }: RecruitStepProps) {
+export default function Step11({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (
     <>
-      <SiGithub size={64} />
+      <SiHtml5 size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -29,7 +33,7 @@ export default function Step10({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">Github 아이디를 입력해주세요</p>
+        <p className="font-medium text-lg">다룰 수 있는 프론트엔드 기술을 선택해주세요</p>
       </motion.div>
 
       <motion.div
@@ -46,20 +50,34 @@ export default function Step10({ go, form }: RecruitStepProps) {
               }
             : {}
         }
-        className="w-full max-w-[300px]"
+        className="flex flex-col w-full max-w-[300px]"
       >
-        <FormField
-          control={form.control}
-          name="github"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input placeholder="Github 아이디를 입력해주세요." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormItem className="space-y-4">
+          {frontendTechStacks.map(({ name, raw }) => (
+            <FormField
+              key={raw}
+              control={form.control}
+              name="frontendTechStacks"
+              render={({ field }) => {
+                return (
+                  <FormItem key={raw} className="space-x-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value!.includes(raw as FrontendTechStack)}
+                        onCheckedChange={(checked) => {
+                          return checked
+                            ? field.onChange([...field.value!, raw])
+                            : field.onChange(field.value!.filter((value) => value !== raw));
+                        }}
+                      />
+                    </FormControl>
+                    <FormLabel className="text-base">{name}</FormLabel>
+                  </FormItem>
+                );
+              }}
+            />
+          ))}
+        </FormItem>
       </motion.div>
 
       <motion.div
@@ -81,7 +99,7 @@ export default function Step10({ go, form }: RecruitStepProps) {
         <Button
           variant="outline"
           onClick={() => {
-            form.setValue('github', '');
+            form.setValue('frontendTechStacks', []);
             go((prev) => prev + 1);
           }}
         >
@@ -91,10 +109,10 @@ export default function Step10({ go, form }: RecruitStepProps) {
         <Button
           variant="wink"
           onClick={() => {
-            if (!form.formState.errors.github) {
+            if (!form.formState.errors.frontendTechStacks) {
               go((prev) => prev + 1);
             } else {
-              toast.error(form.formState.errors.github.message);
+              toast.error(form.formState.errors.frontendTechStacks.message);
             }
           }}
         >

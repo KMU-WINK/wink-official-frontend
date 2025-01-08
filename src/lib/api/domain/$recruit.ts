@@ -33,6 +33,10 @@ export default class AdminRecruit {
     return this.request.delete(`/admin/recruit/${recruitId}`);
   }
 
+  public async finalizeRecruit(recruitId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/finalize`);
+  }
+
   public async getApplications(recruitId: string): Promise<GetApplicationsResponse> {
     return this.request.get(`/admin/recruit/${recruitId}/application`);
   }

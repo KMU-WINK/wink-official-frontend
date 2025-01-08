@@ -92,6 +92,15 @@ export default function AboutUsMemberPage() {
         />
 
         <UserList
+          role="학술부"
+          description="동아리 학술 담당"
+          users={techs}
+          direction="col"
+          skeleton={2}
+          loading={loading}
+        />
+
+        <UserList
           role="홍보부"
           description="동아리 홍보 및 홍보물 제작, SNS 관리"
           users={publicRelations}
@@ -104,15 +113,6 @@ export default function AboutUsMemberPage() {
           role="기획부"
           description="동아리 활동 기획 및 활동 정리"
           users={plannings}
-          direction="col"
-          skeleton={2}
-          loading={loading}
-        />
-
-        <UserList
-          role="학술부"
-          description="동아리 학술 담당"
-          users={techs}
           direction="col"
           skeleton={2}
           loading={loading}
