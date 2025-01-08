@@ -1,25 +1,25 @@
 import { useState } from 'react';
-import { SiDocker } from 'react-icons/si';
+import { SiFigma } from 'react-icons/si';
 
-import { devOpsTechStacks } from '@/app/recruit/application/_constant/tech_stack';
+import { designTechStacks } from '@/app/recruit/application/_constant/tech_stack';
 
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel } from '@/ui/form';
 
-import { DevOpsTechStack } from '@/api/type/schema/application';
+import { DesignTechStack } from '@/api/type/schema/application';
 
 import { RecruitStepProps } from '@/app/recruit/application/page';
 
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
-export default function Step13({ go, form }: RecruitStepProps) {
+export default function Step14({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (
     <>
-      <SiDocker size={64} />
+      <SiFigma size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -33,7 +33,7 @@ export default function Step13({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">다룰 수 있는 DevOps 기술을 선택해주세요</p>
+        <p className="font-medium text-lg">다룰 수 있는 디자인 툴을 선택해주세요</p>
       </motion.div>
 
       <motion.div
@@ -53,17 +53,17 @@ export default function Step13({ go, form }: RecruitStepProps) {
         className="flex flex-col w-full max-w-[300px]"
       >
         <FormItem className="space-y-4">
-          {devOpsTechStacks.map(({ name, raw }) => (
+          {designTechStacks.map(({ name, raw }) => (
             <FormField
               key={raw}
               control={form.control}
-              name="devOpsTechStacks"
+              name="designTechStacks"
               render={({ field }) => {
                 return (
                   <FormItem key={raw} className="space-x-2">
                     <FormControl>
                       <Checkbox
-                        checked={field.value!.includes(raw as DevOpsTechStack)}
+                        checked={field.value!.includes(raw as DesignTechStack)}
                         onCheckedChange={(checked) => {
                           return checked
                             ? field.onChange([...field.value!, raw])
@@ -99,7 +99,7 @@ export default function Step13({ go, form }: RecruitStepProps) {
         <Button
           variant="outline"
           onClick={() => {
-            form.setValue('devOpsTechStacks', []);
+            form.setValue('designTechStacks', []);
             go((prev) => prev + 1);
           }}
         >
@@ -109,10 +109,10 @@ export default function Step13({ go, form }: RecruitStepProps) {
         <Button
           variant="wink"
           onClick={() => {
-            if (!form.formState.errors.devOpsTechStacks) {
+            if (!form.formState.errors.designTechStacks) {
               go((prev) => prev + 1);
             } else {
-              toast.error(form.formState.errors.devOpsTechStacks.message);
+              toast.error(form.formState.errors.designTechStacks.message);
             }
           }}
         >

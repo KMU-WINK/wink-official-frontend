@@ -7,15 +7,15 @@ import { Textarea } from '@/ui/textarea';
 import { RecruitStepProps } from '@/app/recruit/application/page';
 
 import { motion } from 'framer-motion';
-import { Sparkle } from 'lucide-react';
+import { MessageCircleMore } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step15({ go, form }: RecruitStepProps) {
+export default function Step16({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (
     <>
-      <Sparkle size={64} />
+      <MessageCircleMore size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -29,7 +29,7 @@ export default function Step15({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">가장 기억에 남는 프로젝트는 무엇인가요?</p>
+        <p className="font-medium text-lg">마지막 한마디를 입력해주세요</p>
       </motion.div>
 
       <motion.div
@@ -50,13 +50,13 @@ export default function Step15({ go, form }: RecruitStepProps) {
       >
         <FormField
           control={form.control}
-          name="favoriteProject"
+          name="lastComment"
           render={({ field }) => (
             <FormItem>
               <FormControl>
                 <Textarea
                   className="min-h-[200px] sm:min-h-[300px]"
-                  placeholder="가장 기억에 남는 프로젝트를 입력해주세요."
+                  placeholder="마지막 한마디를 입력해주세요."
                   {...field}
                 />
               </FormControl>
@@ -85,7 +85,7 @@ export default function Step15({ go, form }: RecruitStepProps) {
         <Button
           variant="outline"
           onClick={() => {
-            form.setValue('favoriteProject', '');
+            form.setValue('lastComment', '');
             go((prev) => prev + 1);
           }}
         >
@@ -95,10 +95,10 @@ export default function Step15({ go, form }: RecruitStepProps) {
         <Button
           variant="wink"
           onClick={() => {
-            if (!form.formState.errors.favoriteProject) {
+            if (!form.formState.errors.lastComment) {
               go((prev) => prev + 1);
             } else {
-              toast.error(form.formState.errors.favoriteProject.message);
+              toast.error(form.formState.errors.lastComment.message);
             }
           }}
         >

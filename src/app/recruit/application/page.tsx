@@ -29,7 +29,6 @@ import Step13 from '@/app/recruit/application/_step/13';
 import Step14 from '@/app/recruit/application/_step/14';
 import Step15 from '@/app/recruit/application/_step/15';
 import Step16 from '@/app/recruit/application/_step/16';
-import Step17 from '@/app/recruit/application/_step/17';
 import { Step, StepProps, now, toDate } from '@/lib/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -60,7 +59,6 @@ const STEPS: Step<RecruitStepProps> = [
   Step14,
   Step15,
   Step16,
-  Step17,
 ];
 
 export default function RecruitApplicationPage() {
@@ -87,7 +85,6 @@ export default function RecruitApplicationPage() {
           jiwonDonggi: '',
           baeugoSipeunJeom: '',
           canInterviewDates: [],
-          domains: [],
           github: '',
           frontendTechStacks: [],
           backendTechStacks: [],

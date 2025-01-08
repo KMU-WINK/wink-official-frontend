@@ -10,7 +10,6 @@ export default interface Application extends BaseSchema {
   jiwonDonggi: string;
   baeugoSipeunJeom: string;
   canInterviewDates: string[];
-  domains: Domain[];
   github: string;
   frontendTechStacks: FrontendTechStack[];
   backendTechStacks: BackendTechStack[];
@@ -18,7 +17,7 @@ export default interface Application extends BaseSchema {
   designTechStacks: DesignTechStack[];
   favoriteProject: string;
   lastComment: string;
-  passed: boolean;
+  passed: boolean | null;
 }
 
 export enum Domain {

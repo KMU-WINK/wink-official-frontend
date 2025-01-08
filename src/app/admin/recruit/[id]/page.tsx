@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { domains } from '@/app/recruit/_constant/domain';
 import {
   backendTechStacks,
   designTechStacks,
@@ -63,8 +62,6 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
       );
 
       setSelectedApplication((prev) => (prev ? { ...prev, passed: true } : null));
-
-      toast.success(`${application.name}님을 합격시켰습니다.`);
     },
     [recruit],
   );
@@ -80,11 +77,17 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
       );
 
       setSelectedApplication((prev) => (prev ? { ...prev, passed: false } : null));
-
-      toast.success(`${application.name}님을 불합격시켰습니다.`);
     },
     [recruit],
   );
+
+  const finalize = useCallback(async () => {
+    await Api.Domain.AdminRecruit.finalizeRecruit(recruit!.id);
+
+    setRecruit((prev) => (prev ? { ...prev, finalized: true } : null));
+
+    toast.success('모집을 확정했습니다.');
+  }, [recruit]);
 
   useEffect(() => {
     (async () => {
@@ -171,20 +174,27 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <Button
-          variant="destructive"
-          disabled={!selectedApplication || selectedApplication.passed !== null}
-          onClick={() => selectedApplication && fail(selectedApplication)}
-        >
-          불합격
-        </Button>
-        <Button
-          variant="wink"
-          disabled={!selectedApplication || selectedApplication.passed !== null}
-          onClick={() => selectedApplication && pass(selectedApplication)}
-        >
-          합격
-        </Button>
+        {!recruit.finalized && (
+          <>
+            {selectedApplication && (
+              <>
+                <Button variant="destructive" onClick={() => fail(selectedApplication)}>
+                  불합격
+                </Button>
+                <Button variant="wink" onClick={() => pass(selectedApplication)}>
+                  합격
+                </Button>
+              </>
+            )}
+            <Button
+              variant="outline"
+              disabled={applications?.some((x) => x.passed === null)}
+              onClick={finalize}
+            >
+              확정
+            </Button>
+          </>
+        )}
       </div>
 
       <ScrollArea className="md:w-[calc(100vw-305px)]">
@@ -257,14 +267,6 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
               <TableCell className="whitespace-pre-wrap">
                 {selectedApplication.canInterviewDates
                   .map((date) => formatDate(date, true))
-                  .join('\n')}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">지원 분야</TableHead>
-              <TableCell className="whitespace-pre-wrap">
-                {selectedApplication.domains
-                  .map((domain) => domains.find((d) => d.raw === domain)!.domain)
                   .join('\n')}
               </TableCell>
             </TableRow>

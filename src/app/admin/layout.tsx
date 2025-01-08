@@ -20,13 +20,6 @@ import {
 
 import AdminGuard from '@/guard/admin';
 
-/**
- * 1. 유저 목록(수정), 유저 초대, 임시 유저 목록(삭제)
- * 2. 모집 목록, 모집 생성, 신청자 목록, 신청자 조회, 합격 불합격 처리
- * 3. 연혁 목록(수정 삭제), 연혁 생성
- * 4. 활동 목록(수정, 삭제, 고정O, 고정X), 활동 생성
- */
-
 interface AdminLayoutProps {
   children: ReactNode;
 }

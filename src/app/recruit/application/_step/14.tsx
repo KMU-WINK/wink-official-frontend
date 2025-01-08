@@ -1,25 +1,21 @@
 import { useState } from 'react';
-import { SiFigma } from 'react-icons/si';
-
-import { designTechStacks } from '@/app/recruit/application/_constant/tech_stack';
 
 import { Button } from '@/ui/button';
-import { Checkbox } from '@/ui/checkbox';
-import { FormControl, FormField, FormItem, FormLabel } from '@/ui/form';
-
-import { DesignTechStack } from '@/api/type/schema/application';
+import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
+import { Textarea } from '@/ui/textarea';
 
 import { RecruitStepProps } from '@/app/recruit/application/page';
 
 import { motion } from 'framer-motion';
+import { Sparkle } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step14({ go, form }: RecruitStepProps) {
+export default function Step15({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (
     <>
-      <SiFigma size={64} />
+      <Sparkle size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -33,7 +29,7 @@ export default function Step14({ go, form }: RecruitStepProps) {
         }}
         onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
-        <p className="font-medium text-lg">다룰 수 있는 디자인 툴을 선택해주세요</p>
+        <p className="font-medium text-lg">가장 기억에 남는 프로젝트는 무엇인가요?</p>
       </motion.div>
 
       <motion.div
@@ -50,34 +46,24 @@ export default function Step14({ go, form }: RecruitStepProps) {
               }
             : {}
         }
-        className="flex flex-col w-full max-w-[300px]"
+        className="w-full max-w-[300px]"
       >
-        <FormItem className="space-y-4">
-          {designTechStacks.map(({ name, raw }) => (
-            <FormField
-              key={raw}
-              control={form.control}
-              name="designTechStacks"
-              render={({ field }) => {
-                return (
-                  <FormItem key={raw} className="space-x-2">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value!.includes(raw as DesignTechStack)}
-                        onCheckedChange={(checked) => {
-                          return checked
-                            ? field.onChange([...field.value!, raw])
-                            : field.onChange(field.value!.filter((value) => value !== raw));
-                        }}
-                      />
-                    </FormControl>
-                    <FormLabel className="text-base">{name}</FormLabel>
-                  </FormItem>
-                );
-              }}
-            />
-          ))}
-        </FormItem>
+        <FormField
+          control={form.control}
+          name="favoriteProject"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Textarea
+                  className="min-h-[200px] sm:min-h-[300px]"
+                  placeholder="가장 기억에 남는 프로젝트를 입력해주세요."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </motion.div>
 
       <motion.div
@@ -99,7 +85,7 @@ export default function Step14({ go, form }: RecruitStepProps) {
         <Button
           variant="outline"
           onClick={() => {
-            form.setValue('designTechStacks', []);
+            form.setValue('favoriteProject', '');
             go((prev) => prev + 1);
           }}
         >
@@ -109,10 +95,10 @@ export default function Step14({ go, form }: RecruitStepProps) {
         <Button
           variant="wink"
           onClick={() => {
-            if (!form.formState.errors.designTechStacks) {
+            if (!form.formState.errors.favoriteProject) {
               go((prev) => prev + 1);
             } else {
-              toast.error(form.formState.errors.designTechStacks.message);
+              toast.error(form.formState.errors.favoriteProject.message);
             }
           }}
         >
