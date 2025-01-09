@@ -62,6 +62,10 @@ export const EmailCheckRequestSchema = z.object({
   email: z.string().regex(KOOKMIN_EMAIL_EXPRESSION, KOOKMIN_EMAIL_MESSAGE),
 });
 
+export const FinalizePaperRequestSchema = z.object({
+  interviewUrl: z.string().min(1, '면접 안내 URL은 비어있을 수 없습니다.'),
+});
+
 export const PhoneNumberCheckRequestSchema = z.object({
   phoneNumber: z.string().regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
 });
@@ -93,6 +97,7 @@ export const GetRecruitsResponseSchema = z.object({
 export type ApplicationRequest = z.infer<typeof ApplicationRequestSchema>;
 export type CreateRecruitRequest = z.infer<typeof CreateRecruitRequestSchema>;
 export type EmailCheckRequest = z.infer<typeof EmailCheckRequestSchema>;
+export type FinalizePaperRequest = z.infer<typeof FinalizePaperRequestSchema>;
 export type PhoneNumberCheckRequest = z.infer<typeof PhoneNumberCheckRequestSchema>;
 export type StudentIdCheckRequest = z.infer<typeof StudentIdCheckRequestSchema>;
 export type DuplicationCheckResponse = z.infer<typeof DuplicationCheckResponseSchema>;

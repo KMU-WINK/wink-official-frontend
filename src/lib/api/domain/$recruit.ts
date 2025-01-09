@@ -1,7 +1,7 @@
 import WinkRequest from '@/api/request';
 import {
   CreateRecruitRequest,
-  GetApplicationResponse,
+  FinalizePaperRequest,
   GetApplicationsResponse,
   GetRecruitResponse,
   GetRecruitsResponse,
@@ -33,26 +33,35 @@ export default class AdminRecruit {
     return this.request.delete(`/admin/recruit/${recruitId}`);
   }
 
-  public async finalizeRecruit(recruitId: string): Promise<void> {
-    return this.request.post(`/admin/recruit/${recruitId}/finalize`);
+  public async finalizePaper(recruitId: string, data: FinalizePaperRequest): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/finalize/paper`, data);
+  }
+
+  public async finalizeInterview(recruitId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/finalize/interview`);
   }
 
   public async getApplications(recruitId: string): Promise<GetApplicationsResponse> {
     return this.request.get(`/admin/recruit/${recruitId}/application`);
   }
 
-  public async getApplication(
-    recruitId: string,
-    applicationId: string,
-  ): Promise<GetApplicationResponse> {
-    return this.request.get(`/admin/recruit/${recruitId}/application/${applicationId}`);
+  public async paperPass(recruitId: string, applicationId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/pass/paper`);
   }
 
-  public async passApplication(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/pass`);
+  public async paperFail(recruitId: string, applicationId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/fail/paper`);
   }
 
-  public async failApplication(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/fail`);
+  public async interviewPass(recruitId: string, applicationId: string): Promise<void> {
+    return this.request.post(
+      `/admin/recruit/${recruitId}/application/${applicationId}/pass/interview`,
+    );
+  }
+
+  public async interviewFail(recruitId: string, applicationId: string): Promise<void> {
+    return this.request.post(
+      `/admin/recruit/${recruitId}/application/${applicationId}/fail/interview`,
+    );
   }
 }
