@@ -17,7 +17,8 @@ export default interface Application extends BaseSchema {
   designTechStacks: DesignTechStack[];
   favoriteProject: string;
   lastComment: string;
-  passed: boolean | null;
+  paperPass: boolean | null;
+  interviewPass: boolean | null;
 }
 
 export enum Domain {
