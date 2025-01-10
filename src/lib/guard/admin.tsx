@@ -18,7 +18,9 @@ export default function AdminGuard({ children }: AdminGuardProps) {
   const { user } = useUserStore();
 
   useEffect(() => {
-    if (!isAdmin(user?.role)) {
+    if (!user) {
+      router.replace(`/auth/login?next=${encodeURIComponent(window.location.pathname)}`);
+    } else if (!isAdmin(user.role)) {
       router.replace('/');
     }
   }, [user]);
