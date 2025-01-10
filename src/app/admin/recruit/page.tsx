@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 
 import CreateRecruitModal from '@/app/admin/recruit/_component/modal/create-recruit';
 import DeleteRecruitModal from '@/app/admin/recruit/_component/modal/delete-recruit';
-import UpdateRecruitModal from '@/app/admin/recruit/_component/modal/update-recruit';
 
 import {
   Breadcrumb,
@@ -42,16 +41,11 @@ export default function AdminRecruitPage() {
   const [loading, setLoading] = useState(false);
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedRecruit, setSelectedRecruit] = useState<Recruit | null>(null);
 
   const onCreateRecruit = useCallback((recruit: Recruit) => {
     setRecruits((prev) => [recruit, ...prev!]);
-  }, []);
-
-  const onUpdateRecruit = useCallback((recruit: Recruit) => {
-    setRecruits((prev) => prev!.map((r) => (r.id === recruit.id ? recruit : r)));
   }, []);
 
   const onDeleteRecruit = useCallback((id: string) => {
@@ -163,16 +157,6 @@ export default function AdminRecruitPage() {
                             e.stopPropagation();
 
                             setSelectedRecruit(recruit);
-                            setUpdateModalOpen(true);
-                          }}
-                        >
-                          수정
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={(e) => {
-                            e.stopPropagation();
-
-                            setSelectedRecruit(recruit);
                             setDeleteModalOpen(true);
                           }}
                         >
@@ -198,13 +182,6 @@ export default function AdminRecruitPage() {
         open={createModalOpen}
         setOpen={setCreateModalOpen}
         callback={onCreateRecruit}
-      />
-
-      <UpdateRecruitModal
-        open={updateModalOpen}
-        setOpen={setUpdateModalOpen}
-        recruit={selectedRecruit}
-        callback={onUpdateRecruit}
       />
 
       <DeleteRecruitModal
