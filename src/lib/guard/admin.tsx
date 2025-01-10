@@ -8,6 +8,8 @@ import { isAdmin } from '@/api/type/schema/user';
 
 import { useUserStore } from '@/store/user';
 
+import { toast } from 'sonner';
+
 interface AdminGuardProps {
   children: ReactNode;
 }
@@ -23,6 +25,7 @@ export default function AdminGuard({ children }: AdminGuardProps) {
       router.replace(`/auth/login?next=${encodeURIComponent(pathname)}`);
     } else if (!isAdmin(user.role)) {
       router.replace('/');
+      toast.error('권한이 없습니다.');
     }
   }, [user]);
 
