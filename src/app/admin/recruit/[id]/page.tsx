@@ -206,13 +206,15 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
                 {applications.filter((x) => x.paperPass).length}명 / {applications.length}명
               </span>
             </Badge>
-            <Badge variant="outline" className="text-sm">
-              면접 합격자&nbsp;
-              <span className="font-normal">
-                {applications.filter((x) => x.interviewPass).length}명 /{' '}
-                {applications.filter((x) => x.paperPass).length}명
-              </span>
-            </Badge>
+            {recruit?.step !== Step.PRE && (
+              <Badge variant="outline" className="text-sm">
+                면접 합격자&nbsp;
+                <span className="font-normal">
+                  {applications.filter((x) => x.interviewPass).length}명 /{' '}
+                  {applications.filter((x) => x.paperPass).length}명
+                </span>
+              </Badge>
+            )}
           </div>
 
           <div className="flex space-x-2">
@@ -310,13 +312,15 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
                       <FileUser className="w-[18px] h-[18px] text-red-600" />
                     )}
 
-                    {application.interviewPass === null ? (
-                      <Speech className="w-[18px] h-[18px] text-neutral-600" />
-                    ) : application.interviewPass ? (
-                      <Speech className="w-[18px] h-[18px] text-green-600" />
-                    ) : (
-                      <Speech className="w-[18px] h-[18px] text-red-600" />
-                    )}
+                    {recruit?.step !== Step.PRE &&
+                      application.paperPass &&
+                      (application.interviewPass === null ? (
+                        <Speech className="w-[18px] h-[18px] text-neutral-600" />
+                      ) : application.interviewPass ? (
+                        <Speech className="w-[18px] h-[18px] text-green-600" />
+                      ) : (
+                        <Speech className="w-[18px] h-[18px] text-red-600" />
+                      ))}
                   </div>
                 </div>
                 <p className="text-neutral-500 text-sm">{application.studentId}</p>
