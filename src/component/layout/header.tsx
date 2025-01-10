@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { getMenuItems } from '@/layout/_constant/header-item';
 
@@ -30,7 +31,6 @@ import logo from '@/public/logo.avif';
 
 import { KeyRound, LogOut, UserIcon, UserPen } from 'lucide-react';
 import { toast } from 'sonner';
-import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   loading: boolean;
@@ -109,7 +109,9 @@ export default function Header({ loading }: HeaderProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <NavItem item={{ title: 'Login', href: `/auth/login?next=${encodeURIComponent(pathname)}` }} />
+            <NavItem
+              item={{ title: 'Login', href: `/auth/login?next=${encodeURIComponent(pathname)}` }}
+            />
           )}
         </nav>
 
