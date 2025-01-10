@@ -30,12 +30,15 @@ import logo from '@/public/logo.avif';
 
 import { KeyRound, LogOut, UserIcon, UserPen } from 'lucide-react';
 import { toast } from 'sonner';
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   loading: boolean;
 }
 
 export default function Header({ loading }: HeaderProps) {
+  const pathname = usePathname();
+
   const { user } = useUserStore();
 
   const [changeMyPasswordModalOpen, setChangeMyPasswordModalOpen] = useState(false);
@@ -106,7 +109,7 @@ export default function Header({ loading }: HeaderProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <NavItem item={{ title: 'Login', href: '/auth/login' }} />
+            <NavItem item={{ title: 'Login', href: `/auth/login?next=${encodeURIComponent(pathname)}` }} />
           )}
         </nav>
 

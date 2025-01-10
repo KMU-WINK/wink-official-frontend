@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Button } from '@/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
@@ -19,6 +19,7 @@ import { toast } from 'sonner';
 
 export default function AuthLoginPage() {
   const router = useRouter();
+  const params = useSearchParams();
 
   const form = useForm<LoginRequest>({
     resolver: zodResolver(LoginRequestSchema),
@@ -37,7 +38,7 @@ export default function AuthLoginPage() {
 
       toast.success('로그인에 성공했습니다.');
 
-      router.push('/');
+      router.push(params.has('next') ? decodeURIComponent(params.get('next')!) : '/');
     },
     [router],
   );
