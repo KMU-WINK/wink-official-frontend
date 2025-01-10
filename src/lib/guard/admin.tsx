@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect } from 'react';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { isAdmin } from '@/api/type/schema/user';
 
@@ -14,11 +14,14 @@ interface AdminGuardProps {
 
 export default function AdminGuard({ children }: AdminGuardProps) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const { user } = useUserStore();
 
   useEffect(() => {
-    if (!isAdmin(user?.role)) {
+    if (!user) {
+      router.replace(`/auth/login?next=${encodeURIComponent(pathname)}`);
+    } else if (!isAdmin(user.role)) {
       router.replace('/');
     }
   }, [user]);
