@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -365,7 +366,19 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">Github 아이디</TableHead>
-              <TableCell>{selectedApplication.github || '-'}</TableCell>
+              <TableCell>
+                {selectedApplication.github ? (
+                  <Link
+                    href={`https://github.com/${selectedApplication.github}`}
+                    target="_blank"
+                    className="text-blue-600 hover:text-blue-600/90"
+                  >
+                    {selectedApplication.github}
+                  </Link>
+                ) : (
+                  '-'
+                )}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>

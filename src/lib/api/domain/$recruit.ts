@@ -22,13 +22,6 @@ export default class AdminRecruit {
     return this.request.post('/admin/recruit', data);
   }
 
-  public async updateRecruit(
-    recruitId: string,
-    data: CreateRecruitRequest,
-  ): Promise<GetRecruitResponse> {
-    return this.request.put(`/admin/recruit/${recruitId}`, data);
-  }
-
   public async deleteRecruit(recruitId: string): Promise<GetRecruitResponse> {
     return this.request.delete(`/admin/recruit/${recruitId}`);
   }
