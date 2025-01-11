@@ -1,5 +1,6 @@
 import AdminRecruit from '@/api/domain/$recruit';
 import AdminUser from '@/api/domain/$user';
+import Application from '@/api/domain/application';
 import Auth from '@/api/domain/auth';
 import AdminActivity from '@/api/domain/program/$activity';
 import AdminHistory from '@/api/domain/program/$history';
@@ -34,6 +35,7 @@ export default class Api {
       Study: new Study(this.request),
       Upload: new Upload(this.request),
     },
+    Application: new Application(this.request),
   };
 
   private constructor() {

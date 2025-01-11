@@ -3,7 +3,7 @@ import {
   DesignTechStack,
   DevOpsTechStack,
   FrontendTechStack,
-} from '@/api/type/schema/application';
+} from '@/api/type/schema/recruit-form';
 
 interface TechStack {
   name: string;

@@ -46,6 +46,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="icon" href="/favicon.ico" />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="format-detection" content="telephone=no" />
         <meta name="description" content="국민대학교 소프트웨어융합대학 웹 학술 동아리 WINK" />
       </head>
       <body>

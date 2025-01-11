@@ -7,7 +7,7 @@ import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel } from '@/ui/form';
 
-import { DevOpsTechStack } from '@/api/type/schema/application';
+import { DevOpsTechStack } from '@/api/type/schema/recruit-form';
 
 import { RecruitStepProps } from '@/app/recruit/application/page';
 

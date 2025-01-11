@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { getMenuItems } from '@/layout/_constant/header-item';
 
@@ -27,9 +27,11 @@ import Api from '@/api';
 
 import { useUserStore } from '@/store/user';
 
+import { nowPath } from '@/util';
+
 import logo from '@/public/logo.avif';
 
-import { KeyRound, LogOut, UserIcon, UserPen } from 'lucide-react';
+import { FolderCode, KeyRound, LogOut, UserIcon, UserPen } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface HeaderProps {
@@ -37,7 +39,7 @@ interface HeaderProps {
 }
 
 export default function Header({ loading }: HeaderProps) {
-  const pathname = usePathname();
+  const router = useRouter();
 
   const { user } = useUserStore();
 
@@ -95,6 +97,12 @@ export default function Header({ loading }: HeaderProps) {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
+                  <DropdownMenuItem onClick={() => router.push('/application')}>
+                    <FolderCode />내 애플리케이션
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
                   <DropdownMenuItem
                     onClick={() => {
                       Api.Request.removeToken();
@@ -110,7 +118,7 @@ export default function Header({ loading }: HeaderProps) {
             </DropdownMenu>
           ) : (
             <NavItem
-              item={{ title: 'Login', href: `/auth/login?next=${encodeURIComponent(pathname)}` }}
+              item={{ title: 'Login', href: `/auth/login?next=${encodeURIComponent(nowPath())}` }}
             />
           )}
         </nav>
