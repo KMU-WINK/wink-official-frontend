@@ -1,11 +1,11 @@
-import Application, {
+import Recruit from '@/api/type/schema/recruit';
+import RecruitForm, {
   BackendTechStack,
   DesignTechStack,
   DevOpsTechStack,
   Domain,
   FrontendTechStack,
-} from '@/api/type/schema/application';
-import Recruit from '@/api/type/schema/recruit';
+} from '@/api/type/schema/recruit-form';
 import {
   GITHUB_USERNAME_EXPRESSION,
   GITHUB_USERNAME_MESSAGE,
@@ -79,11 +79,11 @@ export const DuplicationCheckResponseSchema = z.object({
 });
 
 export const GetApplicationResponseSchema = z.object({
-  application: z.custom<Application>(),
+  application: z.custom<RecruitForm>(),
 });
 
 export const GetApplicationsResponseSchema = z.object({
-  applications: z.array(z.custom<Application>()),
+  applications: z.array(z.custom<RecruitForm>()),
 });
 
 export const GetRecruitResponseSchema = z.object({

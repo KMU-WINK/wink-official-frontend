@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { NavItemType } from '@/layout/_constant/header-item';
 
@@ -33,6 +34,8 @@ export default function MobileMenu({
   setChangeMyInfoModalOpen,
   setChangeMyPasswordModalOpen,
 }: MobileMenuProps) {
+  const router = useRouter();
+
   const [isOpen, setOpen] = useState(false);
 
   return (
@@ -94,7 +97,7 @@ export default function MobileMenu({
                     setChangeMyPasswordModalOpen(true);
                   }}
                 >
-                  내 비밀번호 변경
+                  내 비밀번호 수정
                 </Button>
               </div>
 
@@ -103,7 +106,18 @@ export default function MobileMenu({
               <div className="flex items-center justify-center">
                 <Button
                   variant="link"
-                  className="text-xs"
+                  className="flex-1 text-xs"
+                  onClick={() => {
+                    setOpen(false);
+                    router.push('/application');
+                  }}
+                >
+                  내 애플리케이션
+                </Button>
+                <Separator orientation="vertical" className="h-6" />
+                <Button
+                  variant="link"
+                  className="flex-1 text-xs"
                   onClick={() => {
                     Api.Request.removeToken();
 

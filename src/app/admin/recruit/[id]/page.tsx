@@ -31,8 +31,8 @@ import { Skeleton } from '@/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
-import Application from '@/api/type/schema/application';
 import Recruit, { Step } from '@/api/type/schema/recruit';
+import RecruitForm from '@/api/type/schema/recruit-form';
 
 import { cn, formatDate } from '@/util';
 
@@ -46,18 +46,18 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   const router = useRouter();
 
   const [recruit, setRecruit] = useState<Recruit | null>(null);
-  const [applications, setApplications] = useState<Application[] | null>(null);
+  const [applications, setApplications] = useState<RecruitForm[] | null>(null);
 
   const [loading, setLoading] = useState(false);
 
   const [query, setQuery] = useState('');
-  const [queriedApplications, setQueriedApplications] = useState<Application[] | null>(null);
-  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
+  const [queriedApplications, setQueriedApplications] = useState<RecruitForm[] | null>(null);
+  const [selectedApplication, setSelectedApplication] = useState<RecruitForm | null>(null);
 
   const [finalizePaperModalOpen, setFinalizePaperModalOpen] = useState<boolean>(false);
   const [finalizeInterviewModalOpen, setFinalizeInterviewModalOpen] = useState<boolean>(false);
 
-  const paperPass = useCallback(async (recruit: Recruit, application: Application) => {
+  const paperPass = useCallback(async (recruit: Recruit, application: RecruitForm) => {
     await Api.Domain.AdminRecruit.paperPass(recruit.id, application.id);
 
     setApplications((prev) =>
@@ -72,7 +72,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   }, []);
 
   const paperFail = useCallback(
-    async (recruit: Recruit, application: Application) => {
+    async (recruit: Recruit, application: RecruitForm) => {
       await Api.Domain.AdminRecruit.paperFail(recruit.id, application.id);
 
       setApplications((prev) =>
@@ -88,7 +88,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
     [recruit],
   );
 
-  const interviewPass = useCallback(async (recruit: Recruit, application: Application) => {
+  const interviewPass = useCallback(async (recruit: Recruit, application: RecruitForm) => {
     await Api.Domain.AdminRecruit.interviewPass(recruit.id, application.id);
 
     setApplications((prev) =>
@@ -102,7 +102,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
     );
   }, []);
 
-  const interviewFail = useCallback(async (recruit: Recruit, application: Application) => {
+  const interviewFail = useCallback(async (recruit: Recruit, application: RecruitForm) => {
     await Api.Domain.AdminRecruit.interviewFail(recruit.id, application.id);
 
     setApplications((prev) =>

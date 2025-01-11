@@ -37,6 +37,7 @@ import PreUser from '@/api/type/schema/pre-user';
 
 import _ from 'lodash';
 import { MoreHorizontal } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function AdminUserPrePage() {
   const [users, setUsers] = useState<Page<PreUser> | null>(null);
@@ -121,6 +122,7 @@ export default function AdminUserPrePage() {
               <TableHead className="min-w-[100px]">학번</TableHead>
               <TableHead className="min-w-[250px]">이메일</TableHead>
               <TableHead className="min-w-[150px]">전화번호</TableHead>
+              <TableHead className="min-w-[250px]">토큰</TableHead>
               <TableHead className="w-[75px]">액션</TableHead>
             </TableRow>
           </TableHeader>
@@ -140,6 +142,9 @@ export default function AdminUserPrePage() {
                   <TableCell>
                     <Skeleton className="w-[100px] h-4" />
                   </TableCell>
+                  <TableCell>
+                    <Skeleton className="w-[250px] h-4" />
+                  </TableCell>
                 </TableRow>
               ))
             ) : users && users.content.length > 0 ? (
@@ -149,6 +154,24 @@ export default function AdminUserPrePage() {
                   <TableCell>{user.studentId}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phoneNumber}</TableCell>
+                  <TableCell
+                    className={
+                      'clipboard' in navigator
+                        ? 'cursor-pointer text-blue-600 hover:text-blue-600/90'
+                        : ''
+                    }
+                    onClick={async () => {
+                      if (!('clipboard' in navigator)) return;
+
+                      await navigator.clipboard.writeText(
+                        `${window.location.origin}/auth/register?token=${user.token}`,
+                      );
+
+                      toast.info('회원가입 링크가 클립보드에 저장되었습니다.');
+                    }}
+                  >
+                    {user.token}
+                  </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

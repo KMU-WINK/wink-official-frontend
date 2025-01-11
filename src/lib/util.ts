@@ -49,3 +49,7 @@ export function formatDate(date: Date | string, showDayOfWeek = false) {
 }
 
 // ############################################################################################
+
+export function nowPath() {
+  return window.location.href.substring(window.location.origin.length);
+}
