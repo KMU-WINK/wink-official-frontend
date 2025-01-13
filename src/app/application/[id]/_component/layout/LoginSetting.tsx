@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { SCOPE_MAP } from '@/app/application/[id]/_constant/scope-map';
+
 import { Label } from '@/ui/label';
 import { Switch } from '@/ui/switch';
 import { Textarea } from '@/ui/textarea';
@@ -7,8 +9,6 @@ import { Textarea } from '@/ui/textarea';
 import Api from '@/api';
 import Application, { Scope } from '@/api/type/schema/application';
 import { URL_EXPRESSION } from '@/api/validation';
-
-import { SCOPE_MAP } from '@/app/application/[id]/constant/scope-map';
 
 import _ from 'lodash';
 import { toast } from 'sonner';

@@ -56,7 +56,7 @@ export default function AuthLoginPage() {
             <FormItem className="w-full">
               <FormLabel>이메일</FormLabel>
               <FormControl>
-                <Input placeholder="이메일을 입력해주세요." {...field} />
+                <Input type="email" placeholder="이메일을 입력해주세요." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

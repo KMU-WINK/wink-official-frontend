@@ -4,17 +4,17 @@ import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import GeneralSetting from '@/app/application/[id]/_component/layout/GeneralSetting';
+import LoginSetting from '@/app/application/[id]/_component/layout/LoginSetting';
+import DeleteApplicationModal from '@/app/application/[id]/_component/modal/delete-application';
+import UpdateApplicationModal from '@/app/application/[id]/_component/modal/update-application';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar';
 import { Button } from '@/ui/button';
 import { Separator } from '@/ui/separator';
 
 import Api from '@/api';
 import Application from '@/api/type/schema/application';
-
-import GeneralSetting from '@/app/application/[id]/component/layout/GeneralSetting';
-import LoginSetting from '@/app/application/[id]/component/layout/LoginSetting';
-import DeleteApplicationModal from '@/app/application/[id]/component/modal/delete-application';
-import UpdateApplicationModal from '@/app/application/[id]/component/modal/update-application';
 
 import { Pen, Trash2 } from 'lucide-react';
 
