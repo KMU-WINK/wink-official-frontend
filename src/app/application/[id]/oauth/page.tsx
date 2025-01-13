@@ -4,6 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { SCOPE_MAP } from '@/app/application/[id]/_constant/scope-map';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar';
 import { Button } from '@/ui/button';
 import { Separator } from '@/ui/separator';
@@ -12,8 +14,6 @@ import Api from '@/api';
 import Application from '@/api/type/schema/application';
 
 import { useUserStore } from '@/store/user';
-
-import { SCOPE_MAP } from '@/app/application/[id]/constant/scope-map';
 
 import { toast } from 'sonner';
 
