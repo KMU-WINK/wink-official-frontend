@@ -46,10 +46,10 @@ export default class WinkRequest {
     useUserStore.getState().setUser(null);
   }
 
-  private async refresh(): Promise<boolean> {
+  private async refresh(token: string): Promise<boolean> {
     try {
-      const { accessToken, refreshToken } = await this.post<LoginResponse>('/auth/refresh', {
-        refreshToken: this.refreshToken,
+      const { accessToken, refreshToken } = await this.post<LoginResponse>('/auth/refresh-token', {
+        token,
       });
 
       await this.setToken(accessToken, refreshToken);
@@ -70,9 +70,11 @@ export default class WinkRequest {
     ).json();
 
     if (response.error === '엑세스 토큰이 만료되었습니다.') {
+      const token = this.refreshToken!;
+
       this.removeToken();
 
-      if (!(await this.refresh())) return null as T;
+      if (!(await this.refresh(token))) return null as T;
 
       const headers = options.headers as Headers;
       headers.set('Authorization', `Bearer ${this.accessToken}`);
