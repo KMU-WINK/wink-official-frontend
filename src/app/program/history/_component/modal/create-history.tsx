@@ -18,7 +18,7 @@ import {
 } from '@/api/type/domain/program/history';
 import History from '@/api/type/schema/history';
 
-import { formatDate, formatDateApi, toDate } from '@/util';
+import { formatDate, formatDateApi, toDate, uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Calendar as CalendarIcon, Upload } from 'lucide-react';
@@ -153,41 +153,12 @@ export default function CreateHistoryModal({ open, setOpen, callback }: CreateHi
                         onChange={async (e) => {
                           setIsUploading(true);
 
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-
-                          const { url } = await Api.Domain.Program.Upload.uploadImage();
-
                           try {
-                            await fetch(url, {
-                              method: 'PUT',
-                              body: file,
-                              headers: {
-                                'Content-Type': file.type,
-                              },
-                            });
+                            const imgs = await uploadS3(e.target.files!, () =>
+                              Api.Domain.Program.Upload.uploadImage(),
+                            );
 
-                            const imageUrl = url.replace(/\?.+$/, '');
-
-                            let isUploaded = false;
-                            const checkInterval = setInterval(async () => {
-                              const response = await fetch(imageUrl);
-
-                              if (response.ok) {
-                                clearInterval(checkInterval);
-                                isUploaded = true;
-                                field.onChange(imageUrl);
-                              }
-                            }, 500);
-
-                            setTimeout(() => {
-                              if (isUploaded) return;
-                              clearInterval(checkInterval);
-                              toast.error('사진 업로드에 실패했습니다.');
-                            }, 1000 * 30);
-                          } catch (error) {
-                            toast.error(`사진 업로드에 실패했습니다. ${error}`);
-                            throw new Error(error as string);
+                            field.onChange(imgs[0]);
                           } finally {
                             setIsUploading(false);
                           }

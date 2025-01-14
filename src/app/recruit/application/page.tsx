@@ -29,7 +29,7 @@ import Step13 from '@/app/recruit/application/_step/13';
 import Step14 from '@/app/recruit/application/_step/14';
 import Step15 from '@/app/recruit/application/_step/15';
 import Step16 from '@/app/recruit/application/_step/16';
-import { Step, StepProps, now, toDate } from '@/lib/util';
+import { Step, StepProps, nowDate, toDate } from '@/lib/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { endOfDay, startOfDay } from 'date-fns';
@@ -153,8 +153,8 @@ export default function RecruitApplicationPage() {
 
       if (
         !recruit ||
-        now() < startOfDay(toDate(recruit.recruitStartDate)) ||
-        now() > endOfDay(toDate(recruit.recruitEndDate))
+        nowDate() < startOfDay(toDate(recruit.recruitStartDate)) ||
+        nowDate() > endOfDay(toDate(recruit.recruitEndDate))
       ) {
         toast.error('잘못된 접근입니다.');
         router.replace('/');

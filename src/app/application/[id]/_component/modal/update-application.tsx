@@ -14,6 +14,8 @@ import {
 } from '@/api/type/domain/application';
 import Application from '@/api/type/schema/application';
 
+import { uploadS3 } from '@/util';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Upload } from 'lucide-react';
 import { toast } from 'sonner';
@@ -89,7 +91,7 @@ export default function UpdateApplicationModal({
                           </Avatar>
 
                           <div
-                            className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer"
+                            className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer rounded"
                             onClick={() => document.getElementById('image-upload')?.click()}
                           >
                             <Upload color="white" size={32} />
@@ -105,41 +107,12 @@ export default function UpdateApplicationModal({
                         onChange={async (e) => {
                           setIsUploading(true);
 
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-
-                          const { url } = await Api.Domain.Application.uploadImg();
-
                           try {
-                            await fetch(url, {
-                              method: 'PUT',
-                              body: file,
-                              headers: {
-                                'Content-Type': file.type,
-                              },
-                            });
+                            const imgs = await uploadS3(e.target.files!, () =>
+                              Api.Domain.Application.uploadImg(),
+                            );
 
-                            const imageUrl = url.replace(/\?.+$/, '');
-
-                            let isUploaded = false;
-                            const checkInterval = setInterval(async () => {
-                              const response = await fetch(imageUrl);
-
-                              if (response.ok) {
-                                clearInterval(checkInterval);
-                                isUploaded = true;
-                                field.onChange(imageUrl);
-                              }
-                            }, 500);
-
-                            setTimeout(() => {
-                              if (isUploaded) return;
-                              clearInterval(checkInterval);
-                              toast.error('사진 업로드에 실패했습니다.');
-                            }, 1000 * 30);
-                          } catch (error) {
-                            toast.error(`사진 업로드에 실패했습니다. ${error}`);
-                            throw new Error(error as string);
+                            field.onChange(imgs[0]);
                           } finally {
                             setIsUploading(false);
                           }

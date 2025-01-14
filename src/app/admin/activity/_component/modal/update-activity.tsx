@@ -22,6 +22,8 @@ import {
 } from '@/api/type/domain/program/activity';
 import Activity from '@/api/type/schema/activity';
 
+import { uploadS3 } from '@/util';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash2, Upload } from 'lucide-react';
 import { toast } from 'sonner';
@@ -163,65 +165,12 @@ export default function UpdateActivityModal({
                         onChange={async (e) => {
                           setIsUploading(true);
 
-                          const files = e.target.files ? Array.from(e.target.files) : [];
-                          if (files.length === 0) return;
-
                           try {
-                            const uploadPromises = files.map(async (file) => {
-                              const { url } = await Api.Domain.Program.Upload.uploadImage();
-
-                              await fetch(url, {
-                                method: 'PUT',
-                                body: file,
-                                headers: {
-                                  'Content-Type': file.type,
-                                },
-                              });
-
-                              const imageUrl = url.replace(/\?.+$/, '');
-
-                              return new Promise<string>((resolve, reject) => {
-                                let attempts = 0;
-                                const checkInterval = setInterval(async () => {
-                                  try {
-                                    const response = await fetch(imageUrl);
-
-                                    if (response.ok) {
-                                      clearInterval(checkInterval);
-                                      resolve(imageUrl);
-                                    }
-
-                                    attempts++;
-                                    if (attempts >= 60) {
-                                      clearInterval(checkInterval);
-                                      reject(new Error('사진 업로드 시간 초과'));
-                                    }
-                                  } catch (error) {
-                                    /* empty */
-                                  }
-                                }, 500);
-                              });
-                            });
-
-                            const uploadedImages = await Promise.allSettled(uploadPromises);
-
-                            const successfulImages = uploadedImages
-                              .filter((result) => result.status === 'fulfilled')
-                              .map((result) => (result as PromiseFulfilledResult<string>).value);
-
-                            const failedImages = uploadedImages.filter(
-                              (result) => result.status === 'rejected',
+                            const imgs = await uploadS3(e.target.files!, () =>
+                              Api.Domain.Program.Upload.uploadImage(),
                             );
 
-                            if (successfulImages.length > 0) {
-                              field.onChange([...field.value, ...successfulImages]);
-                            }
-
-                            if (failedImages.length > 0) {
-                              toast.error(`${failedImages.length}개의 사진 업로드에 실패했습니다.`);
-                            }
-                          } catch (error) {
-                            toast.error(`사진 업로드에 실패했습니다. ${error}`);
+                            field.onChange([...field.value, ...imgs]);
                           } finally {
                             setIsUploading(false);
                           }
