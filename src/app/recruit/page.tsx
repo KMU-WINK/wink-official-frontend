@@ -23,7 +23,7 @@ import Recruit from '@/api/type/schema/recruit';
 
 import { useUserStore } from '@/store/user';
 
-import { formatDate, now, toDate } from '@/util';
+import { formatDate, nowDate, toDate } from '@/util';
 
 import BackgroundImage from '@/public/recruit/background.avif';
 
@@ -119,8 +119,8 @@ export default function RecruitPage() {
         </Items>
       </div>
 
-      {startOfDay(toDate(recruit.recruitStartDate)) <= now() &&
-        now() <= endOfDay(toDate(recruit.recruitEndDate)) && (
+      {startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() &&
+        nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) && (
           <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
             <div className="flex flex-col items-center justify-center space-y-4">
               <TicketsPlane size={72} className="hidden sm:block" />
