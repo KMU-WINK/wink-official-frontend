@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "husky",
     "build": "next build",
+    "build:assets": "next build && mkdir -p .next/standalone/public/_next && cp -r .next/static .next/standalone/public/_next/",
     "start": "next start",
     "start:dev": "next dev --turbo",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
