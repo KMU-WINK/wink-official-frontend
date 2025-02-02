@@ -121,7 +121,7 @@ export default function AboutUsMemberPage() {
 
       <Separator />
 
-      <UserList users={members} skeleton={8} loading={loading} />
+      <UserList users={members} direction="flex" skeleton={8} loading={loading} />
     </div>
   );
 }
