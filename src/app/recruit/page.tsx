@@ -62,7 +62,7 @@ export default function RecruitPage() {
     })();
   }, []);
 
-  if (loading || !recruit) return null;
+  if (loading) return null;
 
   return (
     <>
@@ -77,14 +77,14 @@ export default function RecruitPage() {
         />
 
         <Rocket />
-        <RecruitTitle year={recruit.year} />
+        <RecruitTitle year={recruit?.year ?? new Date().getFullYear()} />
         <ScrollDown />
       </div>
 
       <div className="flex flex-col space-y-10 sm:space-y-24 py-20 sm:py-28">
         <Items
           title="모집 개요"
-          description={`${recruit.year}년도 ${recruit.semester}학기 WINK 신입 부원 모집 개요`}
+          description={`${recruit?.year ?? new Date().getFullYear()}년도 ${recruit?.semester ?? 1}학기 WINK 신입 부원 모집 개요`}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {infos.map((info) => (
@@ -119,7 +119,8 @@ export default function RecruitPage() {
         </Items>
       </div>
 
-      {startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() &&
+      {recruit &&
+        startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() &&
         nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) && (
           <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
             <div className="flex flex-col items-center justify-center space-y-4">

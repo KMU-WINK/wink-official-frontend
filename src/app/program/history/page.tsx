@@ -78,8 +78,6 @@ export default function ProgramHistoryPage() {
     setHistories(groupedHistories);
   }, [rawHistories]);
 
-  if (!histories) return null;
-
   return (
     <>
       <Title
