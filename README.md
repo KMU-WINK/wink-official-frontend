@@ -13,10 +13,8 @@
 ## Related
 [Wink Official Backend](https://github.com/kmu-wink/wink-official-backend)
 
-[Wink Official Deploy](https://github.com/kmu-wink/wink-official-deploy)
 
-
-## Run Locally
+## Run
 
 Clone the project
 
@@ -33,56 +31,17 @@ cd wink-official-frontend
 Install dependencies
 
 ```bash
-yarn install
+pnpm install
 ```
 
-Copy the config file
+Copy the config file and modify config
 
 ```bash
 cp .env.template .env
 ```
 
-Edit the config file
-
-```bash
-vim .env
-```
-
 Start the server
 
 ```bash
-yarn start:dev
+pnpm start:dev
 ```
-
-
-## Run Locally with Docker
-
-Build the Docker image
-
-```bash
-docker build -t wink-official-frontend:local .
-```
-
-Or pull the Docker image from Docker Hub
-
-```bash
-# master branch
-docker pull kmuwink/wink-official-frontend:master
-
-# develop branch
-docker pull kmuwink/wink-official-frontend:develop
-```
-
-Run the Docker container
-
-```bash
-docker run --name (CONTAINER_NAME) -p 3000:3000 -d (IMAGE_NAME)
-```
-
-
-## Authors
-
-- [@daun-up](https://www.github.com/daun-up)
-- [@pkm021118](https://www.github.com/pkm021118)
-- [@jen454](https://www.github.com/jen454)
-
