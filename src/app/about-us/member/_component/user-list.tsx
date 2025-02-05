@@ -6,7 +6,7 @@ import UserType from '@/api/type/schema/user';
 
 import { cn } from '@/lib/util';
 
-type Direction = 'row' | 'col';
+type Direction = 'row' | 'col' | 'flex';
 
 interface UserListProps {
   role?: string;
@@ -26,7 +26,7 @@ export default function UserList({
   loading,
 }: UserListProps) {
   return (
-    <div className="flex flex-col space-y-4 items-center justify-center w-[300px]">
+    <div className="flex flex-col space-y-4 items-center justify-center">
       {(role || description) && (
         <div className="flex flex-col space-y-2 items-center justify-center">
           <p className="text-xl sm:text-2xl font-bold">&lt;{role}&gt;</p>
@@ -37,7 +37,7 @@ export default function UserList({
       <div
         className={cn(
           'flex gap-4 items-center justify-center',
-          direction === 'row' ? 'flex-row' : 'flex-col',
+          direction === 'row' ? 'flex-row' : direction === 'col' ? 'flex-col' : 'flex-wrap',
         )}
       >
         {loading

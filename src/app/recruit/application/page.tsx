@@ -140,6 +140,8 @@ export default function RecruitApplicationPage() {
   useEffect(() => {
     if (localStorage.getItem('recruit')) {
       toast.info('이전에 작성하던 내용을 불러왔습니다.');
+    } else {
+      toast.info('페이지를 나갔다 와도 내용을 계속 작성할 수 있어요');
     }
   }, []);
 
