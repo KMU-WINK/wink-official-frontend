@@ -15,6 +15,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/ui/carousel';
+import { Skeleton } from '@/ui/skeleton';
 
 import Api from '@/api';
 import Activity from '@/api/type/schema/activity';
@@ -24,7 +25,7 @@ import { cn } from '@/util';
 export default function ProgramActivityPage() {
   const [api, setApi] = useState<CarouselApi>();
 
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activities, setActivities] = useState<Activity[] | null>(null);
   const [selectedActivity, setSelectedActivity] = useState<Activity>();
 
   useEffect(() => {
@@ -46,39 +47,54 @@ export default function ProgramActivityPage() {
       <Title title="WINK, 우리들의 파도" subtitle="다양한 친목 활동" />
 
       <div className="flex flex-col sm:flex-row gap-3">
-        {activities.map((activity) => (
-          <div key={activity.id} className="relative">
-            <Image
-              src={activity.images[0]}
-              alt={activity.images[0]}
-              width={250}
-              height={250}
-              onClick={() => setSelectedActivity(activity)}
-              className={cn(
-                'w-[250px] sm:w-full sm:h-[250px] rounded-3xl object-cover cursor-pointer transition-all duration-300',
-                selectedActivity === activity
-                  ? 'h-[150px] sm:w-[250px]'
-                  : 'h-[50px] sm:w-[75px] grayscale',
-              )}
-            />
-          </div>
-        ))}
+        {activities
+          ? activities.map((activity) => (
+              <div key={activity.id} className="relative">
+                <Image
+                  src={activity.images[0]}
+                  alt={activity.images[0]}
+                  width={250}
+                  height={250}
+                  onClick={() => setSelectedActivity(activity)}
+                  className={cn(
+                    'w-[250px] sm:w-full sm:h-[250px] rounded-3xl object-cover cursor-pointer transition-all duration-300',
+                    selectedActivity === activity
+                      ? 'h-[150px] sm:w-[250px]'
+                      : 'h-[50px] sm:w-[75px] grayscale',
+                  )}
+                />
+              </div>
+            ))
+          : Array.from({ length: 6 }).map((_, idx) => (
+              <div key={idx} className="relative">
+                <Skeleton
+                  className={cn(
+                    'w-[250px] sm:w-full sm:h-[250px] rounded-3xl',
+                    idx === 0 ? 'h-[150px] sm:w-[250px]' : 'h-[50px] sm:w-[75px]',
+                  )}
+                />
+              </div>
+            ))}
       </div>
 
-      <p className="text-xl sm:text-2xl font-bold">{selectedActivity?.title}</p>
+      {selectedActivity ? (
+        <p className="text-xl sm:text-2xl font-bold">{selectedActivity?.title}</p>
+      ) : (
+        <Skeleton className="w-72 h-8" />
+      )}
 
       <Wave>
-        {selectedActivity && (
-          <div className="flex flex-col items-center space-y-6">
-            <Carousel
-              opts={{
-                align: 'start',
-              }}
-              setApi={setApi}
-              className="max-w-[calc(100vw-10rem)] min-[1500px]:max-w-[1500px]"
-            >
-              <CarouselContent>
-                {selectedActivity.images.map((image, index) => (
+        <div className="flex flex-col items-center space-y-6">
+          <Carousel
+            opts={{
+              align: 'start',
+            }}
+            setApi={setApi}
+            className="max-w-[calc(100vw-10rem)] min-[1500px]:max-w-[1500px]"
+          >
+            <CarouselContent>
+              {selectedActivity ? (
+                selectedActivity.images.map((image, index) => (
                   <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
                     <Image
                       src={image}
@@ -88,14 +104,22 @@ export default function ProgramActivityPage() {
                       className="h-[150px] sm:h-[200px] rounded-xl object-cover"
                     />
                   </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-            <p className="text-sm sm:text-lg font-medium">{selectedActivity?.description}</p>
-          </div>
-        )}
+                ))
+              ) : (
+                <CarouselItem>
+                  <Skeleton className="w-[300px] sm:w-[500px] h-[150px] sm:h-[200px] rounded-xl" />
+                </CarouselItem>
+              )}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+          {selectedActivity ? (
+            <p className="text-sm sm:text-lg font-medium">{selectedActivity.description}</p>
+          ) : (
+            <Skeleton className="w-60 h-5" />
+          )}
+        </div>
       </Wave>
     </>
   );

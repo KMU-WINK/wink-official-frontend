@@ -37,6 +37,10 @@ export default function Step17({ recruit, form }: RecruitStepProps) {
       lastComment: form.getValues('lastComment') || undefined,
     });
 
+    localStorage.setItem('recruit-confetti', 'true');
+    localStorage.removeItem('recruit');
+    localStorage.removeItem('recruit-step');
+
     toast.success('지원이 완료되었습니다.');
 
     router.push('/recruit');

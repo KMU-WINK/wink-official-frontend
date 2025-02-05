@@ -13,6 +13,7 @@ import UpdateHistoryModal from '@/app/program/history/_component/modal/update-hi
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/ui/accordion';
 import { Button } from '@/ui/button';
 import { Separator } from '@/ui/separator';
+import { Skeleton } from '@/ui/skeleton';
 
 import Api from '@/api';
 import History from '@/api/type/schema/history';
@@ -78,8 +79,6 @@ export default function ProgramHistoryPage() {
     setHistories(groupedHistories);
   }, [rawHistories]);
 
-  if (!histories) return null;
-
   return (
     <>
       <Title
@@ -94,63 +93,67 @@ export default function ProgramHistoryPage() {
       )}
 
       <div className="flex flex-col space-y-8 sm:space-y-16">
-        {Array.from(histories || new Map()).map(([year, histories]) => (
-          <div key={year}>
-            <h2 className="text-xl sm:text-2xl font-bold text-center">{year}</h2>
+        {histories ? (
+          Array.from(histories).map(([year, histories]) => (
+            <div key={year}>
+              <h2 className="text-xl sm:text-2xl font-bold text-center">{year}</h2>
 
-            <Accordion type="multiple" className="w-[300px] sm:w-[600px]">
-              {histories.map((history: HistoryWithDate) => (
-                <AccordionItem
-                  key={history.id}
-                  value={history.id.toString()}
-                  className="border-none"
-                >
-                  <AccordionTrigger>
-                    <div className="w-full flex items-center justify-between pr-2">
-                      <div className="flex items-center gap-2">
-                        <FaCircle className="w-1.5 h-1.5" />
-                        <p className="min-w-[85px] text-neutral-600">
-                          {formatDate(history.date).substring(6)}
-                        </p>
-                        <Separator orientation="vertical" className="h-4 bg-neutral-600" />
-                        <p>{history.title}</p>
-                      </div>
-                      {isAdmin(user?.role) && (
-                        <div className="flex space-x-2">
-                          <Pencil
-                            className="w-4 h-4 text-neutral-500 hover:text-black"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setSelectedHistory(history);
-                              setUpdateHistoryModalOpen(true);
-                            }}
-                          />
-                          <Trash2
-                            className="w-4 h-4 text-neutral-500 hover:text-black"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setSelectedHistory(history);
-                              setDeleteHistoryModalOpen(true);
-                            }}
-                          />
+              <Accordion type="multiple" className="w-[300px] sm:w-[600px]">
+                {histories.map((history: HistoryWithDate) => (
+                  <AccordionItem
+                    key={history.id}
+                    value={history.id.toString()}
+                    className="border-none"
+                  >
+                    <AccordionTrigger>
+                      <div className="w-full flex items-center justify-between pr-2">
+                        <div className="flex items-center gap-2">
+                          <FaCircle className="w-1.5 h-1.5" />
+                          <p className="min-w-[85px] text-neutral-600">
+                            {formatDate(history.date).substring(6)}
+                          </p>
+                          <Separator orientation="vertical" className="h-4 bg-neutral-600" />
+                          <p>{history.title}</p>
                         </div>
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="flex flex-col gap-2">
-                    <Image
-                      src={history.image}
-                      alt={history.image}
-                      width={600}
-                      height={338}
-                      className="w-[300px] sm:w-[600px] h-[169px] sm:h-[338px] rounded-xl object-cover"
-                    />
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        ))}
+                        {isAdmin(user?.role) && (
+                          <div className="flex space-x-2">
+                            <Pencil
+                              className="w-4 h-4 text-neutral-500 hover:text-black"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setSelectedHistory(history);
+                                setUpdateHistoryModalOpen(true);
+                              }}
+                            />
+                            <Trash2
+                              className="w-4 h-4 text-neutral-500 hover:text-black"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setSelectedHistory(history);
+                                setDeleteHistoryModalOpen(true);
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="flex flex-col gap-2">
+                      <Image
+                        src={history.image}
+                        alt={history.image}
+                        width={600}
+                        height={338}
+                        className="w-[300px] sm:w-[600px] h-[169px] sm:h-[338px] rounded-xl object-cover"
+                      />
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          ))
+        ) : (
+          <Skeleton className="w-20 h-8" />
+        )}
       </div>
 
       <CreateHistoryModal

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/ui/button';
-import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/ui/form';
+import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
 import Api from '@/api';
@@ -75,7 +75,6 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
                 />
               </FormControl>
               <FormMessage />
-              <FormDescription>형식: 010-0000-0000</FormDescription>
             </FormItem>
           )}
         />

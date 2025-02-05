@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import Confetti from 'react-confetti';
 import { useForm } from 'react-hook-form';
 
 import Link from 'next/link';
@@ -20,6 +21,8 @@ import { toast } from 'sonner';
 export default function AuthLoginPage() {
   const router = useRouter();
   const params = useSearchParams();
+
+  const confetti = useMemo(() => localStorage.getItem('register-confetti') === 'true', []);
 
   const form = useForm<LoginRequest>({
     resolver: zodResolver(LoginRequestSchema),
@@ -43,56 +46,66 @@ export default function AuthLoginPage() {
     [router],
   );
 
+  useEffect(() => {
+    if (!confetti) return;
+
+    localStorage.removeItem('register-confetti');
+  }, [confetti]);
+
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col w-full max-w-[300px] space-y-4 items-center justify-center"
-      >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>이메일</FormLabel>
-              <FormControl>
-                <Input type="email" placeholder="이메일을 입력해주세요." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col w-full max-w-[300px] space-y-4 items-center justify-center"
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>이메일</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="이메일을 입력해주세요." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>비밀번호</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="비밀번호를 입력해주세요." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>비밀번호</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="비밀번호를 입력해주세요." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button variant="wink" type="submit" className="w-full">
-          로그인
-        </Button>
+          <Button variant="wink" type="submit" className="w-full">
+            로그인
+          </Button>
 
-        <Separator />
+          <Separator />
 
-        <div className="flex space-x-1 text-xs sm:text-sm text-neutral-600">
-          <p>비밀번호를 잊으셨나요?</p>
-          <Link
-            href="/auth/reset-password/request"
-            className="underline underline-offset-4 hover:text-neutral-600/90"
-          >
-            비밀번호 찾기
-          </Link>
-        </div>
-      </form>
-    </Form>
+          <div className="flex space-x-1 text-xs sm:text-sm text-neutral-600">
+            <p>비밀번호를 잊으셨나요?</p>
+            <Link
+              href="/auth/reset-password/request"
+              className="underline underline-offset-4 hover:text-neutral-600/90"
+            >
+              비밀번호 찾기
+            </Link>
+          </div>
+        </form>
+      </Form>
+
+      {confetti && <Confetti recycle={false} />}
+    </>
   );
 }
