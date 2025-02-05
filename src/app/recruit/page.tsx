@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Confetti from 'react-confetti';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -29,6 +30,7 @@ import BackgroundImage from '@/public/recruit/background.avif';
 
 import { endOfDay, startOfDay } from 'date-fns';
 import { TicketsPlane } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function RecruitPage() {
   const router = useRouter();
@@ -37,6 +39,8 @@ export default function RecruitPage() {
 
   const [recruit, setRecruit] = useState<Recruit | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const confetti = useMemo(() => localStorage.getItem('recruit-confetti') === 'true', []);
 
   const infos = useMemo<Info[]>(() => {
     if (!recruit) return [];
@@ -61,6 +65,12 @@ export default function RecruitPage() {
       setLoading(false);
     })();
   }, []);
+
+  useEffect(() => {
+    if (!confetti) return;
+
+    localStorage.removeItem('recruit-confetti');
+  }, [confetti]);
 
   if (loading) return null;
 
@@ -119,26 +129,41 @@ export default function RecruitPage() {
         </Items>
       </div>
 
-      {recruit &&
-        startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() &&
-        nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) && (
-          <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
-            <div className="flex flex-col items-center justify-center space-y-4">
-              <TicketsPlane size={72} className="hidden sm:block" />
-              <TicketsPlane size={48} className="block sm:hidden" />
-              <p className="text-lg sm:text-2xl font-bold">
-                {recruit.year}년도 {recruit.semester}학기 WINK 신규 부원
-              </p>
-            </div>
-            <Button
-              variant="wink"
-              onClick={() => router.push(`/recruit/application`)}
-              disabled={!!user}
-            >
-              지원하기
-            </Button>
+      {recruit && (
+        <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <TicketsPlane size={72} className="hidden sm:block" />
+            <TicketsPlane size={48} className="block sm:hidden" />
+            <p className="text-lg sm:text-2xl font-bold">
+              {recruit.year}년도 {recruit.semester}학기 WINK 신규 부원
+            </p>
           </div>
-        )}
+
+          {startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() &&
+          nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) ? (
+            !user ? (
+              <Button variant="wink" onClick={() => router.push(`/recruit/application`)}>
+                지원하기
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                onClick={async () => {
+                  Api.Request.removeToken();
+
+                  toast.success('로그아웃되었습니다.');
+                }}
+              >
+                로그아웃
+              </Button>
+            )
+          ) : (
+            <p className="text-neutral-500">지원이 종료되었습니다.</p>
+          )}
+        </div>
+      )}
+
+      {confetti && <Confetti recycle={false} />}
     </>
   );
 }

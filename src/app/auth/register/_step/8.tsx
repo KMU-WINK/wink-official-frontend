@@ -30,6 +30,8 @@ export default function Step8({ user, form }: RegisterStepProps) {
       blog: form.getValues('blog') || undefined,
     });
 
+    localStorage.setItem('register-confetti', 'true');
+
     toast.success('가입이 완료되었습니다.');
 
     router.push('/auth/login');
