@@ -18,7 +18,7 @@ export const INSTAGRAM_EXPRESSION = /^(?!.*\.\.)(?!.*\.$)[a-zA-Z0-9._]{1,30}$/;
 export const INSTAGRAM_MESSAGE = '올바른 Instagram 유저가 아닙니다.';
 
 export const URL_EXPRESSION =
-  /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
+  /^https?:\/\/(localhost|www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$|^https?:\/\/localhost(:\d+)?(\/.*)?$/;
 export const URL_MESSAGE = '올바른 URL이 아닙니다.';
 
 export const STUDENT_ID_MESSAGE = '올바른 학번이 아닙니다.';
@@ -28,6 +28,3 @@ export const PHONE_NUMBER_MESSAGE = '올바른 전화번호가 아닙니다.';
 
 export const YYYY_MM_DD_EXPRESSION = /^\d{4}-\d{2}-\d{2}$/;
 export const YYYY_MM_DD_MESSAGE = '올바른 날짜가 아닙니다';
-
-export const YYYY_MM_DD_HH_MM_EXPRESSION = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
-export const YYYY_MM_DD_HH_MM_MESSAGE = '올바른 날짜 및 시간이 아닙니다';
