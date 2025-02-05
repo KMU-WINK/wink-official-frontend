@@ -10,6 +10,7 @@ import UpdateProjectModal from '@/app/program/project/_component/modal/update-pr
 import ProjectCard from '@/app/program/project/_component/project-card';
 
 import { Button } from '@/ui/button';
+import { Skeleton } from '@/ui/skeleton';
 
 import Api from '@/api';
 import Page from '@/api/type/schema/page';
@@ -80,16 +81,23 @@ export default function ProgramProjectPage() {
       </div>
 
       <div className="flex flex-wrap gap-4 sm:gap-8 items-center justify-center">
-        {projects?.content.map((project) => (
-          <ProjectCard
-            key={project.id}
-            user={user}
-            project={project}
-            setSelectedProject={setSelectedProject}
-            setUpdateProjectModal={setUpdateProjectModal}
-            setDeleteProjectModal={setDeleteProjectModal}
-          />
-        ))}
+        {projects
+          ? projects.content.map((project) => (
+              <ProjectCard
+                key={project.id}
+                user={user}
+                project={project}
+                setSelectedProject={setSelectedProject}
+                setUpdateProjectModal={setUpdateProjectModal}
+                setDeleteProjectModal={setDeleteProjectModal}
+              />
+            ))
+          : Array.from({ length: 6 }).map((_, idx) => (
+              <Skeleton
+                key={idx}
+                className="w-[280px] sm:w-[320px] h-[184px] sm:h-[212px] rounded-3xl"
+              />
+            ))}
       </div>
 
       {projects && projects.page.totalPages - 1 > page && (
