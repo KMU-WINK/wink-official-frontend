@@ -1,13 +1,22 @@
-FROM node:20-alpine
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY .next/standalone ./
+COPY .next/standalone/package.json ./package.json
 
-RUN corepack enable && corepack prepare pnpm@latest --activate && \
+RUN npm install -g pnpm && \
     pnpm install --prod --ignore-scripts && \
     pnpm store prune && \
-    rm -rf /root/.pnpm-store /root/.cache /app/.next/cache
+    npm uninstall -g pnpm && \
+    npm cache clean --force && \
+    rm -rf /root/.pnpm-store /var/cache/apk/*
+
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY .next/standalone ./
 
 EXPOSE 3000
 
