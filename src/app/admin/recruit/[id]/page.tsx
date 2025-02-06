@@ -159,14 +159,16 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
                 application.phoneNumber.includes(query),
             )
             .sort((a, b) => {
-              const rankA = a.interviewPass ? 1 : a.paperPass ? 2 : 3;
-              const rankB = b.interviewPass ? 1 : b.paperPass ? 2 : 3;
+              const rank = (app: RecruitForm) => {
+                if (app.interviewPass === true) return 1;
+                if (app.paperPass === true) return 2;
+                if (app.interviewPass === false) return 3;
+                if (app.paperPass === false) return 4;
+                return 5;
+              };
 
-              if (rankA !== rankB) {
-                return rankA - rankB;
-              }
-
-              return a.name.localeCompare(b.name);
+              const rankDiff = rank(a) - rank(b);
+              return rankDiff !== 0 ? rankDiff : a.name.localeCompare(b.name);
             })
         : [],
     );
@@ -203,15 +205,14 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             <Badge variant="outline" className="text-sm">
               서류 합격자&nbsp;
               <span className="font-normal">
-                {applications.filter((x) => x.paperPass).length}명 / {applications.length}명
+                {applications.filter((x) => x.paperPass).length}명
               </span>
             </Badge>
             {recruit?.step !== Step.PRE && (
               <Badge variant="outline" className="text-sm">
                 면접 합격자&nbsp;
                 <span className="font-normal">
-                  {applications.filter((x) => x.interviewPass).length}명 /{' '}
-                  {applications.filter((x) => x.paperPass).length}명
+                  {applications.filter((x) => x.interviewPass).length}명
                 </span>
               </Badge>
             )}
