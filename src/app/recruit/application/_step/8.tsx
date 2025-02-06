@@ -7,7 +7,7 @@ import { RecruitStepProps } from '@/app/recruit/application/page';
 import { motion } from 'framer-motion';
 import { Laptop } from 'lucide-react';
 
-export default function Step9({ go }: RecruitStepProps) {
+export default function Step9({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (
@@ -45,7 +45,21 @@ export default function Step9({ go }: RecruitStepProps) {
         }
         className="flex items-center space-x-4"
       >
-        <Button variant="destructive" onClick={() => go(15)}>
+        <Button
+          variant="destructive"
+          onClick={() => {
+            sessionStorage.setItem('recruit-prev-develop', 'false');
+
+            form.resetField('github');
+            form.resetField('frontendTechStacks');
+            form.resetField('backendTechStacks');
+            form.resetField('devOpsTechStacks');
+            form.resetField('designTechStacks');
+            form.resetField('favoriteProject');
+
+            go(15);
+          }}
+        >
           아니요
         </Button>
 

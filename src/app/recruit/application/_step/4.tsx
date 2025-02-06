@@ -104,6 +104,9 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
               });
 
               if (duplicated) {
+                localStorage.removeItem('recruit');
+                localStorage.removeItem('recruit-step');
+
                 toast.error('이미 윙크 부원이거나, 이번 모집에 지원하셨습니다.');
                 router.replace('/recruit');
                 return;
