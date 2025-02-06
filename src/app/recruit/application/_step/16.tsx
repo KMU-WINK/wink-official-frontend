@@ -40,6 +40,7 @@ export default function Step17({ recruit, form }: RecruitStepProps) {
     localStorage.setItem('recruit-confetti', 'true');
     localStorage.removeItem('recruit');
     localStorage.removeItem('recruit-step');
+    sessionStorage.removeItem('recruit-prev-develop');
 
     toast.success('지원이 완료되었습니다.');
 
@@ -118,59 +119,71 @@ export default function Step17({ recruit, form }: RecruitStepProps) {
                   .join('\n')}
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">Github 아이디</TableHead>
-              <TableCell>{form.getValues('github') || '-'}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>
-              <TableCell className="whitespace-pre-wrap">
-                {form.getValues('frontendTechStacks')!.length > 0
-                  ? form
-                      .getValues('frontendTechStacks')!
-                      .map((techStack) => frontendTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
-                  : '-'}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">백엔드 기술 스택</TableHead>
-              <TableCell className="whitespace-pre-wrap">
-                {form.getValues('backendTechStacks')!.length > 0
-                  ? form
-                      .getValues('backendTechStacks')!
-                      .map((techStack) => backendTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
-                  : '-'}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">DevOps 기술 스택</TableHead>
-              <TableCell className="whitespace-pre-wrap">
-                {form.getValues('devOpsTechStacks')!.length > 0
-                  ? form
-                      .getValues('devOpsTechStacks')!
-                      .map((techStack) => devOpsTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
-                  : '-'}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">디자인 기술 스택</TableHead>
-              <TableCell className="whitespace-pre-wrap">
-                {form.getValues('designTechStacks')!.length > 0
-                  ? form
-                      .getValues('designTechStacks')!
-                      .map((techStack) => designTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
-                  : '-'}
-              </TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
-              <TableCell>{form.getValues('favoriteProject') || '-'}</TableCell>
-            </TableRow>
+            {sessionStorage.getItem('recruit-prev-develop') !== 'false' && (
+              <>
+                <TableRow>
+                  <TableHead className="w-[180px]">Github 아이디</TableHead>
+                  <TableCell>{form.getValues('github') || '-'}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>
+                  <TableCell className="whitespace-pre-wrap">
+                    {form.getValues('frontendTechStacks')!.length > 0
+                      ? form
+                          .getValues('frontendTechStacks')!
+                          .map(
+                            (techStack) =>
+                              frontendTechStacks.find((t) => t.raw === techStack)!.name,
+                          )
+                          .join('\n')
+                      : '-'}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead className="w-[180px]">백엔드 기술 스택</TableHead>
+                  <TableCell className="whitespace-pre-wrap">
+                    {form.getValues('backendTechStacks')!.length > 0
+                      ? form
+                          .getValues('backendTechStacks')!
+                          .map(
+                            (techStack) => backendTechStacks.find((t) => t.raw === techStack)!.name,
+                          )
+                          .join('\n')
+                      : '-'}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead className="w-[180px]">DevOps 기술 스택</TableHead>
+                  <TableCell className="whitespace-pre-wrap">
+                    {form.getValues('devOpsTechStacks')!.length > 0
+                      ? form
+                          .getValues('devOpsTechStacks')!
+                          .map(
+                            (techStack) => devOpsTechStacks.find((t) => t.raw === techStack)!.name,
+                          )
+                          .join('\n')
+                      : '-'}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead className="w-[180px]">디자인 기술 스택</TableHead>
+                  <TableCell className="whitespace-pre-wrap">
+                    {form.getValues('designTechStacks')!.length > 0
+                      ? form
+                          .getValues('designTechStacks')!
+                          .map(
+                            (techStack) => designTechStacks.find((t) => t.raw === techStack)!.name,
+                          )
+                          .join('\n')
+                      : '-'}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
+                  <TableCell>{form.getValues('favoriteProject') || '-'}</TableCell>
+                </TableRow>
+              </>
+            )}
             <TableRow>
               <TableHead className="w-[180px]">마지막 한마디</TableHead>
               <TableCell>{form.getValues('lastComment') || '-'}</TableCell>

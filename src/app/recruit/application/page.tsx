@@ -189,7 +189,17 @@ export default function RecruitApplicationPage() {
           <CircleChevronLeft
             className="cursor-pointer aria-disabled:opacity-50"
             aria-disabled={isProcessing}
-            onClick={() => !isProcessing && go((prev) => prev - 1)}
+            onClick={() =>
+              !isProcessing &&
+              go((prev) => {
+                if (prev === 15 && sessionStorage.getItem('recruit-prev-develop') === 'false') {
+                  sessionStorage.removeItem('recruit-prev-develop');
+                  return 8;
+                }
+
+                return prev - 1;
+              })
+            }
           />
           <Progress value={(step / (STEPS.length - 1)) * 100} className="h-2" />
         </motion.div>
