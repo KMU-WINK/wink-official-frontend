@@ -14,7 +14,7 @@ import { RecruitStepProps } from '@/app/recruit/application/page';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
-export default function Step11({ go, form }: RecruitStepProps) {
+export default function Step10({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (

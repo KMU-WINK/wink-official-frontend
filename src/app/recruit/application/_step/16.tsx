@@ -21,7 +21,7 @@ import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step17({ recruit, form }: RecruitStepProps) {
+export default function Step16({ recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
