@@ -7,7 +7,7 @@ import { RecruitStepProps } from '@/app/recruit/application/page';
 import { motion } from 'framer-motion';
 import { Laptop } from 'lucide-react';
 
-export default function Step9({ go, form }: RecruitStepProps) {
+export default function Step8({ go, form }: RecruitStepProps) {
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
 
   return (
