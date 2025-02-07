@@ -77,7 +77,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
         {!IGNORE_PATHS.find((path) => pathname.startsWith(path)) && <Footer />}
 
-        <Toaster position="top-center" duration={3000} closeButton={true} richColors={true} />
+        <Toaster
+          position="top-center"
+          duration={3000}
+          closeButton={true}
+          richColors={true}
+          theme="light"
+        />
       </body>
     </html>
   );
