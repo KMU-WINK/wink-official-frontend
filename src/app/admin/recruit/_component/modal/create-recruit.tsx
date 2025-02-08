@@ -29,7 +29,7 @@ export default function CreateRecruitModal({ open, setOpen, callback }: CreateRe
   const [recruitDate, setRecruitDate] = useState<DateRange | undefined>();
   const [interviewDate, setInterviewDate] = useState<DateRange | undefined>();
 
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const form = useForm<CreateRecruitRequest>({
     resolver: zodResolver(CreateRecruitRequestSchema),
@@ -44,18 +44,21 @@ export default function CreateRecruitModal({ open, setOpen, callback }: CreateRe
     },
   });
 
-  const onSubmit = useCallback(async (values: CreateRecruitRequest) => {
+  const onSubmit = useCallback((values: CreateRecruitRequest) => {
     setIsProcessing(true);
 
-    const { recruit } = await Api.Domain.AdminRecruit.createRecruit(values);
-
-    setOpen(false);
-    setIsProcessing(false);
-    form.reset();
-
-    toast.success('모집을 생성했습니다.');
-
-    callback(recruit);
+    toast.promise(
+      async () => callback((await Api.Domain.AdminRecruit.createRecruit(values)).recruit),
+      {
+        loading: '모집을 생성하고 있습니다.',
+        success: '모집을 생성했습니다.',
+        finally: () => {
+          setOpen(false);
+          setIsProcessing(false);
+          form.reset();
+        },
+      },
+    );
   }, []);
 
   useEffect(() => {
