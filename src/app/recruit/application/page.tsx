@@ -1,7 +1,7 @@
 'use client';
 
 import { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Path, PathValue, useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
@@ -66,43 +66,39 @@ export default function RecruitApplicationPage() {
   const controls = useAnimationControls();
 
   const [loading, setLoading] = useState(true);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [step, setStep] = useState(
-    localStorage.getItem('recruit-step') ? Number(localStorage.getItem('recruit-step')) : 0,
-  );
   const [recruit, setRecruit] = useState<Recruit | null>(null);
+
+  const [isProcessing, setisProcessing] = useState(false);
+  const [step, setStep] = useState(0);
 
   const form = useForm<ApplicationRequest>({
     resolver: zodResolver(ApplicationRequestSchema),
     mode: 'onChange',
-    defaultValues: localStorage.getItem('recruit-data')
-      ? JSON.parse(localStorage.getItem('recruit-data')!)
-      : {
-          name: '',
-          studentId: '',
-          email: '',
-          phoneNumber: '',
-          jiwonDonggi: '',
-          baeugoSipeunJeom: '',
-          canInterviewDates: [],
-          github: '',
-          frontendTechStacks: [],
-          backendTechStacks: [],
-          devOpsTechStacks: [],
-          designTechStacks: [],
-          favoriteProject: '',
-          lastComment: '',
-        },
+    defaultValues: {
+      name: '',
+      studentId: '',
+      email: '',
+      phoneNumber: '',
+      jiwonDonggi: '',
+      baeugoSipeunJeom: '',
+      canInterviewDates: [],
+      github: '',
+      frontendTechStacks: [],
+      backendTechStacks: [],
+      devOpsTechStacks: [],
+      designTechStacks: [],
+      favoriteProject: '',
+      lastComment: '',
+    },
   });
 
   const go = useCallback(
     async (page: SetStateAction<number>) => {
-      form.clearErrors();
-      setIsProcessing(true);
+      setisProcessing(true);
 
       setTimeout(() => {
         setStep(page);
-        setIsProcessing(false);
+        setisProcessing(false);
       }, 400);
 
       await controls.start({
@@ -125,32 +121,7 @@ export default function RecruitApplicationPage() {
     [controls, setStep],
   );
 
-  const StepComponent = useMemo(() => {
-    const Component = STEPS[step];
-    return (
-      <motion.div animate={controls} className="flex flex-col items-center space-y-6 w-full">
-        <Component go={go} recruit={recruit!} form={form} />
-      </motion.div>
-    );
-  }, [step, recruit]);
-
-  const formValues = form.watch();
-
-  useEffect(() => {
-    if (localStorage.getItem('recruit-data')) {
-      toast.info('이전에 작성하던 내용을 불러왔습니다.');
-    } else {
-      toast.info('페이지를 나갔다 와도 내용을 계속 작성할 수 있어요');
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('recruit-step', step.toString());
-  }, [step]);
-
-  useEffect(() => {
-    localStorage.setItem('recruit', JSON.stringify(formValues));
-  }, [formValues]);
+  const StepComponent = useMemo(() => STEPS[step], [step]);
 
   useEffect(() => {
     (async () => {
@@ -171,7 +142,46 @@ export default function RecruitApplicationPage() {
     })();
   }, []);
 
-  useEffect(form.clearErrors, [step]);
+  useEffect(() => {
+    if (localStorage.getItem('recruit:data')) {
+      toast.info('이전에 작성하던 내용을 불러왔습니다.');
+    } else {
+      toast.info('페이지를 나갔다 와도 내용을 계속 작성할 수 있어요');
+    }
+  }, []);
+
+  useEffect(() => {
+    const step = localStorage.getItem('recruit:step');
+
+    if (!step) return;
+
+    setStep(Number(step));
+  }, []);
+
+  useEffect(() => {
+    const data = localStorage.getItem('recruit:data');
+
+    if (!data) return;
+
+    Object.entries(JSON.parse(data)).forEach(([k, v]) =>
+      form.setValue(
+        k as Path<ApplicationRequest>,
+        v as PathValue<string, Path<ApplicationRequest>>,
+      ),
+    );
+  }, [recruit]);
+
+  useEffect(() => {
+    localStorage.setItem('recruit:step', step.toString());
+  }, [step]);
+
+  useEffect(() => {
+    const subscription = form.watch((values) => {
+      localStorage.setItem('recruit:data', JSON.stringify(values));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form.watch]);
 
   if (loading || !recruit) return null;
 
@@ -195,8 +205,8 @@ export default function RecruitApplicationPage() {
             onClick={() =>
               !isProcessing &&
               go((prev) => {
-                if (prev === 15 && sessionStorage.getItem('recruit-prev-develop') === 'false') {
-                  sessionStorage.removeItem('recruit-prev-develop');
+                if (prev === 15 && sessionStorage.getItem('recruit:prev-develop') === 'false') {
+                  sessionStorage.removeItem('recruit:prev-develop');
                   return 8;
                 }
 
@@ -210,7 +220,9 @@ export default function RecruitApplicationPage() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(() => {})} className="w-full">
-          {StepComponent}
+          <motion.div animate={controls} className="flex flex-col items-center space-y-6 w-full">
+            <StepComponent go={go} recruit={recruit!} form={form} />
+          </motion.div>
         </form>
       </Form>
     </div>

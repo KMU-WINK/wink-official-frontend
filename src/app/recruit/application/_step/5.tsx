@@ -41,7 +41,7 @@ export default function Step5({ go, form }: RecruitStepProps) {
             ease: 'easeInOut',
           },
         }}
-        className="w-full max-w-[300px]"
+        className="w-[300px] sm:w-[600px]"
       >
         <FormField
           control={form.control}
@@ -50,7 +50,7 @@ export default function Step5({ go, form }: RecruitStepProps) {
             <FormItem>
               <FormControl>
                 <Textarea
-                  className="min-h-[200px] sm:min-h-[300px]"
+                  className="h-[300px] sm:h-[200px] resize-none"
                   placeholder="지원 동기를 입력해주세요."
                   {...field}
                 />

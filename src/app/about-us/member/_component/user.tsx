@@ -59,7 +59,7 @@ export function User({ user }: UserProps) {
           <div className="flex flex-col">
             <p className="text-sm sm:text-base font-medium">{user.name}</p>
             {user.description && (
-              <p className="text-xs sm:text-sm line-clamp-2">{user.description}</p>
+              <p className="text-xs sm:text-sm line-clamp-2 break-all">{user.description}</p>
             )}
           </div>
         </div>

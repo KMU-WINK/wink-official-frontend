@@ -50,7 +50,7 @@ export default function Step15({ go, form }: RecruitStepProps) {
             <FormItem>
               <FormControl>
                 <Textarea
-                  className="min-h-[200px] sm:min-h-[300px]"
+                  className="h-[300px] resize-none"
                   placeholder="마지막 한마디를 입력해주세요."
                   {...field}
                 />
