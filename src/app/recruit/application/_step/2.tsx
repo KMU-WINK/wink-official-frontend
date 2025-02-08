@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 export default function Step2({ go, recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
-  const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
@@ -29,11 +29,10 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
           opacity: 1,
           y: 0,
           transition: {
-            delay: 1.25,
-            duration: 0.5,
+            delay: 1.2,
+            duration: 0.4,
           },
         }}
-        onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
         <p className="font-medium text-lg">
           좋아요, {form.getValues('name').substring(1)}님! 학번을 알려주세요
@@ -42,18 +41,14 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 2.2,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
         className="w-full max-w-[300px]"
       >
         <FormField
@@ -72,29 +67,28 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 3.1,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
       >
         <Button
           variant="wink"
+          disabled={clicked}
           onClick={async () => {
+            setClicked(true);
+
             if (!form.formState.errors.studentId && form.getValues('studentId')) {
               const { duplicated } = await Api.Domain.Recruit.checkStudentId(recruit.id, {
                 studentId: form.getValues('studentId'),
               });
 
               if (duplicated) {
-                localStorage.removeItem('recruit');
+                localStorage.removeItem('recruit-data');
                 localStorage.removeItem('recruit-step');
 
                 toast.error('이미 윙크 부원이거나, 이번 모집에 지원하셨습니다.');
@@ -105,6 +99,7 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
               go((prev) => prev + 1);
             } else {
               toast.error(form.formState.errors.studentId?.message || '학번을 입력해주세요.');
+              setClicked(false);
             }
           }}
         >

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -24,30 +24,7 @@ import { toast } from 'sonner';
 export default function Step16({ recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
-  const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-
-  const onSubmit = useCallback(async () => {
-    setIsProcessing(true);
-
-    await Api.Domain.Recruit.application(recruit.id, {
-      ...form.getValues(),
-      github: form.getValues('github') || undefined,
-      favoriteProject: form.getValues('favoriteProject') || undefined,
-      lastComment: form.getValues('lastComment') || undefined,
-    });
-
-    localStorage.setItem('recruit-confetti', 'true');
-    localStorage.removeItem('recruit');
-    localStorage.removeItem('recruit-step');
-    sessionStorage.removeItem('recruit-prev-develop');
-
-    toast.success('지원이 완료되었습니다.');
-
-    router.push('/recruit');
-
-    setIsProcessing(false);
-  }, [router]);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
@@ -59,30 +36,25 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
           opacity: 1,
           y: 0,
           transition: {
-            delay: 1.25,
-            duration: 0.5,
+            delay: 1.2,
+            duration: 0.4,
           },
         }}
-        onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
         <p className="font-medium text-lg">지원서를 제출하시겠습니까?</p>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, x: -10 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                x: 0,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          x: 0,
+          transition: {
+            delay: 0.75,
+            duration: 0.5,
+            ease: 'easeInOut',
+          },
+        }}
       >
         <Table className="w-full max-w-[600px]">
           <TableBody>
@@ -194,20 +166,42 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 3.1,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
       >
-        <Button variant="wink" disabled={isProcessing} onClick={onSubmit}>
+        <Button
+          variant="wink"
+          disabled={clicked}
+          onClick={async () => {
+            setClicked(true);
+
+            try {
+              await Api.Domain.Recruit.application(recruit.id, {
+                ...form.getValues(),
+                github: form.getValues('github') || undefined,
+                favoriteProject: form.getValues('favoriteProject') || undefined,
+                lastComment: form.getValues('lastComment') || undefined,
+              });
+
+              localStorage.setItem('recruit-confetti', 'true');
+              localStorage.removeItem('recruit-data');
+              localStorage.removeItem('recruit-step');
+              sessionStorage.removeItem('recruit-prev-develop');
+
+              toast.success('지원이 완료되었습니다.');
+
+              router.push('/recruit');
+            } finally {
+              setClicked(false);
+            }
+          }}
+        >
           지원하기
         </Button>
       </motion.div>

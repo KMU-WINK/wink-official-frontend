@@ -12,8 +12,7 @@ import { Hand } from 'lucide-react';
 export default function Step0({ go }: RecruitStepProps) {
   const router = useRouter();
 
-  const [iconAnimationComplete, setIconAnimationComplete] = useState(false);
-  const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
@@ -27,13 +26,12 @@ export default function Step0({ go }: RecruitStepProps) {
           rotate: [10, 30],
           transition: {
             delay: 0.5,
-            duration: 0.35,
+            duration: 0.4,
             repeat: 3,
             repeatType: 'reverse',
             ease: 'easeInOut',
           },
         }}
-        onAnimationComplete={() => setIconAnimationComplete(true)}
       >
         <Hand size={64} />
       </motion.div>
@@ -41,39 +39,30 @@ export default function Step0({ go }: RecruitStepProps) {
       <div className="flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
-          animate={
-            iconAnimationComplete
-              ? {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    delay: 0.5,
-                    duration: 0.5,
-                    ease: 'easeInOut',
-                  },
-                }
-              : {}
-          }
-          onAnimationComplete={() => setTitleAnimationComplete(true)}
+          animate={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              delay: 2.4,
+              duration: 0.4,
+              ease: 'easeInOut',
+            },
+          }}
         >
           <p className="font-medium text-lg">안녕하세요!</p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: -10 }}
-          animate={
-            titleAnimationComplete
-              ? {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    delay: 0.5,
-                    duration: 0.5,
-                    ease: 'easeInOut',
-                  },
-                }
-              : {}
-          }
+          animate={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              delay: 3.1,
+              duration: 0.4,
+              ease: 'easeInOut',
+            },
+          }}
         >
           <p>WINK 신입 부원 모집에 지원하시겠어요?</p>
         </motion.div>
@@ -81,24 +70,36 @@ export default function Step0({ go }: RecruitStepProps) {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 1.5,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 4,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
         className="flex items-center space-x-4"
       >
-        <Button variant="destructive" onClick={router.back}>
+        <Button
+          variant="destructive"
+          disabled={clicked}
+          onClick={() => {
+            setClicked(true);
+
+            router.back();
+          }}
+        >
           아니요
         </Button>
-        <Button variant="wink" onClick={() => go((prev) => prev + 1)}>
+        <Button
+          variant="wink"
+          disabled={clicked}
+          onClick={() => {
+            setClicked(true);
+
+            go((prev) => prev + 1);
+          }}
+        >
           네!
         </Button>
       </motion.div>
