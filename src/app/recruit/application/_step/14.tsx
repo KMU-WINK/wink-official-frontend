@@ -11,7 +11,7 @@ import { Sparkle } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step14({ go, form }: RecruitStepProps) {
-  const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
@@ -23,29 +23,24 @@ export default function Step14({ go, form }: RecruitStepProps) {
           opacity: 1,
           y: 0,
           transition: {
-            delay: 1.25,
-            duration: 0.5,
+            delay: 1.2,
+            duration: 0.4,
           },
         }}
-        onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
         <p className="font-medium text-lg">가장 기억에 남는 프로젝트는 무엇인가요?</p>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 2.2,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
         className="w-full max-w-[300px]"
       >
         <FormField
@@ -68,23 +63,22 @@ export default function Step14({ go, form }: RecruitStepProps) {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 3.1,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
         className="flex items-center space-x-4"
       >
         <Button
           variant="outline"
+          disabled={clicked}
           onClick={() => {
+            setClicked(true);
+
             form.setValue('favoriteProject', '');
             go((prev) => prev + 1);
           }}
@@ -94,11 +88,15 @@ export default function Step14({ go, form }: RecruitStepProps) {
 
         <Button
           variant="wink"
+          disabled={clicked}
           onClick={() => {
+            setClicked(true);
+
             if (!form.formState.errors.favoriteProject) {
               go((prev) => prev + 1);
             } else {
               toast.error(form.formState.errors.favoriteProject.message);
+              setClicked(false);
             }
           }}
         >

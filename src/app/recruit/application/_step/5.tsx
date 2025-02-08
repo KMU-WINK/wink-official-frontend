@@ -11,7 +11,7 @@ import { BadgeHelp } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step5({ go, form }: RecruitStepProps) {
-  const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
@@ -23,29 +23,24 @@ export default function Step5({ go, form }: RecruitStepProps) {
           opacity: 1,
           y: 0,
           transition: {
-            delay: 1.25,
-            duration: 0.5,
+            delay: 1.2,
+            duration: 0.4,
           },
         }}
-        onAnimationComplete={() => setTitleAnimationComplete(true)}
       >
         <p className="font-medium text-lg">WINK에 왜 지원하시나요?</p>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 2.2,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
         className="w-full max-w-[300px]"
       >
         <FormField
@@ -68,28 +63,28 @@ export default function Step5({ go, form }: RecruitStepProps) {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={
-          titleAnimationComplete
-            ? {
-                opacity: 1,
-                transition: {
-                  delay: 0.75,
-                  duration: 0.5,
-                  ease: 'easeInOut',
-                },
-              }
-            : {}
-        }
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 3.1,
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
       >
         <Button
           variant="wink"
+          disabled={clicked}
           onClick={() => {
+            setClicked(true);
+
             if (!form.formState.errors.jiwonDonggi && form.getValues('jiwonDonggi')) {
               go((prev) => prev + 1);
             } else {
               toast.error(
                 form.formState.errors.jiwonDonggi?.message || '지원 동기를 입력해주세요.',
               );
+              setClicked(false);
             }
           }}
         >

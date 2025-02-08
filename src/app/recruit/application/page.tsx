@@ -75,8 +75,8 @@ export default function RecruitApplicationPage() {
   const form = useForm<ApplicationRequest>({
     resolver: zodResolver(ApplicationRequestSchema),
     mode: 'onChange',
-    defaultValues: localStorage.getItem('recruit')
-      ? JSON.parse(localStorage.getItem('recruit')!)
+    defaultValues: localStorage.getItem('recruit-data')
+      ? JSON.parse(localStorage.getItem('recruit-data')!)
       : {
           name: '',
           studentId: '',
@@ -103,7 +103,6 @@ export default function RecruitApplicationPage() {
       setTimeout(() => {
         setStep(page);
         setIsProcessing(false);
-        localStorage.setItem('recruit-step', (step + 1).toString());
       }, 400);
 
       await controls.start({
@@ -123,7 +122,7 @@ export default function RecruitApplicationPage() {
         },
       });
     },
-    [controls, setStep, step],
+    [controls, setStep],
   );
 
   const StepComponent = useMemo(() => {
@@ -138,12 +137,16 @@ export default function RecruitApplicationPage() {
   const formValues = form.watch();
 
   useEffect(() => {
-    if (localStorage.getItem('recruit')) {
+    if (localStorage.getItem('recruit-data')) {
       toast.info('이전에 작성하던 내용을 불러왔습니다.');
     } else {
       toast.info('페이지를 나갔다 와도 내용을 계속 작성할 수 있어요');
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('recruit-step', step.toString());
+  }, [step]);
 
   useEffect(() => {
     localStorage.setItem('recruit', JSON.stringify(formValues));
