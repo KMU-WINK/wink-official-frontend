@@ -40,7 +40,7 @@ export default function RecruitPage() {
   const [recruit, setRecruit] = useState<Recruit | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const confetti = useMemo(() => localStorage.getItem('recruit-confetti') === 'true', []);
+  const confetti = useMemo(() => localStorage.getItem('recruit:confetti') === 'true', []);
 
   const infos = useMemo<Info[]>(() => {
     if (!recruit) return [];
@@ -69,7 +69,7 @@ export default function RecruitPage() {
   useEffect(() => {
     if (!confetti) return;
 
-    localStorage.removeItem('recruit-confetti');
+    localStorage.removeItem('recruit:confetti');
   }, [confetti]);
 
   if (loading) return null;

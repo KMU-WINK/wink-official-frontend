@@ -31,7 +31,7 @@ export const RemovePreUserRequestSchema = z.object({
 });
 
 export const UpdateMyInfoRequestSchema = z.object({
-  description: z.string().max(40, '소개는 40자를 초과할 수 없습니다.').optional(),
+  description: z.string().max(30, '소개는 30자를 초과할 수 없습니다.').optional(),
   github: z
     .string()
     .regex(GITHUB_USERNAME_EXPRESSION, GITHUB_USERNAME_MESSAGE)

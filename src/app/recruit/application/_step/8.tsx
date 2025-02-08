@@ -46,7 +46,7 @@ export default function Step8({ go, form }: RecruitStepProps) {
           onClick={() => {
             setClicked(true);
 
-            sessionStorage.setItem('recruit-prev-develop', 'false');
+            sessionStorage.setItem('recruit:prev-develop', 'false');
 
             form.resetField('github');
             form.resetField('frontendTechStacks');

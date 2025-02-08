@@ -1,10 +1,10 @@
 import WinkRequest from '@/api/request';
 import {
-  ApplicationRequest,
   DuplicationCheckResponse,
   EmailCheckRequest,
   GetRecruitResponse,
   PhoneNumberCheckRequest,
+  RecruitFormRequest,
   StudentIdCheckRequest,
 } from '@/api/type/domain/recruit';
 
@@ -15,7 +15,7 @@ export default class Recruit {
     return this.request.get('/recruit/latest');
   }
 
-  public async application(recruitId: string, data: ApplicationRequest): Promise<void> {
+  public async recruitForm(recruitId: string, data: RecruitFormRequest): Promise<void> {
     return this.request.post(`/recruit/${recruitId}`, data);
   }
 

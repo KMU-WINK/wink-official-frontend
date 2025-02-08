@@ -91,7 +91,7 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
                   .join('\n')}
               </TableCell>
             </TableRow>
-            {sessionStorage.getItem('recruit-prev-develop') !== 'false' && (
+            {sessionStorage.getItem('recruit:prev-develop') !== 'false' && (
               <>
                 <TableRow>
                   <TableHead className="w-[180px]">Github 아이디</TableHead>
@@ -189,10 +189,10 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
                 lastComment: form.getValues('lastComment') || undefined,
               });
 
-              localStorage.setItem('recruit-confetti', 'true');
-              localStorage.removeItem('recruit-data');
-              localStorage.removeItem('recruit-step');
-              sessionStorage.removeItem('recruit-prev-develop');
+              localStorage.setItem('recruit:confetti', 'true');
+              localStorage.removeItem('recruit:data');
+              localStorage.removeItem('recruit:step');
+              sessionStorage.removeItem('recruit:prev-develop');
 
               toast.success('지원이 완료되었습니다.');
 

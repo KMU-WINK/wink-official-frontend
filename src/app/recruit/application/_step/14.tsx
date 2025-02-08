@@ -50,7 +50,7 @@ export default function Step14({ go, form }: RecruitStepProps) {
             <FormItem>
               <FormControl>
                 <Textarea
-                  className="min-h-[200px] sm:min-h-[300px]"
+                  className="h-[300px] resize-none"
                   placeholder="가장 기억에 남는 프로젝트를 입력해주세요."
                   {...field}
                 />

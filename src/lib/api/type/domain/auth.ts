@@ -34,7 +34,7 @@ export const RefreshRequestSchema = z.object({
 export const RegisterRequestSchema = z.object({
   token: z.string().min(1, '토큰은 비어있을 수 없습니다.'),
   password: z.string().regex(PASSWORD_EXPRESSION, PASSWORD_MESSAGE),
-  description: z.string().max(40, '설명은 40자를 초과할 수 없습니다.').optional(),
+  description: z.string().max(30, '설명은 30자를 초과할 수 없습니다.').optional(),
   github: z
     .string()
     .regex(GITHUB_USERNAME_EXPRESSION, GITHUB_USERNAME_MESSAGE)

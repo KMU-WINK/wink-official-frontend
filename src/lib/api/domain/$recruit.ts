@@ -2,7 +2,7 @@ import WinkRequest from '@/api/request';
 import {
   CreateRecruitRequest,
   FinalizePaperRequest,
-  GetApplicationsResponse,
+  GetFormsResponse,
   GetRecruitResponse,
   GetRecruitsResponse,
 } from '@/api/type/domain/recruit';
@@ -34,27 +34,23 @@ export default class AdminRecruit {
     return this.request.post(`/admin/recruit/${recruitId}/finalize/interview`);
   }
 
-  public async getApplications(recruitId: string): Promise<GetApplicationsResponse> {
-    return this.request.get(`/admin/recruit/${recruitId}/application`);
+  public async getForms(recruitId: string): Promise<GetFormsResponse> {
+    return this.request.get(`/admin/recruit/${recruitId}/form`);
   }
 
-  public async paperPass(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/pass/paper`);
+  public async paperPass(recruitId: string, formId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/form/${formId}/pass/paper`);
   }
 
-  public async paperFail(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(`/admin/recruit/${recruitId}/application/${applicationId}/fail/paper`);
+  public async paperFail(recruitId: string, formId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/form/${formId}/fail/paper`);
   }
 
-  public async interviewPass(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(
-      `/admin/recruit/${recruitId}/application/${applicationId}/pass/interview`,
-    );
+  public async interviewPass(recruitId: string, formId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/form/${formId}/pass/interview`);
   }
 
-  public async interviewFail(recruitId: string, applicationId: string): Promise<void> {
-    return this.request.post(
-      `/admin/recruit/${recruitId}/application/${applicationId}/fail/interview`,
-    );
+  public async interviewFail(recruitId: string, formId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/form/${formId}/fail/interview`);
   }
 }
