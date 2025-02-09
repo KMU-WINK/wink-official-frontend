@@ -1,3 +1,5 @@
+import { departments } from '@/app/recruit/form/_constant/departments';
+
 import Recruit from '@/api/type/schema/recruit';
 import RecruitForm, {
   BackendTechStack,
@@ -20,6 +22,10 @@ import {
 } from '@/api/validation';
 
 import { z } from 'zod';
+
+const VALID_DEPARTMENTS = Object.keys(departments).flatMap((department) =>
+  departments[department as keyof typeof departments].map((major) => `${department} ${major}`),
+);
 
 export const CreateRecruitRequestSchema = z.object({
   year: z
@@ -46,11 +52,22 @@ export const PhoneNumberCheckRequestSchema = z.object({
 });
 
 export const RecruitFormRequestSchema = z.object({
-  name: z.string().regex(NAME_EXPRESSION, NAME_MESSAGE),
-  studentId: z.string().length(8, STUDENT_ID_MESSAGE),
-  department: z.string().min(1, '학과는 비어있을 수 없습니다'),
-  email: z.string().regex(KOOKMIN_EMAIL_EXPRESSION, KOOKMIN_EMAIL_MESSAGE),
-  phoneNumber: z.string().regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
+  name: z.string().min(1, '이름을 입력해주세요.').regex(NAME_EXPRESSION, NAME_MESSAGE),
+  studentId: z.string().min(1, '학번을 입력해주세요.').length(8, STUDENT_ID_MESSAGE),
+  department: z
+    .string()
+    .min(1, '학과를 선택해주세요.')
+    .refine((value) => VALID_DEPARTMENTS.includes(value), {
+      message: '올바른 학과가 아닙니다.',
+    }),
+  email: z
+    .string()
+    .min(1, '이메일을 입력해주세요.')
+    .regex(KOOKMIN_EMAIL_EXPRESSION, KOOKMIN_EMAIL_MESSAGE),
+  phoneNumber: z
+    .string()
+    .min(1, '전화번호를 입력해주세요.')
+    .regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
   jiwonDonggi: z
     .string()
     .min(100, '지원동기는 100자 이상이어야 합니다.')
@@ -59,16 +76,23 @@ export const RecruitFormRequestSchema = z.object({
     .string()
     .min(100, '자기소개는 100자 이상이어야 합니다.')
     .max(500, '자기소개는 500자 이하이어야 합니다.'),
-  outings: z.array(z.string()).optional(),
+  outings: z.array(z.string()),
   interviewDates: z
     .array(z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE))
-    .min(1, '면접 가능한 날짜는 최소 1개 이상 선택해야 합니다.'),
-  github: z.string().regex(GITHUB_USERNAME_EXPRESSION, GITHUB_USERNAME_MESSAGE).optional(),
-  frontendTechStacks: z.array(z.nativeEnum(FrontendTechStack)).optional(),
-  backendTechStacks: z.array(z.nativeEnum(BackendTechStack)).optional(),
-  devOpsTechStacks: z.array(z.nativeEnum(DevOpsTechStack)).optional(),
-  designTechStacks: z.array(z.nativeEnum(DesignTechStack)).optional(),
-  favoriteProject: z.string().optional(),
+    .min(1, '면접 날짜를 선택해주세요.'),
+  github: z
+    .string()
+    .regex(GITHUB_USERNAME_EXPRESSION, GITHUB_USERNAME_MESSAGE)
+    .or(z.literal(''))
+    .optional(),
+  frontendTechStacks: z.array(z.enum(Object.keys(FrontendTechStack) as [string, ...string[]])),
+  backendTechStacks: z.array(z.enum(Object.keys(BackendTechStack) as [string, ...string[]])),
+  devOpsTechStacks: z.array(z.enum(Object.keys(DevOpsTechStack) as [string, ...string[]])),
+  designTechStacks: z.array(z.enum(Object.keys(DesignTechStack) as [string, ...string[]])),
+  favoriteProject: z
+    .string()
+    .max(500, '가장 기억에 남는 프로젝트는 500자 이하이어야 합니다.')
+    .optional(),
 });
 
 export const StudentIdCheckRequestSchema = z.object({

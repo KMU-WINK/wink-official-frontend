@@ -104,28 +104,28 @@ export enum BackendTechStack {
 }
 
 export enum DevOpsTechStack {
-  AWS = 'AWS',
-  GCP = 'GCP',
-  AZURE = 'AZURE',
+  AWS = 'Amazon Web Service',
+  GCP = 'Google Cloud Platform',
+  AZURE = 'Microsoft Azure',
 
-  DOCKER = 'DOCKER',
-  KUBERNETES = 'KUBERNETES',
-  DOCKER_COMPOSE = 'DOCKER_COMPOSE',
+  DOCKER = 'Docker',
+  KUBERNETES = 'Kubernetes',
+  DOCKER_COMPOSE = 'Docker Compose',
 
-  JENKINS = 'JENKINS',
-  GITHUB_ACTIONS = 'GITHUB_ACTIONS',
-  GITLAB_CI = 'GITLAB_CI',
-  CIRCLE_CI = 'CIRCLE_CI',
+  JENKINS = 'Jenkins',
+  GITHUB_ACTIONS = 'GitHub Actions',
+  GITLAB_CI = 'Gitlab CI',
+  CIRCLE_CI = 'CircleCI',
 
-  TERRAFORM = 'TERRAFORM',
-  ANSIBLE = 'ANSIBLE',
+  TERRAFORM = 'Terraform',
+  ANSIBLE = 'Ansible',
 
-  PROMETHEUS = 'PROMETHEUS',
-  GRAFANA = 'GRAFANA',
-  ELK_STACK = 'ELK_STACK',
+  PROMETHEUS = 'Prometheus',
+  GRAFANA = 'Grafana',
+  ELK_STACK = 'ELK Stack',
 
   NGINX = 'NGINX',
-  APACHE = 'APACHE',
+  APACHE = 'Apache',
 }
 
 export enum DesignTechStack {

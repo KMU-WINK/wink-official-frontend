@@ -19,7 +19,7 @@ import { Separator } from '@/ui/separator';
 import { Skeleton } from '@/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/ui/tooltip';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';

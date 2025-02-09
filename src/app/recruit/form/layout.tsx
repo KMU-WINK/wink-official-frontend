@@ -9,5 +9,11 @@ interface RecruitApplicationLayoutProps {
 }
 
 export default function RecruitApplicationLayout({ children }: RecruitApplicationLayoutProps) {
-  return <AnonymousGuard>{children}</AnonymousGuard>;
+  return (
+    <AnonymousGuard>
+      <div className="flex flex-col items-center px-6 pt-20 sm:pt-28 pb-10 space-y-10">
+        {children}
+      </div>
+    </AnonymousGuard>
+  );
 }

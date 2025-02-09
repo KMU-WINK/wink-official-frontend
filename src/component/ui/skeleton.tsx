@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (

@@ -1,27 +1,21 @@
 import { useState } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import Api from '@/api';
-
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Phone } from 'lucide-react';
+import { Tag } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step4({ go, recruit, form }: RecruitStepProps) {
-  const router = useRouter();
-
+export default function Step1({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
-      <Phone size={64} />
+      <Tag size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -34,7 +28,7 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">연락 가능한 전화번호를 입력해주세요</p>
+        <p className="font-medium text-lg">혹시, 이름이 어떻게 되시나요?</p>
       </motion.div>
 
       <motion.div
@@ -51,23 +45,11 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
       >
         <FormField
           control={form.control}
-          name="phoneNumber"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input
-                  inputMode="numeric"
-                  placeholder="전화번호를 입력해주세요."
-                  {...field}
-                  onChange={(e) => {
-                    const value = e.target.value
-                      .replace(/[^0-9.]/g, '')
-                      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
-                      .replace(/(-{1,2})$/g, '');
-
-                    field.onChange(value);
-                  }}
-                />
+                <Input placeholder="이름을 입력해주세요." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,23 +74,10 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
           onClick={async () => {
             setClicked(true);
 
-            if (!form.formState.errors.phoneNumber && form.getValues('phoneNumber')) {
-              const { duplicated } = await Api.Domain.Recruit.checkPhoneNumber(recruit.id, {
-                phoneNumber: form.getValues('phoneNumber'),
-              });
-
-              if (duplicated) {
-                localStorage.removeItem('recruit:data');
-                localStorage.removeItem('recruit:step');
-
-                toast.error('이미 윙크 부원이거나, 이번 모집에 지원하셨습니다.');
-                router.replace('/recruit');
-                return;
-              }
-
+            if (await form.trigger('name')) {
               go((prev) => prev + 1);
             } else {
-              toast.error(form.formState.errors.phoneNumber?.message || '전화번호를 입력해주세요.');
+              toast.error(form.formState.errors.name!.message);
               setClicked(false);
             }
           }}

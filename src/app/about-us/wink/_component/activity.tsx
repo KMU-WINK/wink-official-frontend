@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { activity } from '@/app/about-us/wink/_constant/activity';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 import { motion } from 'framer-motion';
 

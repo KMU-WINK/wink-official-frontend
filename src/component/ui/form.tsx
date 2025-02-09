@@ -20,7 +20,7 @@ import {
 
 import { Label } from '@/ui/label';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';

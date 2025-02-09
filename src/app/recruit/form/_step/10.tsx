@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 import { Button } from '@/ui/button';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
 import { Laptop } from 'lucide-react';
 
-export default function Step8({ go, form }: RecruitStepProps) {
+export default function Step10({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
   return (
@@ -55,7 +55,7 @@ export default function Step8({ go, form }: RecruitStepProps) {
             form.resetField('designTechStacks');
             form.resetField('favoriteProject');
 
-            go(15);
+            go(18);
           }}
         >
           아니요

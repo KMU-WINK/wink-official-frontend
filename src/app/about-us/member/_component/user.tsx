@@ -7,7 +7,7 @@ import { Separator } from '@/ui/separator';
 
 import UserType, { Role, getKoreanRole } from '@/api/type/schema/user';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 import { UserIcon } from 'lucide-react';
 

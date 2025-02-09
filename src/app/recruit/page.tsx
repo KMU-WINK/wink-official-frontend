@@ -142,7 +142,7 @@ export default function RecruitPage() {
           {startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() &&
           nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) ? (
             !user ? (
-              <Button variant="wink" onClick={() => router.push(`/recruit/application`)}>
+              <Button variant="wink" onClick={() => router.push(`/recruit/form`)}>
                 지원하기
               </Button>
             ) : (
