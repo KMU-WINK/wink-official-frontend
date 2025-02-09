@@ -2,7 +2,7 @@ import { ComponentProps, forwardRef } from 'react';
 
 import { ButtonProps, buttonVariants } from '@/ui/button';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 

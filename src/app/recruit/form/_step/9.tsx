@@ -4,14 +4,14 @@ import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate, formatDateApi, toDate } from '@/lib/util';
 
 import { motion } from 'framer-motion';
 import { CalendarCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step7({ go, recruit, form }: RecruitStepProps) {
+export default function Step9({ go, recruit, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
   const interviewDates = useMemo(() => {
@@ -62,26 +62,24 @@ export default function Step7({ go, recruit, form }: RecruitStepProps) {
             <FormField
               key={index}
               control={form.control}
-              name="canInterviewDates"
-              render={({ field }) => {
-                return (
-                  <FormItem key={index} className="space-x-2">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value?.includes(formatDateApi(date))}
-                        onCheckedChange={(checked) => {
-                          return checked
-                            ? field.onChange([...field.value, formatDateApi(date)])
-                            : field.onChange(
-                                field.value?.filter((value) => value !== formatDateApi(date)),
-                              );
-                        }}
-                      />
-                    </FormControl>
-                    <FormLabel className="text-base">{formatDate(date, true)}</FormLabel>
-                  </FormItem>
-                );
-              }}
+              name="interviewDates"
+              render={({ field }) => (
+                <FormItem key={index} className="space-x-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value?.includes(formatDateApi(date))}
+                      onCheckedChange={(checked) => {
+                        return checked
+                          ? field.onChange([...field.value, formatDateApi(date)])
+                          : field.onChange(
+                              field.value?.filter((value) => value !== formatDateApi(date)),
+                            );
+                      }}
+                    />
+                  </FormControl>
+                  <FormLabel className="text-base">{formatDate(date, true)}</FormLabel>
+                </FormItem>
+              )}
             />
           ))}
           <FormMessage />
@@ -102,19 +100,13 @@ export default function Step7({ go, recruit, form }: RecruitStepProps) {
         <Button
           variant="wink"
           disabled={clicked}
-          onClick={() => {
+          onClick={async () => {
             setClicked(true);
 
-            if (
-              !form.formState.errors.canInterviewDates &&
-              form.getValues('canInterviewDates').length
-            ) {
+            if (await form.trigger('interviewDates')) {
               go((prev) => prev + 1);
             } else {
-              toast.error(
-                form.formState.errors.canInterviewDates?.message ||
-                  '면접 가능한 날짜를 선택해주세요.',
-              );
+              toast.error(form.formState.errors.interviewDates!.message);
               setClicked(false);
             }
           }}

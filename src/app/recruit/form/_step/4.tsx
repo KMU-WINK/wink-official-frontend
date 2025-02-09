@@ -1,21 +1,27 @@
 import { useState } from 'react';
 
-import { Button } from '@/ui/button';
-import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
-import { Textarea } from '@/ui/textarea';
+import { useRouter } from 'next/navigation';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { Button } from '@/ui/button';
+import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/ui/form';
+import { Input } from '@/ui/input';
+
+import Api from '@/api';
+
+import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { MessageCircleMore } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step15({ go, form }: RecruitStepProps) {
+export default function Step4({ go, recruit, form }: RecruitStepProps) {
+  const router = useRouter();
+
   const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
-      <MessageCircleMore size={64} />
+      <Mail size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -28,7 +34,7 @@ export default function Step15({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">마지막 한마디를 입력해주세요</p>
+        <p className="font-medium text-lg">이메일을 입력해주세요.</p>
       </motion.div>
 
       <motion.div
@@ -45,17 +51,14 @@ export default function Step15({ go, form }: RecruitStepProps) {
       >
         <FormField
           control={form.control}
-          name="lastComment"
+          name="email"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea
-                  className="h-[300px] resize-none"
-                  placeholder="마지막 한마디를 입력해주세요."
-                  {...field}
-                />
+                <Input type="email" placeholder="이메일을 입력해주세요!" {...field} />
               </FormControl>
               <FormMessage />
+              <FormDescription>국민대학교 메일만 사용 가능합니다.</FormDescription>
             </FormItem>
           )}
         />
@@ -71,31 +74,31 @@ export default function Step15({ go, form }: RecruitStepProps) {
             ease: 'easeInOut',
           },
         }}
-        className="flex items-center space-x-4"
       >
-        <Button
-          variant="outline"
-          disabled={clicked}
-          onClick={() => {
-            setClicked(true);
-
-            form.setValue('lastComment', '');
-            go((prev) => prev + 1);
-          }}
-        >
-          건너뛰기
-        </Button>
-
         <Button
           variant="wink"
           disabled={clicked}
-          onClick={() => {
+          onClick={async () => {
             setClicked(true);
 
-            if (!form.formState.errors.lastComment) {
+            if (await form.trigger('email')) {
+              const { duplicated } = await Api.Domain.Recruit.checkEmail(recruit.id, {
+                email: form.getValues('email'),
+              });
+
+              if (duplicated) {
+                localStorage.removeItem('recruit:data');
+                localStorage.removeItem('recruit:stacks');
+                localStorage.removeItem('recruit:step');
+
+                toast.error('이미 윙크 부원이거나, 이번 모집에 지원하셨습니다.');
+                router.replace('/recruit');
+                return;
+              }
+
               go((prev) => prev + 1);
             } else {
-              toast.error(form.formState.errors.lastComment.message);
+              toast.error(form.formState.errors.email!.message);
               setClicked(false);
             }
           }}

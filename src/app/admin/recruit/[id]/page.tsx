@@ -5,13 +5,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import {
-  backendTechStacks,
-  designTechStacks,
-  devOpsTechStacks,
-  frontendTechStacks,
-} from '@/app/recruit/application/_constant/tech_stack';
-
 import FinalizeInterviewModal from '@/app/admin/recruit/[id]/_component/modal/finalize-interview';
 import FinalizePaperModal from '@/app/admin/recruit/[id]/_component/modal/finalize-paper';
 
@@ -46,74 +39,58 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   const router = useRouter();
 
   const [recruit, setRecruit] = useState<Recruit | null>(null);
-  const [applications, setApplications] = useState<RecruitForm[] | null>(null);
+  const [forms, setforms] = useState<RecruitForm[] | null>(null);
 
   const [loading, setLoading] = useState(false);
 
   const [query, setQuery] = useState('');
-  const [queriedApplications, setQueriedApplications] = useState<RecruitForm[] | null>(null);
-  const [selectedApplication, setSelectedApplication] = useState<RecruitForm | null>(null);
+  const [queriedForms, setQueriedForms] = useState<RecruitForm[] | null>(null);
+  const [selectedForm, setSelectedForm] = useState<RecruitForm | null>(null);
 
   const [finalizePaperModalOpen, setFinalizePaperModalOpen] = useState<boolean>(false);
   const [finalizeInterviewModalOpen, setFinalizeInterviewModalOpen] = useState<boolean>(false);
 
-  const paperPass = useCallback(async (recruit: Recruit, application: RecruitForm) => {
-    await Api.Domain.AdminRecruit.paperPass(recruit.id, application.id);
+  const paperPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
+    await Api.Domain.AdminRecruit.paperPass(recruit.id, form.id);
 
-    setApplications((prev) =>
-      prev
-        ? prev.map((a) => (a.id === application.id ? { ...application, paperPass: true } : a))
-        : [],
+    setforms((prev) =>
+      prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: true } : a)) : [],
     );
 
-    setSelectedApplication((prev) =>
-      prev?.id === application.id ? { ...prev, paperPass: true } : prev,
-    );
+    setSelectedForm((prev) => (prev?.id === form.id ? { ...prev, paperPass: true } : prev));
   }, []);
 
   const paperFail = useCallback(
-    async (recruit: Recruit, application: RecruitForm) => {
-      await Api.Domain.AdminRecruit.paperFail(recruit.id, application.id);
+    async (recruit: Recruit, form: RecruitForm) => {
+      await Api.Domain.AdminRecruit.paperFail(recruit.id, form.id);
 
-      setApplications((prev) =>
-        prev
-          ? prev.map((a) => (a.id === application.id ? { ...application, paperPass: false } : a))
-          : [],
+      setforms((prev) =>
+        prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: false } : a)) : [],
       );
 
-      setSelectedApplication((prev) =>
-        prev?.id === application.id ? { ...prev, paperPass: false } : prev,
-      );
+      setSelectedForm((prev) => (prev?.id === form.id ? { ...prev, paperPass: false } : prev));
     },
     [recruit],
   );
 
-  const interviewPass = useCallback(async (recruit: Recruit, application: RecruitForm) => {
-    await Api.Domain.AdminRecruit.interviewPass(recruit.id, application.id);
+  const interviewPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
+    await Api.Domain.AdminRecruit.interviewPass(recruit.id, form.id);
 
-    setApplications((prev) =>
-      prev
-        ? prev.map((a) => (a.id === application.id ? { ...application, interviewPass: true } : a))
-        : [],
+    setforms((prev) =>
+      prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: true } : a)) : [],
     );
 
-    setSelectedApplication((prev) =>
-      prev?.id === application.id ? { ...prev, interviewPass: true } : prev,
-    );
+    setSelectedForm((prev) => (prev?.id === form.id ? { ...prev, interviewPass: true } : prev));
   }, []);
 
-  const interviewFail = useCallback(async (recruit: Recruit, application: RecruitForm) => {
-    await Api.Domain.AdminRecruit.interviewFail(recruit.id, application.id);
+  const interviewFail = useCallback(async (recruit: Recruit, form: RecruitForm) => {
+    await Api.Domain.AdminRecruit.interviewFail(recruit.id, form.id);
 
-    setApplications((prev) =>
-      prev
-        ? prev.map((a) => (a.id === application.id ? { ...application, interviewPass: false } : a))
-        : [],
+    setforms((prev) =>
+      prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: false } : a)) : [],
     );
 
-    setSelectedApplication((prev) =>
-      prev?.id === application.id ? { ...prev, interviewPass: false } : prev,
-    );
+    setSelectedForm((prev) => (prev?.id === form.id ? { ...prev, interviewPass: false } : prev));
   }, []);
 
   useEffect(() => {
@@ -133,12 +110,12 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
       try {
         setLoading(true);
 
-        const { applications } = await Api.Domain.AdminRecruit.getApplications(params.id);
+        const { forms } = await Api.Domain.AdminRecruit.getForms(params.id);
 
         setLoading(false);
-        setApplications(applications);
-        if (applications.length > 0) {
-          setSelectedApplication(applications[0]);
+        setforms(forms);
+        if (forms.length > 0) {
+          setSelectedForm(forms[0]);
         }
       } catch (e) {
         router.back();
@@ -148,22 +125,22 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   }, [params.id]);
 
   useEffect(() => {
-    setQueriedApplications(
-      applications
-        ? applications
+    setQueriedForms(
+      forms
+        ? forms
             .filter(
-              (application) =>
-                application.name.includes(query) ||
-                application.studentId.includes(query) ||
-                application.email.includes(query) ||
-                application.phoneNumber.includes(query),
+              (form) =>
+                form.name.includes(query) ||
+                form.studentId.includes(query) ||
+                form.email.includes(query) ||
+                form.phoneNumber.includes(query),
             )
             .sort((a, b) => {
-              const rank = (app: RecruitForm) => {
-                if (app.interviewPass === true) return 1;
-                if (app.paperPass === true) return 2;
-                if (app.interviewPass === false) return 3;
-                if (app.paperPass === false) return 4;
+              const rank = (form: RecruitForm) => {
+                if (form.interviewPass === true) return 1;
+                if (form.paperPass === true) return 2;
+                if (form.interviewPass === false) return 3;
+                if (form.paperPass === false) return 4;
                 return 5;
               };
 
@@ -172,7 +149,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             })
         : [],
     );
-  }, [applications, query]);
+  }, [forms, query]);
 
   if (!recruit) return null;
 
@@ -196,24 +173,20 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      {applications && (
+      {forms && (
         <div className="flex flex-col space-y-2">
           <div className="flex space-x-2">
             <Badge variant="outline" className="text-sm">
-              전체 지원자&nbsp;<span className="font-normal">{applications.length}명</span>
+              전체 지원자&nbsp;<span className="font-normal">{forms.length}명</span>
             </Badge>
             <Badge variant="outline" className="text-sm">
               서류 합격자&nbsp;
-              <span className="font-normal">
-                {applications.filter((x) => x.paperPass).length}명
-              </span>
+              <span className="font-normal">{forms.filter((x) => x.paperPass).length}명</span>
             </Badge>
             {recruit?.step !== Step.PRE && (
               <Badge variant="outline" className="text-sm">
                 면접 합격자&nbsp;
-                <span className="font-normal">
-                  {applications.filter((x) => x.interviewPass).length}명
-                </span>
+                <span className="font-normal">{forms.filter((x) => x.interviewPass).length}명</span>
               </Badge>
             )}
           </div>
@@ -227,22 +200,19 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
 
             {recruit.step === Step.PRE && (
               <>
-                {selectedApplication && (
+                {selectedForm && (
                   <>
-                    <Button
-                      variant="destructive"
-                      onClick={() => paperFail(recruit!, selectedApplication)}
-                    >
+                    <Button variant="destructive" onClick={() => paperFail(recruit!, selectedForm)}>
                       서류 불합격
                     </Button>
-                    <Button variant="wink" onClick={() => paperPass(recruit!, selectedApplication)}>
+                    <Button variant="wink" onClick={() => paperPass(recruit!, selectedForm)}>
                       서류 합격
                     </Button>
                   </>
                 )}
                 <Button
                   variant="outline"
-                  disabled={applications?.some((x) => x.paperPass === null)}
+                  disabled={forms?.some((x) => x.paperPass === null)}
                   onClick={() => setFinalizePaperModalOpen(true)}
                 >
                   서류 결과 확정
@@ -252,19 +222,19 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
 
             {recruit.step === Step.PAPER_END && (
               <>
-                {selectedApplication && (
+                {selectedForm && (
                   <>
                     <Button
                       variant="destructive"
-                      disabled={!selectedApplication.paperPass}
-                      onClick={() => interviewFail(recruit!, selectedApplication)}
+                      disabled={!selectedForm.paperPass}
+                      onClick={() => interviewFail(recruit!, selectedForm)}
                     >
                       면접 불합격
                     </Button>
                     <Button
                       variant="wink"
-                      disabled={!selectedApplication.paperPass}
-                      onClick={() => interviewPass(recruit!, selectedApplication)}
+                      disabled={!selectedForm.paperPass}
+                      onClick={() => interviewPass(recruit!, selectedForm)}
                     >
                       면접 합격
                     </Button>
@@ -272,7 +242,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
                 )}
                 <Button
                   variant="outline"
-                  disabled={applications?.some((x) => x.paperPass && x.interviewPass === null)}
+                  disabled={forms?.some((x) => x.paperPass && x.interviewPass === null)}
                   onClick={() => setFinalizeInterviewModalOpen(true)}
                 >
                   면접 결과 확정
@@ -289,42 +259,40 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             Array.from({ length: 10 }).map((_, idx) => (
               <Skeleton key={idx} className="w-[150px] h-[70px] rounded-md " />
             ))
-          ) : queriedApplications && queriedApplications.length > 0 ? (
-            queriedApplications?.map((application) => (
+          ) : queriedForms && queriedForms.length > 0 ? (
+            queriedForms?.map((form) => (
               <div
-                key={application.id}
+                key={form.id}
                 className={cn(
                   'w-[150px] border rounded-md px-5 py-3 shadow cursor-pointer hover:bg-neutral-50',
-                  application.id === selectedApplication?.id
-                    ? 'bg-neutral-50 hover:bg-neutral-100/75'
-                    : '',
+                  form.id === selectedForm?.id ? 'bg-neutral-50 hover:bg-neutral-100/75' : '',
                 )}
-                onClick={() => setSelectedApplication(application)}
+                onClick={() => setSelectedForm(form)}
               >
                 <div className="flex justify-between">
-                  <p className="font-medium">{application.name}</p>
+                  <p className="font-medium">{form.name}</p>
 
                   <div className="flex space-x-1">
-                    {application.paperPass === null ? (
+                    {form.paperPass === null ? (
                       <FileUser className="w-[18px] h-[18px] text-neutral-600" />
-                    ) : application.paperPass ? (
+                    ) : form.paperPass ? (
                       <FileUser className="w-[18px] h-[18px] text-green-600" />
                     ) : (
                       <FileUser className="w-[18px] h-[18px] text-red-600" />
                     )}
 
                     {recruit?.step !== Step.PRE &&
-                      application.paperPass &&
-                      (application.interviewPass === null ? (
+                      form.paperPass &&
+                      (form.interviewPass === null ? (
                         <Speech className="w-[18px] h-[18px] text-neutral-600" />
-                      ) : application.interviewPass ? (
+                      ) : form.interviewPass ? (
                         <Speech className="w-[18px] h-[18px] text-green-600" />
                       ) : (
                         <Speech className="w-[18px] h-[18px] text-red-600" />
                       ))}
                   </div>
                 </div>
-                <p className="text-neutral-500 text-sm">{application.studentId}</p>
+                <p className="text-neutral-500 text-sm">{form.studentId}</p>
               </div>
             ))
           ) : (
@@ -334,51 +302,59 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      {selectedApplication && (
+      {selectedForm && (
         <Table className="w-full">
           <TableBody>
             <TableRow>
               <TableHead className="w-[180px]">이름</TableHead>
-              <TableCell>{selectedApplication.name}</TableCell>
+              <TableCell>{selectedForm.name}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">학번</TableHead>
-              <TableCell>{selectedApplication.studentId}</TableCell>
+              <TableCell>{selectedForm.studentId}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableHead className="w-[180px]">학과</TableHead>
+              <TableCell>{selectedForm.department}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">이메일</TableHead>
-              <TableCell>{selectedApplication.email}</TableCell>
+              <TableCell>{selectedForm.email}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">전화번호</TableHead>
-              <TableCell>{selectedApplication.phoneNumber}</TableCell>
+              <TableCell>{selectedForm.phoneNumber}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">지원동기</TableHead>
-              <TableCell>{selectedApplication.jiwonDonggi}</TableCell>
+              <TableCell>{selectedForm.jiwonDonggi}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">배우고 싶은 점</TableHead>
-              <TableCell>{selectedApplication.baeugoSipeunJeom}</TableCell>
+              <TableHead className="w-[180px]">자기소개</TableHead>
+              <TableCell>{selectedForm.selfIntroduce}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableHead className="w-[180px]">외부활동</TableHead>
+              <TableCell className="whitespace-pre-wrap">
+                {selectedForm.outings.join('\n')}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">면접 가능한 날짜</TableHead>
               <TableCell className="whitespace-pre-wrap">
-                {selectedApplication.canInterviewDates
-                  .map((date) => formatDate(date, true))
-                  .join('\n')}
+                {selectedForm.interviewDates.map((date) => formatDate(date, true)).join('\n')}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">Github 아이디</TableHead>
               <TableCell>
-                {selectedApplication.github ? (
+                {selectedForm.github ? (
                   <Link
-                    href={`https://github.com/${selectedApplication.github}`}
+                    href={`https://github.com/${selectedForm.github}`}
                     target="_blank"
                     className="text-blue-600 hover:text-blue-600/90"
                   >
-                    {selectedApplication.github}
+                    {selectedForm.github}
                   </Link>
                 ) : (
                   '-'
@@ -388,50 +364,38 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             <TableRow>
               <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>
               <TableCell className="whitespace-pre-wrap">
-                {selectedApplication.frontendTechStacks.length > 0
-                  ? selectedApplication.frontendTechStacks
-                      .map((techStack) => frontendTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
+                {selectedForm.frontendTechStacks.length > 0
+                  ? selectedForm.frontendTechStacks.join('\n')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">백엔드 기술 스택</TableHead>
               <TableCell className="whitespace-pre-wrap">
-                {selectedApplication.backendTechStacks.length > 0
-                  ? selectedApplication.backendTechStacks
-                      .map((techStack) => backendTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
+                {selectedForm.backendTechStacks.length > 0
+                  ? selectedForm.backendTechStacks.join('\n')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">DevOps 기술 스택</TableHead>
               <TableCell className="whitespace-pre-wrap">
-                {selectedApplication.devOpsTechStacks.length > 0
-                  ? selectedApplication.devOpsTechStacks
-                      .map((techStack) => devOpsTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
+                {selectedForm.devOpsTechStacks.length > 0
+                  ? selectedForm.devOpsTechStacks.join('\n')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">디자인 기술 스택</TableHead>
               <TableCell className="whitespace-pre-wrap">
-                {selectedApplication.designTechStacks.length > 0
-                  ? selectedApplication.designTechStacks
-                      .map((techStack) => designTechStacks.find((t) => t.raw === techStack)!.name)
-                      .join('\n')
+                {selectedForm.designTechStacks.length > 0
+                  ? selectedForm.designTechStacks.join('\n')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
-              <TableCell>{selectedApplication.favoriteProject || '-'}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">마지막 한마디</TableHead>
-              <TableCell>{selectedApplication.lastComment || '-'}</TableCell>
+              <TableCell>{selectedForm.favoriteProject || '-'}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -4,7 +4,7 @@ import { Skeleton } from '@/ui/skeleton';
 
 import UserType from '@/api/type/schema/user';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 type Direction = 'row' | 'col' | 'flex';
 

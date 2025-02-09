@@ -2,13 +2,13 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import PrivacyModal from '@/app/recruit/application/_component/modal/privacy';
+import PrivacyModal from '@/app/recruit/form/_component/modal/privacy';
 
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { Label } from '@/ui/label';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { motion } from 'framer-motion';
@@ -134,7 +134,7 @@ export default function Step0({ go }: RecruitStepProps) {
         <Button
           className="transition-opacity"
           variant="wink"
-          disabled={clicked || !isAgreePrivacy}
+          disabled={clicked || isAgreePrivacy !== true}
           onClick={() => {
             setClicked(true);
 

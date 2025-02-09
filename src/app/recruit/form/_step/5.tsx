@@ -1,21 +1,27 @@
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
-import { Textarea } from '@/ui/textarea';
+import { Input } from '@/ui/input';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import Api from '@/api';
+
+import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { BookA } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step6({ go, form }: RecruitStepProps) {
+export default function Step5({ go, recruit, form }: RecruitStepProps) {
+  const router = useRouter();
+
   const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
-      <BookA size={64} />
+      <Phone size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -28,7 +34,7 @@ export default function Step6({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">WINK에서 어떤걸 배우고 싶나요?</p>
+        <p className="font-medium text-lg">연락 가능한 전화번호를 입력해주세요</p>
       </motion.div>
 
       <motion.div
@@ -45,14 +51,22 @@ export default function Step6({ go, form }: RecruitStepProps) {
       >
         <FormField
           control={form.control}
-          name="baeugoSipeunJeom"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea
-                  className="h-[300px] resize-none"
-                  placeholder="배우고 싶은 점을 입력해주세요."
+                <Input
+                  inputMode="numeric"
+                  placeholder="전화번호를 입력해주세요."
                   {...field}
+                  onChange={(e) => {
+                    const value = e.target.value
+                      .replace(/[^0-9.]/g, '')
+                      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
+                      .replace(/(-{1,2})$/g, '');
+
+                    field.onChange(value);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -75,15 +89,27 @@ export default function Step6({ go, form }: RecruitStepProps) {
         <Button
           variant="wink"
           disabled={clicked}
-          onClick={() => {
+          onClick={async () => {
             setClicked(true);
 
-            if (!form.formState.errors.baeugoSipeunJeom && form.getValues('baeugoSipeunJeom')) {
+            if (await form.trigger('phoneNumber')) {
+              const { duplicated } = await Api.Domain.Recruit.checkPhoneNumber(recruit.id, {
+                phoneNumber: form.getValues('phoneNumber'),
+              });
+
+              if (duplicated) {
+                localStorage.removeItem('recruit:data');
+                localStorage.removeItem('recruit:stacks');
+                localStorage.removeItem('recruit:step');
+
+                toast.error('이미 윙크 부원이거나, 이번 모집에 지원하셨습니다.');
+                router.replace('/recruit');
+                return;
+              }
+
               go((prev) => prev + 1);
             } else {
-              toast.error(
-                form.formState.errors.baeugoSipeunJeom?.message || '배우고 싶은 점을 입력해주세요.',
-              );
+              toast.error(form.formState.errors.phoneNumber!.message);
               setClicked(false);
             }
           }}

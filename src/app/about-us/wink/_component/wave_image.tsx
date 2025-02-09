@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from 'next/image';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 type Direction = 'top' | 'bottom';
 

@@ -11,15 +11,16 @@ import Header from '@/layout/header';
 
 import Api from '@/api';
 
+import { cn } from '@/util';
+
 import Loading from '@/app/loading';
-import { cn } from '@/lib/util';
 import '@/style/global.css';
 
 interface RootLayoutProps {
   children: ReactNode;
 }
 
-const IGNORE_PATHS = ['/auth', '/recruit/application', '/admin'];
+const IGNORE_PATHS = ['/auth', '/recruit/form', '/admin'];
 
 export default function RootLayout({ children }: RootLayoutProps) {
   const pathname = usePathname();

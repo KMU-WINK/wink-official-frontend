@@ -1,27 +1,27 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-import {
-  backendTechStacks,
-  designTechStacks,
-  devOpsTechStacks,
-  frontendTechStacks,
-} from '@/app/recruit/application/_constant/tech_stack';
 
 import { Button } from '@/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
+import {
+  BackendTechStack,
+  DesignTechStack,
+  DevOpsTechStack,
+  FrontendTechStack,
+} from '@/api/type/schema/recruit-form';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate } from '@/lib/util';
 
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step16({ recruit, form }: RecruitStepProps) {
+export default function Step18({ recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
   const [clicked, setClicked] = useState<boolean>(false);
@@ -67,6 +67,10 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
               <TableCell>{form.getValues('studentId')}</TableCell>
             </TableRow>
             <TableRow>
+              <TableHead className="w-[180px]">학과</TableHead>
+              <TableCell>{form.getValues('department')}</TableCell>
+            </TableRow>
+            <TableRow>
               <TableHead className="w-[180px]">이메일</TableHead>
               <TableCell>{form.getValues('email')}</TableCell>
             </TableRow>
@@ -76,17 +80,26 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">지원동기</TableHead>
-              <TableCell>{form.getValues('jiwonDonggi')}</TableCell>
+              <TableCell className="break-all">{form.getValues('jiwonDonggi')}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">배우고 싶은 점</TableHead>
-              <TableCell>{form.getValues('baeugoSipeunJeom')}</TableCell>
+              <TableHead className="w-[180px]">자기소개</TableHead>
+              <TableCell className="break-all">{form.getValues('selfIntroduce')}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableHead className="w-[180px]">대외활동</TableHead>
+              <TableCell className="whitespace-pre-wrap">
+                {form
+                  .getValues('outings')
+
+                  .join('\n') || '-'}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">면접 가능한 날짜</TableHead>
               <TableCell className="whitespace-pre-wrap">
                 {form
-                  .getValues('canInterviewDates')
+                  .getValues('interviewDates')
                   .map((date) => formatDate(date, true))
                   .join('\n')}
               </TableCell>
@@ -95,7 +108,19 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
               <>
                 <TableRow>
                   <TableHead className="w-[180px]">Github 아이디</TableHead>
-                  <TableCell>{form.getValues('github') || '-'}</TableCell>
+                  <TableCell>
+                    {form.getValues('github') ? (
+                      <Link
+                        href={`https://github.com/${form.getValues('github')}`}
+                        target="_blank"
+                        className="text-blue-600 hover:text-blue-600/90"
+                      >
+                        {form.getValues('github')}
+                      </Link>
+                    ) : (
+                      '-'
+                    )}
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>
@@ -103,11 +128,9 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
                     {form.getValues('frontendTechStacks')!.length > 0
                       ? form
                           .getValues('frontendTechStacks')!
-                          .map(
-                            (techStack) =>
-                              frontendTechStacks.find((t) => t.raw === techStack)!.name,
-                          )
-                          .join('\n')
+                          .map((s) => s as keyof typeof FrontendTechStack)
+                          .map((s) => FrontendTechStack[s])
+                          .join(', ')
                       : '-'}
                   </TableCell>
                 </TableRow>
@@ -117,23 +140,21 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
                     {form.getValues('backendTechStacks')!.length > 0
                       ? form
                           .getValues('backendTechStacks')!
-                          .map(
-                            (techStack) => backendTechStacks.find((t) => t.raw === techStack)!.name,
-                          )
-                          .join('\n')
+                          .map((s) => s as keyof typeof BackendTechStack)
+                          .map((s) => BackendTechStack[s])
+                          .join(', ')
                       : '-'}
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableHead className="w-[180px]">DevOps 기술 스택</TableHead>
+                  <TableHead className="w-[180px]">데브옵스 기술 스택</TableHead>
                   <TableCell className="whitespace-pre-wrap">
                     {form.getValues('devOpsTechStacks')!.length > 0
                       ? form
                           .getValues('devOpsTechStacks')!
-                          .map(
-                            (techStack) => devOpsTechStacks.find((t) => t.raw === techStack)!.name,
-                          )
-                          .join('\n')
+                          .map((s) => s as keyof typeof DevOpsTechStack)
+                          .map((s) => DevOpsTechStack[s])
+                          .join(', ')
                       : '-'}
                   </TableCell>
                 </TableRow>
@@ -143,10 +164,9 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
                     {form.getValues('designTechStacks')!.length > 0
                       ? form
                           .getValues('designTechStacks')!
-                          .map(
-                            (techStack) => designTechStacks.find((t) => t.raw === techStack)!.name,
-                          )
-                          .join('\n')
+                          .map((s) => s as keyof typeof DesignTechStack)
+                          .map((s) => DesignTechStack[s])
+                          .join(', ')
                       : '-'}
                   </TableCell>
                 </TableRow>
@@ -156,10 +176,6 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
                 </TableRow>
               </>
             )}
-            <TableRow>
-              <TableHead className="w-[180px]">마지막 한마디</TableHead>
-              <TableCell>{form.getValues('lastComment') || '-'}</TableCell>
-            </TableRow>
           </TableBody>
         </Table>
       </motion.div>
@@ -182,15 +198,15 @@ export default function Step16({ recruit, form }: RecruitStepProps) {
             setClicked(true);
 
             try {
-              await Api.Domain.Recruit.application(recruit.id, {
+              await Api.Domain.Recruit.recruitForm(recruit.id, {
                 ...form.getValues(),
                 github: form.getValues('github') || undefined,
                 favoriteProject: form.getValues('favoriteProject') || undefined,
-                lastComment: form.getValues('lastComment') || undefined,
               });
 
               localStorage.setItem('recruit:confetti', 'true');
               localStorage.removeItem('recruit:data');
+              localStorage.removeItem('recruit:stacks');
               localStorage.removeItem('recruit:step');
               sessionStorage.removeItem('recruit:prev-develop');
 

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { cn } from '@/lib/util';
+import { cn } from '@/util';
 
 import { motion } from 'framer-motion';
 

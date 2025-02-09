@@ -1,17 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Textarea } from '@/ui/textarea';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { cn } from '@/util';
+
+import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
 import { BadgeHelp } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step5({ go, form }: RecruitStepProps) {
+export default function Step6({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const jiwonDonggi = form.watch('jiwonDonggi');
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = '200px';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [jiwonDonggi]);
 
   return (
     <>
@@ -41,8 +54,16 @@ export default function Step5({ go, form }: RecruitStepProps) {
             ease: 'easeInOut',
           },
         }}
-        className="w-[300px] sm:w-[600px]"
+        className="w-full max-w-[300px] sm:max-w-[600px]"
       >
+        <p
+          className={cn(
+            'text-sm justify-self-end',
+            jiwonDonggi.length <= 500 ? 'text-neutral-500' : 'text-red-500',
+          )}
+        >
+          {jiwonDonggi.length} / 500
+        </p>
         <FormField
           control={form.control}
           name="jiwonDonggi"
@@ -50,9 +71,13 @@ export default function Step5({ go, form }: RecruitStepProps) {
             <FormItem>
               <FormControl>
                 <Textarea
-                  className="h-[300px] sm:h-[200px] resize-none"
+                  className="overflow-hidden resize-none"
                   placeholder="지원 동기를 입력해주세요."
                   {...field}
+                  ref={(e) => {
+                    field.ref(e);
+                    textareaRef.current = e;
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -75,15 +100,13 @@ export default function Step5({ go, form }: RecruitStepProps) {
         <Button
           variant="wink"
           disabled={clicked}
-          onClick={() => {
+          onClick={async () => {
             setClicked(true);
 
-            if (!form.formState.errors.jiwonDonggi && form.getValues('jiwonDonggi')) {
+            if (await form.trigger('jiwonDonggi')) {
               go((prev) => prev + 1);
             } else {
-              toast.error(
-                form.formState.errors.jiwonDonggi?.message || '지원 동기를 입력해주세요.',
-              );
+              toast.error(form.formState.errors.jiwonDonggi!.message);
               setClicked(false);
             }
           }}

@@ -1,21 +1,34 @@
-import { useState } from 'react';
-import { SiGithub } from 'react-icons/si';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
-import { Input } from '@/ui/input';
+import { Textarea } from '@/ui/textarea';
 
-import { RecruitStepProps } from '@/app/recruit/application/page';
+import { cn } from '@/util';
+
+import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
+import { Sparkle } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step9({ go, form }: RecruitStepProps) {
+export default function Step17({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const favoriteProject = form.watch('favoriteProject');
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = '200px';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [favoriteProject]);
 
   return (
     <>
-      <SiGithub size={64} />
+      <Sparkle size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -28,7 +41,7 @@ export default function Step9({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">Github 아이디를 입력해주세요</p>
+        <p className="font-medium text-lg">가장 기억에 남는 프로젝트는 무엇인가요?</p>
       </motion.div>
 
       <motion.div
@@ -41,15 +54,31 @@ export default function Step9({ go, form }: RecruitStepProps) {
             ease: 'easeInOut',
           },
         }}
-        className="w-full max-w-[300px]"
+        className="w-full max-w-[300px] sm:max-w-[600px]"
       >
+        <p
+          className={cn(
+            'text-sm justify-self-end',
+            (favoriteProject?.length ?? 0) <= 500 ? 'text-neutral-500' : 'text-red-500',
+          )}
+        >
+          {favoriteProject?.length ?? 0} / 500
+        </p>
         <FormField
           control={form.control}
-          name="github"
+          name="favoriteProject"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Github 아이디를 입력해주세요." {...field} />
+                <Textarea
+                  className="overflow-hidden resize-none"
+                  placeholder="가장 기억에 남는 프로젝트를 입력해주세요."
+                  {...field}
+                  ref={(e) => {
+                    field.ref(e);
+                    textareaRef.current = e;
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -75,7 +104,7 @@ export default function Step9({ go, form }: RecruitStepProps) {
           onClick={() => {
             setClicked(true);
 
-            form.setValue('github', '');
+            form.setValue('favoriteProject', '');
             go((prev) => prev + 1);
           }}
         >
@@ -85,13 +114,13 @@ export default function Step9({ go, form }: RecruitStepProps) {
         <Button
           variant="wink"
           disabled={clicked}
-          onClick={() => {
+          onClick={async () => {
             setClicked(true);
 
-            if (!form.formState.errors.github) {
+            if (await form.trigger('favoriteProject')) {
               go((prev) => prev + 1);
             } else {
-              toast.error(form.formState.errors.github.message);
+              toast.error(form.formState.errors.favoriteProject!.message);
               setClicked(false);
             }
           }}

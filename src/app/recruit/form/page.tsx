@@ -9,26 +9,28 @@ import { Form } from '@/ui/form';
 import { Progress } from '@/ui/progress';
 
 import Api from '@/api';
-import { ApplicationRequest, ApplicationRequestSchema } from '@/api/type/domain/recruit';
+import { RecruitFormRequest, RecruitFormRequestSchema } from '@/api/type/domain/recruit';
 import Recruit from '@/api/type/schema/recruit';
 
-import Step0 from '@/app/recruit/application/_step/0';
-import Step1 from '@/app/recruit/application/_step/1';
-import Step2 from '@/app/recruit/application/_step/2';
-import Step3 from '@/app/recruit/application/_step/3';
-import Step4 from '@/app/recruit/application/_step/4';
-import Step5 from '@/app/recruit/application/_step/5';
-import Step6 from '@/app/recruit/application/_step/6';
-import Step7 from '@/app/recruit/application/_step/7';
-import Step8 from '@/app/recruit/application/_step/8';
-import Step9 from '@/app/recruit/application/_step/9';
-import Step10 from '@/app/recruit/application/_step/10';
-import Step11 from '@/app/recruit/application/_step/11';
-import Step12 from '@/app/recruit/application/_step/12';
-import Step13 from '@/app/recruit/application/_step/13';
-import Step14 from '@/app/recruit/application/_step/14';
-import Step15 from '@/app/recruit/application/_step/15';
-import Step16 from '@/app/recruit/application/_step/16';
+import Step0 from '@/app/recruit/form/_step/0';
+import Step1 from '@/app/recruit/form/_step/1';
+import Step2 from '@/app/recruit/form/_step/2';
+import Step3 from '@/app/recruit/form/_step/3';
+import Step4 from '@/app/recruit/form/_step/4';
+import Step5 from '@/app/recruit/form/_step/5';
+import Step6 from '@/app/recruit/form/_step/6';
+import Step7 from '@/app/recruit/form/_step/7';
+import Step8 from '@/app/recruit/form/_step/8';
+import Step9 from '@/app/recruit/form/_step/9';
+import Step10 from '@/app/recruit/form/_step/10';
+import Step11 from '@/app/recruit/form/_step/11';
+import Step12 from '@/app/recruit/form/_step/12';
+import Step13 from '@/app/recruit/form/_step/13';
+import Step14 from '@/app/recruit/form/_step/14';
+import Step15 from '@/app/recruit/form/_step/15';
+import Step16 from '@/app/recruit/form/_step/16';
+import Step17 from '@/app/recruit/form/_step/17';
+import Step18 from '@/app/recruit/form/_step/18';
 import { Step, StepProps, nowDate, toDate } from '@/lib/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,7 +39,7 @@ import { motion, useAnimationControls } from 'framer-motion';
 import { CircleChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
-export interface RecruitStepProps extends StepProps<ApplicationRequest> {
+export interface RecruitStepProps extends StepProps<RecruitFormRequest> {
   recruit: Recruit;
 }
 
@@ -59,6 +61,8 @@ const STEPS: Step<RecruitStepProps> = [
   Step14,
   Step15,
   Step16,
+  Step17,
+  Step18,
 ];
 
 export default function RecruitApplicationPage() {
@@ -71,24 +75,25 @@ export default function RecruitApplicationPage() {
   const [isProcessing, setisProcessing] = useState(false);
   const [step, setStep] = useState(0);
 
-  const form = useForm<ApplicationRequest>({
-    resolver: zodResolver(ApplicationRequestSchema),
+  const form = useForm<RecruitFormRequest>({
+    resolver: zodResolver(RecruitFormRequestSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
       studentId: '',
+      department: '',
       email: '',
       phoneNumber: '',
       jiwonDonggi: '',
-      baeugoSipeunJeom: '',
-      canInterviewDates: [],
+      selfIntroduce: '',
+      outings: [],
+      interviewDates: [],
       github: '',
       frontendTechStacks: [],
       backendTechStacks: [],
       devOpsTechStacks: [],
       designTechStacks: [],
       favoriteProject: '',
-      lastComment: '',
     },
   });
 
@@ -163,17 +168,17 @@ export default function RecruitApplicationPage() {
 
     if (!data) return;
 
-    Object.entries(JSON.parse(data)).forEach(([k, v]) =>
-      form.setValue(
-        k as Path<ApplicationRequest>,
-        v as PathValue<string, Path<ApplicationRequest>>,
-      ),
-    );
+    Object.entries(JSON.parse(data)).forEach(async ([k, v]) => {
+      const key = k as Path<RecruitFormRequest>;
+      const value = v as PathValue<string, Path<RecruitFormRequest>>;
+
+      form.setValue(key, value);
+    });
   }, [recruit]);
 
-  useEffect(() => {
-    localStorage.setItem('recruit:step', step.toString());
-  }, [step]);
+  useEffect(form.clearErrors, [step]);
+
+  useEffect(() => localStorage.setItem('recruit:step', step.toString()), [step]);
 
   useEffect(() => {
     const subscription = form.watch((values) => {
@@ -186,7 +191,7 @@ export default function RecruitApplicationPage() {
   if (loading || !recruit) return null;
 
   return (
-    <div className="flex flex-col items-center px-6 pt-20 sm:pt-28 pb-10 space-y-10">
+    <>
       {step > 0 && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -205,9 +210,9 @@ export default function RecruitApplicationPage() {
             onClick={() =>
               !isProcessing &&
               go((prev) => {
-                if (prev === 15 && sessionStorage.getItem('recruit:prev-develop') === 'false') {
+                if (prev === 18 && sessionStorage.getItem('recruit:prev-develop') === 'false') {
                   sessionStorage.removeItem('recruit:prev-develop');
-                  return 8;
+                  return 10;
                 }
 
                 return prev - 1;
@@ -225,6 +230,6 @@ export default function RecruitApplicationPage() {
           </motion.div>
         </form>
       </Form>
-    </div>
+    </>
   );
 }
