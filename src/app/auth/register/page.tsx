@@ -104,10 +104,10 @@ export default function AuthRegisterPage() {
     const Component = STEPS[step];
     return (
       <motion.div animate={controls} className="flex flex-col items-center space-y-6 w-full">
-        <Component go={go} user={user!} form={form} />
+        <Component go={go} setStep={setStep} user={user!} form={form} />
       </motion.div>
     );
-  }, [step, user]);
+  }, [step, setStep, user]);
 
   useEffect(() => {
     form.setValue('token', token || '');

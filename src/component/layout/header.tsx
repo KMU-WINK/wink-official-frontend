@@ -56,9 +56,9 @@ export default function Header({ loading }: HeaderProps) {
             src={logo}
             alt={logo.src}
             width={64}
-            height={24}
+            height={26}
             priority
-            className="w-[48px] h-[18px] sm:w-[64px] sm:h-[24px]"
+            className="w-[48px] h-[19.5px] sm:w-[64px] sm:h-[26px]"
           />
         </Link>
 

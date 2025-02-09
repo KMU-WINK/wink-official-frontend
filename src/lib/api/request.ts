@@ -13,11 +13,7 @@ export default class WinkRequest {
   private refreshToken: string | null = null;
 
   public constructor() {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    this.baseUrl = window.origin;
+    this.baseUrl = typeof window === 'undefined' ? process.env.API_URL : window.origin;
   }
 
   public async setToken(accessToken: string, refreshToken: string) {
