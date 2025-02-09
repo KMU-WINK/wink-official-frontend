@@ -194,28 +194,32 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
         <Button
           variant="wink"
           disabled={clicked}
-          onClick={async () => {
+          onClick={() => {
             setClicked(true);
 
-            try {
-              await Api.Domain.Recruit.recruitForm(recruit.id, {
-                ...form.getValues(),
-                github: form.getValues('github') || undefined,
-                favoriteProject: form.getValues('favoriteProject') || undefined,
-              });
+            toast.promise(
+              async () => {
+                await Api.Domain.Recruit.recruitForm(recruit.id, {
+                  ...form.getValues(),
+                  github: form.getValues('github') || undefined,
+                  favoriteProject: form.getValues('favoriteProject') || undefined,
+                });
 
-              localStorage.setItem('recruit:confetti', 'true');
-              localStorage.removeItem('recruit:data');
-              localStorage.removeItem('recruit:stacks');
-              localStorage.removeItem('recruit:step');
-              sessionStorage.removeItem('recruit:prev-develop');
+                localStorage.setItem('recruit:confetti', 'true');
+                localStorage.removeItem('recruit:data');
+                localStorage.removeItem('recruit:stacks');
+                localStorage.removeItem('recruit:step');
+                sessionStorage.removeItem('recruit:prev-develop');
+                sessionStorage.removeItem('recruit:back');
 
-              toast.success('지원이 완료되었습니다.');
-
-              router.push('/recruit');
-            } finally {
-              setClicked(false);
-            }
+                router.push('/recruit');
+              },
+              {
+                loading: '지원서를 쓰고 있습니다.',
+                success: '지원이 완료되었습니다.',
+                finally: () => setClicked(false),
+              },
+            );
           }}
         >
           지원하기

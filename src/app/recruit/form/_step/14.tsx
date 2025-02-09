@@ -3,6 +3,8 @@ import { SiHtml5 } from 'react-icons/si';
 
 import { backendTechStacks } from '@/app/recruit/form/_constant/tech_stack';
 
+import { Stack } from '@/app/recruit/form/_component/StackButton';
+
 import { Button } from '@/ui/button';
 import {
   Command,
@@ -19,19 +21,24 @@ import { BackendTechStack } from '@/api/type/schema/recruit-form';
 
 import { cn } from '@/util';
 
-import { Stack } from '@/app/recruit/form/_step/12';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step14({ go, form }: RecruitStepProps) {
+export default function Step14({ go, setStep, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
   useEffect(() => {
     const stacks: Stack[] = JSON.parse(localStorage.getItem('recruit:stacks')!);
-    if (!stacks.includes('backend')) go((prev) => prev + 1);
+    const amount = sessionStorage.getItem('recruit:back') === 'true' ? -1 : +1;
+
+    if (!stacks.includes('backend')) {
+      setStep((prev) => prev + amount);
+    } else {
+      sessionStorage.removeItem('recruit:back');
+    }
   }, []);
 
   return (
@@ -74,7 +81,7 @@ export default function Step14({ go, form }: RecruitStepProps) {
                   <PopoverTrigger asChild>
                     <Button variant="outline" role="combobox" className="w-full justify-between">
                       {field.value!.length > 0
-                        ? field.value![0] +
+                        ? BackendTechStack[field.value![0] as keyof typeof BackendTechStack] +
                           (field.value!.length > 1 ? ` (외 ${field.value!.length - 1}개)` : '')
                         : '백엔드 기술을 선택해주세요.'}
                       <ChevronsUpDown className="opacity-50" />
@@ -87,7 +94,7 @@ export default function Step14({ go, form }: RecruitStepProps) {
                         <CommandEmpty>검색된 기술이 없습니다.</CommandEmpty>
 
                         {Object.entries(backendTechStacks).map(([group, stacks]) => (
-                          <CommandGroup heading={group}>
+                          <CommandGroup key={group} heading={group}>
                             {stacks
                               .map((stack) => stack as BackendTechStack)
                               .map((stack) => {

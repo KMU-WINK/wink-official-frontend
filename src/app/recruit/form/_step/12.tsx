@@ -1,13 +1,13 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SiHtml5 } from 'react-icons/si';
+
+import StackButton, { Stack } from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-
-export type Stack = 'frontend' | 'backend' | 'devops' | 'design';
 
 export default function Step12({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -78,6 +78,7 @@ export default function Step12({ go, form }: RecruitStepProps) {
           onClick={() => {
             setClicked(true);
 
+            setStacks([]);
             form.setValue('frontendTechStacks', []);
             form.setValue('backendTechStacks', []);
             form.setValue('devOpsTechStacks', []);
@@ -102,29 +103,5 @@ export default function Step12({ go, form }: RecruitStepProps) {
         </Button>
       </motion.div>
     </>
-  );
-}
-
-// ############################################################################################
-
-interface StackButtonProps {
-  name: string;
-  raw: Stack;
-  stacks: Stack[];
-  setStacks: Dispatch<SetStateAction<Stack[]>>;
-}
-
-function StackButton({ name, raw, stacks, setStacks }: StackButtonProps) {
-  return (
-    <Button
-      variant={stacks.includes(raw) ? 'default' : 'outline'}
-      onClick={() =>
-        setStacks((prev) =>
-          prev.includes(raw) ? prev.filter((stack) => stack !== raw) : [...prev, raw],
-        )
-      }
-    >
-      {name}
-    </Button>
   );
 }

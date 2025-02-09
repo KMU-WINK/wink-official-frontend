@@ -15,6 +15,7 @@ export type Step<T> = ComponentType<T>[];
 
 export interface StepProps<T extends FieldValues> {
   go: Dispatch<SetStateAction<number>>;
+  setStep: Dispatch<SetStateAction<number>>;
   form: UseFormReturn<T>;
 }
 

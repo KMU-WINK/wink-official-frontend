@@ -210,6 +210,8 @@ export default function RecruitApplicationPage() {
             onClick={() =>
               !isProcessing &&
               go((prev) => {
+                sessionStorage.setItem('recruit:back', 'true');
+
                 if (prev === 18 && sessionStorage.getItem('recruit:prev-develop') === 'false') {
                   sessionStorage.removeItem('recruit:prev-develop');
                   return 10;
@@ -226,7 +228,7 @@ export default function RecruitApplicationPage() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(() => {})} className="w-full">
           <motion.div animate={controls} className="flex flex-col items-center space-y-6 w-full">
-            <StepComponent go={go} recruit={recruit!} form={form} />
+            <StepComponent go={go} setStep={setStep} recruit={recruit!} form={form} />
           </motion.div>
         </form>
       </Form>

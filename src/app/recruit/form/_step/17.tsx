@@ -59,10 +59,10 @@ export default function Step17({ go, form }: RecruitStepProps) {
         <p
           className={cn(
             'text-sm justify-self-end',
-            (favoriteProject?.length ?? 0) <= 500 ? 'text-neutral-500' : 'text-red-500',
+            (favoriteProject?.length ?? 0) <= 700 ? 'text-neutral-500' : 'text-red-500',
           )}
         >
-          {favoriteProject?.length ?? 0} / 500
+          {favoriteProject?.length ?? 0} / 700
         </p>
         <FormField
           control={form.control}
