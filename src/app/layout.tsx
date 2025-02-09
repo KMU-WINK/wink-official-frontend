@@ -61,6 +61,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
           content="국민대학교 소프트웨어융합대학 웹 학술 동아리 WINK"
         />
         <meta property="og:image" content="https://i.imgur.com/qXRRE56.png" />
+
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body>
         <Header loading={loading} />
