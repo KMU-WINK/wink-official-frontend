@@ -91,7 +91,7 @@ export const RecruitFormRequestSchema = z.object({
   designTechStacks: z.array(z.enum(Object.keys(DesignTechStack) as [string, ...string[]])),
   favoriteProject: z
     .string()
-    .max(500, '가장 기억에 남는 프로젝트는 500자 이하이어야 합니다.')
+    .max(700, '가장 기억에 남는 프로젝트는 700자 이하이어야 합니다.')
     .optional(),
 });
 
