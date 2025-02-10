@@ -80,11 +80,15 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">지원동기</TableHead>
-              <TableCell className="break-all">{form.getValues('jiwonDonggi')}</TableCell>
+              <TableCell className="break-all whitespace-pre-line">
+                {form.getValues('jiwonDonggi')}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">자기소개</TableHead>
-              <TableCell className="break-all">{form.getValues('selfIntroduce')}</TableCell>
+              <TableCell className="break-all whitespace-pre-line">
+                {form.getValues('selfIntroduce')}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">대외활동</TableHead>
@@ -124,7 +128,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                 </TableRow>
                 <TableRow>
                   <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>
-                  <TableCell className="whitespace-pre-wrap">
+                  <TableCell>
                     {form.getValues('frontendTechStacks')!.length > 0
                       ? form
                           .getValues('frontendTechStacks')!
@@ -136,7 +140,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                 </TableRow>
                 <TableRow>
                   <TableHead className="w-[180px]">백엔드 기술 스택</TableHead>
-                  <TableCell className="whitespace-pre-wrap">
+                  <TableCell>
                     {form.getValues('backendTechStacks')!.length > 0
                       ? form
                           .getValues('backendTechStacks')!
@@ -148,7 +152,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                 </TableRow>
                 <TableRow>
                   <TableHead className="w-[180px]">데브옵스 기술 스택</TableHead>
-                  <TableCell className="whitespace-pre-wrap">
+                  <TableCell>
                     {form.getValues('devOpsTechStacks')!.length > 0
                       ? form
                           .getValues('devOpsTechStacks')!
@@ -160,7 +164,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                 </TableRow>
                 <TableRow>
                   <TableHead className="w-[180px]">디자인 기술 스택</TableHead>
-                  <TableCell className="whitespace-pre-wrap">
+                  <TableCell>
                     {form.getValues('designTechStacks')!.length > 0
                       ? form
                           .getValues('designTechStacks')!
@@ -172,7 +176,9 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                 </TableRow>
                 <TableRow>
                   <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
-                  <TableCell>{form.getValues('favoriteProject') || '-'}</TableCell>
+                  <TableCell className="whitespace-pre-line">
+                    {form.getValues('favoriteProject') || '-'}
+                  </TableCell>
                 </TableRow>
               </>
             )}
