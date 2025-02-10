@@ -25,7 +25,12 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import Recruit, { Step } from '@/api/type/schema/recruit';
-import RecruitForm from '@/api/type/schema/recruit-form';
+import RecruitForm, {
+  BackendTechStack,
+  DesignTechStack,
+  DevOpsTechStack,
+  FrontendTechStack,
+} from '@/api/type/schema/recruit-form';
 
 import { cn, formatDate } from '@/util';
 
@@ -327,11 +332,11 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">지원동기</TableHead>
-              <TableCell>{selectedForm.jiwonDonggi}</TableCell>
+              <TableCell className="break-all">{selectedForm.jiwonDonggi}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">자기소개</TableHead>
-              <TableCell>{selectedForm.selfIntroduce}</TableCell>
+              <TableCell className="break-all">{selectedForm.selfIntroduce}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">외부활동</TableHead>
@@ -362,34 +367,46 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>
+              <TableHead className="w-[180px]">프론트엔드 기술</TableHead>
               <TableCell className="whitespace-pre-wrap">
                 {selectedForm.frontendTechStacks.length > 0
-                  ? selectedForm.frontendTechStacks.join('\n')
+                  ? selectedForm.frontendTechStacks
+                      .map((s) => s as unknown as keyof typeof FrontendTechStack)
+                      .map((s) => FrontendTechStack[s])
+                      .join(', ')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">백엔드 기술 스택</TableHead>
+              <TableHead className="w-[180px]">백엔드 기술</TableHead>
               <TableCell className="whitespace-pre-wrap">
                 {selectedForm.backendTechStacks.length > 0
-                  ? selectedForm.backendTechStacks.join('\n')
+                  ? selectedForm.backendTechStacks
+                      .map((s) => s as unknown as keyof typeof BackendTechStack)
+                      .map((s) => BackendTechStack[s])
+                      .join(', ')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">DevOps 기술 스택</TableHead>
+              <TableHead className="w-[180px]">데브옵스 기술</TableHead>
               <TableCell className="whitespace-pre-wrap">
                 {selectedForm.devOpsTechStacks.length > 0
-                  ? selectedForm.devOpsTechStacks.join('\n')
+                  ? selectedForm.devOpsTechStacks
+                      .map((s) => s as unknown as keyof typeof DevOpsTechStack)
+                      .map((s) => DevOpsTechStack[s])
+                      .join(', ')
                   : '-'}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">디자인 기술 스택</TableHead>
+              <TableHead className="w-[180px]">디자인 기술</TableHead>
               <TableCell className="whitespace-pre-wrap">
                 {selectedForm.designTechStacks.length > 0
-                  ? selectedForm.designTechStacks.join('\n')
+                  ? selectedForm.designTechStacks
+                      .map((s) => s as unknown as keyof typeof DesignTechStack)
+                      .map((s) => DesignTechStack[s])
+                      .join(', ')
                   : '-'}
               </TableCell>
             </TableRow>

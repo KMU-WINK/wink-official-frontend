@@ -24,7 +24,9 @@ import {
 import { z } from 'zod';
 
 const VALID_DEPARTMENTS = Object.keys(departments).flatMap((department) =>
-  departments[department as keyof typeof departments].map((major) => `${department} ${major}`),
+  departments[department as unknown as keyof typeof departments].map(
+    (major) => `${department} ${major}`,
+  ),
 );
 
 export const CreateRecruitRequestSchema = z.object({

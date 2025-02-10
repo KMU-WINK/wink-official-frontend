@@ -210,7 +210,9 @@ export default function RecruitApplicationPage() {
             onClick={() =>
               !isProcessing &&
               go((prev) => {
-                sessionStorage.setItem('recruit:back', 'true');
+                if (14 <= prev && prev <= 17) {
+                  sessionStorage.setItem('recruit:back', 'true');
+                }
 
                 if (prev === 18 && sessionStorage.getItem('recruit:prev-develop') === 'false') {
                   sessionStorage.removeItem('recruit:prev-develop');
