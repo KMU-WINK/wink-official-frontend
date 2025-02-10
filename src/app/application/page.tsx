@@ -13,7 +13,7 @@ import { Skeleton } from '@/ui/skeleton';
 import Api from '@/api';
 import Application from '@/api/type/schema/application';
 
-import { Plus } from 'lucide-react';
+import { BookText, Plus } from 'lucide-react';
 
 export default function ApplicationPage() {
   const router = useRouter();
@@ -37,12 +37,18 @@ export default function ApplicationPage() {
   return (
     <>
       <div className="flex flex-col space-y-8 p-12">
-        <div className="flex flex-row justify-between items-end">
+        <div className="flex justify-between items-end">
           <p className="text-2xl sm:text-3xl font-medium">내 애플리케이션</p>
-          <Button variant="wink" onClick={() => setCreateApplicationModalOpen(true)}>
-            <Plus />
-            추가
-          </Button>
+          <div className="flex space-x-4">
+            <Button variant="outline" onClick={() => router.push('/application/manual')}>
+              <BookText />
+              가이드
+            </Button>
+            <Button variant="wink" onClick={() => setCreateApplicationModalOpen(true)}>
+              <Plus />
+              추가
+            </Button>
+          </div>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-6 sm:gap-4">
