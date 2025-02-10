@@ -1,7 +1,7 @@
 export const NAME_EXPRESSION = /^[가-힣]{2,5}$/;
 export const NAME_MESSAGE = '올바른 이름이 아닙니다.';
 
-export const PASSWORD_EXPRESSION = /^.*[a-zA-Z].*\d\S{8,}$/;
+export const PASSWORD_EXPRESSION = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
 export const PASSWORD_MESSAGE = '비밀번호는 8자 이상의 영문자 및 숫자 조합으로 작성해주세요.';
 
 export const KOOKMIN_EMAIL_EXPRESSION = /^[a-zA-Z0-9._%+-]+@kookmin\.ac\.kr$/;
