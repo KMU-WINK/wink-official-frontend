@@ -7,7 +7,7 @@ import { Input } from '@/ui/input';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Tag } from 'lucide-react';
+import { User } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step1({ go, form }: RecruitStepProps) {
@@ -15,7 +15,7 @@ export default function Step1({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Tag size={64} />
+      <User size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -28,7 +28,7 @@ export default function Step1({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">혹시, 이름이 어떻게 되시나요?</p>
+        <p className="font-medium text-lg">어떻게 불러드리면 될까요?</p>
       </motion.div>
 
       <motion.div

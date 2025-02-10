@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SiHtml5 } from 'react-icons/si';
 
 import { designTechStacks } from '@/app/recruit/form/_constant/tech_stack';
 
@@ -24,7 +23,7 @@ import { cn } from '@/util';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import { Check, ChevronsUpDown, Paintbrush } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step16({ go, setStep, form }: RecruitStepProps) {
@@ -43,7 +42,7 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
 
   return (
     <>
-      <SiHtml5 size={64} />
+      <Paintbrush size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -56,7 +55,7 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">다룰 수 있는 디자인 기술을 선택해주세요</p>
+        <p className="font-medium text-lg">다룰 수 있는 디자인 기술을 알려주세요!</p>
       </motion.div>
 
       <motion.div

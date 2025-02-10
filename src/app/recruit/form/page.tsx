@@ -1,7 +1,15 @@
 'use client';
 
-import { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
-import { Path, PathValue, useForm } from 'react-hook-form';
+import {
+  ComponentType,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { Path, PathValue, UseFormReturn, useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
@@ -31,7 +39,7 @@ import Step15 from '@/app/recruit/form/_step/15';
 import Step16 from '@/app/recruit/form/_step/16';
 import Step17 from '@/app/recruit/form/_step/17';
 import Step18 from '@/app/recruit/form/_step/18';
-import { Step, StepProps, nowDate, toDate } from '@/lib/util';
+import { nowDate, toDate } from '@/lib/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { endOfDay, startOfDay } from 'date-fns';
@@ -39,11 +47,14 @@ import { motion, useAnimationControls } from 'framer-motion';
 import { CircleChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
-export interface RecruitStepProps extends StepProps<RecruitFormRequest> {
+export interface RecruitStepProps {
+  go: Dispatch<SetStateAction<number>>;
+  setStep: Dispatch<SetStateAction<number>>;
+  form: UseFormReturn<RecruitFormRequest>;
   recruit: Recruit;
 }
 
-const STEPS: Step<RecruitStepProps> = [
+const STEPS: ComponentType<RecruitStepProps>[] = [
   Step0,
   Step1,
   Step2,

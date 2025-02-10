@@ -28,7 +28,7 @@ export default function Step11({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">Github 아이디를 입력해주세요</p>
+        <p className="font-medium text-lg">GitHub 아이디를 입력해주세요!</p>
       </motion.div>
 
       <motion.div

@@ -141,7 +141,7 @@ export default function Step0({ go }: RecruitStepProps) {
             go((prev) => prev + 1);
           }}
         >
-          네!
+          네
         </Button>
       </motion.div>
 

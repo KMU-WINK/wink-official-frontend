@@ -11,7 +11,7 @@ import Api from '@/api';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { IdCard } from 'lucide-react';
+import { BadgeCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step2({ go, recruit, form }: RecruitStepProps) {
@@ -21,7 +21,7 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <IdCard size={64} />
+      <BadgeCheck size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -35,7 +35,7 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
         }}
       >
         <p className="font-medium text-lg">
-          좋아요, {form.getValues('name').substring(1)}님! 학번을 알려주세요
+          좋아요, {form.getValues('name').substring(1)}님! 학번을 알려주실 수 있나요?
         </p>
       </motion.div>
 

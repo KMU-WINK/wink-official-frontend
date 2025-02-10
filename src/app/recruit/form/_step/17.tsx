@@ -9,7 +9,7 @@ import { cn } from '@/util';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Sparkle } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step17({ go, form }: RecruitStepProps) {
@@ -28,7 +28,7 @@ export default function Step17({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Sparkle size={64} />
+      <Lightbulb size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

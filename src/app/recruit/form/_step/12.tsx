@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SiHtml5 } from 'react-icons/si';
 
 import StackButton, { Stack } from '@/app/recruit/form/_component/StackButton';
 
@@ -8,6 +7,7 @@ import { Button } from '@/ui/button';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
+import { Boxes } from 'lucide-react';
 
 export default function Step12({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export default function Step12({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <SiHtml5 size={64} />
+      <Boxes size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -39,7 +39,7 @@ export default function Step12({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">분야 선택</p>
+        <p className="font-medium text-lg">어떤 분야에 관심이 있으신가요?</p>
       </motion.div>
 
       <motion.div

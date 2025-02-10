@@ -5,14 +5,14 @@ import { Button } from '@/ui/button';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Laptop } from 'lucide-react';
+import { Code } from 'lucide-react';
 
 export default function Step10({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <>
-      <Laptop size={64} />
+      <Code size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -25,7 +25,7 @@ export default function Step10({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">혹시 개발 경험이 있으신가요?</p>
+        <p className="font-medium text-lg">개발 경험이 있으신가요?</p>
       </motion.div>
 
       <motion.div
@@ -70,7 +70,7 @@ export default function Step10({ go, form }: RecruitStepProps) {
             go((prev) => prev + 1);
           }}
         >
-          네!
+          네
         </Button>
       </motion.div>
     </>

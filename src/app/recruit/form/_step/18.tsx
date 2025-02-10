@@ -41,7 +41,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">지원서를 제출하시겠습니까?</p>
+        <p className="font-medium text-lg">지원서를 제출할까요?</p>
       </motion.div>
 
       <motion.div
@@ -215,8 +215,8 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                 router.push('/recruit');
               },
               {
-                loading: '지원서를 쓰고 있습니다.',
-                success: '지원이 완료되었습니다.',
+                loading: '지원서를 제출하고 있습니다.',
+                success: '지원서를 제출했습니다.',
                 finally: () => setClicked(false),
               },
             );

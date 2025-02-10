@@ -8,7 +8,7 @@ import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate, formatDateApi, toDate } from '@/lib/util';
 
 import { motion } from 'framer-motion';
-import { CalendarCheck } from 'lucide-react';
+import { CalendarClock } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step9({ go, recruit, form }: RecruitStepProps) {
@@ -29,7 +29,7 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <CalendarCheck size={64} />
+      <CalendarClock size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -42,7 +42,7 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">면접 가능한 날짜를 선택해주세요</p>
+        <p className="font-medium text-lg">면접을 볼 수 있는 날짜를 선택해주세요!</p>
       </motion.div>
 
       <motion.div
