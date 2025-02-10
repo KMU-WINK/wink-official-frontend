@@ -89,6 +89,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {!IGNORE_PATHS.find((path) => pathname.startsWith(path)) && <Footer />}
 
         <Toaster
+          className="font-sans"
           position="top-center"
           duration={3000}
           closeButton={true}
