@@ -39,54 +39,62 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
   });
 
   const handleImageUpload = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       setIsUploading(true);
 
       const file = e.target.files?.[0];
       if (!file) return;
 
-      const { url } = await Api.Domain.User.updateMyAvatar();
+      toast.promise(
+        async () => {
+          const { url } = await Api.Domain.User.updateMyAvatar();
 
-      try {
-        await fetch(url, {
-          method: 'PUT',
-          body: file,
-          headers: {
-            'Content-Type': file.type,
+          await fetch(url, {
+            method: 'PUT',
+            body: file,
+            headers: {
+              'Content-Type': file.type,
+            },
+          });
+
+          const avatarUrl = url.replace('/original', '').replace(/\?.+$/, '.webp');
+
+          return new Promise<void>((resolve, reject) => {
+            let isUploaded = false;
+            const checkInterval = setInterval(async () => {
+              const response = await fetch(avatarUrl);
+
+              if (response.ok) {
+                clearInterval(checkInterval);
+
+                isUploaded = true;
+
+                setUser({
+                  ...user,
+                  avatar: avatarUrl,
+                } as User);
+
+                resolve();
+              }
+            }, 500);
+
+            setTimeout(() => {
+              if (isUploaded) return;
+              clearInterval(checkInterval);
+              reject();
+            }, 1000 * 30);
+          });
+        },
+        {
+          loading: '프로필 사진을 수정중입니다.',
+          success: '프로필 사진을 수정했습니다.',
+          error: '프로필 사진 수정에 실패했습니다.',
+          finally: () => {
+            setIsUploading(false);
+            setOpen(false);
           },
-        });
-
-        const avatarUrl = url.replace('/original', '').replace(/\?.+$/, '.webp');
-
-        let isUploaded = false;
-        const checkInterval = setInterval(async () => {
-          const response = await fetch(avatarUrl);
-
-          if (response.ok) {
-            clearInterval(checkInterval);
-
-            isUploaded = true;
-
-            setUser({
-              ...user,
-              avatar: avatarUrl,
-            } as User);
-
-            toast.success('프로필 이미지가 업데이트되었습니다.');
-          }
-        }, 500);
-
-        setTimeout(() => {
-          if (isUploaded) return;
-          clearInterval(checkInterval);
-          toast.error('프로필 이미지 업로드에 실패했습니다.');
-        }, 1000 * 30);
-      } catch (error) {
-        toast.error(`이미지 업로드에 실패했습니다. ${error}`);
-        throw new Error(error as string);
-      } finally {
-        setIsUploading(false);
-      }
+        },
+      );
     },
     [user],
   );
