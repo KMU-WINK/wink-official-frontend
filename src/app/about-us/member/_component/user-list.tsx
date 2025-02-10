@@ -1,19 +1,30 @@
 import { User } from '@/app/about-us/member/_component/user';
 
+import { Skeleton } from '@/ui/skeleton';
+
 import UserType from '@/api/type/schema/user';
 
 import { cn } from '@/util';
 
-type Direction = 'row' | 'col';
+type Direction = 'row' | 'col' | 'flex';
 
 interface UserListProps {
   role?: string;
   description?: string;
   direction?: Direction;
   users: UserType[];
+  skeleton: number;
+  loading: boolean;
 }
 
-export default function UserList({ role, description, direction = 'row', users }: UserListProps) {
+export default function UserList({
+  role,
+  description,
+  direction = 'row',
+  users,
+  skeleton,
+  loading,
+}: UserListProps) {
   return (
     <div className="flex flex-col space-y-4 items-center justify-center">
       {(role || description) && (
@@ -26,12 +37,14 @@ export default function UserList({ role, description, direction = 'row', users }
       <div
         className={cn(
           'flex gap-4 items-center justify-center',
-          direction === 'row' ? 'flex-row flex-wrap' : 'flex-col',
+          direction === 'row' ? 'flex-row' : direction === 'col' ? 'flex-col' : 'flex-wrap',
         )}
       >
-        {users.map((user) => (
-          <User key={user.id} user={user} />
-        ))}
+        {loading
+          ? Array.from({ length: skeleton }).map((_, index) => (
+              <Skeleton key={index} className="w-[300px] h-[170px] rounded-3xl mt-3" />
+            ))
+          : users.map((user) => <User key={user.id} user={user} />)}
       </div>
     </div>
   );
