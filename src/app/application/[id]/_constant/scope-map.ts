@@ -3,17 +3,18 @@ import { ForwardRefExoticComponent, RefAttributes } from 'react';
 import { Scope } from '@/api/type/schema/application';
 
 import {
-  AtSign,
+  BadgeCheck,
+  CaseSensitive,
   CircleDollarSign,
-  CircleUser,
   GraduationCap,
   IdCard,
+  Image,
   LucideProps,
+  Mail,
   Phone,
   RadioTower,
   Shapes,
-  Tag,
-  Type,
+  User,
 } from 'lucide-react';
 
 export interface ScopeMapType {
@@ -34,17 +35,23 @@ export const SCOPE_MAP: ScopeMapType[] = [
     name: '이메일',
     value: Scope.EMAIL,
     disable: false,
-    icon: AtSign,
+    icon: Mail,
   },
   {
     name: '이름',
     value: Scope.NAME,
     disable: false,
-    icon: Tag,
+    icon: User,
   },
   {
     name: '학번',
     value: Scope.STUDENT_ID,
+    disable: false,
+    icon: BadgeCheck,
+  },
+  {
+    name: '학부(과)',
+    value: Scope.DEPARTMENT,
     disable: false,
     icon: GraduationCap,
   },
@@ -58,13 +65,13 @@ export const SCOPE_MAP: ScopeMapType[] = [
     name: '프로필 사진',
     value: Scope.AVATAR,
     disable: false,
-    icon: CircleUser,
+    icon: Image,
   },
   {
     name: '한 줄 소개',
     value: Scope.DESCRIPTION,
     disable: false,
-    icon: Type,
+    icon: CaseSensitive,
   },
   {
     name: '소셜 정보',
