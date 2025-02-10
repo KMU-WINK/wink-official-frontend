@@ -332,11 +332,15 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">지원동기</TableHead>
-              <TableCell className="break-all">{selectedForm.jiwonDonggi}</TableCell>
+              <TableCell className="break-all whitespace-pre-line">
+                {selectedForm.jiwonDonggi}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">자기소개</TableHead>
-              <TableCell className="break-all">{selectedForm.selfIntroduce}</TableCell>
+              <TableCell className="break-all whitespace-pre-line">
+                {selectedForm.selfIntroduce}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">외부활동</TableHead>
@@ -368,7 +372,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">프론트엔드 기술</TableHead>
-              <TableCell className="whitespace-pre-wrap">
+              <TableCell>
                 {selectedForm.frontendTechStacks.length > 0
                   ? selectedForm.frontendTechStacks
                       .map((s) => s as unknown as keyof typeof FrontendTechStack)
@@ -379,7 +383,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">백엔드 기술</TableHead>
-              <TableCell className="whitespace-pre-wrap">
+              <TableCell>
                 {selectedForm.backendTechStacks.length > 0
                   ? selectedForm.backendTechStacks
                       .map((s) => s as unknown as keyof typeof BackendTechStack)
@@ -390,7 +394,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">데브옵스 기술</TableHead>
-              <TableCell className="whitespace-pre-wrap">
+              <TableCell>
                 {selectedForm.devOpsTechStacks.length > 0
                   ? selectedForm.devOpsTechStacks
                       .map((s) => s as unknown as keyof typeof DevOpsTechStack)
@@ -401,7 +405,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">디자인 기술</TableHead>
-              <TableCell className="whitespace-pre-wrap">
+              <TableCell>
                 {selectedForm.designTechStacks.length > 0
                   ? selectedForm.designTechStacks
                       .map((s) => s as unknown as keyof typeof DesignTechStack)
@@ -412,7 +416,9 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
-              <TableCell>{selectedForm.favoriteProject || '-'}</TableCell>
+              <TableCell className="whitespace-pre-line">
+                {selectedForm.favoriteProject || '-'}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
