@@ -81,8 +81,9 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
                   <PopoverTrigger asChild>
                     <Button variant="outline" role="combobox" className="w-full justify-between">
                       {field.value!.length > 0
-                        ? DesignTechStack[field.value![0] as keyof typeof DesignTechStack] +
-                          (field.value!.length > 1 ? ` (외 ${field.value!.length - 1}개)` : '')
+                        ? DesignTechStack[
+                            field.value![0] as unknown as keyof typeof DesignTechStack
+                          ] + (field.value!.length > 1 ? ` (외 ${field.value!.length - 1}개)` : '')
                         : '디자인 기술을 선택해주세요.'}
                       <ChevronsUpDown className="opacity-50" />
                     </Button>

@@ -128,7 +128,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                     {form.getValues('frontendTechStacks')!.length > 0
                       ? form
                           .getValues('frontendTechStacks')!
-                          .map((s) => s as keyof typeof FrontendTechStack)
+                          .map((s) => s as unknown as keyof typeof FrontendTechStack)
                           .map((s) => FrontendTechStack[s])
                           .join(', ')
                       : '-'}
@@ -140,7 +140,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                     {form.getValues('backendTechStacks')!.length > 0
                       ? form
                           .getValues('backendTechStacks')!
-                          .map((s) => s as keyof typeof BackendTechStack)
+                          .map((s) => s as unknown as keyof typeof BackendTechStack)
                           .map((s) => BackendTechStack[s])
                           .join(', ')
                       : '-'}
@@ -152,7 +152,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                     {form.getValues('devOpsTechStacks')!.length > 0
                       ? form
                           .getValues('devOpsTechStacks')!
-                          .map((s) => s as keyof typeof DevOpsTechStack)
+                          .map((s) => s as unknown as keyof typeof DevOpsTechStack)
                           .map((s) => DevOpsTechStack[s])
                           .join(', ')
                       : '-'}
@@ -164,7 +164,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                     {form.getValues('designTechStacks')!.length > 0
                       ? form
                           .getValues('designTechStacks')!
-                          .map((s) => s as keyof typeof DesignTechStack)
+                          .map((s) => s as unknown as keyof typeof DesignTechStack)
                           .map((s) => DesignTechStack[s])
                           .join(', ')
                       : '-'}

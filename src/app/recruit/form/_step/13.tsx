@@ -81,8 +81,9 @@ export default function Step13({ go, setStep, form }: RecruitStepProps) {
                   <PopoverTrigger asChild>
                     <Button variant="outline" role="combobox" className="w-full justify-between">
                       {field.value!.length > 0
-                        ? FrontendTechStack[field.value![0] as keyof typeof FrontendTechStack] +
-                          (field.value!.length > 1 ? ` (외 ${field.value!.length - 1}개)` : '')
+                        ? FrontendTechStack[
+                            field.value![0] as unknown as keyof typeof FrontendTechStack
+                          ] + (field.value!.length > 1 ? ` (외 ${field.value!.length - 1}개)` : '')
                         : '프론트엔드 기술을 선택해주세요.'}
                       <ChevronsUpDown className="opacity-50" />
                     </Button>
