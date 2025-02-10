@@ -19,7 +19,7 @@ import { cn } from '@/util';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Check, ChevronsUpDown, IdCard } from 'lucide-react';
+import { Check, ChevronsUpDown, GraduationCap } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step3({ go, form }: RecruitStepProps) {
@@ -29,7 +29,7 @@ export default function Step3({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <IdCard size={64} />
+      <GraduationCap size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -42,7 +42,7 @@ export default function Step3({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">학부(과)가 어디신가요</p>
+        <p className="font-medium text-lg">어느 학부(과)에서 공부하고 계신가요?</p>
       </motion.div>
 
       <motion.div

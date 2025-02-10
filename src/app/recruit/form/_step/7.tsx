@@ -9,7 +9,7 @@ import { cn } from '@/util';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { BookA } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step7({ go, form }: RecruitStepProps) {
@@ -28,7 +28,7 @@ export default function Step7({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <BookA size={64} />
+      <Pencil size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -41,7 +41,7 @@ export default function Step7({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">자기소개</p>
+        <p className="font-medium text-lg">간단한 자기소개를 부탁드려요!</p>
       </motion.div>
 
       <motion.div
@@ -72,7 +72,7 @@ export default function Step7({ go, form }: RecruitStepProps) {
               <FormControl>
                 <Textarea
                   className="overflow-hidden resize-none"
-                  placeholder="배우고 싶은 점을 입력해주세요."
+                  placeholder="자기소개를 입력해주세요."
                   {...field}
                   ref={(e) => {
                     field.ref(e);

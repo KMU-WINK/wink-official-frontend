@@ -9,7 +9,7 @@ import { cn } from '@/util';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { BadgeHelp } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step6({ go, form }: RecruitStepProps) {
@@ -28,7 +28,7 @@ export default function Step6({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <BadgeHelp size={64} />
+      <MessageSquare size={64} />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -41,7 +41,7 @@ export default function Step6({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">WINK에 왜 지원하시나요?</p>
+        <p className="font-medium text-lg">WINK를 지원하게 된 계기가 궁금해요!</p>
       </motion.div>
 
       <motion.div

@@ -34,7 +34,7 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">이메일을 입력해주세요.</p>
+        <p className="font-medium text-lg">이메일을 입력해주세요!</p>
       </motion.div>
 
       <motion.div
@@ -55,7 +55,7 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="email" placeholder="이메일을 입력해주세요!" {...field} />
+                <Input type="email" placeholder="이메일을 입력해주세요." {...field} />
               </FormControl>
               <FormMessage />
               <FormDescription>국민대학교 메일만 사용 가능합니다.</FormDescription>

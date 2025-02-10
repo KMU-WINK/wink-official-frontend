@@ -1,22 +1,9 @@
-import { ComponentType, Dispatch, SetStateAction } from 'react';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
-
 import { type ClassValue, clsx } from 'clsx';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-// ############################################################################################
-
-export type Step<T> = ComponentType<T>[];
-
-export interface StepProps<T extends FieldValues> {
-  go: Dispatch<SetStateAction<number>>;
-  setStep: Dispatch<SetStateAction<number>>;
-  form: UseFormReturn<T>;
 }
 
 // ############################################################################################

@@ -34,7 +34,7 @@ export default function Step5({ go, recruit, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">연락 가능한 전화번호를 입력해주세요</p>
+        <p className="font-medium text-lg">전화번호를 알려주세요!</p>
       </motion.div>
 
       <motion.div

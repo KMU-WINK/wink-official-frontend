@@ -7,7 +7,7 @@ import { Input } from '@/ui/input';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { CalendarCheck } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step8({ go, form }: RecruitStepProps) {
@@ -15,7 +15,7 @@ export default function Step8({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <CalendarCheck size={64} />
+      <Calendar size={64} />
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{
@@ -27,7 +27,7 @@ export default function Step8({ go, form }: RecruitStepProps) {
           },
         }}
       >
-        <p className="font-medium text-lg">대외활동</p>
+        <p className="font-medium text-lg">현재 하고 있는 대외활동이 있나요?</p>
       </motion.div>
       <motion.div
         initial={{ opacity: 0 }}
@@ -47,7 +47,6 @@ export default function Step8({ go, form }: RecruitStepProps) {
           render={({ field }) => {
             const values = [...(field.value || [])];
 
-            // 마지막 셀이 비어있지 않은 경우에만 빈 셀 추가
             if (values.length === 0 || values[values.length - 1] !== '') {
               values.push('');
             }
