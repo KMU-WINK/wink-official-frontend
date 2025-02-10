@@ -120,6 +120,7 @@ export default function AdminUserPrePage() {
             <TableRow>
               <TableHead className="min-w-[125px]">이름</TableHead>
               <TableHead className="min-w-[100px]">학번</TableHead>
+              <TableHead className="min-w-[200px]">학과</TableHead>
               <TableHead className="min-w-[250px]">이메일</TableHead>
               <TableHead className="min-w-[150px]">전화번호</TableHead>
               <TableHead className="min-w-[250px]">토큰</TableHead>
@@ -137,6 +138,9 @@ export default function AdminUserPrePage() {
                     <Skeleton className="w-[60px] h-4" />
                   </TableCell>
                   <TableCell>
+                    <Skeleton className="w-[100px] h-4" />
+                  </TableCell>
+                  <TableCell>
                     <Skeleton className="w-[130px] h-4" />
                   </TableCell>
                   <TableCell>
@@ -152,6 +156,7 @@ export default function AdminUserPrePage() {
                 <TableRow key={user.id}>
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.studentId}</TableCell>
+                  <TableCell>{user.department}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phoneNumber}</TableCell>
                   <TableCell

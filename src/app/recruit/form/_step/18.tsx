@@ -56,7 +56,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
           },
         }}
       >
-        <Table className="w-full max-w-[600px]">
+        <Table className="w-full max-w-[300px] sm:max-w-[600px]">
           <TableBody>
             <TableRow>
               <TableHead className="w-[180px]">이름</TableHead>

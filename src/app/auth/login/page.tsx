@@ -22,7 +22,7 @@ export default function AuthLoginPage() {
   const router = useRouter();
   const params = useSearchParams();
 
-  const confetti = useMemo(() => localStorage.getItem('register-confetti') === 'true', []);
+  const confetti = useMemo(() => sessionStorage.getItem('register:confetti') === 'true', []);
 
   const form = useForm<LoginRequest>({
     resolver: zodResolver(LoginRequestSchema),
@@ -49,7 +49,7 @@ export default function AuthLoginPage() {
   useEffect(() => {
     if (!confetti) return;
 
-    localStorage.removeItem('register-confetti');
+    sessionStorage.removeItem('register:confetti');
   }, [confetti]);
 
   return (
