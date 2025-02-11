@@ -211,10 +211,10 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                   favoriteProject: form.getValues('favoriteProject') || undefined,
                 });
 
-                localStorage.setItem('recruit:confetti', 'true');
                 localStorage.removeItem('recruit:data');
                 localStorage.removeItem('recruit:stacks');
                 localStorage.removeItem('recruit:step');
+                sessionStorage.setItem('recruit:confetti', 'true');
                 sessionStorage.removeItem('recruit:prev-develop');
                 sessionStorage.removeItem('recruit:back');
 
@@ -222,7 +222,15 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
               },
               {
                 loading: '지원서를 제출하고 있습니다.',
-                success: '지원서를 제출했습니다.',
+                success: (
+                  <div className="flex flex-col space-y-2">
+                    <p className="font-medium">지원서를 제출했습니다.</p>
+                    <p className="text-neutral-500">
+                      면접 대상자는 추후 문자와 이메일로 안내될 예정입니다.
+                    </p>
+                  </div>
+                ),
+                duration: 1000 * 60 * 60,
                 finally: () => setClicked(false),
               },
             );
