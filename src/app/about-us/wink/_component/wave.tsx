@@ -12,9 +12,9 @@ interface WaveProps {
 export default function Wave({ children, className }: WaveProps) {
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="relative w-full h-[150px] sm:h-[250px] bg-wink-100 overflow-hidden">
+      <div className="relative w-full h-[150px] sm:h-[250px] 2xl:[350px] bg-wink-100 overflow-hidden">
         <motion.div
-          className="absolute -left-[50vw] sm:-left-[100vw] bottom-[10vh] sm:bottom-[15vh] w-[200vw] h-[200vw] sm:w-[300vw] sm:h-[300vw] bg-white rounded-[47%]"
+          className="absolute -left-[50vw] sm:-left-[100vw] 2xl:-left-[175vw] bottom-[10vh] sm:bottom-[15vh] 2xl:bottom-[10vh] w-[200vw] h-[200vw] sm:w-[300vw] sm:h-[300vw] 2xl:w-[450vw] 2xl:h-[450vw] bg-white rounded-[47%] 2xl:rounded-[48%]"
           animate={{
             rotate: 360,
           }}
@@ -25,7 +25,7 @@ export default function Wave({ children, className }: WaveProps) {
         />
 
         <motion.div
-          className="absolute -left-[50vw] sm:-left-[100vw] bottom-[10vh] sm:bottom-[15vh] w-[200vw] h-[200vw] sm:w-[300vw] sm:h-[300vw] bg-white/50 rounded-[45%]"
+          className="absolute -left-[50vw] sm:-left-[100vw] 2xl:-left-[175vw] bottom-[10vh] sm:bottom-[15vh] 2xl:bottom-[10vh] w-[200vw] h-[200vw] sm:w-[300vw] sm:h-[300vw] 2xl:w-[450vw] 2xl:h-[450vw] bg-white/50 rounded-[45%] 2xl:rounded-[47%]"
           animate={{
             rotate: 360,
           }}
