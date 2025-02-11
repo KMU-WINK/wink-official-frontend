@@ -12,25 +12,25 @@ interface WaveProps {
 export default function Wave({ children, className }: WaveProps) {
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="relative w-full h-[150px] sm:h-[250px] overflow-hidden">
+      <div className="relative w-full h-[150px] sm:h-[250px] bg-wink-100 overflow-hidden">
         <motion.div
-          className="absolute -left-[100vw] top-[10vh] w-[300vw] h-[300vw] bg-wink-100/50 rounded-[47%] xl:w-[400vw] xl:h-[400vw] xl:-left-[150vw] xl:rounded-[48.5%] 2xl:w-[550vw] 2xl:h-[550vw] 2xl:-left-[225vw] 2xl:rounded-[49.5%]"
+          className="absolute -left-[100vw] bottom-[15vh] w-[300vw] h-[300vw] bg-white rounded-[47%]"
           animate={{
             rotate: 360,
           }}
           transition={{
-            duration: 45,
+            duration: 25,
             repeat: Infinity,
           }}
         />
 
         <motion.div
-          className="absolute -left-[100vw] top-[10vh] w-[300vw] h-[300vw] bg-wink-100 rounded-[48%] xl:w-[400vw] xl:h-[400vw] xl:-left-[150vw] xl:rounded-[48%] 2xl:w-[550vw] 2xl:h-[550vw] 2xl:-left-[225vw] 2xl:rounded-[49%]"
+          className="absolute -left-[100vw] bottom-[15vh] w-[300vw] h-[300vw] bg-white/50 rounded-[45%]"
           animate={{
             rotate: 360,
           }}
           transition={{
-            duration: 55,
+            duration: 25,
             repeat: Infinity,
           }}
         />
