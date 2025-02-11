@@ -101,13 +101,13 @@ export default function ProgramActivityPage() {
                       alt={image}
                       width={500}
                       height={300}
-                      className="h-[150px] sm:h-[200px] rounded-xl object-cover"
+                      className="h-[180px] sm:h-[240px] rounded-xl object-cover"
                     />
                   </CarouselItem>
                 ))
               ) : (
                 <CarouselItem>
-                  <Skeleton className="w-[300px] sm:w-[500px] h-[150px] sm:h-[200px] rounded-xl" />
+                  <Skeleton className="w-[300px] sm:w-[500px] h-[180px] sm:h-[240px] rounded-xl" />
                 </CarouselItem>
               )}
             </CarouselContent>
