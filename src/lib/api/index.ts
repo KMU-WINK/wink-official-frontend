@@ -2,6 +2,7 @@ import AdminRecruit from '@/api/domain/$recruit';
 import AdminUser from '@/api/domain/$user';
 import Application from '@/api/domain/application';
 import Auth from '@/api/domain/auth';
+import Migrate from '@/api/domain/migrate';
 import AdminActivity from '@/api/domain/program/$activity';
 import AdminHistory from '@/api/domain/program/$history';
 import AdminProject from '@/api/domain/program/$project';
@@ -36,6 +37,7 @@ export default class Api {
       Upload: new Upload(this.request),
     },
     Application: new Application(this.request),
+    Migrate: new Migrate(this.request),
   };
 
   private constructor() {
