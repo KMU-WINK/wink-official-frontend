@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -21,6 +21,8 @@ export default function Step0({ go }: RecruitStepProps) {
   const [isAgreePrivacy, setAgreePrivacy] = useState<CheckedState>('indeterminate');
 
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
   return (
     <>
@@ -138,10 +140,10 @@ export default function Step0({ go }: RecruitStepProps) {
           onClick={() => {
             setClicked(true);
 
-            go((prev) => prev + 1);
+            go((prev) => (isFinalEdit ? 18 : prev + 1));
           }}
         >
-          네
+          {isFinalEdit ? '네' : '수정 완료'}
         </Button>
       </motion.div>
 

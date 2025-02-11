@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { designTechStacks } from '@/app/recruit/form/_constant/tech_stack';
 
@@ -29,6 +29,8 @@ import { toast } from 'sonner';
 export default function Step16({ go, setStep, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+
   useEffect(() => {
     const stacks: Stack[] = JSON.parse(localStorage.getItem('recruit:stacks')!);
     const amount = sessionStorage.getItem('recruit:back') === 'true' ? -1 : +1;
@@ -39,6 +41,9 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
       sessionStorage.removeItem('recruit:back');
     }
   }, []);
+  if (isFinalEdit) {
+    sessionStorage.removeItem('recruit:final_edit');
+  }
 
   return (
     <>
@@ -149,19 +154,21 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
         }}
         className="flex items-center space-x-4"
       >
-        <Button
-          variant="outline"
-          disabled={clicked}
-          onClick={() => {
-            setClicked(true);
+        {!isFinalEdit && (
+          <Button
+            variant="outline"
+            disabled={clicked}
+            onClick={() => {
+              setClicked(true);
 
-            form.setValue('designTechStacks', []);
+              form.setValue('designTechStacks', []);
 
-            go((prev) => prev + 1);
-          }}
-        >
-          건너뛰기
-        </Button>
+              go((prev) => prev + 1);
+            }}
+          >
+            건너뛰기
+          </Button>
+        )}
 
         <Button
           variant="wink"
@@ -170,14 +177,18 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('designTechStacks')) {
-              go((prev) => prev + 1);
+              if (isFinalEdit) {
+                sessionStorage.removeItem('recruit:final_edit');
+              }
+
+              go((prev) => (isFinalEdit ? 18 : prev + 1));
             } else {
               toast.error(form.formState.errors.designTechStacks!.message);
               setClicked(false);
             }
           }}
         >
-          다음으로
+          {isFinalEdit ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>
