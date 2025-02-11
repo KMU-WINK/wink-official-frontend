@@ -31,11 +31,11 @@ export default function Step0({ go }: RecruitStepProps) {
       <motion.div
         initial={{
           scale: 1.1,
-          rotate: 10,
+          rotate: -10,
         }}
         animate={{
           scale: [1.1, 1],
-          rotate: [0, 20],
+          rotate: [-20, 0],
           transition: {
             delay: 0.5,
             duration: 0.4,

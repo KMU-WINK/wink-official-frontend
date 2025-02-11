@@ -99,6 +99,7 @@ export default function RecruitApplicationPage() {
       selfIntroduce: '',
       outings: [],
       interviewDates: [],
+      whyCannotInterview: '',
       github: '',
       frontendTechStacks: [],
       backendTechStacks: [],

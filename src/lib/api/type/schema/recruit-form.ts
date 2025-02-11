@@ -12,6 +12,7 @@ export default interface RecruitForm extends BaseSchema {
   selfIntroduce: string;
   outings: string[];
   interviewDates: string[];
+  whyCannotInterview: string;
   github: string;
   frontendTechStacks: FrontendTechStack[];
   backendTechStacks: BackendTechStack[];

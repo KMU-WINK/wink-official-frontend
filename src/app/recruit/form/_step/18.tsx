@@ -178,7 +178,11 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
               <TableCell className="whitespace-pre-wrap hover:underline cursor-pointer">
                 {form
                   .getValues('interviewDates')
-                  .map((date) => (date === '0000-01-01' ? '기타' : formatDate(date, true)))
+                  .map((date) =>
+                    date === '0001-01-01'
+                      ? `기타 (사유: ${form.getValues('whyCannotInterview')})`
+                      : formatDate(date, true),
+                  )
                   .join('\n')}
               </TableCell>
             </TableRow>
@@ -331,6 +335,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
               async () => {
                 await Api.Domain.Recruit.recruitForm(recruit.id, {
                   ...form.getValues(),
+                  whyCannotInterview: form.getValues('whyCannotInterview') || undefined,
                   github: form.getValues('github') || undefined,
                   favoriteProject: form.getValues('favoriteProject') || undefined,
                 });
@@ -354,7 +359,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     </p>
                   </div>
                 ),
-                duration: 1000 * 60 * 60,
+                duration: 1000 * 60 * 3,
                 finally: () => setClicked(false),
               },
             );
