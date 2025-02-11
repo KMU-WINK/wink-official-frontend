@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 
+import Image from 'next/image';
+
 import { departments } from '@/app/recruit/form/_constant/departments';
 
 import { Button } from '@/ui/button';
@@ -16,10 +18,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import { cn } from '@/util';
 
+import GraduationCap from '@/public/recruit/icon/graduation_cap.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Check, ChevronsUpDown, GraduationCap } from 'lucide-react';
+import { Check, ChevronsUpDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step3({ go, form }: RecruitStepProps) {
@@ -31,7 +35,13 @@ export default function Step3({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <GraduationCap size={64} />
+      <Image
+        src={GraduationCap}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

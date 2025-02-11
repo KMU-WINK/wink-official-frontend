@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import PrivacyModal from '@/app/recruit/form/_component/modal/privacy';
@@ -8,11 +9,12 @@ import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { Label } from '@/ui/label';
 
+import Hand from '@/public/recruit/icon/hand.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { motion } from 'framer-motion';
-import { Hand } from 'lucide-react';
 
 export default function Step0({ go }: RecruitStepProps) {
   const router = useRouter();
@@ -32,8 +34,8 @@ export default function Step0({ go }: RecruitStepProps) {
           rotate: 10,
         }}
         animate={{
-          scale: 1,
-          rotate: [10, 30],
+          scale: [1.1, 1],
+          rotate: [0, 20],
           transition: {
             delay: 0.5,
             duration: 0.4,
@@ -43,7 +45,13 @@ export default function Step0({ go }: RecruitStepProps) {
           },
         }}
       >
-        <Hand size={64} />
+        <Image
+          src={Hand}
+          width={72}
+          height={72}
+          className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+          alt="icon"
+        />
       </motion.div>
 
       <div className="flex flex-col items-center">
@@ -143,7 +151,7 @@ export default function Step0({ go }: RecruitStepProps) {
             go((prev) => (isFinalEdit ? 18 : prev + 1));
           }}
         >
-          {isFinalEdit ? '네' : '수정 완료'}
+          {isFinalEdit ? '수정 완료' : '네'}
         </Button>
       </motion.div>
 

@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react';
-import { SiGithub } from 'react-icons/si';
+
+import Image from 'next/image';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
+
+import Github from '@/public/recruit/icon/github.avif';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -17,7 +20,13 @@ export default function Step11({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <SiGithub size={64} />
+      <Image
+        src={Github}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

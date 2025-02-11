@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import Image from 'next/image';
+
 import { frontendTechStacks } from '@/app/recruit/form/_constant/tech_stack';
 
 import { Stack } from '@/app/recruit/form/_component/StackButton';
@@ -20,10 +22,12 @@ import { FrontendTechStack } from '@/api/type/schema/recruit-form';
 
 import { cn } from '@/util';
 
+import Frontend from '@/public/recruit/icon/fe.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Check, ChevronsUpDown, Palette } from 'lucide-react';
+import { Check, ChevronsUpDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step13({ go, setStep, form }: RecruitStepProps) {
@@ -44,7 +48,13 @@ export default function Step13({ go, setStep, form }: RecruitStepProps) {
 
   return (
     <>
-      <Palette size={64} />
+      <Image
+        src={Frontend}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

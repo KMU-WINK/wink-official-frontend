@@ -27,9 +27,9 @@ import { useUserStore } from '@/store/user';
 import { formatDate, nowDate, toDate } from '@/util';
 
 import BackgroundImage from '@/public/recruit/background.avif';
+import RocketIcon from '@/public/recruit/icon/rocket_3d.avif';
 
 import { endOfDay, startOfDay } from 'date-fns';
-import { TicketsPlane } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function RecruitPage() {
@@ -115,8 +115,13 @@ export default function RecruitPage() {
       {recruit && (
         <div className="flex flex-col items-center justify-center py-20 sm:py-28 space-y-10 sm:space-y-14">
           <div className="flex flex-col items-center justify-center space-y-4">
-            <TicketsPlane size={72} className="hidden sm:block" />
-            <TicketsPlane size={48} className="block sm:hidden" />
+            <Image
+              src={RocketIcon}
+              width={72}
+              height={72}
+              className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+              alt="icon"
+            />
             <p className="text-lg sm:text-2xl font-bold">
               {recruit.year}년도 {recruit.semester}학기 WINK 신규 부원
             </p>

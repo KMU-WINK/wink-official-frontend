@@ -1,13 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import Image from 'next/image';
+
 import StackButton, { Stack } from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
 
+import Laptop from '@/public/recruit/icon/laptop.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Boxes } from 'lucide-react';
 
 export default function Step12({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -28,7 +31,13 @@ export default function Step12({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Boxes size={64} />
+      <Image
+        src={Laptop}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
