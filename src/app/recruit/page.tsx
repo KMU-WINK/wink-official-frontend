@@ -91,7 +91,7 @@ export default function RecruitPage() {
         <ScrollDown />
       </div>
 
-      <div className="flex flex-col space-y-10 sm:space-y-24 py-20 sm:py-28">
+      <div className="flex flex-col space-y-10 sm:space-y-24 pt-20 sm:pt-28">
         <Items
           title="모집 개요"
           description={`${recruit?.year ?? new Date().getFullYear()}년도 ${recruit?.semester ?? 1}학기 WINK 신입 부원 모집 개요`}
@@ -112,25 +112,8 @@ export default function RecruitPage() {
         </Items>
       </div>
 
-      <div className="flex flex-col items-center py-20 sm:py-28 bg-wink-50">
-        <Items title="자주 묻는 질문">
-          <Accordion
-            type="single"
-            collapsible
-            className="w-[300px] sm:w-[608px] bg-white rounded-3xl px-6"
-          >
-            {qnas.map(({ question, answer }, index) => (
-              <AccordionItem key={index} value={index.toString()}>
-                <AccordionTrigger className="text-sm sm:text-base">{question}</AccordionTrigger>
-                <AccordionContent className="text-xs sm:text-base">{answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </Items>
-      </div>
-
       {recruit && (
-        <div className="flex flex-col items-center justify-center pt-20 sm:pt-28 space-y-10 sm:space-y-14">
+        <div className="flex flex-col items-center justify-center py-20 sm:py-28 space-y-10 sm:space-y-14">
           <div className="flex flex-col items-center justify-center space-y-4">
             <TicketsPlane size={72} className="hidden sm:block" />
             <TicketsPlane size={48} className="block sm:hidden" />
@@ -162,6 +145,23 @@ export default function RecruitPage() {
           )}
         </div>
       )}
+
+      <div className="flex flex-col items-center py-20 sm:py-28 bg-wink-50">
+        <Items title="자주 묻는 질문">
+          <Accordion
+            type="single"
+            collapsible
+            className="w-[300px] sm:w-[608px] bg-white rounded-3xl px-6"
+          >
+            {qnas.map(({ question, answer }, index) => (
+              <AccordionItem key={index} value={index.toString()}>
+                <AccordionTrigger className="text-sm sm:text-base">{question}</AccordionTrigger>
+                <AccordionContent className="text-xs sm:text-base">{answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </Items>
+      </div>
 
       {confetti && <Confetti recycle={false} />}
     </>
