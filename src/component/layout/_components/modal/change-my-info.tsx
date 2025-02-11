@@ -89,10 +89,7 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
           loading: '프로필 사진을 수정중입니다.',
           success: '프로필 사진을 수정했습니다.',
           error: '프로필 사진 수정에 실패했습니다.',
-          finally: () => {
-            setIsUploading(false);
-            setOpen(false);
-          },
+          finally: () => setIsUploading(false),
         },
       );
     },
