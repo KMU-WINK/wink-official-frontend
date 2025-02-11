@@ -70,8 +70,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
           opacity: 1,
           x: 0,
           transition: {
-            delay: 0.75,
-            duration: 0.5,
+            delay: 1.9,
+            duration: 0.4,
             ease: 'easeInOut',
           },
         }}
@@ -319,7 +319,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
         animate={{
           opacity: 1,
           transition: {
-            delay: 3.1,
+            delay: 2.8,
             duration: 0.4,
             ease: 'easeInOut',
           },
