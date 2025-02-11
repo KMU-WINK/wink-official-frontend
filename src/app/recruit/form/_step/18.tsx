@@ -104,7 +104,7 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
               <TableCell className="whitespace-pre-wrap">
                 {form
                   .getValues('interviewDates')
-                  .map((date) => formatDate(date, true))
+                  .map((date) => (date === '0000-01-01' ? '기타' : formatDate(date, true)))
                   .join('\n')}
               </TableCell>
             </TableRow>
