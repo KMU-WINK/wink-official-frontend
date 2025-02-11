@@ -1,11 +1,14 @@
 import { useMemo, useState } from 'react';
 
+import Image from 'next/image';
+
 import { Button } from '@/ui/button';
+
+import Gear from '@/public/recruit/icon/gear.avif';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Code } from 'lucide-react';
 
 export default function Step10({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -14,7 +17,13 @@ export default function Step10({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Code size={64} />
+      <Image
+        src={Gear}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

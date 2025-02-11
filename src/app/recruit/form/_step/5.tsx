@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/ui/button';
@@ -8,10 +9,11 @@ import { Input } from '@/ui/input';
 
 import Api from '@/api';
 
+import Telephone from '@/public/recruit/icon/telephone.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Phone } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step5({ go, recruit, form }: RecruitStepProps) {
@@ -23,7 +25,13 @@ export default function Step5({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <Phone size={64} />
+      <Image
+        src={Telephone}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

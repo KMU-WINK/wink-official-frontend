@@ -1,13 +1,16 @@
 import { useMemo, useState } from 'react';
 
+import Image from 'next/image';
+
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
+import Smile from '@/public/recruit/icon/smile.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { User } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step1({ go, form }: RecruitStepProps) {
@@ -17,7 +20,13 @@ export default function Step1({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <User size={64} />
+      <Image
+        src={Smile}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

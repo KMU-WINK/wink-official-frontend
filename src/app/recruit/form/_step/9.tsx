@@ -1,15 +1,18 @@
 import { useMemo, useState } from 'react';
 
+import Image from 'next/image';
+
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
 import { Separator } from '@/ui/separator';
 
+import Calendar from '@/public/recruit/icon/calendar.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate, formatDateApi, toDate } from '@/lib/util';
 
 import { motion } from 'framer-motion';
-import { CalendarClock } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step9({ go, recruit, form }: RecruitStepProps) {
@@ -32,7 +35,13 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <CalendarClock size={64} />
+      <Image
+        src={Calendar}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

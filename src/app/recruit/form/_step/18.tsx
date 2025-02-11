@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -16,11 +17,12 @@ import {
   FrontendTechStack,
 } from '@/api/type/schema/recruit-form';
 
+import BallotBox from '@/public/recruit/icon/ballot_box.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate } from '@/lib/util';
 
 import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step18({ go, recruit, form }: RecruitStepProps) {
@@ -40,7 +42,13 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <Send size={64} />
+      <Image
+        src={BallotBox}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

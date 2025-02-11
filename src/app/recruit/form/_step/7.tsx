@@ -1,15 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import Image from 'next/image';
+
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Textarea } from '@/ui/textarea';
 
 import { cn } from '@/util';
 
+import IdCard from '@/public/recruit/icon/id_card.avif';
+
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { Pencil } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step7({ go, form }: RecruitStepProps) {
@@ -30,7 +33,13 @@ export default function Step7({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Pencil size={64} />
+      <Image
+        src={IdCard}
+        width={72}
+        height={72}
+        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
+        alt="icon"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
