@@ -126,10 +126,9 @@ export default function AdminUserPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[125px]">이름</TableHead>
+              <TableHead className="min-w-[75px]">이름</TableHead>
               <TableHead className="min-w-[100px]">학번</TableHead>
-              <TableHead className="min-w-[250px]">이메일</TableHead>
-              <TableHead className="min-w-[150px]">전화번호</TableHead>
+              <TableHead className="min-w-[250px]">학부(과)</TableHead>
               <TableHead className="min-w-[100px]">역할</TableHead>
               <TableHead className="min-w-[75px]">회비 납부</TableHead>
               <TableHead className="w-[75px]">액션</TableHead>
@@ -148,9 +147,6 @@ export default function AdminUserPage() {
                   </TableCell>
                   <TableCell>
                     <Skeleton className="w-[130px] h-4" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="w-[100px] h-4" />
                   </TableCell>
                   <TableCell>
                     <Skeleton className="w-[30px] h-4" />
@@ -173,8 +169,7 @@ export default function AdminUserPage() {
                     {user.name}
                   </TableCell>
                   <TableCell>{user.studentId}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.phoneNumber}</TableCell>
+                  <TableCell>{user.department}</TableCell>
                   <TableCell>{getKoreanRole(user.role)}</TableCell>
                   <TableCell>{user.fee ? 'O' : 'X'}</TableCell>
                   <TableCell>

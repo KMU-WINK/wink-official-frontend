@@ -118,12 +118,11 @@ export default function AdminUserPrePage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[125px]">이름</TableHead>
+              <TableHead className="min-w-[75px]">이름</TableHead>
               <TableHead className="min-w-[100px]">학번</TableHead>
-              <TableHead className="min-w-[200px]">학과</TableHead>
+              <TableHead className="min-w-[250px]">학과</TableHead>
               <TableHead className="min-w-[250px]">이메일</TableHead>
               <TableHead className="min-w-[150px]">전화번호</TableHead>
-              <TableHead className="min-w-[250px]">토큰</TableHead>
               <TableHead className="w-[75px]">액션</TableHead>
             </TableRow>
           </TableHeader>
@@ -138,16 +137,13 @@ export default function AdminUserPrePage() {
                     <Skeleton className="w-[60px] h-4" />
                   </TableCell>
                   <TableCell>
-                    <Skeleton className="w-[100px] h-4" />
+                    <Skeleton className="w-[130px] h-4" />
                   </TableCell>
                   <TableCell>
                     <Skeleton className="w-[130px] h-4" />
                   </TableCell>
                   <TableCell>
                     <Skeleton className="w-[100px] h-4" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="w-[250px] h-4" />
                   </TableCell>
                 </TableRow>
               ))
@@ -159,24 +155,6 @@ export default function AdminUserPrePage() {
                   <TableCell>{user.department}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phoneNumber}</TableCell>
-                  <TableCell
-                    className={
-                      'clipboard' in navigator
-                        ? 'cursor-pointer text-blue-600 hover:text-blue-600/90'
-                        : ''
-                    }
-                    onClick={async () => {
-                      if (!('clipboard' in navigator)) return;
-
-                      await navigator.clipboard.writeText(
-                        `${window.location.origin}/auth/register?token=${user.token}`,
-                      );
-
-                      toast.info('회원가입 링크가 클립보드에 저장되었습니다.');
-                    }}
-                  >
-                    {user.token}
-                  </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -185,6 +163,19 @@ export default function AdminUserPrePage() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
+                        <DropdownMenuItem
+                          onClick={async () => {
+                            if (!('clipboard' in navigator)) return;
+
+                            await navigator.clipboard.writeText(
+                              `${window.location.origin}/auth/register?token=${user.token}`,
+                            );
+
+                            toast.info('회원가입 링크가 클립보드에 저장되었습니다.');
+                          }}
+                        >
+                          회원가입 링크 복사
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => {
                             setSelectedUser(user);
