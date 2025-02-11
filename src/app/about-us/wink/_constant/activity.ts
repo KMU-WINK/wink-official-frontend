@@ -1,9 +1,9 @@
 import { StaticImageData } from 'next/image';
 
 import LinkImage from '@/public/about-us/wink/activity/link.avif';
-import WinkathonImage from '@/public/about-us/wink/activity/link.avif';
 import PreCourseImage from '@/public/about-us/wink/activity/precourse.avif';
 import WiminarImage from '@/public/about-us/wink/activity/wiminar.avif';
+import WinkathonImage from '@/public/about-us/wink/activity/winkathon.avif';
 
 interface Activity {
   tag: string;
