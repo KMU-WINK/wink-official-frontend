@@ -1,15 +1,29 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { departments } from '@/app/recruit/form/_constant/departments';
+
 import { Button } from '@/ui/button';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/ui/command';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import Api from '@/api';
 import { InviteRequest, InviteRequestSchema } from '@/api/type/domain/user';
 
+import { cn } from '@/util';
+
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Check, ChevronsUpDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface InviteUserModalProps {
@@ -18,12 +32,15 @@ interface InviteUserModalProps {
 }
 
 export default function InviteUserModal({ open, setOpen }: InviteUserModalProps) {
+  const [departmentOpen, setDepartmentOpen] = useState<boolean>(false);
+
   const form = useForm<InviteRequest>({
     resolver: zodResolver(InviteRequestSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
       studentId: '',
+      department: '',
       email: '',
       phoneNumber: '',
     },
@@ -69,6 +86,68 @@ export default function InviteUserModal({ open, setOpen }: InviteUserModalProps)
                   <FormLabel>학번</FormLabel>
                   <FormControl>
                     <Input placeholder="학번을 입력해주세요." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="department"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>학부(과)</FormLabel>
+                  <FormControl>
+                    <Popover open={departmentOpen} onOpenChange={setDepartmentOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={departmentOpen}
+                          className={cn(
+                            'w-full justify-between font-normal',
+                            field.value ? '' : 'text-neutral-500',
+                          )}
+                        >
+                          {field.value || '학부(과)를 선택해주세요.'}
+                          <ChevronsUpDown className="opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="p-0">
+                        <Command>
+                          <CommandInput placeholder="학부(과) 검색" />
+                          <CommandList>
+                            <CommandEmpty>검색된 학과가 없습니다.</CommandEmpty>
+
+                            {Object.entries(departments).map(([college, _departments]) => (
+                              <CommandGroup heading={college}>
+                                {_departments.map((department) => (
+                                  <CommandItem
+                                    key={department}
+                                    value={college + ' ' + department}
+                                    onSelect={(value) => {
+                                      field.onChange(value);
+                                      setDepartmentOpen(false);
+                                    }}
+                                  >
+                                    {department}
+                                    <Check
+                                      className={cn(
+                                        'ml-auto',
+                                        field.value === college + ' ' + department
+                                          ? 'opacity-100'
+                                          : 'opacity-0',
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            ))}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
