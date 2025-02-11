@@ -45,11 +45,6 @@ module.exports = {
             transform: 'translate(-50%, 0%) rotateZ(360deg)',
           },
         },
-        wave: {
-          '0%': { transform: 'translate(-50%, 0) rotateZ(0deg)' },
-          '50%': { transform: 'translate(-50%, -2%) rotateZ(180deg)' },
-          '100%': { transform: 'translate(-50%, 0%) rotateZ(360deg)' },
-        },
         moveDiagonally: {
           '0%, 100%': {
             transform: 'translateX(0) translateY(0)',
@@ -95,7 +90,6 @@ module.exports = {
       },
       animation: {
         rotate: 'rotate 15s linear infinite',
-        wave: 'wave 15s linear infinite',
         rocket: 'moveDiagonally 3s ease-in-out infinite',
         updown: 'updown 1.4s infinite ease-in-out alternate',
         'updown-shadow': 'updown-shadow 1.4s infinite ease-in-out alternate',
