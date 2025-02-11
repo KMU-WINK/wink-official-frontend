@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Button } from '@/ui/button';
 
@@ -9,6 +9,8 @@ import { Code } from 'lucide-react';
 
 export default function Step10({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
   return (
     <>
@@ -67,7 +69,11 @@ export default function Step10({ go, form }: RecruitStepProps) {
           onClick={() => {
             setClicked(true);
 
-            go((prev) => prev + 1);
+            if (isFinalEdit) {
+              sessionStorage.removeItem('recruit:final_edit');
+            }
+
+            go((prev) => (isFinalEdit ? 18 : prev + 1));
           }}
         >
           네

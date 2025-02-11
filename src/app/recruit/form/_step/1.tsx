@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
@@ -12,6 +12,8 @@ import { toast } from 'sonner';
 
 export default function Step1({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
   return (
     <>
@@ -75,14 +77,18 @@ export default function Step1({ go, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('name')) {
-              go((prev) => prev + 1);
+              if (isFinalEdit) {
+                sessionStorage.removeItem('recruit:final_edit');
+              }
+
+              go((prev) => (isFinalEdit ? 18 : prev + 1));
             } else {
               toast.error(form.formState.errors.name!.message);
               setClicked(false);
             }
           }}
         >
-          다음으로
+          {isFinalEdit ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

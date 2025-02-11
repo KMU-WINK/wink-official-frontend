@@ -15,6 +15,8 @@ import { toast } from 'sonner';
 export default function Step9({ go, recruit, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+
   const interviewDates = useMemo(() => {
     const dates = [];
 
@@ -128,14 +130,18 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('interviewDates')) {
-              go((prev) => prev + 1);
+              if (isFinalEdit) {
+                sessionStorage.removeItem('recruit:final_edit');
+              }
+
+              go((prev) => (isFinalEdit ? 18 : prev + 1));
             } else {
               toast.error(form.formState.errors.interviewDates!.message);
               setClicked(false);
             }
           }}
         >
-          다음으로
+          {isFinalEdit ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

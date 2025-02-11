@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import StackButton, { Stack } from '@/app/recruit/form/_component/StackButton';
 
@@ -13,6 +13,8 @@ export default function Step12({ go, form }: RecruitStepProps) {
   const [clicked, setClicked] = useState<boolean>(false);
 
   const [stacks, setStacks] = useState<Stack[]>([]);
+
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
   useEffect(() => {
     const _stacks = localStorage.getItem('recruit:stacks');
@@ -72,23 +74,25 @@ export default function Step12({ go, form }: RecruitStepProps) {
         }}
         className="flex items-center space-x-4"
       >
-        <Button
-          variant="outline"
-          disabled={clicked}
-          onClick={() => {
-            setClicked(true);
+        {!isFinalEdit && (
+          <Button
+            variant="outline"
+            disabled={clicked}
+            onClick={() => {
+              setClicked(true);
 
-            setStacks([]);
-            form.setValue('frontendTechStacks', []);
-            form.setValue('backendTechStacks', []);
-            form.setValue('devOpsTechStacks', []);
-            form.setValue('designTechStacks', []);
+              setStacks([]);
+              form.setValue('frontendTechStacks', []);
+              form.setValue('backendTechStacks', []);
+              form.setValue('devOpsTechStacks', []);
+              form.setValue('designTechStacks', []);
 
-            go(17);
-          }}
-        >
-          건너뛰기
-        </Button>
+              go(17);
+            }}
+          >
+            건너뛰기
+          </Button>
+        )}
 
         <Button
           variant="wink"
@@ -96,10 +100,14 @@ export default function Step12({ go, form }: RecruitStepProps) {
           onClick={async () => {
             setClicked(true);
 
-            go((prev) => prev + 1);
+            if (isFinalEdit) {
+              sessionStorage.removeItem('recruit:final_edit');
+            }
+
+            go((prev) => (isFinalEdit ? 18 : prev + 1));
           }}
         >
-          다음으로
+          {isFinalEdit ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

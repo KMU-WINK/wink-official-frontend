@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
@@ -17,6 +17,8 @@ export default function Step7({ go, form }: RecruitStepProps) {
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const selfIntroduce = form.watch('selfIntroduce');
+
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -104,14 +106,18 @@ export default function Step7({ go, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('selfIntroduce')) {
-              go((prev) => prev + 1);
+              if (isFinalEdit) {
+                sessionStorage.removeItem('recruit:final_edit');
+              }
+
+              go((prev) => (isFinalEdit ? 18 : prev + 1));
             } else {
               toast.error(form.formState.errors.selfIntroduce!.message);
               setClicked(false);
             }
           }}
         >
-          다음으로
+          {isFinalEdit ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

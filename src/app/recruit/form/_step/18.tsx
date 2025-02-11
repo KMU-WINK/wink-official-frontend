@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+import { Stack } from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
@@ -21,10 +23,20 @@ import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step18({ recruit, form }: RecruitStepProps) {
+export default function Step18({ go, recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const [stacks, setStacks] = useState<Stack[]>([]);
+
+  useEffect(() => {
+    const _stacks = localStorage.getItem('recruit:stacks');
+
+    if (!_stacks) return;
+
+    setStacks(JSON.parse(_stacks));
+  }, []);
 
   return (
     <>
@@ -58,50 +70,104 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
       >
         <Table className="w-full max-w-[300px] sm:max-w-[600px]">
           <TableBody>
-            <TableRow>
-              <TableHead className="w-[180px]">이름</TableHead>
-              <TableCell>{form.getValues('name')}</TableCell>
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(1);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">이름</TableHead>
+              <TableCell className="hover:underline cursor-pointer">
+                {form.getValues('name')}
+              </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">학번</TableHead>
-              <TableCell>{form.getValues('studentId')}</TableCell>
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(2);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">학번</TableHead>
+              <TableCell className="hover:underline cursor-pointer">
+                {form.getValues('studentId')}
+              </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">학과</TableHead>
-              <TableCell>{form.getValues('department')}</TableCell>
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(3);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">학과</TableHead>
+              <TableCell className="hover:underline cursor-pointer">
+                {form.getValues('department')}
+              </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">이메일</TableHead>
-              <TableCell>{form.getValues('email')}</TableCell>
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(4);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">이메일</TableHead>
+              <TableCell className="hover:underline cursor-pointer">
+                {form.getValues('email')}
+              </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">전화번호</TableHead>
-              <TableCell>{form.getValues('phoneNumber')}</TableCell>
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(5);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">전화번호</TableHead>
+              <TableCell className="hover:underline cursor-pointer">
+                {form.getValues('phoneNumber')}
+              </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">지원동기</TableHead>
-              <TableCell className="break-all whitespace-pre-line">
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(6);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">지원동기</TableHead>
+              <TableCell className="break-all whitespace-pre-line hover:underline cursor-pointer">
                 {form.getValues('jiwonDonggi')}
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">자기소개</TableHead>
-              <TableCell className="break-all whitespace-pre-line">
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(7);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">자기소개</TableHead>
+              <TableCell className="break-all whitespace-pre-line hover:underline cursor-pointer">
                 {form.getValues('selfIntroduce')}
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">대외활동</TableHead>
-              <TableCell className="whitespace-pre-wrap">
-                {form
-                  .getValues('outings')
-
-                  .join('\n') || '-'}
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(8);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">대외활동</TableHead>
+              <TableCell className="whitespace-pre-wrap hover:underline cursor-pointer">
+                {form.getValues('outings').join('\n') || '-'}
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableHead className="w-[180px]">면접 가능한 날짜</TableHead>
-              <TableCell className="whitespace-pre-wrap">
+            <TableRow
+              onClick={() => {
+                sessionStorage.setItem('recruit:final_edit', 'true');
+                go(9);
+              }}
+            >
+              <TableHead className="w-[180px] hover:underline cursor-pointer">
+                면접 가능한 날짜
+              </TableHead>
+              <TableCell className="whitespace-pre-wrap hover:underline cursor-pointer">
                 {form
                   .getValues('interviewDates')
                   .map((date) => (date === '0000-01-01' ? '기타' : formatDate(date, true)))
@@ -110,9 +176,16 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
             </TableRow>
             {sessionStorage.getItem('recruit:prev-develop') !== 'false' && (
               <>
-                <TableRow>
-                  <TableHead className="w-[180px]">Github 아이디</TableHead>
-                  <TableCell>
+                <TableRow
+                  onClick={() => {
+                    sessionStorage.setItem('recruit:final_edit', 'true');
+                    go(11);
+                  }}
+                >
+                  <TableHead className="w-[180px] hover:underline cursor-pointer">
+                    Github 아이디
+                  </TableHead>
+                  <TableCell className="hover:underline cursor-pointer">
                     {form.getValues('github') ? (
                       <Link
                         href={`https://github.com/${form.getValues('github')}`}
@@ -126,57 +199,100 @@ export default function Step18({ recruit, form }: RecruitStepProps) {
                     )}
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableHead className="w-[180px]">프론트엔드 기술 스택</TableHead>
-                  <TableCell>
-                    {form.getValues('frontendTechStacks')!.length > 0
-                      ? form
-                          .getValues('frontendTechStacks')!
-                          .map((s) => s as unknown as keyof typeof FrontendTechStack)
-                          .map((s) => FrontendTechStack[s])
-                          .join(', ')
-                      : '-'}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableHead className="w-[180px]">백엔드 기술 스택</TableHead>
-                  <TableCell>
-                    {form.getValues('backendTechStacks')!.length > 0
-                      ? form
-                          .getValues('backendTechStacks')!
-                          .map((s) => s as unknown as keyof typeof BackendTechStack)
-                          .map((s) => BackendTechStack[s])
-                          .join(', ')
-                      : '-'}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableHead className="w-[180px]">데브옵스 기술 스택</TableHead>
-                  <TableCell>
-                    {form.getValues('devOpsTechStacks')!.length > 0
-                      ? form
-                          .getValues('devOpsTechStacks')!
-                          .map((s) => s as unknown as keyof typeof DevOpsTechStack)
-                          .map((s) => DevOpsTechStack[s])
-                          .join(', ')
-                      : '-'}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableHead className="w-[180px]">디자인 기술 스택</TableHead>
-                  <TableCell>
-                    {form.getValues('designTechStacks')!.length > 0
-                      ? form
-                          .getValues('designTechStacks')!
-                          .map((s) => s as unknown as keyof typeof DesignTechStack)
-                          .map((s) => DesignTechStack[s])
-                          .join(', ')
-                      : '-'}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
-                  <TableCell className="whitespace-pre-line">
+                {stacks.includes('frontend') && (
+                  <TableRow
+                    onClick={() => {
+                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      go(13);
+                    }}
+                  >
+                    <TableHead className="w-[180px] hover:underline cursor-pointer">
+                      프론트엔드 기술 스택
+                    </TableHead>
+                    <TableCell className="hover:underline cursor-pointer">
+                      {form.getValues('frontendTechStacks')!.length > 0
+                        ? form
+                            .getValues('frontendTechStacks')!
+                            .map((s) => s as unknown as keyof typeof FrontendTechStack)
+                            .map((s) => FrontendTechStack[s])
+                            .join(', ')
+                        : '-'}
+                    </TableCell>
+                  </TableRow>
+                )}
+                {stacks.includes('backend') && (
+                  <TableRow
+                    onClick={() => {
+                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      go(14);
+                    }}
+                  >
+                    <TableHead className="w-[180px] hover:underline cursor-pointer">
+                      백엔드 기술 스택
+                    </TableHead>
+                    <TableCell className="hover:underline cursor-pointer">
+                      {form.getValues('backendTechStacks')!.length > 0
+                        ? form
+                            .getValues('backendTechStacks')!
+                            .map((s) => s as unknown as keyof typeof BackendTechStack)
+                            .map((s) => BackendTechStack[s])
+                            .join(', ')
+                        : '-'}
+                    </TableCell>
+                  </TableRow>
+                )}
+                {stacks.includes('devops') && (
+                  <TableRow
+                    onClick={() => {
+                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      go(15);
+                    }}
+                  >
+                    <TableHead className="w-[180px] hover:underline cursor-pointer">
+                      데브옵스 기술 스택
+                    </TableHead>
+                    <TableCell className="hover:underline cursor-pointer">
+                      {form.getValues('devOpsTechStacks')!.length > 0
+                        ? form
+                            .getValues('devOpsTechStacks')!
+                            .map((s) => s as unknown as keyof typeof DevOpsTechStack)
+                            .map((s) => DevOpsTechStack[s])
+                            .join(', ')
+                        : '-'}
+                    </TableCell>
+                  </TableRow>
+                )}
+                {stacks.includes('design') && (
+                  <TableRow
+                    onClick={() => {
+                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      go(16);
+                    }}
+                  >
+                    <TableHead className="w-[180px] hover:underline cursor-pointer">
+                      디자인 기술 스택
+                    </TableHead>
+                    <TableCell className="hover:underline cursor-pointer">
+                      {form.getValues('designTechStacks')!.length > 0
+                        ? form
+                            .getValues('designTechStacks')!
+                            .map((s) => s as unknown as keyof typeof DesignTechStack)
+                            .map((s) => DesignTechStack[s])
+                            .join(', ')
+                        : '-'}
+                    </TableCell>
+                  </TableRow>
+                )}
+                <TableRow
+                  onClick={() => {
+                    sessionStorage.setItem('recruit:final_edit', 'true');
+                    go(17);
+                  }}
+                >
+                  <TableHead className="w-[180px] hover:underline cursor-pointer">
+                    가장 기억에 남는 프로젝트
+                  </TableHead>
+                  <TableCell className="whitespace-pre-line hover:underline cursor-pointer">
                     {form.getValues('favoriteProject') || '-'}
                   </TableCell>
                 </TableRow>

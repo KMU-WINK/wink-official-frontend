@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -18,6 +18,8 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
   return (
     <>
@@ -96,14 +98,18 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
                 return;
               }
 
-              go((prev) => prev + 1);
+              if (isFinalEdit) {
+                sessionStorage.removeItem('recruit:final_edit');
+              }
+
+              go((prev) => (isFinalEdit ? 18 : prev + 1));
             } else {
               toast.error(form.formState.errors.email!.message);
               setClicked(false);
             }
           }}
         >
-          다음으로
+          {isFinalEdit ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>
