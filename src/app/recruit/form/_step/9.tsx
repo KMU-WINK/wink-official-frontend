@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Image from 'next/image';
 
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
+import { Input } from '@/ui/input';
 import { Separator } from '@/ui/separator';
 
 import Calendar from '@/public/recruit/icon/calendar.avif';
@@ -20,7 +21,7 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
 
   const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
-  const interviewDates = useMemo(() => {
+  const dateOptions = useMemo(() => {
     const dates = [];
 
     let date = toDate(recruit.interviewStartDate);
@@ -32,6 +33,14 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
 
     return dates;
   }, [recruit]);
+
+  const interviewDates = form.watch('interviewDates');
+
+  useEffect(() => {
+    if (!interviewDates.some((date) => date === '0001-01-01')) {
+      form.resetField('whyCannotInterview');
+    }
+  }, [interviewDates]);
 
   return (
     <>
@@ -70,7 +79,7 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
         className="flex flex-col items-center justify-center w-full max-w-[300px]"
       >
         <FormItem className="space-y-4">
-          {interviewDates.map((date, index) => (
+          {dateOptions.map((date, index) => (
             <FormField
               key={index}
               control={form.control}
@@ -83,7 +92,7 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
                       onCheckedChange={(checked) => {
                         return checked
                           ? field.onChange([
-                              ...field.value.filter((value) => value !== '0000-01-01'),
+                              ...field.value.filter((value) => value !== '0001-01-01'),
                               formatDateApi(date),
                             ])
                           : field.onChange(
@@ -107,13 +116,29 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
               <FormItem className="space-x-2">
                 <FormControl>
                   <Checkbox
-                    checked={field.value?.includes('0000-01-01')}
+                    checked={field.value?.includes('0001-01-01')}
                     onCheckedChange={(checked) => {
-                      return checked ? field.onChange(['0000-01-01']) : field.onChange([]);
+                      return checked ? field.onChange(['0001-01-01']) : field.onChange([]);
                     }}
                   />
                 </FormControl>
-                <FormLabel className="text-base text-black">기타</FormLabel>
+                <FormLabel className="text-base text-black">
+                  기타
+                  {form.watch('interviewDates').includes('0001-01-01') && (
+                    <FormField
+                      control={form.control}
+                      name="whyCannotInterview"
+                      render={({ field }) => (
+                        <FormItem className="w-full mt-2">
+                          <FormControl>
+                            <Input placeholder="사유를 입력해주세요." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                </FormLabel>
               </FormItem>
             )}
           />
@@ -138,14 +163,17 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
           onClick={async () => {
             setClicked(true);
 
-            if (await form.trigger('interviewDates')) {
+            if (await form.trigger(['interviewDates', 'whyCannotInterview'])) {
               if (isFinalEdit) {
                 sessionStorage.removeItem('recruit:final_edit');
               }
 
               go((prev) => (isFinalEdit ? 18 : prev + 1));
             } else {
-              toast.error(form.formState.errors.interviewDates!.message);
+              toast.error(
+                form.formState.errors.interviewDates?.message ||
+                  form.formState.errors.whyCannotInterview!.message,
+              );
               setClicked(false);
             }
           }}
