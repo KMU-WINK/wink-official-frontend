@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
+import { Separator } from '@/ui/separator';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate, formatDateApi, toDate } from '@/lib/util';
@@ -67,21 +68,44 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
                 <FormItem key={index} className="space-x-2">
                   <FormControl>
                     <Checkbox
-                      checked={field.value?.includes(formatDateApi(date))}
+                      checked={field.value.includes(formatDateApi(date))}
                       onCheckedChange={(checked) => {
                         return checked
-                          ? field.onChange([...field.value, formatDateApi(date)])
+                          ? field.onChange([
+                              ...field.value.filter((value) => value !== '0000-01-01'),
+                              formatDateApi(date),
+                            ])
                           : field.onChange(
                               field.value?.filter((value) => value !== formatDateApi(date)),
                             );
                       }}
                     />
                   </FormControl>
-                  <FormLabel className="text-base">{formatDate(date, true)}</FormLabel>
+                  <FormLabel className="text-base text-black">{formatDate(date, true)}</FormLabel>
                 </FormItem>
               )}
             />
           ))}
+
+          <Separator />
+
+          <FormField
+            control={form.control}
+            name="interviewDates"
+            render={({ field }) => (
+              <FormItem className="space-x-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value?.includes('0000-01-01')}
+                    onCheckedChange={(checked) => {
+                      return checked ? field.onChange(['0000-01-01']) : field.onChange([]);
+                    }}
+                  />
+                </FormControl>
+                <FormLabel className="text-base text-black">기타</FormLabel>
+              </FormItem>
+            )}
+          />
           <FormMessage />
         </FormItem>
       </motion.div>

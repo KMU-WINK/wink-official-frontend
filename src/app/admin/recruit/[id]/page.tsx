@@ -351,7 +351,9 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             <TableRow>
               <TableHead className="w-[180px]">면접 가능한 날짜</TableHead>
               <TableCell className="whitespace-pre-wrap">
-                {selectedForm.interviewDates.map((date) => formatDate(date, true)).join('\n')}
+                {selectedForm.interviewDates
+                  .map((date) => (date === '0000-01-01' ? '기타' : formatDate(date, true)))
+                  .join('\n')}
               </TableCell>
             </TableRow>
             <TableRow>
