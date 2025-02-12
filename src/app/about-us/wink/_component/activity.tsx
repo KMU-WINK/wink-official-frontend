@@ -31,7 +31,7 @@ export default function Activity() {
               )}
             >
               <p className="text-sm sm:text-base font-medium text-wink-500">{tag}</p>
-              <p className="text-xl sm:text-2xl font-medium whitespace-pre-line">{title}</p>
+              <p className="text-lg sm:text-2xl font-medium whitespace-pre-line">{title}</p>
               <p className="text-sm sm:text-base text-neutral-500 whitespace-pre-line">
                 {description}
               </p>
