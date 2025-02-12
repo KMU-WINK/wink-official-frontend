@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -21,17 +21,17 @@ import {
   CreateActivityRequestSchema,
 } from '@/api/type/domain/program/activity';
 import Activity from '@/api/type/schema/activity';
+import { useApiWithToast } from '@/api/useApi';
 
 import { uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash2, Upload } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface UpdateActivityModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  activity: Activity | null;
+  activity?: Activity;
   callback: (activity: Activity) => void;
 }
 
@@ -41,7 +41,8 @@ export default function UpdateActivityModal({
   activity,
   callback,
 }: UpdateActivityModalProps) {
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startUpload] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<CreateActivityRequest>({
     resolver: zodResolver(CreateActivityRequestSchema),
@@ -54,24 +55,30 @@ export default function UpdateActivityModal({
   });
 
   const onSubmit = useCallback(
-    async (values: CreateActivityRequest) => {
-      const { activity: _activity } = await Api.Domain.Program.AdminActivity.updateActivity(
-        activity!.id,
-        values,
-      );
-
-      setOpen(false);
-      form.reset();
-
-      toast.success('활동을 수정했습니다.');
-
-      callback(_activity);
-    },
+    async (values: CreateActivityRequest) =>
+      startApi(
+        async () => {
+          const { activity: _activity } = await Api.Domain.Program.AdminActivity.updateActivity(
+            activity!.id,
+            values,
+          );
+          callback(_activity);
+        },
+        {
+          loading: '활동을 수정하고 있습니다.',
+          success: '활동을 수정했습니다.',
+          finally: () => {
+            setOpen(false);
+            form.reset();
+          },
+        },
+      ),
     [activity],
   );
 
   useEffect(() => {
-    form.reset(activity || undefined);
+    if (!activity) return;
+    form.reset(activity);
   }, [activity]);
 
   if (!activity) return null;
@@ -162,20 +169,21 @@ export default function UpdateActivityModal({
                         className="hidden"
                         accept="image/*"
                         multiple
-                        onChange={async (e) => {
-                          setIsUploading(true);
-
-                          try {
-                            const imgs = await uploadS3(e.target.files!, () =>
-                              Api.Domain.Program.Upload.uploadImage(),
-                            );
-
-                            field.onChange([...field.value, ...imgs]);
-                          } finally {
-                            setIsUploading(false);
-                          }
-                        }}
                         disabled={isUploading}
+                        onChange={async (e) =>
+                          startUpload(
+                            async () =>
+                              field.onChange(
+                                await uploadS3(e.target.files!, () =>
+                                  Api.Domain.Program.Upload.uploadImage(),
+                                ),
+                              ),
+                            {
+                              loading: '이미지를 업로드하고 있습니다.',
+                              success: '이미지를 업로드했습니다.',
+                            },
+                          )
+                        }
                       />
                     </>
                   </FormControl>
@@ -184,7 +192,7 @@ export default function UpdateActivityModal({
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isUploading || isApi} className="w-full">
               활동 수정
             </Button>
           </form>

@@ -21,7 +21,9 @@ import { Button } from '@/ui/button';
 
 import Api from '@/api';
 import Recruit from '@/api/type/schema/recruit';
+import { useApi } from '@/api/useApi';
 
+import { useRecruitStore } from '@/store/recruit';
 import { useUserStore } from '@/store/user';
 
 import { formatDate, nowDate, toDate } from '@/util';
@@ -36,11 +38,11 @@ export default function RecruitPage() {
   const router = useRouter();
 
   const { user } = useUserStore();
+  const { confetti, setConfetti } = useRecruitStore();
 
-  const [recruit, setRecruit] = useState<Recruit | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isApi, startApi] = useApi();
 
-  const confetti = useMemo(() => sessionStorage.getItem('recruit:confetti') === 'true', []);
+  const [recruit, setRecruit] = useState<Recruit>();
 
   const infos = useMemo<Info[]>(() => {
     if (!recruit) return [];
@@ -58,21 +60,18 @@ export default function RecruitPage() {
   }, [recruit]);
 
   useEffect(() => {
-    (async () => {
+    startApi(async () => {
       const { recruit } = await Api.Domain.Recruit.getLatestRecruit();
-
       setRecruit(recruit);
-      setLoading(false);
-    })();
+    });
   }, []);
 
   useEffect(() => {
     if (!confetti) return;
-
-    sessionStorage.removeItem('recruit:confetti');
+    setConfetti(false);
   }, [confetti]);
 
-  if (loading) return null;
+  if (isApi) return null;
 
   return (
     <>
@@ -138,9 +137,8 @@ export default function RecruitPage() {
             ) : (
               <Button
                 variant="outline"
-                onClick={async () => {
+                onClick={() => {
                   Api.Request.removeToken();
-
                   toast.success('로그아웃되었습니다.');
                 }}
               >

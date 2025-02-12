@@ -1,9 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
@@ -11,17 +11,19 @@ import { Input } from '@/ui/input';
 
 import Api from '@/api';
 import { ResetPasswordRequest, ResetPasswordRequestSchema } from '@/api/type/domain/auth';
+import { useApi, useApiWithToast } from '@/api/useApi';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { parseAsString, useQueryState } from 'nuqs';
 import { toast } from 'sonner';
 
 export default function AuthResetPasswordPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const token = searchParams.get('token');
+  const [isApi, startApi] = useApi();
+  const [isApi2, startApi2] = useApiWithToast();
 
-  const [loading, setLoading] = useState(true);
+  const [token] = useQueryState('token', parseAsString.withDefault(''));
 
   const form = useForm<ResetPasswordRequest>({
     resolver: zodResolver(ResetPasswordRequestSchema),
@@ -32,37 +34,35 @@ export default function AuthResetPasswordPage() {
     },
   });
 
-  const onSubmit = useCallback(
-    async (values: ResetPasswordRequest) => {
-      await Api.Domain.Auth.resetPassword(values);
-
-      toast.success('비밀번호를 변경했습니다.');
-
-      router.push('/auth/login');
-    },
-    [router],
-  );
+  const onSubmit = useCallback((values: ResetPasswordRequest) => {
+    startApi2(
+      async () => {
+        await Api.Domain.Auth.resetPassword(values);
+        router.push('/auth/login');
+      },
+      {
+        loading: '비밀번호를 변경하고 있습니다',
+        success: '비밀번호를 변경했습니다.',
+      },
+    );
+  }, []);
 
   useEffect(() => {
-    form.setValue('token', token || '');
+    form.setValue('token', token);
   }, [token]);
 
   useEffect(() => {
-    (async () => {
-      const { isValid } = await Api.Domain.Auth.checkResetPassword({
-        token: token ?? 'invalid',
-      });
+    startApi(async () => {
+      const { isValid } = await Api.Domain.Auth.checkResetPassword({ token });
 
       if (!isValid) {
         toast.error('잘못된 접근입니다.');
         router.replace('/');
       }
-
-      setLoading(false);
-    })();
+    });
   }, [token]);
 
-  if (loading) return null;
+  if (isApi) return null;
 
   return (
     <Form {...form}>
@@ -84,7 +84,7 @@ export default function AuthResetPasswordPage() {
           )}
         />
 
-        <Button variant="wink" type="submit" className="w-full">
+        <Button variant="wink" type="submit" disabled={isApi2} className="w-full">
           비밀번호 변경
         </Button>
       </form>

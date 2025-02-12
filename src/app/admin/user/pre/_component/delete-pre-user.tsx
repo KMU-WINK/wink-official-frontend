@@ -6,13 +6,12 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import PreUser from '@/api/type/schema/pre-user';
-
-import { toast } from 'sonner';
+import { useApiWithToast } from '@/api/useApi';
 
 interface DeletePreUserModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  user: PreUser | null;
+  user?: PreUser;
   callback: (id: string) => void;
 }
 
@@ -22,15 +21,21 @@ export default function DeletePreUserModal({
   user,
   callback,
 }: DeletePreUserModalProps) {
-  const onSubmit = useCallback(async () => {
-    await Api.Domain.AdminUser.removePreUser(user!.id);
+  const [isApi, startApi] = useApiWithToast();
 
-    setOpen(false);
-
-    toast.success('대기 유저를 삭제했습니다.');
-
-    callback(user!.id);
-  }, [user]);
+  const onSubmit = useCallback((user: PreUser) => {
+    startApi(
+      async () => {
+        await Api.Domain.AdminUser.removePreUser(user!.id);
+        callback(user!.id);
+      },
+      {
+        loading: '대기 유저를 삭제하고 있습니다.',
+        success: '대기 유저를 삭제했습니다',
+        finally: () => setOpen(false),
+      },
+    );
+  }, []);
 
   if (!user) return null;
 
@@ -63,7 +68,13 @@ export default function DeletePreUserModal({
           </TableBody>
         </Table>
 
-        <Button variant="wink" type="submit" className="w-full" onClick={onSubmit}>
+        <Button
+          variant="wink"
+          type="submit"
+          disabled={isApi}
+          className="w-full"
+          onClick={() => onSubmit(user)}
+        >
           대기 유저 삭제
         </Button>
       </DialogContent>

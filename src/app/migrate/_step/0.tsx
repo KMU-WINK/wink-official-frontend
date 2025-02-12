@@ -14,7 +14,7 @@ import { motion } from 'framer-motion';
 export default function Step0({ go }: MigrateStepProps) {
   const router = useRouter();
 
-  const [clicked, setClicked] = useState<boolean>(false);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>

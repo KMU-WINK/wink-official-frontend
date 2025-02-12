@@ -9,7 +9,7 @@ export default class Project {
     page: number = 0,
     query: string = '',
   ): Promise<GetProjectsPageableResponse> {
-    return this.request.get('/program/project', { params: { page, query } });
+    return this.request.get(`/program/project?page=${page}&query=${query}`);
   }
 
   public async createProject(request: CreateProjectRequest): Promise<GetProjectResponse> {

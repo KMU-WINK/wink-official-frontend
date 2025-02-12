@@ -1,8 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
 import { Button } from '@/ui/button';
+
+import { useRecruitStore } from '@/store/recruit';
 
 import Gear from '@/public/recruit/icon/gear.png';
 
@@ -11,9 +13,9 @@ import { RecruitStepProps } from '@/app/recruit/form/page';
 import { motion } from 'framer-motion';
 
 export default function Step10({ go, form }: RecruitStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { step, modify, setModify, setDeveloper } = useRecruitStore();
 
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -57,8 +59,7 @@ export default function Step10({ go, form }: RecruitStepProps) {
           disabled={clicked}
           onClick={() => {
             setClicked(true);
-
-            sessionStorage.setItem('recruit:prev-develop', 'false');
+            setDeveloper(false);
 
             form.resetField('github');
             form.resetField('frontendTechStacks');
@@ -78,12 +79,9 @@ export default function Step10({ go, form }: RecruitStepProps) {
           disabled={clicked}
           onClick={() => {
             setClicked(true);
-
-            if (isFinalEdit) {
-              sessionStorage.removeItem('recruit:final_edit');
-            }
-
-            go((prev) => (isFinalEdit ? 18 : prev + 1));
+            setDeveloper(true);
+            go(modify || step + 1);
+            modify && setTimeout(() => setModify(undefined), 400);
           }}
         >
           네

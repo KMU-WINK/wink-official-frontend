@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Avatar, AvatarImage } from '@/ui/avatar';
@@ -13,12 +13,12 @@ import {
   UpdateApplicationRequestSchema,
 } from '@/api/type/domain/application';
 import Application from '@/api/type/schema/application';
+import { useApiWithToast } from '@/api/useApi';
 
 import { uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Upload } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface UpdateApplicationModalProps {
   open: boolean;
@@ -33,7 +33,8 @@ export default function UpdateApplicationModal({
   application,
   callback,
 }: UpdateApplicationModalProps) {
-  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isUploading, startUploading] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<UpdateApplicationRequest>({
     resolver: zodResolver(UpdateApplicationRequestSchema),
@@ -45,17 +46,21 @@ export default function UpdateApplicationModal({
   });
 
   const onSubmit = useCallback(
-    async (values: UpdateApplicationRequest) => {
-      const { application: application2 } = await Api.Domain.Application.updateApplication(
-        application.id,
-        values,
+    (values: UpdateApplicationRequest) => {
+      startApi(
+        async () => {
+          const { application: application2 } = await Api.Domain.Application.updateApplication(
+            application.id,
+            values,
+          );
+          callback(application2);
+        },
+        {
+          loading: '애플리케이션을 수정하고 있습니다',
+          success: '애플리케이션을 수정했습니다.',
+          finally: () => setOpen(false),
+        },
       );
-
-      setOpen(false);
-
-      toast.success('애플리케이션을 수정했습니다.');
-
-      callback(application2);
     },
     [application],
   );
@@ -104,18 +109,19 @@ export default function UpdateApplicationModal({
                         type="file"
                         className="hidden"
                         accept="image/*"
-                        onChange={async (e) => {
-                          setIsUploading(true);
-
-                          try {
-                            const imgs = await uploadS3(e.target.files!, () =>
-                              Api.Domain.Application.uploadImg(),
-                            );
-
-                            field.onChange(imgs[0]);
-                          } finally {
-                            setIsUploading(false);
-                          }
+                        onChange={(e) => {
+                          startUploading(
+                            async () => {
+                              const imgs = await uploadS3(e.target.files!, () =>
+                                Api.Domain.Application.uploadImg(),
+                              );
+                              field.onChange(imgs[0]);
+                            },
+                            {
+                              loading: '이미지를 업로드하고 있습니다.',
+                              success: '이미지를 업로드했습니다.',
+                            },
+                          );
                         }}
                         disabled={isUploading}
                       />
@@ -140,7 +146,7 @@ export default function UpdateApplicationModal({
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isUploading || isApi} className="w-full">
               애플리케이션 수정
             </Button>
           </form>

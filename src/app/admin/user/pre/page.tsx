@@ -34,20 +34,23 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Api from '@/api';
 import Page from '@/api/type/schema/page';
 import PreUser from '@/api/type/schema/pre-user';
+import { useApi } from '@/api/useApi';
 
 import _ from 'lodash';
 import { MoreHorizontal } from 'lucide-react';
+import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
 import { toast } from 'sonner';
 
 export default function AdminUserPrePage() {
-  const [users, setUsers] = useState<Page<PreUser> | null>(null);
+  const [isApi, startApi, setApi] = useApi();
 
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
+
+  const [users, setUsers] = useState<Page<PreUser>>();
+  const [selected, setSelected] = useState<PreUser>();
 
   const [deletePreUserOpen, setDeletePreUserOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<PreUser | null>(null);
 
   const pageIndex = useMemo(() => {
     if (!users) return [];
@@ -74,19 +77,18 @@ export default function AdminUserPrePage() {
   }, []);
 
   useEffect(() => {
-    const debounce = _.debounce(async () => {
-      const { users } = await Api.Domain.AdminUser.getPreUsers(page, query);
-      setUsers(users);
-      setLoading(false);
+    const debounce = _.debounce(() => {
+      startApi(async () => {
+        const { users } = await Api.Domain.AdminUser.getPreUsers(page, query);
+        setUsers(users);
+      });
     }, 500);
 
-    setUsers(null);
-    setLoading(true);
+    setApi(true);
+    setUsers(undefined);
     debounce();
 
-    return () => {
-      debounce.cancel();
-    };
+    return () => debounce.cancel();
   }, [page, query]);
 
   return (
@@ -127,7 +129,7 @@ export default function AdminUserPrePage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {loading ? (
+            {isApi ? (
               Array.from({ length: 10 }, (_, index) => (
                 <TableRow key={index}>
                   <TableCell>
@@ -178,7 +180,7 @@ export default function AdminUserPrePage() {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => {
-                            setSelectedUser(user);
+                            setSelected(user);
                             setDeletePreUserOpen(true);
                           }}
                         >
@@ -199,7 +201,7 @@ export default function AdminUserPrePage() {
           </TableBody>
         </Table>
 
-        {!loading && users && users.page.totalPages > 0 && (
+        {!isApi && users && users.page.totalPages > 0 && (
           <Pagination>
             <PaginationContent>
               <PaginationItem>
@@ -240,7 +242,7 @@ export default function AdminUserPrePage() {
       <DeletePreUserModal
         open={deletePreUserOpen}
         setOpen={setDeletePreUserOpen}
-        user={selectedUser}
+        user={selected}
         callback={onDeletePreUser}
       />
     </>

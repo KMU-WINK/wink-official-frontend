@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -17,12 +17,12 @@ import {
   CreateHistoryRequestSchema,
 } from '@/api/type/domain/program/history';
 import History from '@/api/type/schema/history';
+import { useApiWithToast } from '@/api/useApi';
 
 import { formatDate, formatDateApi, toDate, uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Calendar as CalendarIcon, Upload } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface CreateHistoryModalProps {
   open: boolean;
@@ -31,7 +31,8 @@ interface CreateHistoryModalProps {
 }
 
 export default function CreateHistoryModal({ open, setOpen, callback }: CreateHistoryModalProps) {
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startUpload] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<CreateHistoryRequest>({
     resolver: zodResolver(CreateHistoryRequestSchema),
@@ -43,15 +44,21 @@ export default function CreateHistoryModal({ open, setOpen, callback }: CreateHi
     },
   });
 
-  const onSubmit = useCallback(async (values: CreateHistoryRequest) => {
-    const { history } = await Api.Domain.Program.AdminHistory.createHistory(values);
-
-    setOpen(false);
-    form.reset();
-
-    toast.success('연혁을 생성했습니다.');
-
-    callback(history);
+  const onSubmit = useCallback((values: CreateHistoryRequest) => {
+    startApi(
+      async () => {
+        const { history } = await Api.Domain.Program.AdminHistory.createHistory(values);
+        callback(history);
+      },
+      {
+        loading: '연혁을 생성하고 있습니다',
+        success: '연혁을 생성했습니다.',
+        finally: () => {
+          setOpen(false);
+          form.reset();
+        },
+      },
+    );
   }, []);
 
   return (
@@ -151,17 +158,18 @@ export default function CreateHistoryModal({ open, setOpen, callback }: CreateHi
                         className="hidden"
                         accept="image/*"
                         onChange={async (e) => {
-                          setIsUploading(true);
-
-                          try {
-                            const imgs = await uploadS3(e.target.files!, () =>
-                              Api.Domain.Program.Upload.uploadImage(),
-                            );
-
-                            field.onChange(imgs[0]);
-                          } finally {
-                            setIsUploading(false);
-                          }
+                          startUpload(
+                            async () =>
+                              field.onChange(
+                                await uploadS3(e.target.files!, () =>
+                                  Api.Domain.Program.Upload.uploadImage(),
+                                ),
+                              ),
+                            {
+                              loading: '이미지를 업로드하고 있습니다.',
+                              success: '이미지를 업로드했습니다.',
+                            },
+                          );
                         }}
                         disabled={isUploading}
                       />
@@ -172,7 +180,7 @@ export default function CreateHistoryModal({ open, setOpen, callback }: CreateHi
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isUploading || isApi} className="w-full">
               연혁 추가
             </Button>
           </form>

@@ -120,9 +120,7 @@ export default function MobileMenu({
                   className="flex-1 text-xs"
                   onClick={() => {
                     Api.Request.removeToken();
-
                     setOpen(false);
-
                     toast.success('로그아웃되었습니다.');
                   }}
                 >

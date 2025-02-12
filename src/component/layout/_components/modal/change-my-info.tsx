@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar';
@@ -10,12 +10,12 @@ import { Input } from '@/ui/input';
 import Api from '@/api';
 import { UpdateMyInfoRequest, UpdateMyInfoRequestSchema } from '@/api/type/domain/user';
 import User from '@/api/type/schema/user';
+import { useApiWithToast } from '@/api/useApi';
 
 import { useUserStore } from '@/store/user';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash2, Upload, UserIcon } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface ChangeMyInfoModalProps {
   open: boolean;
@@ -25,7 +25,8 @@ interface ChangeMyInfoModalProps {
 export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalProps) {
   const { user, setUser } = useUserStore();
 
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startUpload] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<UpdateMyInfoRequest>({
     resolver: zodResolver(UpdateMyInfoRequestSchema),
@@ -40,12 +41,10 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
 
   const handleImageUpload = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setIsUploading(true);
-
       const file = e.target.files?.[0];
       if (!file) return;
 
-      toast.promise(
+      startUpload(
         async () => {
           const { url } = await Api.Domain.User.updateMyAvatar();
 
@@ -88,27 +87,33 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
         {
           loading: '프로필 사진을 수정중입니다.',
           success: '프로필 사진을 수정했습니다.',
-          error: '프로필 사진 수정에 실패했습니다.',
-          finally: () => setIsUploading(false),
         },
       );
     },
     [user],
   );
 
-  const onSubmit = useCallback(async (values: UpdateMyInfoRequest) => {
-    const { user } = await Api.Domain.User.updateMyInfo({
-      description: values.description || undefined,
-      github: values.github || undefined,
-      instagram: values.instagram || undefined,
-      blog: values.blog || undefined,
-    });
+  const onSubmit = useCallback(
+    (values: UpdateMyInfoRequest) =>
+      startApi(
+        async () => {
+          const { user } = await Api.Domain.User.updateMyInfo({
+            description: values.description || undefined,
+            github: values.github || undefined,
+            instagram: values.instagram || undefined,
+            blog: values.blog || undefined,
+          });
 
-    setUser(user);
-    setOpen(false);
-
-    toast.success('내 정보를 수정했습니다.');
-  }, []);
+          setUser(user);
+        },
+        {
+          loading: '내 정보를 수정하고 있습니다.',
+          success: '내 정보를 수정했습니다.',
+          finally: () => setOpen(false),
+        },
+      ),
+    [],
+  );
 
   useEffect(() => {
     form.reset({
@@ -151,14 +156,21 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
               {user?.avatar && (
                 <div
                   className="absolute bottom-0 right-0 p-1 bg-black/50 rounded-full"
-                  onClick={async (e) => {
+                  onClick={(e) => {
                     e.stopPropagation();
 
-                    const { user } = await Api.Domain.User.deleteMyAvatar();
+                    if (isUploading) return;
 
-                    setUser(user);
-
-                    toast.success('프로필 이미지를 삭제했습니다.');
+                    startApi(
+                      async () => {
+                        const { user } = await Api.Domain.User.deleteMyAvatar();
+                        setUser(user);
+                      },
+                      {
+                        loading: '프로필 이미지를 삭제하고 있습니다.',
+                        success: '프로필 이미지를 삭제했습니다',
+                      },
+                    );
                   }}
                 >
                   <Trash2 className="w-4 h-4 text-white" />
@@ -171,8 +183,8 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
               type="file"
               className="hidden"
               accept="image/*"
-              onChange={handleImageUpload}
               disabled={isUploading}
+              onChange={handleImageUpload}
             />
 
             <FormField
@@ -231,7 +243,7 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
               내 정보 수정
             </Button>
           </form>

@@ -6,13 +6,12 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import Recruit from '@/api/type/schema/recruit';
-
-import { toast } from 'sonner';
+import { useApiWithToast } from '@/api/useApi';
 
 interface DeleteRecruitModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  recruit: Recruit | null;
+  recruit?: Recruit;
   callback: (id: string) => void;
 }
 
@@ -22,15 +21,21 @@ export default function DeleteRecruitModal({
   recruit,
   callback,
 }: DeleteRecruitModalProps) {
-  const onSubmit = useCallback(async () => {
-    await Api.Domain.AdminRecruit.deleteRecruit(recruit!.id);
+  const [isApi, startApi] = useApiWithToast();
 
-    setOpen(false);
-
-    toast.success('모집을 삭제했습니다.');
-
-    callback(recruit!.id);
-  }, [recruit]);
+  const onSubmit = useCallback((recruit: Recruit) => {
+    startApi(
+      async () => {
+        await Api.Domain.AdminRecruit.deleteRecruit(recruit!.id);
+        callback(recruit!.id);
+      },
+      {
+        loading: '모집을 삭제하고 있습니다.',
+        success: '모집을 삭제했습니다.',
+        finally: () => setOpen(false),
+      },
+    );
+  }, []);
 
   if (!recruit) return null;
 
@@ -55,7 +60,13 @@ export default function DeleteRecruitModal({
           </TableBody>
         </Table>
 
-        <Button variant="wink" type="submit" className="w-full" onClick={onSubmit}>
+        <Button
+          variant="wink"
+          type="submit"
+          disabled={isApi}
+          className="w-full"
+          onClick={() => onSubmit(recruit)}
+        >
           모집 삭제
         </Button>
       </DialogContent>

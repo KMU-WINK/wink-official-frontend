@@ -12,12 +12,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 import Api from '@/api';
 import { CreateRecruitRequest, CreateRecruitRequestSchema } from '@/api/type/domain/recruit';
 import Recruit from '@/api/type/schema/recruit';
+import { useApiWithToast } from '@/api/useApi';
 
 import { cn, formatDate, formatDateApi } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface CreateRecruitModalProps {
   open: boolean;
@@ -26,10 +26,10 @@ interface CreateRecruitModalProps {
 }
 
 export default function CreateRecruitModal({ open, setOpen, callback }: CreateRecruitModalProps) {
-  const [recruitDate, setRecruitDate] = useState<DateRange | undefined>();
-  const [interviewDate, setInterviewDate] = useState<DateRange | undefined>();
+  const [isApi, startApi] = useApiWithToast();
 
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [recruitDate, setRecruitDate] = useState<DateRange>();
+  const [interviewDate, setInterviewDate] = useState<DateRange>();
 
   const form = useForm<CreateRecruitRequest>({
     resolver: zodResolver(CreateRecruitRequestSchema),
@@ -45,20 +45,14 @@ export default function CreateRecruitModal({ open, setOpen, callback }: CreateRe
   });
 
   const onSubmit = useCallback((values: CreateRecruitRequest) => {
-    setIsProcessing(true);
-
-    toast.promise(
-      async () => callback((await Api.Domain.AdminRecruit.createRecruit(values)).recruit),
-      {
-        loading: '모집을 생성하고 있습니다.',
-        success: '모집을 생성했습니다.',
-        finally: () => {
-          setOpen(false);
-          setIsProcessing(false);
-          form.reset();
-        },
+    startApi(async () => callback((await Api.Domain.AdminRecruit.createRecruit(values)).recruit), {
+      loading: '모집을 생성하고 있습니다.',
+      success: '모집을 생성했습니다.',
+      finally: () => {
+        setOpen(false);
+        form.reset();
       },
-    );
+    });
   }, []);
 
   useEffect(() => {
@@ -210,7 +204,7 @@ export default function CreateRecruitModal({ open, setOpen, callback }: CreateRe
               )}
             />
 
-            <Button variant="wink" type="submit" disabled={isProcessing} className="w-full">
+            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
               모집 생성
             </Button>
           </form>

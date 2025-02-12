@@ -6,13 +6,12 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import Project from '@/api/type/schema/project';
-
-import { toast } from 'sonner';
+import { useApiWithToast } from '@/api/useApi';
 
 interface DeleteProjectModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  project: Project | null;
+  project?: Project;
   callback: (id: string) => void;
   isAdmin: boolean;
 }
@@ -24,17 +23,23 @@ export default function DeleteProjectModal({
   callback,
   isAdmin,
 }: DeleteProjectModalProps) {
-  const onSubmit = useCallback(async () => {
-    await (isAdmin
-      ? Api.Domain.Program.AdminProject.deleteProject(project!.id)
-      : Api.Domain.Program.Project.deleteProject(project!.id));
+  const [isApi, startApi] = useApiWithToast();
 
-    setOpen(false);
-
-    toast.success('프로젝트를 삭제했습니다.');
-
-    callback(project!.id);
-  }, [project]);
+  const onSubmit = useCallback((project: Project) => {
+    startApi(
+      async () => {
+        await (isAdmin
+          ? Api.Domain.Program.AdminProject.deleteProject(project!.id)
+          : Api.Domain.Program.Project.deleteProject(project!.id));
+        callback(project!.id);
+      },
+      {
+        loading: '프로젝트를 삭제하고 있습니다.',
+        success: '프로젝트를 삭제했습니다.',
+        finally: () => setOpen(false),
+      },
+    );
+  }, []);
 
   if (!project) return null;
 
@@ -59,7 +64,13 @@ export default function DeleteProjectModal({
           </TableBody>
         </Table>
 
-        <Button variant="wink" type="submit" className="w-full" onClick={onSubmit}>
+        <Button
+          variant="wink"
+          type="submit"
+          disabled={isApi}
+          className="w-full"
+          onClick={() => onSubmit(project)}
+        >
           프로젝트 삭제
         </Button>
       </DialogContent>

@@ -14,7 +14,7 @@ interface CarouselProps {
 }
 
 export default function Carousel({ loading, projects }: CarouselProps) {
-  const [angle, setAngle] = useState(360 * 1000);
+  const [angle, setAngle] = useState(360 * 100);
 
   const rotateAngle = useMemo(() => 360 / projects.length, [projects.length]);
   const radian = useMemo(() => ((rotateAngle / 2) * Math.PI) / 180, [rotateAngle]);

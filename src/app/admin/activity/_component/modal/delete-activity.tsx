@@ -6,13 +6,12 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import Activity from '@/api/type/schema/activity';
-
-import { toast } from 'sonner';
+import { useApiWithToast } from '@/api/useApi';
 
 interface DeleteActivityModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  activity: Activity | null;
+  activity?: Activity;
   callback: (id: string) => void;
 }
 
@@ -22,15 +21,23 @@ export default function DeleteActivityModal({
   activity,
   callback,
 }: DeleteActivityModalProps) {
-  const onSubmit = useCallback(async () => {
-    await Api.Domain.Program.AdminActivity.deleteActivity(activity!.id);
+  const [isApi, startApi] = useApiWithToast();
 
-    setOpen(false);
-
-    toast.success('활동을 삭제했습니다.');
-
-    callback(activity!.id);
-  }, [activity]);
+  const onSubmit = useCallback(
+    async (activity: Activity) =>
+      startApi(
+        async () => {
+          await Api.Domain.Program.AdminActivity.deleteActivity(activity!.id);
+          callback(activity.id);
+        },
+        {
+          loading: '활동을 삭제하고 있습니다.',
+          success: '활동을 삭제했습니다.',
+          finally: () => setOpen(false),
+        },
+      ),
+    [],
+  );
 
   if (!activity) return null;
 
@@ -51,7 +58,13 @@ export default function DeleteActivityModal({
           </TableBody>
         </Table>
 
-        <Button variant="wink" type="submit" className="w-full" onClick={onSubmit}>
+        <Button
+          variant="wink"
+          type="submit"
+          disabled={isApi}
+          className="w-full"
+          onClick={() => onSubmit(activity)}
+        >
           활동 삭제
         </Button>
       </DialogContent>

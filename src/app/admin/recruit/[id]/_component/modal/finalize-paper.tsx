@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/ui/button';
@@ -9,9 +9,9 @@ import { Input } from '@/ui/input';
 import Api from '@/api';
 import { FinalizePaperRequest, FinalizePaperRequestSchema } from '@/api/type/domain/recruit';
 import Recruit from '@/api/type/schema/recruit';
+import { useApiWithToast } from '@/api/useApi';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
 
 interface FinalizePaperModalProps {
   open: boolean;
@@ -26,7 +26,7 @@ export default function FinalizePaperModal({
   recruit,
   callback,
 }: FinalizePaperModalProps) {
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<FinalizePaperRequest>({
     resolver: zodResolver(FinalizePaperRequestSchema),
@@ -37,18 +37,21 @@ export default function FinalizePaperModal({
   });
 
   const onSubmit = useCallback(
-    async (values: FinalizePaperRequest) => {
-      setIsProcessing(true);
-
-      await Api.Domain.AdminRecruit.finalizePaper(recruit.id, values);
-
-      setOpen(false);
-      setIsProcessing(false);
-      form.reset();
-
-      toast.success('서류 결과를 확정했습니다.');
-
-      callback();
+    (values: FinalizePaperRequest) => {
+      startApi(
+        async () => {
+          await Api.Domain.AdminRecruit.finalizePaper(recruit.id, values);
+          callback();
+        },
+        {
+          loading: '서류 결과를 확정하고 있습니다.',
+          success: '서류 결과를 확정했습니다.',
+          finally: () => {
+            setOpen(false);
+            form.reset();
+          },
+        },
+      );
     },
     [recruit],
   );
@@ -86,7 +89,7 @@ export default function FinalizePaperModal({
               이후에 서류 결과를 수정할 수 없습니다.
             </p>
 
-            <Button variant="wink" type="submit" disabled={isProcessing} className="w-full">
+            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
               서류 결과 확정
             </Button>
           </form>

@@ -14,12 +14,14 @@ import {
   RequestResetPasswordRequest,
   RequestResetPasswordRequestSchema,
 } from '@/api/type/domain/auth';
+import { useApiWithToast } from '@/api/useApi';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
 
 export default function AuthResetPasswordRequestPage() {
   const router = useRouter();
+
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<RequestResetPasswordRequest>({
     resolver: zodResolver(RequestResetPasswordRequestSchema),
@@ -29,16 +31,18 @@ export default function AuthResetPasswordRequestPage() {
     },
   });
 
-  const onSubmit = useCallback(
-    async (values: RequestResetPasswordRequest) => {
-      await Api.Domain.Auth.requestResetPassword(values);
-
-      toast.success('비밀번호 초기화 메일을 전송했습니다.');
-
-      router.push('/auth/login');
-    },
-    [router],
-  );
+  const onSubmit = useCallback((values: RequestResetPasswordRequest) => {
+    startApi(
+      async () => {
+        await Api.Domain.Auth.requestResetPassword(values);
+        router.push('/auth/login');
+      },
+      {
+        loading: '비밀번호 초기화 메일을 전송하고 있습니다.',
+        success: '비밀번호 초기화 메일을 전송했습니다.',
+      },
+    );
+  }, []);
 
   return (
     <Form {...form}>
@@ -60,7 +64,7 @@ export default function AuthResetPasswordRequestPage() {
           )}
         />
 
-        <Button variant="wink" type="submit" className="w-full">
+        <Button variant="wink" type="submit" disabled={isApi} className="w-full">
           비밀번호 초기화 요청
         </Button>
       </form>

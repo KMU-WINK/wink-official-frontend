@@ -12,7 +12,7 @@ export default class AdminActivity {
     page: number = 0,
     query: string = '',
   ): Promise<GetActivitiesPageableResponse> {
-    return this.request.get('/admin/program/activity', { params: { page, query } });
+    return this.request.get(`/admin/program/activity?page=${page}&query=${query}`);
   }
 
   public async createActivity(request: CreateActivityRequest): Promise<GetActivityResponse> {

@@ -56,6 +56,12 @@ export const UpdateMyPasswordRequestSchema = z.object({
 export const UpdateRequestSchema = z.object({
   name: z.string().min(1, '이름은 비어있을 수 없습니다.'),
   studentId: z.string().length(8, STUDENT_ID_MESSAGE),
+  department: z
+    .string()
+    .min(1, '학과를 선택해주세요.')
+    .refine((value) => VALID_DEPARTMENTS.includes(value), {
+      message: '올바른 학과가 아닙니다.',
+    }),
   email: z.string().regex(KOOKMIN_EMAIL_EXPRESSION, KOOKMIN_EMAIL_MESSAGE),
   phoneNumber: z.string().regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
   role: z.nativeEnum(Role),

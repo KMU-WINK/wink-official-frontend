@@ -23,22 +23,21 @@ import Activity from '@/api/type/schema/activity';
 import { cn } from '@/util';
 
 export default function ProgramActivityPage() {
-  const [api, setApi] = useState<CarouselApi>();
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
-  const [activities, setActivities] = useState<Activity[] | null>(null);
-  const [selectedActivity, setSelectedActivity] = useState<Activity>();
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [selected, setselected] = useState<Activity>();
 
   useEffect(() => {
-    if (api) {
-      api.scrollTo(0);
-    }
-  }, [selectedActivity]);
+    if (!carouselApi) return;
+    carouselApi.scrollTo(0);
+  }, [selected]);
 
   useEffect(() => {
     (async () => {
       const { activities } = await Api.Domain.Program.Activity.getActivities();
       setActivities(activities);
-      setSelectedActivity(activities[0]);
+      setselected(activities[0]);
     })();
   }, []);
 
@@ -55,10 +54,10 @@ export default function ProgramActivityPage() {
                   alt={activity.images[0]}
                   width={250}
                   height={250}
-                  onClick={() => setSelectedActivity(activity)}
+                  onClick={() => setselected(activity)}
                   className={cn(
                     'w-[250px] sm:w-full sm:h-[250px] rounded-3xl object-cover cursor-pointer transition-all duration-300',
-                    selectedActivity === activity
+                    selected === activity
                       ? 'h-[150px] sm:w-[250px]'
                       : 'h-[50px] sm:w-[75px] grayscale',
                   )}
@@ -77,8 +76,8 @@ export default function ProgramActivityPage() {
             ))}
       </div>
 
-      {selectedActivity ? (
-        <p className="text-xl sm:text-3xl font-bold">{selectedActivity?.title}</p>
+      {selected ? (
+        <p className="text-xl sm:text-3xl font-bold">{selected?.title}</p>
       ) : (
         <Skeleton className="w-72 h-8" />
       )}
@@ -89,12 +88,12 @@ export default function ProgramActivityPage() {
             opts={{
               align: 'start',
             }}
-            setApi={setApi}
+            setApi={setCarouselApi}
             className="max-w-[calc(100vw-10rem)] min-[1500px]:max-w-[1500px]"
           >
             <CarouselContent>
-              {selectedActivity ? (
-                selectedActivity.images.map((image, index) => (
+              {selected ? (
+                selected.images.map((image, index) => (
                   <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
                     <Image
                       src={image}
@@ -114,8 +113,8 @@ export default function ProgramActivityPage() {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
-          {selectedActivity ? (
-            <p className="text-sm sm:text-lg">{selectedActivity.description}</p>
+          {selected ? (
+            <p className="text-sm sm:text-lg">{selected.description}</p>
           ) : (
             <Skeleton className="w-60 h-5" />
           )}

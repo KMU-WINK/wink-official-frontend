@@ -8,18 +8,21 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/f
 import { Input } from '@/ui/input';
 import { Separator } from '@/ui/separator';
 
+import { useRecruitStore } from '@/store/recruit';
+
+import { formatDate, formatDateApi, toDate } from '@/util';
+
 import Calendar from '@/public/recruit/icon/calendar.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
-import { formatDate, formatDateApi, toDate } from '@/lib/util';
 
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function Step9({ go, recruit, form }: RecruitStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { step, modify, setModify } = useRecruitStore();
 
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+  const [clicked, setClicked] = useState(false);
 
   const dateOptions = useMemo(() => {
     const dates = [];
@@ -165,11 +168,8 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger(['interviewDates', 'whyCannotInterview'])) {
-              if (isFinalEdit) {
-                sessionStorage.removeItem('recruit:final_edit');
-              }
-
-              go((prev) => (isFinalEdit ? 18 : prev + 1));
+              go(modify || step + 1);
+              modify && setTimeout(() => setModify(undefined), 400);
             } else {
               toast.error(
                 form.formState.errors.interviewDates?.message ||
@@ -179,7 +179,7 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
             }
           }}
         >
-          {isFinalEdit ? '수정 완료' : '다음으로'}
+          {modify ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
+
+import { useRecruitStore } from '@/store/recruit';
 
 import Github from '@/public/recruit/icon/github.png';
 
@@ -14,9 +16,9 @@ import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function Step11({ go, form }: RecruitStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { step, modify, setModify } = useRecruitStore();
 
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -81,15 +83,14 @@ export default function Step11({ go, form }: RecruitStepProps) {
         }}
         className="flex items-center space-x-4"
       >
-        {!isFinalEdit && (
+        {!modify && (
           <Button
             variant="outline"
             disabled={clicked}
             onClick={() => {
               setClicked(true);
-
               form.setValue('github', '');
-              go((prev) => prev + 1);
+              go(step + 1);
             }}
           >
             건너뛰기
@@ -103,18 +104,15 @@ export default function Step11({ go, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('github')) {
-              if (isFinalEdit) {
-                sessionStorage.removeItem('recruit:final_edit');
-              }
-
-              go((prev) => (isFinalEdit ? 18 : prev + 1));
+              go(modify || step + 1);
+              modify && setTimeout(() => setModify(undefined), 400);
             } else {
               toast.error(form.formState.errors.github!.message);
               setClicked(false);
             }
           }}
         >
-          {isFinalEdit ? '수정 완료' : '다음으로'}
+          {modify ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

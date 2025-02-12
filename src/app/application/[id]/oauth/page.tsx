@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { SCOPE_MAP } from '@/app/application/[id]/_constant/scope-map';
 
@@ -12,9 +12,11 @@ import { Separator } from '@/ui/separator';
 
 import Api from '@/api';
 import Application from '@/api/type/schema/application';
+import { useApi } from '@/api/useApi';
 
 import { useUserStore } from '@/store/user';
 
+import { parseAsString, useQueryState } from 'nuqs';
 import { toast } from 'sonner';
 
 interface OauthLoginPageProps {
@@ -23,29 +25,26 @@ interface OauthLoginPageProps {
 
 export default function OauthLoginPage({ params }: OauthLoginPageProps) {
   const router = useRouter();
-  const queryParams = useSearchParams();
 
   const { user } = useUserStore();
 
-  const callback: string | null = queryParams.has('callback')
-    ? decodeURIComponent(queryParams.get('callback')!)
-    : null;
+  const [callback] = useQueryState('callback', parseAsString.withDefault(''));
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isApi, startApi] = useApi();
+
   const [application, setApplication] = useState<Application>();
 
-  const onLogin = useCallback(async () => {
+  const onLogin = useCallback((application: Application) => {
     if (!application) return;
 
-    const { token } = await Api.Domain.Application.oauthLogin(application.id);
-
-    window.location.href = `${callback}?token=${token}`;
-  }, [application]);
+    startApi(async () => {
+      const { token } = await Api.Domain.Application.oauthLogin(application.id);
+      window.location.href = `${callback}?token=${token}`;
+    });
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-
+    startApi(async () => {
       const { application } = await Api.Domain.Application.getApplication(params.id);
 
       if (!application.login.enable) {
@@ -61,11 +60,10 @@ export default function OauthLoginPage({ params }: OauthLoginPageProps) {
       }
 
       setApplication(application);
-      setLoading(false);
-    })();
+    });
   }, []);
 
-  if (loading || !application) return null;
+  if (isApi || !application) return null;
 
   return (
     <div className="flex flex-col items-center px-6 pt-20 sm:pt-28 space-y-10">
@@ -108,7 +106,7 @@ export default function OauthLoginPage({ params }: OauthLoginPageProps) {
 
       <Separator className="sm:max-w-[500px]" />
 
-      <Button variant="wink" onClick={onLogin}>
+      <Button variant="wink" disabled={isApi} onClick={() => onLogin(application)}>
         계속하기
       </Button>
     </div>

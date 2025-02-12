@@ -16,22 +16,25 @@ import Api from '@/api';
 import Page from '@/api/type/schema/page';
 import Project from '@/api/type/schema/project';
 import { isAdmin } from '@/api/type/schema/user';
+import { useApi } from '@/api/useApi';
 
 import { useUserStore } from '@/store/user';
+
+import { parseAsInteger, useQueryState } from 'nuqs';
 
 export default function ProgramProjectPage() {
   const { user } = useUserStore();
 
-  const [projects, setProjects] = useState<Page<Project> | null>(null);
+  const [isApi, startApi] = useApi();
 
-  const [page, setPage] = useState(0);
+  const [projects, setProjects] = useState<Page<Project>>();
+  const [selected, setSelected] = useState<Project>();
+
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
 
   const [createProjectModal, setCreateProjectModal] = useState(false);
   const [updateProjectModal, setUpdateProjectModal] = useState(false);
   const [deleteProjectModal, setDeleteProjectModal] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  const [loading, setLoading] = useState(true);
 
   const onCreateProject = useCallback((project: Project) => {
     setProjects((prev) => ({
@@ -55,15 +58,13 @@ export default function ProgramProjectPage() {
   }, []);
 
   useEffect(() => {
-    (async () => {
+    startApi(async () => {
       const { projects } = await Api.Domain.Program.Project.getProjects(page);
-
       setProjects((prev) => ({
         page: projects.page,
         content: [...(prev?.content || []), ...projects.content],
       }));
-      setLoading(false);
-    })();
+    });
   }, [page]);
 
   return (
@@ -77,7 +78,7 @@ export default function ProgramProjectPage() {
       )}
 
       <div className="hidden sm:block py-5">
-        <Carousel loading={loading} projects={projects?.content.slice(0, 6) || []} />
+        <Carousel loading={isApi} projects={projects?.content.slice(0, 6) || []} />
       </div>
 
       <div className="flex flex-wrap gap-4 sm:gap-8 items-center justify-center">
@@ -87,7 +88,7 @@ export default function ProgramProjectPage() {
                 key={project.id}
                 user={user}
                 project={project}
-                setSelectedProject={setSelectedProject}
+                setSelectedProject={setSelected}
                 setUpdateProjectModal={setUpdateProjectModal}
                 setDeleteProjectModal={setDeleteProjectModal}
               />
@@ -111,16 +112,18 @@ export default function ProgramProjectPage() {
         setOpen={setCreateProjectModal}
         callback={onCreateProject}
       />
+
       <UpdateProjectModal
         open={updateProjectModal}
         setOpen={setUpdateProjectModal}
-        project={selectedProject}
+        project={selected}
         callback={onUpdateProject}
       />
+
       <DeleteProjectModal
         open={deleteProjectModal}
         setOpen={setDeleteProjectModal}
-        project={selectedProject}
+        project={selected}
         callback={onDeleteProject}
         isAdmin={isAdmin(user?.role)}
       />

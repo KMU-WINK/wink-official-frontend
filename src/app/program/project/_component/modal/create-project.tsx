@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -15,12 +15,12 @@ import {
   CreateProjectRequestSchema,
 } from '@/api/type/domain/program/project';
 import Project from '@/api/type/schema/project';
+import { useApiWithToast } from '@/api/useApi';
 
 import { uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Upload } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface CreateProjectModalProps {
   open: boolean;
@@ -29,7 +29,8 @@ interface CreateProjectModalProps {
 }
 
 export default function CreateProjectModal({ open, setOpen, callback }: CreateProjectModalProps) {
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startUpload] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<CreateProjectRequest>({
     resolver: zodResolver(CreateProjectRequestSchema),
@@ -41,15 +42,21 @@ export default function CreateProjectModal({ open, setOpen, callback }: CreatePr
     },
   });
 
-  const onSubmit = useCallback(async (values: CreateProjectRequest) => {
-    const { project } = await Api.Domain.Program.Project.createProject(values);
-
-    setOpen(false);
-    form.reset();
-
-    toast.success('프로젝트를 생성했습니다.');
-
-    callback(project);
+  const onSubmit = useCallback((values: CreateProjectRequest) => {
+    startApi(
+      async () => {
+        const { project } = await Api.Domain.Program.Project.createProject(values);
+        callback(project);
+      },
+      {
+        loading: '프로젝트를 생성하고 있습니다',
+        success: '프로젝트를 생성했습니다.',
+        finally: () => {
+          setOpen(false);
+          form.reset();
+        },
+      },
+    );
   }, []);
 
   return (
@@ -130,17 +137,18 @@ export default function CreateProjectModal({ open, setOpen, callback }: CreatePr
                         className="hidden"
                         accept="image/*"
                         onChange={async (e) => {
-                          setIsUploading(true);
-
-                          try {
-                            const imgs = await uploadS3(e.target.files!, () =>
-                              Api.Domain.Program.Upload.uploadImage(),
-                            );
-
-                            field.onChange(imgs[0]);
-                          } finally {
-                            setIsUploading(false);
-                          }
+                          startUpload(
+                            async () =>
+                              field.onChange(
+                                await uploadS3(e.target.files!, () =>
+                                  Api.Domain.Program.Upload.uploadImage(),
+                                ),
+                              ),
+                            {
+                              loading: '이미지를 업로드하고 있습니다.',
+                              success: '이미지를 업로드했습니다.',
+                            },
+                          );
                         }}
                         disabled={isUploading}
                       />
@@ -151,7 +159,7 @@ export default function CreateProjectModal({ open, setOpen, callback }: CreatePr
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isUploading || isApi} className="w-full">
               프로젝트 추가
             </Button>
           </form>

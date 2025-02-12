@@ -19,12 +19,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import Api from '@/api';
 import { InviteRequest, InviteRequestSchema } from '@/api/type/domain/user';
+import { useApiWithToast } from '@/api/useApi';
 
 import { cn } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface InviteUserModalProps {
   open: boolean;
@@ -32,7 +32,9 @@ interface InviteUserModalProps {
 }
 
 export default function InviteUserModal({ open, setOpen }: InviteUserModalProps) {
-  const [departmentOpen, setDepartmentOpen] = useState<boolean>(false);
+  const [isApi, startApi] = useApiWithToast();
+
+  const [departmentOpen, setDepartmentOpen] = useState(false);
 
   const form = useForm<InviteRequest>({
     resolver: zodResolver(InviteRequestSchema),
@@ -46,13 +48,15 @@ export default function InviteUserModal({ open, setOpen }: InviteUserModalProps)
     },
   });
 
-  const onSubmit = useCallback(async (values: InviteRequest) => {
-    await Api.Domain.AdminUser.invite(values);
-
-    setOpen(false);
-    form.reset();
-
-    toast.success('유저를 초대했습니다.');
+  const onSubmit = useCallback((values: InviteRequest) => {
+    startApi(() => Api.Domain.AdminUser.invite(values), {
+      loading: '유저를 초대하고 있습니다.',
+      success: '유저를 초대했습니다.',
+      finally: () => {
+        setOpen(false);
+        form.reset();
+      },
+    });
   }, []);
 
   return (
@@ -194,7 +198,7 @@ export default function InviteUserModal({ open, setOpen }: InviteUserModalProps)
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
               유저 초대
             </Button>
           </form>

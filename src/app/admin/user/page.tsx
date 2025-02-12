@@ -36,20 +36,23 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Api from '@/api';
 import Page from '@/api/type/schema/page';
 import User, { getKoreanRole } from '@/api/type/schema/user';
+import { useApi } from '@/api/useApi';
 
 import _ from 'lodash';
 import { MoreHorizontal, UserIcon } from 'lucide-react';
+import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
 
 export default function AdminUserPage() {
-  const [users, setUsers] = useState<Page<User> | null>(null);
+  const [isApi, startApi, setApi] = useApi();
 
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
+
+  const [users, setUsers] = useState<Page<User>>();
+  const [selected, setSelected] = useState<User>();
 
   const [inviteUserOpen, setInviteUserOpen] = useState(false);
   const [updateUserOpen, setUpdateUserOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const pageIndex = useMemo(() => {
     if (!users) return [];
@@ -70,25 +73,24 @@ export default function AdminUserPage() {
 
   const onUpdateUser = useCallback((user: User) => {
     setUsers((prev) => {
-      if (!prev) return null;
+      if (!prev) return undefined;
       return { ...prev, content: prev.content.map((u) => (u.id === user.id ? user : u)) };
     });
   }, []);
 
   useEffect(() => {
-    const debounce = _.debounce(async () => {
-      const { users } = await Api.Domain.AdminUser.getUsers(page, query);
-      setUsers(users);
-      setLoading(false);
+    const debounce = _.debounce(() => {
+      startApi(async () => {
+        const { users } = await Api.Domain.AdminUser.getUsers(page, query);
+        setUsers(users);
+      });
     }, 500);
 
-    setUsers(null);
-    setLoading(true);
+    setApi(true);
+    setUsers(undefined);
     debounce();
 
-    return () => {
-      debounce.cancel();
-    };
+    return () => debounce.cancel();
   }, [page, query]);
 
   return (
@@ -135,7 +137,7 @@ export default function AdminUserPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {loading ? (
+            {isApi ? (
               Array.from({ length: 10 }, (_, index) => (
                 <TableRow key={index}>
                   <TableCell className="flex items-center gap-2">
@@ -182,7 +184,7 @@ export default function AdminUserPage() {
                       <DropdownMenuContent>
                         <DropdownMenuItem
                           onClick={() => {
-                            setSelectedUser(user);
+                            setSelected(user);
                             setUpdateUserOpen(true);
                           }}
                         >
@@ -203,7 +205,7 @@ export default function AdminUserPage() {
           </TableBody>
         </Table>
 
-        {!loading && users && users.page.totalPages > 0 && (
+        {!isApi && users && users.page.totalPages > 0 && (
           <Pagination>
             <PaginationContent>
               <PaginationItem>
@@ -242,10 +244,11 @@ export default function AdminUserPage() {
       </div>
 
       <InviteUserModal open={inviteUserOpen} setOpen={setInviteUserOpen} />
+
       <UpdateUserModal
         open={updateUserOpen}
         setOpen={setUpdateUserOpen}
-        user={selectedUser}
+        user={selected}
         callback={onUpdateUser}
       />
     </>

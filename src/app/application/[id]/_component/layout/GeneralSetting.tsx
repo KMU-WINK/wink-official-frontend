@@ -6,6 +6,7 @@ import { Label } from '@/ui/label';
 
 import Api from '@/api';
 import Application from '@/api/type/schema/application';
+import { useApiWithToast } from '@/api/useApi';
 
 import { toast } from 'sonner';
 
@@ -15,16 +16,25 @@ interface GeneralSettingProps {
 }
 
 export default function GeneralSetting({ application, setApplication }: GeneralSettingProps) {
-  const [clientSecretVisible, setClientSecretVisible] = useState<boolean>(false);
+  const [isApi, startApi] = useApiWithToast();
+
+  const [clientSecretVisible, setClientSecretVisible] = useState(false);
 
   const resetSecret = useCallback(async () => {
     if (!application) return;
 
-    const { application: application2 } = await Api.Domain.Application.resetSecret(application.id);
-
-    toast.success('애플리케이션 시크릿을 재발급했습니다.');
-
-    setApplication(application2);
+    startApi(
+      async () => {
+        const { application: application2 } = await Api.Domain.Application.resetSecret(
+          application.id,
+        );
+        setApplication(application2);
+      },
+      {
+        loading: '애플리케이션 시크릿 값을 재발급받고 있습니다.',
+        success: '애플리케이션 시크릿 값을 재발급받았습니다.',
+      },
+    );
   }, [application]);
 
   return (
@@ -66,7 +76,9 @@ export default function GeneralSetting({ application, setApplication }: GeneralS
           />
         </div>
 
-        <Button onClick={resetSecret}>재발급</Button>
+        <Button disabled={isApi} onClick={resetSecret}>
+          재발급
+        </Button>
       </div>
     </div>
   );

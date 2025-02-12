@@ -27,9 +27,9 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step3({ go, form }: MigrateStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const [clicked, setClicked] = useState(false);
 
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>

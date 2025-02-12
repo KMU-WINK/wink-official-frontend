@@ -14,7 +14,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function Step6({ go, form }: MigrateStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>

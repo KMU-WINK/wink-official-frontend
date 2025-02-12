@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import { usePathname } from 'next/navigation';
 
@@ -11,10 +11,14 @@ import Header from '@/layout/header';
 
 import Api from '@/api';
 
+import { useInitStore } from '@/store/init';
+
 import { cn } from '@/util';
 
 import Loading from '@/app/loading';
 import '@/style/global.css';
+
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -25,18 +29,20 @@ const IGNORE_PATHS = ['/auth', '/recruit/form', '/admin'];
 export default function RootLayout({ children }: RootLayoutProps) {
   const pathname = usePathname();
 
-  const [loading, setLoading] = useState(true);
+  const { isInit, setInit } = useInitStore();
 
   useEffect(() => {
+    setInit(false);
+
     (async () => {
-      const accessToken: string | null = localStorage.getItem('accessToken');
-      const refreshToken: string | null = localStorage.getItem('refreshToken');
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
 
       if (accessToken && refreshToken) {
         await Api.Request.setToken(accessToken, refreshToken);
       }
 
-      setLoading(false);
+      setInit(true);
     })();
   }, []);
 
@@ -73,29 +79,31 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body>
-        <Header loading={loading} />
+        <NuqsAdapter>
+          <Header loading={!isInit} />
 
-        <main
-          className={cn(
-            'pt-14',
-            IGNORE_PATHS.find((path) => pathname.startsWith(path))
-              ? 'min-h-[100dvh]'
-              : 'min-h-[calc(100dvh-274px)]',
-          )}
-        >
-          {loading ? <Loading /> : children}
-        </main>
+          <main
+            className={cn(
+              'pt-14',
+              IGNORE_PATHS.find((path) => pathname.startsWith(path))
+                ? 'min-h-[100dvh]'
+                : 'min-h-[calc(100dvh-274px)]',
+            )}
+          >
+            {!isInit ? <Loading /> : children}
+          </main>
 
-        {!IGNORE_PATHS.find((path) => pathname.startsWith(path)) && <Footer />}
+          {!IGNORE_PATHS.find((path) => pathname.startsWith(path)) && <Footer />}
 
-        <Toaster
-          className="font-sans"
-          position="top-center"
-          duration={3000}
-          closeButton={true}
-          richColors={true}
-          theme="light"
-        />
+          <Toaster
+            className="font-sans"
+            position="top-center"
+            duration={3000}
+            closeButton={true}
+            richColors={true}
+            theme="light"
+          />
+        </NuqsAdapter>
       </body>
     </html>
   );

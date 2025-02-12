@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -17,17 +17,17 @@ import {
   CreateHistoryRequestSchema,
 } from '@/api/type/domain/program/history';
 import History from '@/api/type/schema/history';
+import { useApiWithToast } from '@/api/useApi';
 
 import { formatDate, formatDateApi, toDate, uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Calendar as CalendarIcon, Upload } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface UpdateHistoryModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  history: History | null;
+  history?: History;
   callback: (history: History) => void;
 }
 
@@ -37,7 +37,8 @@ export default function UpdateHistoryModal({
   history,
   callback,
 }: UpdateHistoryModalProps) {
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startUpload] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<CreateHistoryRequest>({
     resolver: zodResolver(CreateHistoryRequestSchema),
@@ -50,20 +51,26 @@ export default function UpdateHistoryModal({
   });
 
   const onSubmit = useCallback(
-    async (values: CreateHistoryRequest) => {
+    (values: CreateHistoryRequest) => {
       if (!history) return;
 
-      const { history: _history } = await Api.Domain.Program.AdminHistory.updateHistory(
-        history.id,
-        values,
+      startApi(
+        async () => {
+          const { history: _history } = await Api.Domain.Program.AdminHistory.updateHistory(
+            history.id,
+            values,
+          );
+          callback(_history);
+        },
+        {
+          loading: '연혁을 수정하고 있습니다',
+          success: '연혁을 수정했습니다.',
+          finally: () => {
+            setOpen(false);
+            form.reset();
+          },
+        },
       );
-
-      setOpen(false);
-      form.reset();
-
-      toast.success('연혁을 수정했습니다.');
-
-      callback(_history);
     },
     [history],
   );
@@ -177,17 +184,18 @@ export default function UpdateHistoryModal({
                         className="hidden"
                         accept="image/*"
                         onChange={async (e) => {
-                          setIsUploading(true);
-
-                          try {
-                            const imgs = await uploadS3(e.target.files!, () =>
-                              Api.Domain.Program.Upload.uploadImage(),
-                            );
-
-                            field.onChange(imgs[0]);
-                          } finally {
-                            setIsUploading(false);
-                          }
+                          startUpload(
+                            async () =>
+                              field.onChange(
+                                await uploadS3(e.target.files!, () =>
+                                  Api.Domain.Program.Upload.uploadImage(),
+                                ),
+                              ),
+                            {
+                              loading: '이미지를 업로드하고 있습니다.',
+                              success: '이미지를 업로드했습니다.',
+                            },
+                          );
                         }}
                         disabled={isUploading}
                       />
@@ -198,7 +206,7 @@ export default function UpdateHistoryModal({
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isUploading || isApi} className="w-full">
               연혁 수정
             </Button>
           </form>
