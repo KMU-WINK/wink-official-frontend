@@ -40,7 +40,7 @@ export default function Carousel({ loading, projects }: CarouselProps) {
             ? Array.from({ length: 6 }).map((_, idx) => (
                 <Skeleton
                   key={idx}
-                  className="absolute w-[275px] h-[165px] rounded-3xl"
+                  className="absolute w-[320px] h-[130px] rounded-3xl"
                   style={{
                     transform: `rotateY(${60 * idx}deg) translateZ(268px)`,
                   }}
@@ -58,10 +58,11 @@ export default function Carousel({ loading, projects }: CarouselProps) {
                     key={id}
                     src={image}
                     alt={title}
-                    width={275}
-                    height={165}
+                    width={320}
+                    height={130}
+                    quality={100}
                     className={cn(
-                      'absolute w-[275px] h-[165px] cursor-pointer rounded-3xl',
+                      'absolute w-[320px] h-[130px] cursor-pointer rounded-3xl object-cover',
                       now ? 'shadow-lg' : 'grayscale brightness-75 blur-[2px]',
                     )}
                     style={{
@@ -80,7 +81,7 @@ export default function Carousel({ loading, projects }: CarouselProps) {
         </div>
       </div>
 
-      <div className="pt-28">
+      <div className="pt-12">
         {loading ? (
           <Skeleton className="w-[300px] h-7" />
         ) : (

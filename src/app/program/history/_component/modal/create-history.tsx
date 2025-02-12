@@ -161,9 +161,11 @@ export default function CreateHistoryModal({ open, setOpen, callback }: CreateHi
                           startUpload(
                             async () =>
                               field.onChange(
-                                await uploadS3(e.target.files!, () =>
-                                  Api.Domain.Program.Upload.uploadImage(),
-                                ),
+                                (
+                                  await uploadS3(e.target.files!, () =>
+                                    Api.Domain.Program.Upload.uploadImage(),
+                                  )
+                                )[0],
                               ),
                             {
                               loading: '이미지를 업로드하고 있습니다.',
