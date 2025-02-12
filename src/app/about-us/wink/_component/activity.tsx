@@ -42,6 +42,7 @@ export default function Activity() {
                 alt={image.src}
                 width={320}
                 height={180}
+                placeholder="blur"
                 className="h-[180px] sm:h-auto rounded-md object-cover"
               />
             </div>

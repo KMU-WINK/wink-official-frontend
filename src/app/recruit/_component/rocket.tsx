@@ -26,6 +26,7 @@ export default function Rocker() {
         height={100}
         quality={100}
         priority
+        placeholder="blur"
         className="-translate-y-28 sm:-translate-y-52 w-[40px] sm:w-[80px] h-[50px] sm:h-[100px]"
       />
     </motion.div>
