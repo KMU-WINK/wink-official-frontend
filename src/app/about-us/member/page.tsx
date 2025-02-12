@@ -77,6 +77,7 @@ export default function AboutUsMemberPage() {
         role="회장단"
         description="전체 동아리 운영 기획 및 각 부서 업무 참여"
         users={leaders}
+        direction="row"
         skeleton={2}
         loading={loading}
       />
@@ -121,7 +122,7 @@ export default function AboutUsMemberPage() {
 
       <Separator />
 
-      <UserList users={members} direction="flex" skeleton={8} loading={loading} />
+      <UserList users={members} direction="row" skeleton={8} loading={loading} />
     </div>
   );
 }
