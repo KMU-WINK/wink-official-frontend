@@ -86,16 +86,29 @@ export default function AboutUsMemberPage() {
         </p>
       </Cloud>
 
-      <UserList
-        role="회장단"
-        description="전체 동아리 운영 기획 및 각 부서 업무 참여"
-        users={leaders}
-        direction="row"
-        skeleton={2}
-        loading={loading}
-      />
+      <div className="hidden md:block">
+        <UserList
+          role="회장단"
+          description="전체 동아리 운영 기획 및 각 부서 업무 참여"
+          users={leaders}
+          direction="row"
+          skeleton={2}
+          loading={loading}
+        />
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-4 items-start">
+      <div className="block md:hidden">
+        <UserList
+          role="회장단"
+          description="전체 동아리 운영 기획 및 각 부서 업무 참여"
+          users={leaders}
+          direction="col"
+          skeleton={2}
+          loading={loading}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-10 items-start">
         <UserList
           role="총무부"
           description="비품 및 회의 관리, 도서 신청 및 대출 관리"
