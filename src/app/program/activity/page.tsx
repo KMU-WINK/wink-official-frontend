@@ -89,30 +89,35 @@ export default function ProgramActivityPage() {
               align: 'start',
             }}
             setApi={setCarouselApi}
-            className="max-w-[calc(100vw-10rem)] min-[1500px]:max-w-[1500px]"
+            className="max-w-[300px] sm:max-w-[400px] min-[930px]:max-w-[800px] min-[1300px]:max-w-[1200px]"
           >
             <CarouselContent>
               {selected ? (
                 selected.images.map((image, index) => (
-                  <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
+                  <CarouselItem
+                    key={index}
+                    className="min-[900px]:basis-1/2 min-[1300px]:basis-1/3"
+                  >
                     <Image
                       src={image}
                       alt={image}
                       width={500}
                       height={300}
                       loading="eager"
-                      className="h-[180px] sm:h-[240px] rounded-xl object-cover"
+                      className="w-[300px] h-[200px] sm:w-[400px] sm:h-[250px] rounded-xl object-cover"
                     />
                   </CarouselItem>
                 ))
               ) : (
                 <CarouselItem>
-                  <Skeleton className="w-[300px] sm:w-[500px] h-[180px] sm:h-[240px] rounded-xl" />
+                  <Skeleton className="w-[300px] h-[200px] sm:w-[400px] sm:h-[250px] rounded-xl" />
                 </CarouselItem>
               )}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <div className="hidden sm:block">
+              <CarouselPrevious />
+              <CarouselNext />
+            </div>
           </Carousel>
           {selected ? (
             <p className="text-sm sm:text-lg">{selected.description}</p>
