@@ -4,16 +4,7 @@ import Study from '@/api/type/schema/study';
 
 import { CircleHelp } from 'lucide-react';
 
-interface StudyCardProps extends Study {}
-
-export default function StudyCard({
-  index,
-  category,
-  title,
-  author,
-  content,
-  image,
-}: StudyCardProps) {
+export default function StudyCard({ index, category, title, author, content, image }: Study) {
   return (
     <div
       className="flex flex-col-reverse sm:flex-row justify-between w-[300px] sm:w-full sm:max-w-[900px] border border-neutral-200 rounded-xl cursor-pointer"

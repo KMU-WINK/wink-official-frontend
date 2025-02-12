@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
@@ -16,6 +16,8 @@ import {
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
+import { useRecruitStore } from '@/store/recruit';
+
 import { cn } from '@/util';
 
 import GraduationCap from '@/public/recruit/icon/graduation_cap.png';
@@ -27,11 +29,11 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Step3({ go, form }: RecruitStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const [clicked, setClicked] = useState(false);
 
-  const [open, setOpen] = useState<boolean>(false);
+  const { step, modify, setModify } = useRecruitStore();
 
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -147,18 +149,15 @@ export default function Step3({ go, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('department')) {
-              if (isFinalEdit) {
-                sessionStorage.removeItem('recruit:final_edit');
-              }
-
-              go((prev) => (isFinalEdit ? 18 : prev + 1));
+              go(modify || step + 1);
+              modify && setTimeout(() => setModify(undefined), 400);
             } else {
               toast.error(form.formState.errors.department!.message);
               setClicked(false);
             }
           }}
         >
-          {isFinalEdit ? '수정 완료' : '다음으로'}
+          {modify ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

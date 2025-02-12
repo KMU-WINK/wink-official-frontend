@@ -8,10 +8,10 @@ import { Textarea } from '@/ui/textarea';
 
 import Api from '@/api';
 import Application, { Scope } from '@/api/type/schema/application';
+import { useApiWithToast } from '@/api/useApi';
 import { URL_EXPRESSION } from '@/api/validation';
 
 import _ from 'lodash';
-import { toast } from 'sonner';
 
 interface LoginSettingProps {
   application: Application;
@@ -19,6 +19,8 @@ interface LoginSettingProps {
 }
 
 export default function LoginSetting({ application, setApplication }: LoginSettingProps) {
+  const [isApi, startApi] = useApiWithToast();
+
   const [urls, setUrls] = useState<string[]>([]);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -32,60 +34,72 @@ export default function LoginSetting({ application, setApplication }: LoginSetti
     }
   }, [textareaRef]);
 
-  const onEnableChange = useCallback(
-    async (enable: boolean) => {
-      const { application: application2 } = await Api.Domain.Application.updateApplicationLogin(
-        application.id,
-        {
-          enable,
-          urls: enable ? application.login.urls : [],
-          scopes: enable ? application.login.scopes : [Scope.UUID],
-        },
-      );
-
-      toast.success(`로그인 기능을 ${enable ? '' : '비'}활성화했습니다.`);
-
-      setApplication(application2);
-    },
-    [application],
-  );
-
-  const onUrlsChange = useCallback(async () => {
-    const _urls = [...new Set(urls)].filter((x) => URL_EXPRESSION.test(x));
-    setUrls(_urls);
-
-    if (_.isEqual(_urls, application.login.urls)) return;
-
-    const { application: application2 } = await Api.Domain.Application.updateApplicationLogin(
-      application.id,
-      { ...application.login, urls: _urls },
+  const onEnableChange = useCallback((application: Application, enable: boolean) => {
+    startApi(
+      async () => {
+        const { application: application2 } = await Api.Domain.Application.updateApplicationLogin(
+          application.id,
+          {
+            enable,
+            urls: enable ? application.login.urls : [],
+            scopes: enable ? application.login.scopes : [Scope.UUID],
+          },
+        );
+        setApplication(application2);
+      },
+      {
+        loading: `로그인 기능을 ${enable ? '' : '비'}활성화하고 있습니다.`,
+        success: `로그인 기능을 ${enable ? '' : '비'}활성화했습니다.`,
+      },
     );
+  }, []);
 
-    toast.success('콜백 URL을 수정했습니다.');
+  const onUrlsChange = useCallback(
+    (application: Application) => {
+      startApi(
+        async () => {
+          const _urls = [...new Set(urls)].filter((x) => URL_EXPRESSION.test(x));
+          setUrls(_urls);
 
-    setApplication(application2);
-  }, [application, urls]);
+          if (_.isEqual(_urls, application.login.urls)) return;
 
-  const onScopeChange = useCallback(
-    async (scope: Scope, value: boolean) => {
-      const { application: application2 } = await Api.Domain.Application.updateApplicationLogin(
-        application.id,
+          const { application: application2 } = await Api.Domain.Application.updateApplicationLogin(
+            application.id,
+            { ...application.login, urls: _urls },
+          );
+          setApplication(application2);
+        },
         {
-          ...application.login,
-          scopes: value
-            ? application.login.scopes.includes(scope)
-              ? application.login.scopes
-              : [...application.login.scopes, scope]
-            : application.login.scopes.filter((x) => x !== scope),
+          loading: '콜백 URL을 수정하고 있습니다',
+          success: '콜백 URL을 수정했습니다.',
         },
       );
-
-      toast.success('필요한 정보를 수정했습니다.');
-
-      setApplication(application2);
     },
-    [application],
+    [urls, setUrls],
   );
+
+  const onScopeChange = useCallback((application: Application, scope: Scope, value: boolean) => {
+    startApi(
+      async () => {
+        const { application: application2 } = await Api.Domain.Application.updateApplicationLogin(
+          application.id,
+          {
+            ...application.login,
+            scopes: value
+              ? application.login.scopes.includes(scope)
+                ? application.login.scopes
+                : [...application.login.scopes, scope]
+              : application.login.scopes.filter((x) => x !== scope),
+          },
+        );
+        setApplication(application2);
+      },
+      {
+        loading: '스코프를 수정하고 있습니다',
+        success: '스코프를 수정했습니다.',
+      },
+    );
+  }, []);
 
   useEffect(() => {
     setUrls(application.login.urls);
@@ -98,7 +112,12 @@ export default function LoginSetting({ application, setApplication }: LoginSetti
 
       <div className="flex items-center space-x-2">
         <Label htmlFor="enable">활성화</Label>
-        <Switch id="enable" checked={application.login.enable} onCheckedChange={onEnableChange} />
+        <Switch
+          id="enable"
+          disabled={isApi}
+          checked={application.login.enable}
+          onCheckedChange={(v) => onEnableChange(application, v)}
+        />
       </div>
 
       {application.login.enable && (
@@ -113,9 +132,9 @@ export default function LoginSetting({ application, setApplication }: LoginSetti
                   </Label>
                   <Switch
                     id={`enable-${value}`}
-                    disabled={disable}
+                    disabled={disable || isApi}
                     checked={application.login.scopes.includes(value)}
-                    onCheckedChange={(v) => onScopeChange(value, v)}
+                    onCheckedChange={(v) => onScopeChange(application, value, v)}
                   />
                 </div>
               ))}
@@ -127,12 +146,13 @@ export default function LoginSetting({ application, setApplication }: LoginSetti
             <Textarea
               id="urls"
               ref={textareaRef}
+              disabled={isApi}
               className="resize-none overflow-y-hidden overflow-x-scroll"
               value={urls.join('\n')}
               placeholder="http://localhost:3000/callback/oauth/wink"
               onInput={resizeTextarea}
               onChange={(e) => setUrls(e.target.value.split('\n'))}
-              onBlur={onUrlsChange}
+              onBlur={() => onUrlsChange(application)}
             />
             <p className="text-sm text-neutral-500">한 줄에 하나의 URL을 입력해주세요.</p>
           </div>

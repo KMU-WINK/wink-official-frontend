@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
-import StackButton, { Stack } from '@/app/recruit/form/_component/StackButton';
+import StackButton from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
+
+import { useRecruitStore } from '@/store/recruit';
 
 import Laptop from '@/public/recruit/icon/laptop.png';
 
@@ -13,21 +15,9 @@ import { RecruitStepProps } from '@/app/recruit/form/page';
 import { motion } from 'framer-motion';
 
 export default function Step12({ go, form }: RecruitStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { step, modify, setModify, setStack } = useRecruitStore();
 
-  const [stacks, setStacks] = useState<Stack[]>([]);
-
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
-
-  useEffect(() => {
-    const _stacks = localStorage.getItem('recruit:stacks');
-
-    if (!_stacks) return;
-
-    setStacks(JSON.parse(_stacks));
-  }, []);
-
-  useEffect(() => localStorage.setItem('recruit:stacks', JSON.stringify(stacks)), [stacks]);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -66,10 +56,10 @@ export default function Step12({ go, form }: RecruitStepProps) {
         }}
         className="flex flex-col space-y-2 w-full max-w-[300px]"
       >
-        <StackButton name="프론트엔드" raw="frontend" stacks={stacks} setStacks={setStacks} />
-        <StackButton name="백엔드" raw="backend" stacks={stacks} setStacks={setStacks} />
-        <StackButton name="데브옵스" raw="devops" stacks={stacks} setStacks={setStacks} />
-        <StackButton name="디자인" raw="design" stacks={stacks} setStacks={setStacks} />
+        <StackButton name="프론트엔드" raw="frontend" />
+        <StackButton name="백엔드" raw="backend" />
+        <StackButton name="데브옵스" raw="devops" />
+        <StackButton name="디자인" raw="design" />
       </motion.div>
 
       <motion.div
@@ -84,14 +74,14 @@ export default function Step12({ go, form }: RecruitStepProps) {
         }}
         className="flex items-center space-x-4"
       >
-        {!isFinalEdit && (
+        {!modify && (
           <Button
             variant="outline"
             disabled={clicked}
             onClick={() => {
               setClicked(true);
+              setStack([]);
 
-              setStacks([]);
               form.setValue('frontendTechStacks', []);
               form.setValue('backendTechStacks', []);
               form.setValue('devOpsTechStacks', []);
@@ -109,15 +99,11 @@ export default function Step12({ go, form }: RecruitStepProps) {
           disabled={clicked}
           onClick={async () => {
             setClicked(true);
-
-            if (isFinalEdit) {
-              sessionStorage.removeItem('recruit:final_edit');
-            }
-
-            go((prev) => (isFinalEdit ? 18 : prev + 1));
+            go(modify || step + 1);
+            modify && setTimeout(() => setModify(undefined), 400);
           }}
         >
-          {isFinalEdit ? '수정 완료' : '다음으로'}
+          {modify ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

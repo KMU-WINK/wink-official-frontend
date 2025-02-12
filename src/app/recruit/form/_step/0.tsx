@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -8,6 +8,8 @@ import PrivacyModal from '@/app/recruit/form/_component/modal/privacy';
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { Label } from '@/ui/label';
+
+import { useRecruitStore } from '@/store/recruit';
 
 import Hand from '@/public/recruit/icon/hand.png';
 
@@ -19,12 +21,12 @@ import { motion } from 'framer-motion';
 export default function Step0({ go }: RecruitStepProps) {
   const router = useRouter();
 
-  const [openPrivacyModal, setOpenPrivacyModal] = useState<boolean>(false);
+  const { step } = useRecruitStore();
+
   const [isAgreePrivacy, setAgreePrivacy] = useState<CheckedState>('indeterminate');
+  const [openPrivacyModal, setOpenPrivacyModal] = useState(false);
 
-  const [clicked, setClicked] = useState<boolean>(false);
-
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -136,23 +138,22 @@ export default function Step0({ go }: RecruitStepProps) {
           disabled={clicked}
           onClick={() => {
             setClicked(true);
-
             router.back();
           }}
         >
           아니요
         </Button>
+
         <Button
           className="transition-opacity"
           variant="wink"
           disabled={clicked || isAgreePrivacy !== true}
           onClick={() => {
             setClicked(true);
-
-            go((prev) => (isFinalEdit ? 18 : prev + 1));
+            go(step + 1);
           }}
         >
-          {isFinalEdit ? '수정 완료' : '네'}
+          네
         </Button>
       </motion.div>
 

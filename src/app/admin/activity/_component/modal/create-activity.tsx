@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -21,12 +21,12 @@ import {
   CreateActivityRequestSchema,
 } from '@/api/type/domain/program/activity';
 import Activity from '@/api/type/schema/activity';
+import { useApiWithToast } from '@/api/useApi';
 
 import { uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash2, Upload } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface CreateActivityModalProps {
   open: boolean;
@@ -35,7 +35,8 @@ interface CreateActivityModalProps {
 }
 
 export default function CreateActivityModal({ open, setOpen, callback }: CreateActivityModalProps) {
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startUpload] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<CreateActivityRequest>({
     resolver: zodResolver(CreateActivityRequestSchema),
@@ -47,16 +48,24 @@ export default function CreateActivityModal({ open, setOpen, callback }: CreateA
     },
   });
 
-  const onSubmit = useCallback(async (values: CreateActivityRequest) => {
-    const { activity } = await Api.Domain.Program.AdminActivity.createActivity(values);
-
-    setOpen(false);
-    form.reset();
-
-    toast.success('활동을 생성했습니다.');
-
-    callback(activity);
-  }, []);
+  const onSubmit = useCallback(
+    (values: CreateActivityRequest) =>
+      startApi(
+        async () => {
+          const { activity } = await Api.Domain.Program.AdminActivity.createActivity(values);
+          callback(activity);
+        },
+        {
+          loading: '활동을 생성중입니다.',
+          success: '활동을 생성했습니다.',
+          finally: () => {
+            form.reset();
+            setOpen(false);
+          },
+        },
+      ),
+    [],
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -144,20 +153,21 @@ export default function CreateActivityModal({ open, setOpen, callback }: CreateA
                         className="hidden"
                         accept="image/*"
                         multiple
-                        onChange={async (e) => {
-                          setIsUploading(true);
-
-                          try {
-                            const imgs = await uploadS3(e.target.files!, () =>
-                              Api.Domain.Program.Upload.uploadImage(),
-                            );
-
-                            field.onChange([...field.value, ...imgs]);
-                          } finally {
-                            setIsUploading(false);
-                          }
-                        }}
                         disabled={isUploading}
+                        onChange={(e) =>
+                          startUpload(
+                            async () =>
+                              field.onChange(
+                                await uploadS3(e.target.files!, () =>
+                                  Api.Domain.Program.Upload.uploadImage(),
+                                ),
+                              ),
+                            {
+                              loading: '이미지를 업로드하고 있습니다.',
+                              success: '이미지를 업로드했습니다.',
+                            },
+                          )
+                        }
                       />
                     </>
                   </FormControl>
@@ -166,7 +176,7 @@ export default function CreateActivityModal({ open, setOpen, callback }: CreateA
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isUploading || isApi} className="w-full">
               활동 생성
             </Button>
           </form>

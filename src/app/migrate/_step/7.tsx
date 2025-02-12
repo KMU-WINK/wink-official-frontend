@@ -8,6 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 
+import { useRegisterStore } from '@/store/register';
+
 import BallotBox from '@/public/recruit/icon/ballot_box.png';
 
 import { MigrateStepProps } from '@/app/migrate/page';
@@ -18,7 +20,9 @@ import { toast } from 'sonner';
 export default function Step7({ form }: MigrateStepProps) {
   const router = useRouter();
 
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { setConfetti } = useRegisterStore();
+
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -102,8 +106,7 @@ export default function Step7({ form }: MigrateStepProps) {
             toast.promise(
               async () => {
                 await Api.Domain.Migrate.migrate(form.getValues());
-
-                sessionStorage.setItem('register:confetti', 'true');
+                setConfetti(true);
                 router.push('/auth/login');
               },
               {

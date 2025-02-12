@@ -1,24 +1,22 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { Button } from '@/ui/button';
+
+import { useRecruitStore } from '@/store/recruit';
 
 export type Stack = 'frontend' | 'backend' | 'devops' | 'design';
 
 interface StackButtonProps {
   name: string;
   raw: Stack;
-  stacks: Stack[];
-  setStacks: Dispatch<SetStateAction<Stack[]>>;
 }
 
-export default function StackButton({ name, raw, stacks, setStacks }: StackButtonProps) {
+export default function StackButton({ name, raw }: StackButtonProps) {
+  const { stack, setStack } = useRecruitStore();
+
   return (
     <Button
-      variant={stacks.includes(raw) ? 'default' : 'outline'}
+      variant={stack.includes(raw) ? 'default' : 'outline'}
       onClick={() =>
-        setStacks((prev) =>
-          prev.includes(raw) ? prev.filter((stack) => stack !== raw) : [...prev, raw],
-        )
+        setStack(stack.includes(raw) ? stack.filter((s) => s !== raw) : [...stack, raw])
       }
     >
       {name}

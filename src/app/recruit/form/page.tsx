@@ -1,15 +1,7 @@
 'use client';
 
-import {
-  ComponentType,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Path, PathValue, UseFormReturn, useForm } from 'react-hook-form';
+import { ComponentType, useCallback, useEffect, useMemo, useState } from 'react';
+import { UseFormReturn, useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
@@ -19,6 +11,11 @@ import { Progress } from '@/ui/progress';
 import Api from '@/api';
 import { RecruitFormRequest, RecruitFormRequestSchema } from '@/api/type/domain/recruit';
 import Recruit from '@/api/type/schema/recruit';
+import { useApi } from '@/api/useApi';
+
+import { useRecruitStore } from '@/store/recruit';
+
+import { nowDate, toDate } from '@/util';
 
 import Step0 from '@/app/recruit/form/_step/0';
 import Step1 from '@/app/recruit/form/_step/1';
@@ -39,7 +36,6 @@ import Step15 from '@/app/recruit/form/_step/15';
 import Step16 from '@/app/recruit/form/_step/16';
 import Step17 from '@/app/recruit/form/_step/17';
 import Step18 from '@/app/recruit/form/_step/18';
-import { nowDate, toDate } from '@/lib/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { endOfDay, startOfDay } from 'date-fns';
@@ -48,8 +44,7 @@ import { CircleChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
 export interface RecruitStepProps {
-  go: Dispatch<SetStateAction<number>>;
-  setStep: Dispatch<SetStateAction<number>>;
+  go: (page: number) => void;
   form: UseFormReturn<RecruitFormRequest>;
   recruit: Recruit;
 }
@@ -78,13 +73,15 @@ const STEPS: ComponentType<RecruitStepProps>[] = [
 
 export default function RecruitApplicationPage() {
   const router = useRouter();
+
+  const { step, data, setStep, developer, setBack, modify, setData } = useRecruitStore();
+
+  const [isApi, startApi] = useApi();
+  const [isMoving, startMoving] = useApi();
+
   const controls = useAnimationControls();
 
-  const [loading, setLoading] = useState(true);
-  const [recruit, setRecruit] = useState<Recruit | null>(null);
-
-  const [isProcessing, setisProcessing] = useState(false);
-  const [step, setStep] = useState(0);
+  const [recruit, setRecruit] = useState<Recruit>();
 
   const form = useForm<RecruitFormRequest>({
     resolver: zodResolver(RecruitFormRequestSchema),
@@ -109,15 +106,8 @@ export default function RecruitApplicationPage() {
     },
   });
 
-  const go = useCallback(
-    async (page: SetStateAction<number>) => {
-      setisProcessing(true);
-
-      setTimeout(() => {
-        setStep(page);
-        setisProcessing(false);
-      }, 400);
-
+  const go = useCallback((page: number) => {
+    startMoving(async () => {
       await controls.start({
         opacity: 0,
         transition: {
@@ -125,6 +115,8 @@ export default function RecruitApplicationPage() {
           duration: 0.4,
         },
       });
+
+      setStep(page);
 
       await controls.start({
         opacity: 1,
@@ -134,14 +126,13 @@ export default function RecruitApplicationPage() {
           duration: 0.4,
         },
       });
-    },
-    [controls, setStep],
-  );
+    });
+  }, []);
 
   const StepComponent = useMemo(() => STEPS[step], [step]);
 
   useEffect(() => {
-    (async () => {
+    startApi(async () => {
       const { recruit } = await Api.Domain.Recruit.getLatestRecruit();
 
       if (
@@ -155,94 +146,67 @@ export default function RecruitApplicationPage() {
       }
 
       setRecruit(recruit);
-      setLoading(false);
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem('recruit:data')) {
-      toast.info('이전에 작성하던 내용을 불러왔습니다.');
-    } else {
-      toast.info('페이지를 나갔다 와도 내용을 계속 작성할 수 있어요');
-    }
-  }, []);
-
-  useEffect(() => {
-    const step = localStorage.getItem('recruit:step');
-
-    if (!step) return;
-
-    setStep(Number(step));
-  }, []);
-
-  useEffect(() => {
-    const data = localStorage.getItem('recruit:data');
-
-    if (!data) return;
-
-    Object.entries(JSON.parse(data)).forEach(async ([k, v]) => {
-      const key = k as Path<RecruitFormRequest>;
-      const value = v as PathValue<string, Path<RecruitFormRequest>>;
-
-      form.setValue(key, value);
     });
-  }, [recruit]);
+  }, []);
+
+  useEffect(() => {
+    toast.info(
+      data
+        ? '이전에 작성하던 내용을 불러왔습니다.'
+        : '페이지를 나갔다 와도 내용을 계속 작성할 수 있어요',
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!data) return;
+    form.reset(data);
+  }, []);
 
   useEffect(form.clearErrors, [step]);
 
-  useEffect(() => localStorage.setItem('recruit:step', step.toString()), [step]);
-
   useEffect(() => {
-    const subscription = form.watch((values) => {
-      localStorage.setItem('recruit:data', JSON.stringify(values));
-    });
-
+    const subscription = form.watch((values) => setData(values as RecruitFormRequest));
     return () => subscription.unsubscribe();
   }, [form.watch]);
 
-  if (loading || !recruit) return null;
+  if (isApi || !recruit) return null;
 
   return (
     <>
-      {step > 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: {
-              duration: 0.4,
-              ease: 'easeInOut',
-            },
-          }}
-          className="flex items-center space-x-4 w-[300px]"
-        >
-          <CircleChevronLeft
-            className="cursor-pointer aria-disabled:opacity-50"
-            aria-disabled={isProcessing}
-            onClick={() =>
-              !isProcessing &&
-              go((prev) => {
-                if (14 <= prev && prev <= 17) {
-                  sessionStorage.setItem('recruit:back', 'true');
-                }
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: {
+            duration: 0.4,
+            ease: 'easeInOut',
+          },
+        }}
+        className="flex items-center space-x-4 w-[300px]"
+      >
+        <CircleChevronLeft
+          className="cursor-pointer aria-disabled:opacity-50"
+          aria-disabled={!!(isMoving || step <= 0 || modify)}
+          onClick={() => {
+            if (isMoving || step <= 0 || modify) return;
 
-                if (prev === 18 && sessionStorage.getItem('recruit:prev-develop') === 'false') {
-                  sessionStorage.removeItem('recruit:prev-develop');
-                  return 10;
-                }
+            14 <= step && step <= 17 && setBack(true);
 
-                return prev - 1;
-              })
+            if (step === 18 && !developer) {
+              go(10);
+              return;
             }
-          />
-          <Progress value={(step / (STEPS.length - 1)) * 100} className="h-2" />
-        </motion.div>
-      )}
+
+            go(step - 1);
+          }}
+        />
+        <Progress value={(step / (STEPS.length - 1)) * 100} className="h-2" />
+      </motion.div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(() => {})} className="w-full">
           <motion.div animate={controls} className="flex flex-col items-center space-y-6 w-full">
-            <StepComponent go={go} setStep={setStep} recruit={recruit!} form={form} />
+            <StepComponent go={go} recruit={recruit} form={form} />
           </motion.div>
         </form>
       </Form>

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
@@ -10,44 +10,44 @@ import { Input } from '@/ui/input';
 
 import Api from '@/api';
 import { RegisterRequest, RegisterRequestSchema } from '@/api/type/domain/auth';
+import { useApiWithToast } from '@/api/useApi';
+
+import { useRegisterStore } from '@/store/register';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
 
 interface RegisterModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  token: string | null;
+  token: string;
 }
 
 export default function RegisterModal({ open, setOpen, token }: RegisterModalProps) {
   const router = useRouter();
 
-  const [isProcessing, setProcessing] = useState<boolean>(false);
+  const { setConfetti } = useRegisterStore();
+
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<RegisterRequest>({
     resolver: zodResolver(RegisterRequestSchema),
     mode: 'onChange',
     defaultValues: {
-      token: token as string,
+      token,
       password: '',
     },
   });
 
   const onSubmit = useCallback(async (values: RegisterRequest) => {
-    setProcessing(true);
-
-    toast.promise(
+    startApi(
       async () => {
         await Api.Domain.Auth.register(values);
-
-        sessionStorage.setItem('register:confetti', 'true');
+        setConfetti(true);
         router.replace('/auth/login');
       },
       {
-        loading: 'WINK 부원으로 가입 중입니다.',
-        success: 'WINK 부원 가입에 성공했습니다.',
-        finally: () => setProcessing(false),
+        loading: 'WINK에 가입하고 있습니다.',
+        success: 'WINK에 가입되었습니다.',
       },
     );
   }, []);
@@ -75,7 +75,7 @@ export default function RegisterModal({ open, setOpen, token }: RegisterModalPro
               )}
             />
 
-            <Button variant="wink" type="submit" disabled={isProcessing} className="w-full">
+            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
               가입하기
             </Button>
           </form>

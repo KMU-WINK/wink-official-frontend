@@ -15,6 +15,7 @@ import { Separator } from '@/ui/separator';
 
 import Api from '@/api';
 import Application from '@/api/type/schema/application';
+import { useApi } from '@/api/useApi';
 
 import { Pen, Trash2 } from 'lucide-react';
 
@@ -25,34 +26,27 @@ interface ApplicationDetailPageProps {
 export default function ApplicationDetailPage({ params }: ApplicationDetailPageProps) {
   const router = useRouter();
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isApi, startApi] = useApi();
+
   const [application, setApplication] = useState<Application>();
 
-  const [updateApplicationModalOpen, setUpdateApplicationModalOpen] = useState<boolean>(false);
-  const [deleteApplicationModalOpen, setDeleteApplicationModalOpen] = useState<boolean>(false);
+  const [updateApplicationModalOpen, setUpdateApplicationModalOpen] = useState(false);
+  const [deleteApplicationModalOpen, setDeleteApplicationModalOpen] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
+    startApi(async () => {
+      const { application } = await Api.Domain.Application.getApplication(params.id);
 
-        const { application } = await Api.Domain.Application.getApplication(params.id);
-
-        if (!application.secret) {
-          router.back();
-          return;
-        }
-
-        setApplication(application);
-      } catch (_) {
+      if (!application.secret) {
         router.back();
-      } finally {
-        setLoading(false);
+        return;
       }
-    })();
+
+      setApplication(application);
+    });
   }, []);
 
-  if (loading || !application) return null;
+  if (isApi || !application) return null;
 
   return (
     <>
@@ -81,7 +75,6 @@ export default function ApplicationDetailPage({ params }: ApplicationDetailPageP
 
         <div className="flex flex-col space-y-12 sm:px-8">
           <GeneralSetting application={application} setApplication={setApplication} />
-
           <LoginSetting application={application} setApplication={setApplication} />
         </div>
       </div>

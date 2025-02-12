@@ -1,11 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import Confetti from 'react-confetti';
 import { useForm } from 'react-hook-form';
 
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
@@ -14,15 +14,23 @@ import { Separator } from '@/ui/separator';
 
 import Api from '@/api';
 import { LoginRequest, LoginRequestSchema } from '@/api/type/domain/auth';
+import { useApiWithToast } from '@/api/useApi';
+
+import { useRegisterStore } from '@/store/register';
+
+import { parseAsURI } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
+import { useQueryState } from 'nuqs';
 
 export default function AuthLoginPage() {
   const router = useRouter();
-  const params = useSearchParams();
 
-  const confetti = useMemo(() => sessionStorage.getItem('register:confetti') === 'true', []);
+  const { confetti, setConfetti } = useRegisterStore();
+
+  const [isApi, startApi] = useApiWithToast();
+
+  const [next] = useQueryState('next', parseAsURI.withDefault('/'));
 
   const form = useForm<LoginRequest>({
     resolver: zodResolver(LoginRequestSchema),
@@ -33,23 +41,23 @@ export default function AuthLoginPage() {
     },
   });
 
-  const onSubmit = useCallback(
-    async (values: LoginRequest) => {
-      const { accessToken, refreshToken } = await Api.Domain.Auth.login(values);
-
-      await Api.Request.setToken(accessToken, refreshToken);
-
-      toast.success('로그인에 성공했습니다.');
-
-      router.push(params.has('next') ? decodeURIComponent(params.get('next')!) : '/');
-    },
-    [router],
-  );
+  const onSubmit = useCallback((values: LoginRequest) => {
+    startApi(
+      async () => {
+        const { accessToken, refreshToken } = await Api.Domain.Auth.login(values);
+        await Api.Request.setToken(accessToken, refreshToken);
+        router.replace(next);
+      },
+      {
+        loading: '로그인 중입니다...',
+        success: '로그인 완료!',
+      },
+    );
+  }, []);
 
   useEffect(() => {
-    if (!confetti) return;
-
-    sessionStorage.removeItem('register:confetti');
+    if (confetti) return;
+    setConfetti(false);
   }, [confetti]);
 
   return (
@@ -87,7 +95,7 @@ export default function AuthLoginPage() {
             )}
           />
 
-          <Button variant="wink" type="submit" className="w-full">
+          <Button variant="wink" type="submit" disabled={isApi} className="w-full">
             로그인
           </Button>
 

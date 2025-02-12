@@ -1,10 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
 import { designTechStacks } from '@/app/recruit/form/_constant/tech_stack';
-
-import { Stack } from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
 import {
@@ -20,6 +18,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import { DesignTechStack } from '@/api/type/schema/recruit-form';
 
+import { useRecruitStore } from '@/store/recruit';
+
 import { cn } from '@/util';
 
 import Design from '@/public/recruit/icon/design.png';
@@ -30,24 +30,14 @@ import { motion } from 'framer-motion';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function Step16({ go, setStep, form }: RecruitStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+export default function Step16({ go, form }: RecruitStepProps) {
+  const { step, setStep, modify, setModify, stack, back, setBack } = useRecruitStore();
 
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
-    const stacks: Stack[] = JSON.parse(localStorage.getItem('recruit:stacks')!);
-    const amount = sessionStorage.getItem('recruit:back') === 'true' ? -1 : +1;
-
-    if (!stacks.includes('design')) {
-      setStep((prev) => prev + amount);
-    } else {
-      sessionStorage.removeItem('recruit:back');
-    }
+    !stack.includes('design') ? setStep(step + (back ? -1 : +1)) : setBack(false);
   }, []);
-  if (isFinalEdit) {
-    sessionStorage.removeItem('recruit:final_edit');
-  }
 
   return (
     <>
@@ -165,16 +155,14 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
         }}
         className="flex items-center space-x-4"
       >
-        {!isFinalEdit && (
+        {!modify && (
           <Button
             variant="outline"
             disabled={clicked}
             onClick={() => {
               setClicked(true);
-
               form.setValue('designTechStacks', []);
-
-              go((prev) => prev + 1);
+              go(step + 1);
             }}
           >
             건너뛰기
@@ -188,18 +176,15 @@ export default function Step16({ go, setStep, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('designTechStacks')) {
-              if (isFinalEdit) {
-                sessionStorage.removeItem('recruit:final_edit');
-              }
-
-              go((prev) => (isFinalEdit ? 18 : prev + 1));
+              go(modify || step + 1);
+              modify && setTimeout(() => setModify(undefined), 400);
             } else {
               toast.error(form.formState.errors.designTechStacks!.message);
               setClicked(false);
             }
           }}
         >
-          {isFinalEdit ? '수정 완료' : '다음으로'}
+          {modify ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

@@ -6,15 +6,14 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import History from '@/api/type/schema/history';
+import { useApiWithToast } from '@/api/useApi';
 
 import { formatDate } from '@/util';
-
-import { toast } from 'sonner';
 
 interface DeleteHistoryModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  history: History | null;
+  history?: History;
   callback: (id: string) => void;
 }
 
@@ -24,15 +23,21 @@ export default function DeleteHistoryModal({
   history,
   callback,
 }: DeleteHistoryModalProps) {
-  const onSubmit = useCallback(async () => {
-    await Api.Domain.Program.AdminHistory.deleteHistory(history!.id);
+  const [isApi, startApi] = useApiWithToast();
 
-    setOpen(false);
-
-    toast.success('연혁을 삭제했습니다.');
-
-    callback(history!.id);
-  }, [history]);
+  const onSubmit = useCallback((history: History) => {
+    startApi(
+      async () => {
+        await Api.Domain.Program.AdminHistory.deleteHistory(history.id);
+        callback(history!.id);
+      },
+      {
+        loading: '연혁을 삭제하고 있습니다',
+        success: '연혁을 삭제했습니다.',
+        finally: () => setOpen(false),
+      },
+    );
+  }, []);
 
   if (!history) return null;
 
@@ -57,7 +62,13 @@ export default function DeleteHistoryModal({
           </TableBody>
         </Table>
 
-        <Button variant="wink" type="submit" className="w-full" onClick={onSubmit}>
+        <Button
+          variant="wink"
+          type="submit"
+          disabled={isApi}
+          className="w-full"
+          onClick={() => onSubmit(history)}
+        >
           연혁 삭제
         </Button>
       </DialogContent>

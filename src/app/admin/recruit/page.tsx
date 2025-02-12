@@ -28,6 +28,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 
 import Api from '@/api';
 import Recruit from '@/api/type/schema/recruit';
+import { useApi } from '@/api/useApi';
 
 import { formatDate } from '@/util';
 
@@ -36,13 +37,13 @@ import { MoreHorizontal } from 'lucide-react';
 export default function AdminRecruitPage() {
   const router = useRouter();
 
-  const [recruits, setRecruits] = useState<Recruit[] | null>(null);
+  const [isApi, startApi] = useApi();
 
-  const [loading, setLoading] = useState(false);
+  const [recruits, setRecruits] = useState<Recruit[]>([]);
+  const [selected, setSelected] = useState<Recruit>();
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [selectedRecruit, setSelectedRecruit] = useState<Recruit | null>(null);
 
   const onCreateRecruit = useCallback((recruit: Recruit) => {
     setRecruits((prev) => [recruit, ...prev!]);
@@ -53,14 +54,10 @@ export default function AdminRecruitPage() {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-
+    startApi(async () => {
       const { recruits } = await Api.Domain.AdminRecruit.getRecruits();
-
       setRecruits(recruits);
-      setLoading(false);
-    })();
+    });
   }, []);
 
   return (
@@ -97,7 +94,7 @@ export default function AdminRecruitPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {loading ? (
+            {isApi ? (
               Array.from({ length: 10 }, (_, index) => (
                 <TableRow key={index}>
                   <TableCell>
@@ -114,7 +111,7 @@ export default function AdminRecruitPage() {
                   </TableCell>
                 </TableRow>
               ))
-            ) : recruits && recruits.length > 0 ? (
+            ) : recruits.length > 0 ? (
               recruits!.map((recruit) => (
                 <TableRow
                   key={recruit.id}
@@ -156,7 +153,7 @@ export default function AdminRecruitPage() {
                           onClick={(e) => {
                             e.stopPropagation();
 
-                            setSelectedRecruit(recruit);
+                            setSelected(recruit);
                             setDeleteModalOpen(true);
                           }}
                         >
@@ -187,7 +184,7 @@ export default function AdminRecruitPage() {
       <DeleteRecruitModal
         open={deleteModalOpen}
         setOpen={setDeleteModalOpen}
-        recruit={selectedRecruit}
+        recruit={selected}
         callback={onDeleteRecruit}
       />
     </>

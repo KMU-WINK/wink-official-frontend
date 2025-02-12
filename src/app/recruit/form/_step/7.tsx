@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Textarea } from '@/ui/textarea';
+
+import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
 
@@ -16,12 +18,12 @@ import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function Step7({ go, form }: RecruitStepProps) {
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { step, modify, setModify } = useRecruitStore();
+
+  const [clicked, setClicked] = useState(false);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const selfIntroduce = form.watch('selfIntroduce');
-
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -116,18 +118,15 @@ export default function Step7({ go, form }: RecruitStepProps) {
             setClicked(true);
 
             if (await form.trigger('selfIntroduce')) {
-              if (isFinalEdit) {
-                sessionStorage.removeItem('recruit:final_edit');
-              }
-
-              go((prev) => (isFinalEdit ? 18 : prev + 1));
+              go(modify || step + 1);
+              modify && setTimeout(() => setModify(undefined), 400);
             } else {
               toast.error(form.formState.errors.selfIntroduce!.message);
               setClicked(false);
             }
           }}
         >
-          {isFinalEdit ? '수정 완료' : '다음으로'}
+          {modify ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

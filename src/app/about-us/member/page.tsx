@@ -9,70 +9,64 @@ import { Separator } from '@/ui/separator';
 
 import Api from '@/api';
 import User, { Role } from '@/api/type/schema/user';
+import { useApi } from '@/api/useApi';
 
 import { useUserStore } from '@/store/user';
 
 export default function AboutUsMemberPage() {
   const { user } = useUserStore();
 
+  const [isApi, startApi] = useApi();
+
   const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
+    startApi(async () => {
       const { users } = await Api.Domain.User.getUsers();
-
       setUsers(users);
-      setLoading(false);
-    })();
+    });
   }, []);
 
   useEffect(() => {
     setUsers((prev) => prev.map((u) => (u.id === user?.id ? { ...u, ...user } : u)));
   }, [user]);
 
-  const leaders: User[] = useMemo(() => {
-    const roleOrder = [Role.PRESIDENT, Role.VICE_PRESIDENT];
-    return users
-      .filter((user) => roleOrder.includes(user.role))
-      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
-  }, [users]);
-
-  const treasuries: User[] = useMemo(() => {
-    const roleOrder = [Role.TREASURY_HEAD, Role.TREASURY_ASSISTANT];
-    return users
-      .filter((user) => roleOrder.includes(user.role))
-      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
-  }, [users]);
-
-  const publicRelations: User[] = useMemo(() => {
-    const roleOrder = [Role.PUBLIC_RELATIONS_HEAD, Role.PUBLIC_RELATIONS_ASSISTANT];
-    return users
-      .filter((user) => roleOrder.includes(user.role))
-      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
-  }, [users]);
-
-  const plannings: User[] = useMemo(() => {
-    const roleOrder = [Role.PLANNING_HEAD, Role.PLANNING_ASSISTANT];
-    return users
-      .filter((user) => roleOrder.includes(user.role))
-      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
-  }, [users]);
-
-  const techs: User[] = useMemo(() => {
-    const roleOrder = [Role.TECH_HEAD, Role.TECH_ASSISTANT];
-    return users
-      .filter((user) => roleOrder.includes(user.role))
-      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
-  }, [users]);
-
-  const members: User[] = useMemo(
-    () =>
-      users
-        .filter((user) => user.role === Role.MEMBER)
-        .sort((a, b) => a.name.localeCompare(b.name)),
+  const leaders: User[] = useMemo(
+    () => users.filter((user) => user.role === Role.PRESIDENT || user.role === Role.VICE_PRESIDENT),
     [users],
   );
+
+  const treasuries: User[] = useMemo(
+    () =>
+      users.filter(
+        (user) => user.role === Role.TREASURY_HEAD || user.role === Role.TREASURY_ASSISTANT,
+      ),
+    [users],
+  );
+
+  const publicRelations: User[] = useMemo(
+    () =>
+      users.filter(
+        (user) =>
+          user.role === Role.PUBLIC_RELATIONS_HEAD || user.role === Role.PUBLIC_RELATIONS_ASSISTANT,
+      ),
+    [users],
+  );
+
+  const plannings: User[] = useMemo(
+    () =>
+      users.filter(
+        (user) => user.role === Role.PLANNING_HEAD || user.role === Role.PLANNING_ASSISTANT,
+      ),
+    [users],
+  );
+
+  const techs: User[] = useMemo(
+    () => users.filter((user) => user.role === Role.TECH_HEAD || user.role === Role.TECH_ASSISTANT),
+    [users],
+  );
+
+  const members: User[] = useMemo(() => users.filter((user) => user.role === Role.MEMBER), [users]);
 
   return (
     <div className="flex flex-col items-center px-6 pt-20 sm:pt-28 space-y-10">
@@ -93,7 +87,7 @@ export default function AboutUsMemberPage() {
           users={leaders}
           direction="row"
           skeleton={2}
-          loading={loading}
+          loading={isApi}
         />
       </div>
 
@@ -104,7 +98,7 @@ export default function AboutUsMemberPage() {
           users={leaders}
           direction="col"
           skeleton={2}
-          loading={loading}
+          loading={isApi}
         />
       </div>
 
@@ -115,7 +109,7 @@ export default function AboutUsMemberPage() {
           users={treasuries}
           direction="col"
           skeleton={2}
-          loading={loading}
+          loading={isApi}
         />
 
         <UserList
@@ -124,7 +118,7 @@ export default function AboutUsMemberPage() {
           users={techs}
           direction="col"
           skeleton={2}
-          loading={loading}
+          loading={isApi}
         />
 
         <UserList
@@ -133,7 +127,7 @@ export default function AboutUsMemberPage() {
           users={publicRelations}
           direction="col"
           skeleton={2}
-          loading={loading}
+          loading={isApi}
         />
 
         <UserList
@@ -142,13 +136,13 @@ export default function AboutUsMemberPage() {
           users={plannings}
           direction="col"
           skeleton={2}
-          loading={loading}
+          loading={isApi}
         />
       </div>
 
       <Separator />
 
-      <UserList users={members} direction="row" skeleton={8} loading={loading} />
+      <UserList users={members} direction="row" skeleton={8} loading={isApi} />
     </div>
   );
 }

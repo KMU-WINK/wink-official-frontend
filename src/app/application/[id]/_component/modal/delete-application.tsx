@@ -6,8 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import Application from '@/api/type/schema/application';
-
-import { toast } from 'sonner';
+import { useApiWithToast } from '@/api/useApi';
 
 interface DeleteApplicationModalProps {
   open: boolean;
@@ -22,15 +21,21 @@ export default function DeleteApplicationModal({
   application,
   callback,
 }: DeleteApplicationModalProps) {
-  const onSubmit = useCallback(async () => {
-    await Api.Domain.Application.deleteApplication(application.id);
+  const [isApi, startApi] = useApiWithToast();
 
-    setOpen(false);
-
-    toast.success('애플리케이션을 삭제했습니다.');
-
-    callback();
-  }, [application]);
+  const onSubmit = useCallback((application: Application) => {
+    startApi(
+      async () => {
+        await Api.Domain.Application.deleteApplication(application.id);
+        callback();
+      },
+      {
+        loading: '애플리케이션을 삭제하고 있습니다.',
+        success: '애플리케이션을 삭제했습니다.',
+        finally: () => setOpen(false),
+      },
+    );
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -49,7 +54,12 @@ export default function DeleteApplicationModal({
           </TableBody>
         </Table>
 
-        <Button variant="wink" className="w-full" onClick={onSubmit}>
+        <Button
+          variant="wink"
+          disabled={isApi}
+          className="w-full"
+          onClick={() => onSubmit(application)}
+        >
           애플리케이션 삭제
         </Button>
       </DialogContent>

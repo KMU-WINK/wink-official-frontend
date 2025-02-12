@@ -12,26 +12,24 @@ import { Skeleton } from '@/ui/skeleton';
 
 import Api from '@/api';
 import Application from '@/api/type/schema/application';
+import { useApi } from '@/api/useApi';
 
 import { BookText, Plus } from 'lucide-react';
 
 export default function ApplicationPage() {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  const [isApi, startApi] = useApi();
+
   const [applications, setApplications] = useState<Application[]>([]);
 
-  const [createApplicationModalOpen, setCreateApplicationModalOpen] = useState<boolean>(false);
+  const [createApplicationModalOpen, setCreateApplicationModalOpen] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-
+    startApi(async () => {
       const { applications } = await Api.Domain.Application.getApplications();
-
       setApplications(applications);
-      setLoading(false);
-    })();
+    });
   }, []);
 
   return (
@@ -52,7 +50,7 @@ export default function ApplicationPage() {
         </div>
 
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-6 sm:gap-4">
-          {loading ? (
+          {isApi ? (
             Array.from({ length: 12 }).map((_, idx) => (
               <Skeleton key={idx} className="w-52 h-52 rounded-xl" />
             ))

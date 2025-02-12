@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-import { Stack } from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
@@ -17,10 +15,13 @@ import {
   FrontendTechStack,
 } from '@/api/type/schema/recruit-form';
 
+import { useRecruitStore } from '@/store/recruit';
+
+import { formatDate } from '@/util';
+
 import BallotBox from '@/public/recruit/icon/ballot_box.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
-import { formatDate } from '@/lib/util';
 
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -28,17 +29,9 @@ import { toast } from 'sonner';
 export default function Step18({ go, recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { setModify, developer, stack, clear } = useRecruitStore();
 
-  const [stacks, setStacks] = useState<Stack[]>([]);
-
-  useEffect(() => {
-    const _stacks = localStorage.getItem('recruit:stacks');
-
-    if (!_stacks) return;
-
-    setStacks(JSON.parse(_stacks));
-  }, []);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -81,7 +74,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
           <TableBody>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(1);
               }}
             >
@@ -92,7 +85,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(2);
               }}
             >
@@ -103,7 +96,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(3);
               }}
             >
@@ -114,7 +107,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(4);
               }}
             >
@@ -125,7 +118,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(5);
               }}
             >
@@ -136,7 +129,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(6);
               }}
             >
@@ -147,7 +140,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(7);
               }}
             >
@@ -158,7 +151,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(8);
               }}
             >
@@ -169,7 +162,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
             </TableRow>
             <TableRow
               onClick={() => {
-                sessionStorage.setItem('recruit:final_edit', 'true');
+                setModify(18);
                 go(9);
               }}
             >
@@ -187,11 +180,11 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                   .join('\n')}
               </TableCell>
             </TableRow>
-            {sessionStorage.getItem('recruit:prev-develop') !== 'false' && (
+            {!developer && (
               <>
                 <TableRow
                   onClick={() => {
-                    sessionStorage.setItem('recruit:final_edit', 'true');
+                    setModify(18);
                     go(11);
                   }}
                 >
@@ -212,10 +205,10 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     )}
                   </TableCell>
                 </TableRow>
-                {stacks.includes('frontend') && (
+                {stack.includes('frontend') && (
                   <TableRow
                     onClick={() => {
-                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      setModify(18);
                       go(13);
                     }}
                   >
@@ -233,10 +226,10 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     </TableCell>
                   </TableRow>
                 )}
-                {stacks.includes('backend') && (
+                {stack.includes('backend') && (
                   <TableRow
                     onClick={() => {
-                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      setModify(18);
                       go(14);
                     }}
                   >
@@ -254,10 +247,10 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     </TableCell>
                   </TableRow>
                 )}
-                {stacks.includes('devops') && (
+                {stack.includes('devops') && (
                   <TableRow
                     onClick={() => {
-                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      setModify(18);
                       go(15);
                     }}
                   >
@@ -275,10 +268,10 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     </TableCell>
                   </TableRow>
                 )}
-                {stacks.includes('design') && (
+                {stack.includes('design') && (
                   <TableRow
                     onClick={() => {
-                      sessionStorage.setItem('recruit:final_edit', 'true');
+                      setModify(18);
                       go(16);
                     }}
                   >
@@ -298,7 +291,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 )}
                 <TableRow
                   onClick={() => {
-                    sessionStorage.setItem('recruit:final_edit', 'true');
+                    setModify(18);
                     go(17);
                   }}
                 >
@@ -341,13 +334,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                   favoriteProject: form.getValues('favoriteProject') || undefined,
                 });
 
-                localStorage.removeItem('recruit:data');
-                localStorage.removeItem('recruit:stacks');
-                localStorage.removeItem('recruit:step');
-                sessionStorage.setItem('recruit:confetti', 'true');
-                sessionStorage.removeItem('recruit:prev-develop');
-                sessionStorage.removeItem('recruit:back');
-
+                clear();
                 router.push('/recruit');
               },
               {

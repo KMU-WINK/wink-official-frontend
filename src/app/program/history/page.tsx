@@ -30,13 +30,13 @@ type HistoryWithDate = History & { date: Date };
 export default function ProgramHistoryPage() {
   const { user } = useUserStore();
 
-  const [rawHistories, setRawHistories] = useState<History[]>();
-  const [histories, setHistories] = useState<Map<number, HistoryWithDate[]> | null>(null);
+  const [rawHistories, setRawHistories] = useState<History[]>([]);
+  const [histories, setHistories] = useState<Map<number, HistoryWithDate[]>>(new Map());
+  const [selectedHistory, setSelectedHistory] = useState<History>();
 
   const [createHistoryModalOpen, setCreateHistoryModalOpen] = useState(false);
   const [updateHistoryModalOpen, setUpdateHistoryModalOpen] = useState(false);
   const [deleteHistoryModalOpen, setDeleteHistoryModalOpen] = useState(false);
-  const [selectedHistory, setSelectedHistory] = useState<History | null>(null);
 
   const onCreateHistory = useCallback((history: History) => {
     setRawHistories((prev) => [...prev!, history]);

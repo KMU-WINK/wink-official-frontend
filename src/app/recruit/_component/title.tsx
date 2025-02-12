@@ -3,9 +3,7 @@ export interface Title {
   description?: string;
 }
 
-interface TitleProps extends Title {}
-
-export default function Title({ title, description }: TitleProps) {
+export default function TitleComponent({ title, description }: Title) {
   return (
     <div className="flex flex-col items-center justify-center sm:space-y-1.5">
       <h2 className="text-xl sm:text-4xl font-semibold">{title}</h2>

@@ -1,12 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { Button } from '@/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/ui/dialog';
 
 import Api from '@/api';
 import Recruit from '@/api/type/schema/recruit';
-
-import { toast } from 'sonner';
+import { useApiWithToast } from '@/api/useApi';
 
 interface FinalizeInterviewModalProps {
   open: boolean;
@@ -21,20 +20,21 @@ export default function FinalizeInterviewModal({
   recruit,
   callback,
 }: FinalizeInterviewModalProps) {
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isApi, startApi] = useApiWithToast();
 
-  const onSubmit = useCallback(async () => {
-    setIsProcessing(true);
-
-    await Api.Domain.AdminRecruit.finalizeInterview(recruit.id);
-
-    setOpen(false);
-    setIsProcessing(false);
-
-    toast.success('면접 결과를 확정했습니다.');
-
-    callback();
-  }, [recruit]);
+  const onSubmit = useCallback((recruit: Recruit) => {
+    startApi(
+      async () => {
+        await Api.Domain.AdminRecruit.finalizeInterview(recruit.id);
+        callback();
+      },
+      {
+        loading: '면접 결과를 확정하고 있습니다.',
+        success: '면접 결과를 확정했습니다',
+        finally: () => setOpen(false),
+      },
+    );
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -52,7 +52,12 @@ export default function FinalizeInterviewModal({
             이후에 면접 결과를 수정할 수 없습니다.
           </p>
 
-          <Button variant="wink" disabled={isProcessing} className="w-full" onClick={onSubmit}>
+          <Button
+            variant="wink"
+            disabled={isApi}
+            className="w-full"
+            onClick={() => onSubmit(recruit)}
+          >
             면접 결과 확정
           </Button>
         </div>

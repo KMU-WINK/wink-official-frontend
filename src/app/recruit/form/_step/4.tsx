@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -8,6 +8,8 @@ import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '
 import { Input } from '@/ui/input';
 
 import Api from '@/api';
+
+import { useRecruitStore } from '@/store/recruit';
 
 import Envelope from '@/public/recruit/icon/envelope.png';
 
@@ -19,9 +21,9 @@ import { toast } from 'sonner';
 export default function Step4({ go, recruit, form }: RecruitStepProps) {
   const router = useRouter();
 
-  const [clicked, setClicked] = useState<boolean>(false);
+  const { step, modify, setModify, clear } = useRecruitStore();
 
-  const isFinalEdit = useMemo(() => sessionStorage.getItem('recruit:final_edit') === 'true', []);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -98,27 +100,21 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
               });
 
               if (duplicated) {
-                localStorage.removeItem('recruit:data');
-                localStorage.removeItem('recruit:stacks');
-                localStorage.removeItem('recruit:step');
-
+                clear();
                 toast.error('이미 윙크 부원이거나, 이번 모집에 지원하셨습니다.');
                 router.replace('/recruit');
                 return;
               }
 
-              if (isFinalEdit) {
-                sessionStorage.removeItem('recruit:final_edit');
-              }
-
-              go((prev) => (isFinalEdit ? 18 : prev + 1));
+              go(modify || step + 1);
+              modify && setTimeout(() => setModify(undefined), 400);
             } else {
               toast.error(form.formState.errors.email!.message);
               setClicked(false);
             }
           }}
         >
-          {isFinalEdit ? '수정 완료' : '다음으로'}
+          {modify ? '수정 완료' : '다음으로'}
         </Button>
       </motion.div>
     </>

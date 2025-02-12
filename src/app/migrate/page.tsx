@@ -48,7 +48,7 @@ const STEPS: ComponentType<MigrateStepProps>[] = [
 export default function MigratePage() {
   const controls = useAnimationControls();
 
-  const [isProcessing, setisProcessing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [step, setStep] = useState(0);
 
   const form = useForm<MigrateRequest>({
@@ -66,11 +66,11 @@ export default function MigratePage() {
 
   const go = useCallback(
     async (page: SetStateAction<number>) => {
-      setisProcessing(true);
+      setIsProcessing(true);
 
       setTimeout(() => {
         setStep(page);
-        setisProcessing(false);
+        setIsProcessing(false);
       }, 400);
 
       await controls.start({

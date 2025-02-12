@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import RegisterModal from '@/app/auth/register/_component/modal/register-modal';
 
@@ -11,25 +11,25 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 import PreUser from '@/api/type/schema/pre-user';
+import { useApi } from '@/api/useApi';
 
+import { parseAsString, useQueryState } from 'nuqs';
 import { toast } from 'sonner';
 
 export default function AuthRegisterPage() {
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const [isApi, startApi] = useApi();
 
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<PreUser | null>(null);
+  const [token] = useQueryState('token', parseAsString.withDefault(''));
 
-  const [registerModalOpen, setRegisterModalOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<PreUser>();
+
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const { isValid, user } = await Api.Domain.Auth.checkRegister({
-        token: token ?? 'unvalid-token',
-      });
+    startApi(async () => {
+      const { isValid, user } = await Api.Domain.Auth.checkRegister({ token });
 
       if (!isValid) {
         toast.error('잘못된 접근입니다.');
@@ -38,11 +38,10 @@ export default function AuthRegisterPage() {
       }
 
       setUser(user);
-      setLoading(false);
-    })();
+    });
   }, []);
 
-  if (loading || !user) return null;
+  if (isApi || !user) return null;
 
   return (
     <>

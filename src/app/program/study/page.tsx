@@ -13,39 +13,40 @@ import { Skeleton } from '@/ui/skeleton';
 import Api from '@/api';
 import Page from '@/api/type/schema/page';
 import Study from '@/api/type/schema/study';
+import { useApi } from '@/api/useApi';
 
 import { cn } from '@/util';
 
 import _ from 'lodash';
+import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
 
 export default function ProgramStudyPage() {
-  const [categories, setCategories] = useState<string[]>([]);
-  const [studies, setStudies] = useState<Page<Study> | null>(null);
+  const [isApi, startApi, setApi] = useApi();
 
-  const [query, setQuery] = useState('');
-  const [category, setCategory] = useState<string>('전체');
-  const [page, setPage] = useState(0);
+  const [categories, setCategories] = useState<string[]>(['전체']);
+  const [studies, setStudies] = useState<Page<Study>>();
 
-  const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useQueryState('category', parseAsString.withDefault('전체'));
+  const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
 
   useEffect(() => {
-    const debounce = _.debounce(async () => {
-      const { studies } = await (category === '전체'
-        ? Api.Domain.Program.Study.getStudies(0, query)
-        : Api.Domain.Program.Study.getStudiesByCategory(category, 0, query));
+    const debounce = _.debounce(() => {
+      startApi(async () => {
+        const { studies } = await (category === '전체'
+          ? Api.Domain.Program.Study.getStudies(0, query)
+          : Api.Domain.Program.Study.getStudiesByCategory(category, 0, query));
 
-      setStudies(studies);
-      setLoading(false);
+        setStudies(studies);
+      });
     }, 500);
 
-    setPage(0);
-    setStudies(null);
-    setLoading(true);
+    setApi(true);
+    setPage(0).then(() => {});
+    setStudies(undefined);
     debounce();
 
-    return () => {
-      debounce.cancel();
-    };
+    return () => debounce.cancel();
   }, [category, query]);
 
   useEffect(() => {
@@ -53,7 +54,6 @@ export default function ProgramStudyPage() {
       const { studies } = await (category === '전체'
         ? Api.Domain.Program.Study.getStudies(page, query)
         : Api.Domain.Program.Study.getStudiesByCategory(category, page, query));
-
       setStudies((prev) => ({
         page: studies.page,
         content: [...(prev?.content || []), ...studies.content],
@@ -95,13 +95,13 @@ export default function ProgramStudyPage() {
       </div>
 
       <div className="flex flex-col space-y-6 sm:space-y-4 w-full items-center">
-        {loading ? (
+        {isApi ? (
           Array.from({ length: 5 }).map((_, index) => (
             <Skeleton
               key={index}
               className={cn(
                 'w-[300px] sm:w-full sm:max-w-[900px] h-[250px] sm:h-[150px] rounded-xl',
-                !loading && 'hidden',
+                !isApi && 'hidden',
               )}
             />
           ))

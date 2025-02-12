@@ -37,48 +37,67 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Api from '@/api';
 import Activity from '@/api/type/schema/activity';
 import Page from '@/api/type/schema/page';
+import { useApi, useApiWithToast } from '@/api/useApi';
 
 import { formatDate } from '@/util';
 
 import _ from 'lodash';
 import { MoreHorizontal } from 'lucide-react';
-import { toast } from 'sonner';
+import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
 
-export default function AdminUserPage() {
-  const [activities, setActivities] = useState<Page<Activity> | null>(null);
+export default function AdminActivityPage() {
+  const [isApi, startApi, setApi] = useApi();
+  const [isPinApi, startPinApi] = useApiWithToast();
 
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
+
+  const [activities, setActivities] = useState<Page<Activity>>();
+  const [selected, setSelected] = useState<Activity>();
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
-  const pin = useCallback(async (activity: Activity) => {
-    const { activity: _activity } = await Api.Domain.Program.AdminActivity.pinActivity(activity.id);
+  const pin = useCallback(
+    async (activity: Activity) =>
+      startPinApi(
+        async () => {
+          const { activity: _activity } = await Api.Domain.Program.AdminActivity.pinActivity(
+            activity.id,
+          );
+          setActivities((prev) => ({
+            ...prev!,
+            content: prev!.content.map((a) => (a.id === _activity.id ? _activity : a)),
+          }));
+        },
+        {
+          loading: '활동을 고정하고 있습니다.',
+          success: '활동을 고정했습니다.',
+        },
+      ),
+    [],
+  );
 
-    toast.success('활동을 고정했습니다.');
-
-    setActivities((prev) => ({
-      ...prev!,
-      content: prev!.content.map((a) => (a.id === _activity.id ? _activity : a)),
-    }));
-  }, []);
-
-  const unpin = useCallback(async (activity: Activity) => {
-    const { activity: _activity } = await Api.Domain.Program.AdminActivity.unpinActivity(
-      activity.id,
-    );
-
-    toast.success('활동을 고정 해제했습니다.');
-
-    setActivities((prev) => ({
-      ...prev!,
-      content: prev!.content.map((a) => (a.id === _activity.id ? _activity : a)),
-    }));
-  }, []);
+  const unpin = useCallback(
+    async (activity: Activity) =>
+      startPinApi(
+        async () => {
+          const { activity: _activity } = await Api.Domain.Program.AdminActivity.unpinActivity(
+            activity.id,
+          );
+          setActivities((prev) => ({
+            ...prev!,
+            content: prev!.content.map((a) => (a.id === _activity.id ? _activity : a)),
+          }));
+        },
+        {
+          loading: '활동 고정을 풀고있습니다.',
+          success: '활동 고정을 풀었습니다.',
+        },
+      ),
+    [],
+  );
 
   const onCreateActivity = useCallback((activity: Activity) => {
     setActivities((prev) => ({ ...prev!, content: [activity, ...prev!.content] }));
@@ -116,19 +135,20 @@ export default function AdminUserPage() {
   }, [page, activities]);
 
   useEffect(() => {
-    const debounce = _.debounce(async () => {
-      const { activities } = await Api.Domain.Program.AdminActivity.getActivities(page, query);
-      setActivities(activities);
-      setLoading(false);
-    }, 500);
+    const debounce = _.debounce(
+      () =>
+        startApi(async () => {
+          const { activities } = await Api.Domain.Program.AdminActivity.getActivities(page, query);
+          setActivities(activities);
+        }),
+      500,
+    );
 
-    setActivities(null);
-    setLoading(true);
+    setApi(true);
+    setActivities(undefined);
     debounce();
 
-    return () => {
-      debounce.cancel();
-    };
+    return () => debounce.cancel();
   }, [page, query]);
 
   return (
@@ -173,7 +193,7 @@ export default function AdminUserPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {loading ? (
+            {isApi ? (
               Array.from({ length: 10 }, (_, index) => (
                 <TableRow key={index}>
                   <TableCell />
@@ -191,6 +211,7 @@ export default function AdminUserPage() {
                   <TableCell>
                     <Checkbox
                       checked={activity.pinned}
+                      disabled={isPinApi}
                       onCheckedChange={() => (activity.pinned ? unpin(activity) : pin(activity))}
                     />
                   </TableCell>
@@ -206,7 +227,7 @@ export default function AdminUserPage() {
                       <DropdownMenuContent>
                         <DropdownMenuItem
                           onClick={() => {
-                            setSelectedActivity(activity);
+                            setSelected(activity);
                             setUpdateModalOpen(true);
                           }}
                         >
@@ -214,7 +235,7 @@ export default function AdminUserPage() {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => {
-                            setSelectedActivity(activity);
+                            setSelected(activity);
                             setDeleteModalOpen(true);
                           }}
                         >
@@ -235,7 +256,7 @@ export default function AdminUserPage() {
           </TableBody>
         </Table>
 
-        {!loading && activities && activities.page.totalPages > 0 && (
+        {!isApi && activities && activities.page.totalPages > 0 && (
           <Pagination>
             <PaginationContent>
               <PaginationItem>
@@ -286,14 +307,14 @@ export default function AdminUserPage() {
       <UpdateActivityModal
         open={updateModalOpen}
         setOpen={setUpdateModalOpen}
-        activity={selectedActivity}
+        activity={selected}
         callback={onUpdateActivity}
       />
 
       <DeleteActivityModal
         open={deleteModalOpen}
         setOpen={setDeleteModalOpen}
-        activity={selectedActivity}
+        activity={selected}
         callback={onDeleteActivity}
       />
     </>

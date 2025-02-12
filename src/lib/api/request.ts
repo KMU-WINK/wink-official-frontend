@@ -4,8 +4,6 @@ import { UserResponse } from '@/api/type/domain/user';
 
 import { useUserStore } from '@/store/user';
 
-import { toast } from 'sonner';
-
 export default class WinkRequest {
   private readonly baseUrl?: string;
 
@@ -87,8 +85,7 @@ export default class WinkRequest {
     }
 
     if (response.error) {
-      toast.error(response.error);
-      throw new Error(`${url} [${response.statusCode}] ${response.error}`);
+      throw new Error(response.error);
     }
 
     return response.content!;

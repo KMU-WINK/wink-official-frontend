@@ -12,9 +12,9 @@ import {
   CreateApplicationRequestSchema,
 } from '@/api/type/domain/application';
 import Application from '@/api/type/schema/application';
+import { useApiWithToast } from '@/api/useApi';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
 
 interface CreateApplicationModalProps {
   open: boolean;
@@ -27,6 +27,8 @@ export default function CreateApplicationModal({
   setOpen,
   callback,
 }: CreateApplicationModalProps) {
+  const [isApi, startApi] = useApiWithToast();
+
   const form = useForm<CreateApplicationRequest>({
     resolver: zodResolver(CreateApplicationRequestSchema),
     mode: 'onChange',
@@ -35,14 +37,18 @@ export default function CreateApplicationModal({
     },
   });
 
-  const onSubmit = useCallback(async (values: CreateApplicationRequest) => {
-    const { application } = await Api.Domain.Application.createApplication(values);
-
-    setOpen(false);
-
-    toast.success('애플리케이션을 추가하였습니다.');
-
-    callback(application);
+  const onSubmit = useCallback((values: CreateApplicationRequest) => {
+    startApi(
+      async () => {
+        const { application } = await Api.Domain.Application.createApplication(values);
+        callback(application);
+      },
+      {
+        loading: '애플리케이션을 추가하고 있습니다.',
+        success: '애플리케이션을 추가했습니다.',
+        finally: () => setOpen(false),
+      },
+    );
   }, []);
 
   useEffect(form.reset, []);
@@ -70,7 +76,7 @@ export default function CreateApplicationModal({
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
               애플리케이션 추가
             </Button>
           </form>

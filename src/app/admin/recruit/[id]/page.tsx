@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import FinalizeInterviewModal from '@/app/admin/recruit/[id]/_component/modal/finalize-interview';
 import FinalizePaperModal from '@/app/admin/recruit/[id]/_component/modal/finalize-paper';
@@ -31,29 +30,29 @@ import RecruitForm, {
   DevOpsTechStack,
   FrontendTechStack,
 } from '@/api/type/schema/recruit-form';
+import { useApi } from '@/api/useApi';
 
 import { cn, formatDate } from '@/util';
 
 import { FileUser, Speech } from 'lucide-react';
+import { parseAsString, useQueryState } from 'nuqs';
 
 interface AdminRecruitPageProps {
   params: { id: string };
 }
 
 export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
-  const router = useRouter();
+  const [isApi, startApi] = useApi();
 
-  const [recruit, setRecruit] = useState<Recruit | null>(null);
-  const [forms, setforms] = useState<RecruitForm[] | null>(null);
+  const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
 
-  const [loading, setLoading] = useState(false);
+  const [recruit, setRecruit] = useState<Recruit>();
+  const [forms, setforms] = useState<RecruitForm[]>([]);
+  const [queriedForms, setQueriedForms] = useState<RecruitForm[]>([]);
+  const [selectedForm, setSelectedForm] = useState<RecruitForm>();
 
-  const [query, setQuery] = useState('');
-  const [queriedForms, setQueriedForms] = useState<RecruitForm[] | null>(null);
-  const [selectedForm, setSelectedForm] = useState<RecruitForm | null>(null);
-
-  const [finalizePaperModalOpen, setFinalizePaperModalOpen] = useState<boolean>(false);
-  const [finalizeInterviewModalOpen, setFinalizeInterviewModalOpen] = useState<boolean>(false);
+  const [finalizePaperModalOpen, setFinalizePaperModalOpen] = useState(false);
+  const [finalizeInterviewModalOpen, setFinalizeInterviewModalOpen] = useState(false);
 
   const paperPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruit.paperPass(recruit.id, form.id);
@@ -99,60 +98,42 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { recruit } = await Api.Domain.AdminRecruit.getRecruit(params.id);
-        setRecruit(recruit);
-      } catch (e) {
-        router.back();
-        throw e;
-      }
-    })();
+    startApi(async () => {
+      const { recruit } = await Api.Domain.AdminRecruit.getRecruit(params.id);
+      setRecruit(recruit);
+
+      const { forms } = await Api.Domain.AdminRecruit.getForms(params.id);
+      setforms(forms);
+    });
   }, [params.id]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-
-        const { forms } = await Api.Domain.AdminRecruit.getForms(params.id);
-
-        setLoading(false);
-        setforms(forms);
-        if (forms.length > 0) {
-          setSelectedForm(forms[0]);
-        }
-      } catch (e) {
-        router.back();
-        throw e;
-      }
-    })();
-  }, [params.id]);
+    if (forms.length <= 0) return;
+    setSelectedForm(forms[0]);
+  }, [forms]);
 
   useEffect(() => {
     setQueriedForms(
       forms
-        ? forms
-            .filter(
-              (form) =>
-                form.name.includes(query) ||
-                form.studentId.includes(query) ||
-                form.email.includes(query) ||
-                form.phoneNumber.includes(query),
-            )
-            .sort((a, b) => {
-              const rank = (form: RecruitForm) => {
-                if (form.interviewPass === true) return 1;
-                if (form.paperPass === true) return 2;
-                if (form.interviewPass === false) return 3;
-                if (form.paperPass === false) return 4;
-                return 5;
-              };
+        .filter(
+          (form) =>
+            form.name.includes(query) ||
+            form.studentId.includes(query) ||
+            form.email.includes(query) ||
+            form.phoneNumber.includes(query),
+        )
+        .sort((a, b) => {
+          const rank = (form: RecruitForm) => {
+            if (form.interviewPass === true) return 1;
+            if (form.paperPass === true) return 2;
+            if (form.interviewPass === false) return 3;
+            if (form.paperPass === false) return 4;
+            return 5;
+          };
 
-              const rankDiff = rank(a) - rank(b);
-              return rankDiff !== 0 ? rankDiff : a.name.localeCompare(b.name);
-            })
-        : [],
+          const rankDiff = rank(a) - rank(b);
+          return rankDiff !== 0 ? rankDiff : a.name.localeCompare(b.name);
+        }),
     );
   }, [forms, query]);
 
@@ -178,89 +159,87 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      {forms && (
-        <div className="flex flex-col space-y-2">
-          <div className="flex space-x-2">
+      <div className="flex flex-col space-y-2">
+        <div className="flex space-x-2">
+          <Badge variant="outline" className="text-sm">
+            전체 지원자&nbsp;<span className="font-normal">{forms.length}명</span>
+          </Badge>
+          <Badge variant="outline" className="text-sm">
+            서류 합격자&nbsp;
+            <span className="font-normal">{forms.filter((x) => x.paperPass).length}명</span>
+          </Badge>
+          {recruit?.step !== Step.PRE && (
             <Badge variant="outline" className="text-sm">
-              전체 지원자&nbsp;<span className="font-normal">{forms.length}명</span>
+              면접 합격자&nbsp;
+              <span className="font-normal">{forms.filter((x) => x.interviewPass).length}명</span>
             </Badge>
-            <Badge variant="outline" className="text-sm">
-              서류 합격자&nbsp;
-              <span className="font-normal">{forms.filter((x) => x.paperPass).length}명</span>
-            </Badge>
-            {recruit?.step !== Step.PRE && (
-              <Badge variant="outline" className="text-sm">
-                면접 합격자&nbsp;
-                <span className="font-normal">{forms.filter((x) => x.interviewPass).length}명</span>
-              </Badge>
-            )}
-          </div>
-
-          <div className="flex space-x-2">
-            <Input
-              placeholder="검색어를 입력해주세요."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-
-            {recruit.step === Step.PRE && (
-              <>
-                {selectedForm && (
-                  <>
-                    <Button variant="destructive" onClick={() => paperFail(recruit!, selectedForm)}>
-                      서류 불합격
-                    </Button>
-                    <Button variant="wink" onClick={() => paperPass(recruit!, selectedForm)}>
-                      서류 합격
-                    </Button>
-                  </>
-                )}
-                <Button
-                  variant="outline"
-                  disabled={forms?.some((x) => x.paperPass === null)}
-                  onClick={() => setFinalizePaperModalOpen(true)}
-                >
-                  서류 결과 확정
-                </Button>
-              </>
-            )}
-
-            {recruit.step === Step.PAPER_END && (
-              <>
-                {selectedForm && (
-                  <>
-                    <Button
-                      variant="destructive"
-                      disabled={!selectedForm.paperPass}
-                      onClick={() => interviewFail(recruit!, selectedForm)}
-                    >
-                      면접 불합격
-                    </Button>
-                    <Button
-                      variant="wink"
-                      disabled={!selectedForm.paperPass}
-                      onClick={() => interviewPass(recruit!, selectedForm)}
-                    >
-                      면접 합격
-                    </Button>
-                  </>
-                )}
-                <Button
-                  variant="outline"
-                  disabled={forms?.some((x) => x.paperPass && x.interviewPass === null)}
-                  onClick={() => setFinalizeInterviewModalOpen(true)}
-                >
-                  면접 결과 확정
-                </Button>
-              </>
-            )}
-          </div>
+          )}
         </div>
-      )}
+
+        <div className="flex space-x-2">
+          <Input
+            placeholder="검색어를 입력해주세요."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+
+          {recruit.step === Step.PRE && (
+            <>
+              {selectedForm && (
+                <>
+                  <Button variant="destructive" onClick={() => paperFail(recruit!, selectedForm)}>
+                    서류 불합격
+                  </Button>
+                  <Button variant="wink" onClick={() => paperPass(recruit!, selectedForm)}>
+                    서류 합격
+                  </Button>
+                </>
+              )}
+              <Button
+                variant="outline"
+                disabled={forms?.some((x) => x.paperPass === null)}
+                onClick={() => setFinalizePaperModalOpen(true)}
+              >
+                서류 결과 확정
+              </Button>
+            </>
+          )}
+
+          {recruit.step === Step.PAPER_END && (
+            <>
+              {selectedForm && (
+                <>
+                  <Button
+                    variant="destructive"
+                    disabled={!selectedForm.paperPass}
+                    onClick={() => interviewFail(recruit!, selectedForm)}
+                  >
+                    면접 불합격
+                  </Button>
+                  <Button
+                    variant="wink"
+                    disabled={!selectedForm.paperPass}
+                    onClick={() => interviewPass(recruit!, selectedForm)}
+                  >
+                    면접 합격
+                  </Button>
+                </>
+              )}
+              <Button
+                variant="outline"
+                disabled={forms?.some((x) => x.paperPass && x.interviewPass === null)}
+                onClick={() => setFinalizeInterviewModalOpen(true)}
+              >
+                면접 결과 확정
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
 
       <ScrollArea className="md:w-[calc(100vw-305px)]">
         <div className="flex space-x-3">
-          {loading ? (
+          {isApi ? (
             Array.from({ length: 10 }).map((_, idx) => (
               <Skeleton key={idx} className="w-[150px] h-[70px] rounded-md " />
             ))
@@ -434,14 +413,18 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
         open={finalizePaperModalOpen}
         setOpen={setFinalizePaperModalOpen}
         recruit={recruit}
-        callback={() => setRecruit((prev) => (prev ? { ...prev, step: Step.PAPER_END } : null))}
+        callback={() =>
+          setRecruit((prev) => (prev ? { ...prev, step: Step.PAPER_END } : undefined))
+        }
       />
 
       <FinalizeInterviewModal
         open={finalizeInterviewModalOpen}
         setOpen={setFinalizeInterviewModalOpen}
         recruit={recruit}
-        callback={() => setRecruit((prev) => (prev ? { ...prev, step: Step.INTERVIEW_END } : null))}
+        callback={() =>
+          setRecruit((prev) => (prev ? { ...prev, step: Step.INTERVIEW_END } : undefined))
+        }
       />
     </>
   );

@@ -7,7 +7,7 @@
     "build": "next build",
     "build:assets": "next build && mkdir -p .next/standalone/public/_next && cp -r .next/static .next/standalone/public/_next/",
     "start": "next start",
-    "start:dev": "next dev",
+    "start:dev": "next dev --turbo",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
@@ -38,6 +38,7 @@
     "lucide-react": "^0.456.0",
     "next": "^14.2.6",
     "next-themes": "^0.4.3",
+    "nuqs": "^2.3.2",
     "react": "^18.3.1",
     "react-confetti": "^6.2.2",
     "react-day-picker": "8.10.1",

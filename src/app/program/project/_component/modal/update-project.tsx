@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -15,17 +15,17 @@ import {
   CreateProjectRequestSchema,
 } from '@/api/type/domain/program/project';
 import Project from '@/api/type/schema/project';
+import { useApiWithToast } from '@/api/useApi';
 
 import { uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Upload } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface UpdateProjectModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  project: Project | null;
+  project?: Project;
   callback: (project: Project) => void;
 }
 
@@ -35,7 +35,8 @@ export default function UpdateProjectModal({
   project,
   callback,
 }: UpdateProjectModalProps) {
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, startUpload] = useApiWithToast();
+  const [isApi, startApi] = useApiWithToast();
 
   const form = useForm<CreateProjectRequest>({
     resolver: zodResolver(CreateProjectRequestSchema),
@@ -48,20 +49,24 @@ export default function UpdateProjectModal({
   });
 
   const onSubmit = useCallback(
-    async (values: CreateProjectRequest) => {
-      if (!project) return;
-
-      const { project: _project } = await Api.Domain.Program.Project.updateProject(
-        project.id,
-        values,
+    (values: CreateProjectRequest) => {
+      startApi(
+        async () => {
+          const { project: _project } = await Api.Domain.Program.Project.updateProject(
+            project!.id,
+            values,
+          );
+          callback(_project);
+        },
+        {
+          loading: '프로젝트를 수정하고 있습니다',
+          success: '프로젝트를 수정했습니다.',
+          finally: () => {
+            setOpen(false);
+            form.reset();
+          },
+        },
       );
-
-      setOpen(false);
-      form.reset();
-
-      toast.success('프로젝트를 수정했습니다.');
-
-      callback(_project);
     },
     [project],
   );
@@ -151,17 +156,18 @@ export default function UpdateProjectModal({
                         className="hidden"
                         accept="image/*"
                         onChange={async (e) => {
-                          setIsUploading(true);
-
-                          try {
-                            const imgs = await uploadS3(e.target.files!, () =>
-                              Api.Domain.Program.Upload.uploadImage(),
-                            );
-
-                            field.onChange(imgs[0]);
-                          } finally {
-                            setIsUploading(false);
-                          }
+                          startUpload(
+                            async () =>
+                              field.onChange(
+                                await uploadS3(e.target.files!, () =>
+                                  Api.Domain.Program.Upload.uploadImage(),
+                                ),
+                              ),
+                            {
+                              loading: '이미지를 업로드하고 있습니다.',
+                              success: '이미지를 업로드했습니다.',
+                            },
+                          );
                         }}
                         disabled={isUploading}
                       />
@@ -172,7 +178,7 @@ export default function UpdateProjectModal({
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isUploading || isApi} className="w-full">
               프로젝트 수정
             </Button>
           </form>

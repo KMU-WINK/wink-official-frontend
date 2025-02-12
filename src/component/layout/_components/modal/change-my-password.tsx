@@ -8,9 +8,9 @@ import { Input } from '@/ui/input';
 
 import Api from '@/api';
 import { UpdateMyPasswordRequest, UpdateMyPasswordRequestSchema } from '@/api/type/domain/user';
+import { useApiWithToast } from '@/api/useApi';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
 
 interface ChangeMyInfoModalProps {
   open: boolean;
@@ -18,6 +18,8 @@ interface ChangeMyInfoModalProps {
 }
 
 export default function ChangePasswordModal({ open, setOpen }: ChangeMyInfoModalProps) {
+  const [isApi, startApi] = useApiWithToast();
+
   const form = useForm<UpdateMyPasswordRequest>({
     resolver: zodResolver(UpdateMyPasswordRequestSchema),
     mode: 'onChange',
@@ -27,14 +29,18 @@ export default function ChangePasswordModal({ open, setOpen }: ChangeMyInfoModal
     },
   });
 
-  const onSubmit = useCallback(async (values: UpdateMyPasswordRequest) => {
-    await Api.Domain.User.updateMyPassword(values);
-
-    setOpen(false);
-    form.reset();
-
-    toast.success('비밀번호를 변경했습니다.');
-  }, []);
+  const onSubmit = useCallback(
+    (values: UpdateMyPasswordRequest) =>
+      startApi(() => Api.Domain.User.updateMyPassword(values), {
+        loading: '비밀번호를 수정하고 있습니다.',
+        success: '비밀번호를 수정했습니다.',
+        finally: () => {
+          setOpen(false);
+          form.reset();
+        },
+      }),
+    [],
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -73,7 +79,7 @@ export default function ChangePasswordModal({ open, setOpen }: ChangeMyInfoModal
               )}
             />
 
-            <Button variant="wink" type="submit" className="w-full">
+            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
               비밀번호 변경
             </Button>
           </form>

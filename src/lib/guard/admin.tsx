@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { isAdmin } from '@/api/type/schema/user';
 
+import { useInitStore } from '@/store/init';
 import { useUserStore } from '@/store/user';
 
 import { nowPath } from '@/util';
@@ -20,17 +21,20 @@ export default function AdminGuard({ children }: AdminGuardProps) {
   const router = useRouter();
 
   const { user } = useUserStore();
+  const { isInit } = useInitStore();
 
   useEffect(() => {
+    if (!isInit) return;
+
     if (!user) {
       router.replace(`/auth/login?next=${encodeURIComponent(nowPath())}`);
     } else if (!isAdmin(user.role)) {
       router.replace('/');
       toast.error('권한이 없습니다.');
     }
-  }, [user]);
+  }, [isInit, user]);
 
-  if (!isAdmin(user?.role)) return null;
+  if (!isInit || !isAdmin(user?.role)) return null;
 
   return children;
 }
