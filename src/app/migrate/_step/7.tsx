@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
 import Api from '@/api';
 
-import BallotBox from '@/public/recruit/icon/ballot_box.avif';
+import BallotBox from '@/public/recruit/icon/ballot_box.png';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

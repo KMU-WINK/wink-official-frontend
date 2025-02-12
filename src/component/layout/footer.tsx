@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { FooterLinks } from '@/layout/_constant/footer-link';
 
-import logo from '@/public/footer/logo.avif';
+import logo from '@/public/footer/logo.png';
 
 export default function Footer() {
   return (
@@ -12,8 +12,9 @@ export default function Footer() {
         <Image
           src={logo}
           alt={logo.src}
-          width="48"
-          height="18"
+          width={48}
+          height={18}
+          quality={100}
           className="w-[32px] h-[12px] sm:w-[48px] sm:h-[18px]"
         />
         <p className="text-neutral-500 font-medium text-sm sm:text-base">WINK</p>

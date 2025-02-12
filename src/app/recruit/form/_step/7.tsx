@@ -8,7 +8,7 @@ import { Textarea } from '@/ui/textarea';
 
 import { cn } from '@/util';
 
-import IdCard from '@/public/recruit/icon/id_card.avif';
+import IdCard from '@/public/recruit/icon/id_card.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -37,6 +37,7 @@ export default function Step7({ go, form }: RecruitStepProps) {
         src={IdCard}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

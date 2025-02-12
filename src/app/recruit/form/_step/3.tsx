@@ -18,7 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import { cn } from '@/util';
 
-import GraduationCap from '@/public/recruit/icon/graduation_cap.avif';
+import GraduationCap from '@/public/recruit/icon/graduation_cap.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -39,6 +39,7 @@ export default function Step3({ go, form }: RecruitStepProps) {
         src={GraduationCap}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

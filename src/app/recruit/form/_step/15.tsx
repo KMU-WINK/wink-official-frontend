@@ -22,7 +22,7 @@ import { DevOpsTechStack } from '@/api/type/schema/recruit-form';
 
 import { cn } from '@/util';
 
-import Devops from '@/public/recruit/icon/devops.avif';
+import Devops from '@/public/recruit/icon/devops.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -52,6 +52,7 @@ export default function Step15({ go, setStep, form }: RecruitStepProps) {
         src={Devops}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

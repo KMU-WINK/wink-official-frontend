@@ -9,7 +9,7 @@ import { Input } from '@/ui/input';
 
 import Api from '@/api';
 
-import Telephone from '@/public/recruit/icon/telephone.avif';
+import Telephone from '@/public/recruit/icon/telephone.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -29,6 +29,7 @@ export default function Step5({ go, recruit, form }: RecruitStepProps) {
         src={Telephone}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

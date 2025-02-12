@@ -27,7 +27,7 @@ import { useUserStore } from '@/store/user';
 import { formatDate, nowDate, toDate } from '@/util';
 
 import BackgroundImage from '@/public/recruit/background.avif';
-import RocketIcon from '@/public/recruit/icon/rocket_3d.avif';
+import RocketIcon from '@/public/recruit/icon/rocket_3d.png';
 
 import { endOfDay, startOfDay } from 'date-fns';
 import { toast } from 'sonner';
@@ -119,6 +119,7 @@ export default function RecruitPage() {
               src={RocketIcon}
               width={72}
               height={72}
+              quality={100}
               className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
               alt="icon"
             />

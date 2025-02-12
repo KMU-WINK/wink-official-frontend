@@ -6,7 +6,7 @@ import StackButton, { Stack } from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
 
-import Laptop from '@/public/recruit/icon/laptop.avif';
+import Laptop from '@/public/recruit/icon/laptop.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -35,6 +35,7 @@ export default function Step12({ go, form }: RecruitStepProps) {
         src={Laptop}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />
