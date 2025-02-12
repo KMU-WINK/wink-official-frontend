@@ -83,6 +83,7 @@ export default function RecruitPage() {
           width={1920}
           height={1080}
           priority
+          placeholder="blur"
           className="w-full h-full object-cover"
         />
 
