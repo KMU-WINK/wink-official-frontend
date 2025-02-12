@@ -22,7 +22,7 @@ import { FrontendTechStack } from '@/api/type/schema/recruit-form';
 
 import { cn } from '@/util';
 
-import Frontend from '@/public/recruit/icon/fe.avif';
+import Frontend from '@/public/recruit/icon/fe.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -52,6 +52,7 @@ export default function Step13({ go, setStep, form }: RecruitStepProps) {
         src={Frontend}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

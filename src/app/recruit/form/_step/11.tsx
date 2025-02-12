@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import Github from '@/public/recruit/icon/github.avif';
+import Github from '@/public/recruit/icon/github.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -24,6 +24,7 @@ export default function Step11({ go, form }: RecruitStepProps) {
         src={Github}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

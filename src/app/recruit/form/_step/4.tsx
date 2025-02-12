@@ -9,7 +9,7 @@ import { Input } from '@/ui/input';
 
 import Api from '@/api';
 
-import Envelope from '@/public/recruit/icon/envelope.avif';
+import Envelope from '@/public/recruit/icon/envelope.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -29,6 +29,7 @@ export default function Step4({ go, recruit, form }: RecruitStepProps) {
         src={Envelope}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

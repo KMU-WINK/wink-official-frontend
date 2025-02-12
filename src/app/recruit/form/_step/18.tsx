@@ -17,7 +17,7 @@ import {
   FrontendTechStack,
 } from '@/api/type/schema/recruit-form';
 
-import BallotBox from '@/public/recruit/icon/ballot_box.avif';
+import BallotBox from '@/public/recruit/icon/ballot_box.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate } from '@/lib/util';
@@ -46,6 +46,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
         src={BallotBox}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

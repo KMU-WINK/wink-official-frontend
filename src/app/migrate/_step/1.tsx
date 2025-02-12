@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import Smile from '@/public/recruit/icon/smile.avif';
+import Smile from '@/public/recruit/icon/smile.png';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

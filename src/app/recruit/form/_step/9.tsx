@@ -8,7 +8,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/f
 import { Input } from '@/ui/input';
 import { Separator } from '@/ui/separator';
 
-import Calendar from '@/public/recruit/icon/calendar.avif';
+import Calendar from '@/public/recruit/icon/calendar.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 import { formatDate, formatDateApi, toDate } from '@/lib/util';
@@ -48,6 +48,7 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
         src={Calendar}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

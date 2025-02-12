@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { Button } from '@/ui/button';
 
-import Hand from '@/public/recruit/icon/hand.avif';
+import Hand from '@/public/recruit/icon/hand.png';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

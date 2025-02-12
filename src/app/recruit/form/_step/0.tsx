@@ -9,7 +9,7 @@ import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
 import { Label } from '@/ui/label';
 
-import Hand from '@/public/recruit/icon/hand.avif';
+import Hand from '@/public/recruit/icon/hand.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -49,6 +49,7 @@ export default function Step0({ go }: RecruitStepProps) {
           src={Hand}
           width={72}
           height={72}
+          quality={100}
           className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
           alt="icon"
         />

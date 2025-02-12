@@ -22,7 +22,7 @@ import { BackendTechStack } from '@/api/type/schema/recruit-form';
 
 import { cn } from '@/util';
 
-import Backend from '@/public/recruit/icon/be.avif';
+import Backend from '@/public/recruit/icon/be.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -52,6 +52,7 @@ export default function Step14({ go, setStep, form }: RecruitStepProps) {
         src={Backend}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

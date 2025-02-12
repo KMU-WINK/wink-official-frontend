@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import MagnifyingGlass from '@/public/recruit/icon/magnifying_class.avif';
+import MagnifyingGlass from '@/public/recruit/icon/magnifying_class.png';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

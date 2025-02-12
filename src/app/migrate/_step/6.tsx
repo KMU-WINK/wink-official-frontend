@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import Key from '@/public/migrate/icon/key.avif';
+import Key from '@/public/migrate/icon/key.png';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 
@@ -22,6 +22,7 @@ export default function Step6({ go, form }: MigrateStepProps) {
         src={Key}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

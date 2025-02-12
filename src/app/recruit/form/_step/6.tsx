@@ -8,7 +8,7 @@ import { Textarea } from '@/ui/textarea';
 
 import { cn } from '@/util';
 
-import Thinking from '@/public/recruit/icon/thinking.avif';
+import Thinking from '@/public/recruit/icon/thinking.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -37,6 +37,7 @@ export default function Step6({ go, form }: RecruitStepProps) {
         src={Thinking}
         width={72}
         height={72}
+        quality={100}
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />
