@@ -100,6 +100,7 @@ export default function ProgramActivityPage() {
                       alt={image}
                       width={500}
                       height={300}
+                      loading="eager"
                       className="h-[180px] sm:h-[240px] rounded-xl object-cover"
                     />
                   </CarouselItem>
