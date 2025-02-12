@@ -32,8 +32,9 @@ export default function ProjectCard({
       <Image
         src={project.image}
         alt={project.title}
-        width={640}
-        height={360}
+        width={320}
+        height={130}
+        quality={100}
         className="h-[110px] sm:h-[130px] rounded-t-3xl object-cover"
       />
 
