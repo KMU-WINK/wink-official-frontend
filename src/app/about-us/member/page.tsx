@@ -31,35 +31,48 @@ export default function AboutUsMemberPage() {
     setUsers((prev) => prev.map((u) => (u.id === user?.id ? { ...u, ...user } : u)));
   }, [user]);
 
-  const leaders: User[] = useMemo(
-    () => users.filter((user) => [Role.PRESIDENT, Role.VICE_PRESIDENT].includes(user.role)),
-    [users],
-  );
+  const leaders: User[] = useMemo(() => {
+    const roleOrder = [Role.PRESIDENT, Role.VICE_PRESIDENT];
+    return users
+      .filter((user) => roleOrder.includes(user.role))
+      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
+  }, [users]);
 
-  const treasuries: User[] = useMemo(
-    () => users.filter((user) => [Role.TREASURY_HEAD, Role.TREASURY_ASSISTANT].includes(user.role)),
-    [users],
-  );
+  const treasuries: User[] = useMemo(() => {
+    const roleOrder = [Role.TREASURY_HEAD, Role.TREASURY_ASSISTANT];
+    return users
+      .filter((user) => roleOrder.includes(user.role))
+      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
+  }, [users]);
 
-  const publicRelations: User[] = useMemo(
+  const publicRelations: User[] = useMemo(() => {
+    const roleOrder = [Role.PUBLIC_RELATIONS_HEAD, Role.PUBLIC_RELATIONS_ASSISTANT];
+    return users
+      .filter((user) => roleOrder.includes(user.role))
+      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
+  }, [users]);
+
+  const plannings: User[] = useMemo(() => {
+    const roleOrder = [Role.PLANNING_HEAD, Role.PLANNING_ASSISTANT];
+    return users
+      .filter((user) => roleOrder.includes(user.role))
+      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
+  }, [users]);
+
+  const techs: User[] = useMemo(() => {
+    const roleOrder = [Role.TECH_HEAD, Role.TECH_ASSISTANT];
+    return users
+      .filter((user) => roleOrder.includes(user.role))
+      .sort((a, b) => roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role));
+  }, [users]);
+
+  const members: User[] = useMemo(
     () =>
-      users.filter((user) =>
-        [Role.PUBLIC_RELATIONS_HEAD, Role.PUBLIC_RELATIONS_ASSISTANT].includes(user.role),
-      ),
+      users
+        .filter((user) => user.role === Role.MEMBER)
+        .sort((a, b) => a.name.localeCompare(b.name)),
     [users],
   );
-
-  const plannings: User[] = useMemo(
-    () => users.filter((user) => [Role.PLANNING_HEAD, Role.PLANNING_ASSISTANT].includes(user.role)),
-    [users],
-  );
-
-  const techs: User[] = useMemo(
-    () => users.filter((user) => [Role.TECH_HEAD, Role.TECH_ASSISTANT].includes(user.role)),
-    [users],
-  );
-
-  const members: User[] = useMemo(() => users.filter((user) => user.role === Role.MEMBER), [users]);
 
   return (
     <div className="flex flex-col items-center px-6 pt-20 sm:pt-28 space-y-10">
