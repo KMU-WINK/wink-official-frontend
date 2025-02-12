@@ -107,9 +107,9 @@ export default function ProgramHistoryPage() {
                   >
                     <AccordionTrigger>
                       <div className="w-full flex items-center justify-between pr-2">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 text-sm sm:text-base ">
                           <FaCircle className="w-1.5 h-1.5" />
-                          <p className="min-w-[85px] text-neutral-600">
+                          <p className="min-w-[60px] sm:min-w-[85px] text-neutral-600">
                             {formatDate(history.date).substring(6)}
                           </p>
                           <Separator orientation="vertical" className="h-4 bg-neutral-600" />

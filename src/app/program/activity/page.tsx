@@ -78,7 +78,7 @@ export default function ProgramActivityPage() {
       </div>
 
       {selectedActivity ? (
-        <p className="text-xl sm:text-2xl font-bold">{selectedActivity?.title}</p>
+        <p className="text-xl sm:text-3xl font-bold">{selectedActivity?.title}</p>
       ) : (
         <Skeleton className="w-72 h-8" />
       )}
@@ -115,7 +115,7 @@ export default function ProgramActivityPage() {
             <CarouselNext />
           </Carousel>
           {selectedActivity ? (
-            <p className="text-sm sm:text-lg font-medium">{selectedActivity.description}</p>
+            <p className="text-sm sm:text-lg">{selectedActivity.description}</p>
           ) : (
             <Skeleton className="w-60 h-5" />
           )}

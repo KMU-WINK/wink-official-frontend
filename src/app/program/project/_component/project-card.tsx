@@ -39,7 +39,7 @@ export default function ProjectCard({
 
       <div className="flex flex-col px-4 py-4">
         <div className="flex justify-between">
-          <p className="sm:text-lg font-semibold truncate">{project.title}</p>
+          <p className="sm:text-lg font-medium truncate">{project.title}</p>
           {user?.id === project.author.id ? (
             <div className="flex space-x-2">
               <Pencil
