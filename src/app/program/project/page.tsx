@@ -81,7 +81,7 @@ export default function ProgramProjectPage() {
         <Carousel loading={isApi} projects={projects?.content.slice(0, 6) || []} />
       </div>
 
-      <div className="flex flex-wrap gap-4 sm:gap-8 items-center justify-center">
+      <div className="flex flex-wrap gap-4 sm:gap-8 items-center justify-center max-w-[1050px]">
         {projects
           ? projects.content.map((project) => (
               <ProjectCard
