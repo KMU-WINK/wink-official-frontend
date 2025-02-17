@@ -128,25 +128,26 @@ export default function RecruitPage() {
             </p>
           </div>
 
-          {startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() &&
-          nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) ? (
-            !user ? (
-              <Button variant="wink" onClick={() => router.push(`/recruit/form`)}>
-                지원하기
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                onClick={() => {
-                  Api.Request.removeToken();
-                  toast.success('로그아웃되었습니다.');
-                }}
-              >
-                로그아웃
-              </Button>
-            )
-          ) : (
+          {startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() ? (
             <p className="text-neutral-500">지원이 종료되었습니다.</p>
+          ) : nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) ? (
+            <p className="text-neutral-500">
+              {formatDate(toDate(recruit.recruitStartDate), true)}부터 지원할 수 있습니다.
+            </p>
+          ) : !user ? (
+            <Button variant="wink" onClick={() => router.push(`/recruit/form`)}>
+              지원하기
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              onClick={() => {
+                Api.Request.removeToken();
+                toast.success('로그아웃되었습니다.');
+              }}
+            >
+              로그아웃
+            </Button>
           )}
         </div>
       )}
