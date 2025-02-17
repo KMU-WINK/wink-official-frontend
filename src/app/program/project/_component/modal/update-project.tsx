@@ -131,6 +131,7 @@ export default function UpdateProjectModal({
                               alt={field.value}
                               width={375}
                               height={200}
+                              quality={100}
                               className="w-full h-full rounded-md object-cover"
                             />
                             <div

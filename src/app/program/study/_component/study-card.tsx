@@ -29,6 +29,7 @@ export default function StudyCard({ index, category, title, author, content, ima
             alt={title}
             width={200}
             height={125}
+            quality={100}
             className="w-full h-[125px] sm:h-[150px] object-cover rounded-tl-xl rounded-tr-xl sm:rounded-tl-none sm:rounded-br-xl"
           />
         ) : (

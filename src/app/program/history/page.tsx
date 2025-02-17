@@ -143,7 +143,7 @@ export default function ProgramHistoryPage() {
                         alt={history.image}
                         width={600}
                         height={338}
-                        loading="eager"
+                        quality={100}
                         className="w-[300px] sm:w-[600px] h-[169px] sm:h-[338px] rounded-xl object-cover"
                       />
                     </AccordionContent>

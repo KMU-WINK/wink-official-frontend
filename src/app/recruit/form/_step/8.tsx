@@ -27,6 +27,7 @@ export default function Step8({ go, form }: RecruitStepProps) {
         width={72}
         height={72}
         quality={100}
+        placeholder="blur"
         className="w-[48px] h-[48px] sm:w-[80px] sm:h-[80px]"
         alt="icon"
       />

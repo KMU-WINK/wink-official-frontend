@@ -30,6 +30,9 @@ export default function Cloud({ children, className }: CloudProps) {
           alt={cloud.src}
           width={216}
           height={108}
+          quality={100}
+          placeholder="blur"
+          priority
           className="w-[143px] h-[72px] sm:w-[216px] sm:h-[108px]"
         />
       </motion.div>

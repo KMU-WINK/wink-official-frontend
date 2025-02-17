@@ -15,6 +15,7 @@ export default function Footer() {
           width={48}
           height={18}
           quality={100}
+          placeholder="blur"
           className="w-[32px] h-[12px] sm:w-[48px] sm:h-[18px]"
         />
         <p className="text-neutral-500 font-medium text-sm sm:text-base">WINK</p>

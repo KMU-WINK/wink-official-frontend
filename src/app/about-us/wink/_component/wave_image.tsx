@@ -26,7 +26,9 @@ export default function WaveImage({ text, textStyle, direction, image }: WaveIma
         alt={image.src}
         width={288}
         height={512}
+        quality={100}
         placeholder="blur"
+        priority
         className="h-[384px] sm:h-[512px] rounded-xl object-cover"
       />
     </div>
