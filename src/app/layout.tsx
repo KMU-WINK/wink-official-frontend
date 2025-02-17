@@ -16,6 +16,7 @@ import { useInitStore } from '@/store/init';
 import { cn } from '@/util';
 
 import Loading from '@/app/loading';
+import ImagePreLoader from '@/component/image-pre-loader';
 import '@/style/global.css';
 
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
@@ -80,6 +81,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <NuqsAdapter>
+          <ImagePreLoader />
+
           <Header loading={!isInit} />
 
           <main
