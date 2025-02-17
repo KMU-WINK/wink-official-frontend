@@ -55,22 +55,38 @@ export default function ImagePreLoader() {
             alt={activity.images[0]}
             width={250}
             height={250}
+            quality={100}
             priority
           />
           {activity.images.map((image) => (
-            <Image key={image} src={image} alt={image} width={500} height={300} priority />
+            <Image
+              key={image}
+              src={image}
+              alt={image}
+              width={500}
+              height={300}
+              quality={100}
+              priority
+            />
           ))}
         </Fragment>
       ))}
 
       {histories.map((history) => (
-        <Image src={history.image} alt={history.image} width={600} height={338} priority />
+        <Image
+          src={history.image}
+          alt={history.image}
+          width={600}
+          height={338}
+          quality={100}
+          priority
+        />
       ))}
 
       {studies
         .filter((study) => study.image)
         .map((study) => (
-          <Image src={study.image!} alt={study.image!} width={200} height={125} />
+          <Image src={study.image!} alt={study.image!} width={200} height={125} quality={100} />
         ))}
 
       {users

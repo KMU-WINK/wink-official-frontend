@@ -137,6 +137,7 @@ export default function CreateActivityModal({ open, setOpen, callback }: CreateA
                                   alt={url}
                                   width={375}
                                   height={150}
+                                  quality={100}
                                   className="h-[150px] rounded-md object-cover"
                                 />
                               </CarouselItem>

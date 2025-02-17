@@ -66,6 +66,7 @@ export default function ApplicationPage() {
                   alt={application.name}
                   width={208}
                   height={208}
+                  quality={100}
                   className="absolute top-0 left-0 w-full h-full object-cover rounded-xl"
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 hover:bg-opacity-50 transition-all rounded-xl"></div>

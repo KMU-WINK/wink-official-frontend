@@ -54,6 +54,7 @@ export default function ProgramActivityPage() {
                   alt={activity.images[0]}
                   width={250}
                   height={250}
+                  quality={100}
                   onClick={() => setselected(activity)}
                   className={cn(
                     'w-[250px] sm:w-full sm:h-[250px] rounded-3xl object-cover cursor-pointer transition-all duration-300',
@@ -103,7 +104,7 @@ export default function ProgramActivityPage() {
                       alt={image}
                       width={500}
                       height={300}
-                      loading="eager"
+                      quality={100}
                       className="w-[300px] h-[200px] sm:w-[400px] sm:h-[250px] rounded-xl object-cover"
                     />
                   </CarouselItem>

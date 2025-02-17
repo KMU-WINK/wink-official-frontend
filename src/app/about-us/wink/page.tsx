@@ -8,9 +8,9 @@ import Wave from '@/app/about-us/wink/_component/wave';
 import WaveImage from '@/app/about-us/wink/_component/wave_image';
 import WeAreWink from '@/app/about-us/wink/_component/we-are-wink';
 
-import WaveImage1 from '@/public/about-us/wink/wave-1.avif';
-import WaveImage2 from '@/public/about-us/wink/wave-2.avif';
-import WeAreWinkImage from '@/public/about-us/wink/we-are-wink.avif';
+import WaveImage1 from '@/public/about-us/wink/wave-1.webp';
+import WaveImage2 from '@/public/about-us/wink/wave-2.webp';
+import WeAreWinkImage from '@/public/about-us/wink/we-are-wink.webp';
 
 import { motion } from 'framer-motion';
 
