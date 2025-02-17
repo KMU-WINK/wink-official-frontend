@@ -14,10 +14,6 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-* {
-  overflow-x: clip;
-}
-
 *::-webkit-scrollbar {
   width: 10px;
 }

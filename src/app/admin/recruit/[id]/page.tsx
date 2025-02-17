@@ -237,7 +237,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
         </div>
       </div>
 
-      <ScrollArea className="md:w-[calc(100vw-305px)]">
+      <ScrollArea className="md:w-[calc(100dvw-315px)]">
         <div className="flex space-x-3">
           {isApi ? (
             Array.from({ length: 10 }).map((_, idx) => (
