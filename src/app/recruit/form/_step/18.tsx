@@ -181,7 +181,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                   .join('\n')}
               </TableCell>
             </TableRow>
-            {!developer && (
+            {developer && (
               <>
                 <TableRow
                   onClick={() => {
@@ -343,9 +343,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 success: (
                   <div className="flex flex-col space-y-2">
                     <p className="font-medium">지원서를 제출했습니다.</p>
-                    <p className="text-neutral-500">
-                      면접 대상자는 추후 문자와 이메일로 안내될 예정입니다.
-                    </p>
+                    <p className="text-neutral-500">면접 대상자는 추후 문자로 안내될 예정입니다.</p>
                   </div>
                 ),
                 duration: 1000 * 60 * 3,
