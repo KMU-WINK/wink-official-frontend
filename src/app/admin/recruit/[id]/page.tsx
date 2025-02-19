@@ -199,7 +199,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
               )}
               <Button
                 variant="outline"
-                disabled={forms?.some((x) => x.paperPass === null)}
+                disabled={forms?.some((x) => x.paperPass === null) || forms.length === 0}
                 onClick={() => setFinalizePaperModalOpen(true)}
               >
                 서류 결과 확정
