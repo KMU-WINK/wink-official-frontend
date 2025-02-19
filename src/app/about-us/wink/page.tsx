@@ -36,7 +36,7 @@ export default function WinkPage() {
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, amount: 0.75 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.5 }}
         >
           <WaveImage
@@ -50,7 +50,7 @@ export default function WinkPage() {
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, amount: 0.75 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.5 }}
         >
           <WaveImage
