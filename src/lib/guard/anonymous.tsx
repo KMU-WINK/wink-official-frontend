@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useInitStore } from '@/store/init';
 import { useUserStore } from '@/store/user';
 
+import Loading from '@/app/loading';
+
 interface AnonymousGuardProps {
   children: ReactNode;
 }
@@ -24,7 +26,7 @@ export default function AnonymousGuard({ children }: AnonymousGuardProps) {
     }
   }, [isInit, user]);
 
-  if (!isInit || user) return null;
+  if (!isInit || user) return <Loading />;
 
   return children;
 }

@@ -13,6 +13,8 @@ import Api from '@/api';
 import { ResetPasswordRequest, ResetPasswordRequestSchema } from '@/api/type/domain/auth';
 import { useApi, useApiWithToast } from '@/api/useApi';
 
+import Loading from '@/app/loading';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { parseAsString, useQueryState } from 'nuqs';
 import { toast } from 'sonner';
@@ -62,7 +64,7 @@ export default function AuthResetPasswordPage() {
     });
   }, [token]);
 
-  if (isApi) return null;
+  if (isApi) return <Loading />;
 
   return (
     <Form {...form}>

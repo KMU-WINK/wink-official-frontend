@@ -13,6 +13,8 @@ import Api from '@/api';
 import PreUser from '@/api/type/schema/pre-user';
 import { useApi } from '@/api/useApi';
 
+import Loading from '@/app/loading';
+
 import { parseAsString, useQueryState } from 'nuqs';
 import { toast } from 'sonner';
 
@@ -41,7 +43,7 @@ export default function AuthRegisterPage() {
     });
   }, []);
 
-  if (isApi || !user) return null;
+  if (isApi || !user) return <Loading />;
 
   return (
     <>
