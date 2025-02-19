@@ -60,7 +60,6 @@ export default function Header({ loading }: HeaderProps) {
             width={64}
             height={26}
             quality={100}
-            placeholder="empty"
             priority
             className="w-[48px] h-[19.5px] sm:w-[64px] sm:h-[26px]"
           />
