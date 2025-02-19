@@ -10,7 +10,7 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
 
-import Thinking from '@/public/recruit/icon/thinking.png';
+import Thinking from '@/public/recruit/icon/thinking.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

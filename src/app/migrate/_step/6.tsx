@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import Key from '@/public/migrate/icon/key.png';
+import Key from '@/public/migrate/icon/key.webp';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

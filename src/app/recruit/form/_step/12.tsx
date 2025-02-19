@@ -8,7 +8,7 @@ import { Button } from '@/ui/button';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Laptop from '@/public/recruit/icon/laptop.png';
+import Laptop from '@/public/recruit/icon/laptop.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

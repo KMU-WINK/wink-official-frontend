@@ -28,8 +28,8 @@ import { useUserStore } from '@/store/user';
 
 import { formatDate, nowDate, toDate } from '@/util';
 
-import BackgroundImage from '@/public/recruit/background.jpg';
-import RocketIcon from '@/public/recruit/icon/rocket_3d.png';
+import BackgroundImage from '@/public/recruit/background.webp';
+import RocketIcon from '@/public/recruit/icon/rocket_3d.webp';
 
 import { endOfDay, startOfDay } from 'date-fns';
 import { toast } from 'sonner';

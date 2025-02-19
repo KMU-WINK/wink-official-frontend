@@ -11,7 +11,7 @@ import Api from '@/api';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Telephone from '@/public/recruit/icon/telephone.png';
+import Telephone from '@/public/recruit/icon/telephone.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

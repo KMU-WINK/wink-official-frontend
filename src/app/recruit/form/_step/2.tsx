@@ -11,7 +11,7 @@ import Api from '@/api';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import MagnifyingGlass from '@/public/recruit/icon/magnifying_class.png';
+import MagnifyingGlass from '@/public/recruit/icon/magnifying_class.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

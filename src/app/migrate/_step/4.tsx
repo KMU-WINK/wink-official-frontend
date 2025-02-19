@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import Envelope from '@/public/recruit/icon/envelope.png';
+import Envelope from '@/public/recruit/icon/envelope.webp';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

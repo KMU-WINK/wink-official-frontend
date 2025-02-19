@@ -10,7 +10,7 @@ import Api from '@/api';
 
 import { useRegisterStore } from '@/store/register';
 
-import BallotBox from '@/public/recruit/icon/ballot_box.png';
+import BallotBox from '@/public/recruit/icon/ballot_box.webp';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

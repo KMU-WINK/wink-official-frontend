@@ -22,7 +22,7 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
 
-import Backend from '@/public/recruit/icon/be.png';
+import Backend from '@/public/recruit/icon/be.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

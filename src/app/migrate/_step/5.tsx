@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
-import Telephone from '@/public/recruit/icon/telephone.png';
+import Telephone from '@/public/recruit/icon/telephone.webp';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

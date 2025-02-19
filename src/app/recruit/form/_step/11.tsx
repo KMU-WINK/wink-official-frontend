@@ -8,7 +8,7 @@ import { Input } from '@/ui/input';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Github from '@/public/recruit/icon/github.png';
+import Github from '@/public/recruit/icon/github.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
