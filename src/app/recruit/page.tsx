@@ -33,7 +33,7 @@ import RocketIcon from '@/public/recruit/icon/rocket_3d.webp';
 
 import Loading from '@/app/loading';
 
-import { endOfDay, startOfDay } from 'date-fns';
+import { endOfDay, isAfter, isBefore, startOfDay } from 'date-fns';
 import { toast } from 'sonner';
 
 export default function RecruitPage() {
@@ -132,12 +132,13 @@ export default function RecruitPage() {
             </p>
           </div>
 
-          {startOfDay(toDate(recruit.recruitStartDate)) <= nowDate() ? (
-            <p className="text-neutral-500">지원이 종료되었습니다.</p>
-          ) : nowDate() <= endOfDay(toDate(recruit.recruitEndDate)) ? (
+          {isBefore(startOfDay(nowDate()), startOfDay(toDate(recruit.recruitStartDate))) ? (
             <p className="text-neutral-500">
-              {formatDate(toDate(recruit.recruitStartDate), true)}부터 지원할 수 있습니다.
+              {formatDate(startOfDay(toDate(recruit.recruitStartDate)), true)}부터 지원할 수
+              있습니다.
             </p>
+          ) : isAfter(startOfDay(nowDate()), endOfDay(toDate(recruit.recruitEndDate))) ? (
+            <p className="text-neutral-500">지원이 종료되었습니다.</p>
           ) : !user ? (
             <Button variant="wink" onClick={() => router.push(`/recruit/form`)}>
               지원하기
