@@ -7,6 +7,7 @@ import RecruitForm, {
   DevOpsTechStack,
   FrontendTechStack,
 } from '@/api/type/schema/recruit-form';
+import RecruitSms from '@/api/type/schema/recruit-sms';
 import {
   GITHUB_USERNAME_EXPRESSION,
   GITHUB_USERNAME_MESSAGE,
@@ -39,18 +40,6 @@ export const CreateRecruitRequestSchema = z.object({
   recruitEndDate: z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE),
   interviewStartDate: z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE),
   interviewEndDate: z.string().regex(YYYY_MM_DD_EXPRESSION, YYYY_MM_DD_MESSAGE),
-});
-
-export const EmailCheckRequestSchema = z.object({
-  email: z.string().regex(KOOKMIN_EMAIL_EXPRESSION, KOOKMIN_EMAIL_MESSAGE),
-});
-
-export const FinalizePaperRequestSchema = z.object({
-  interviewUrl: z.string().min(1, '면접 안내 URL은 비어있을 수 없습니다.'),
-});
-
-export const PhoneNumberCheckRequestSchema = z.object({
-  phoneNumber: z.string().regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
 });
 
 export const RecruitFormRequestSchema = z
@@ -108,12 +97,27 @@ export const RecruitFormRequestSchema = z
     }
   });
 
+export const EmailCheckRequestSchema = z.object({
+  email: z.string().regex(KOOKMIN_EMAIL_EXPRESSION, KOOKMIN_EMAIL_MESSAGE),
+});
+
+export const PhoneNumberCheckRequestSchema = z.object({
+  phoneNumber: z.string().regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
+});
+
 export const StudentIdCheckRequestSchema = z.object({
   studentId: z.string().length(8, STUDENT_ID_MESSAGE),
 });
 
 export const DuplicationCheckResponseSchema = z.object({
   duplicated: z.boolean(),
+});
+
+export const UpdateRecruitSmsRequestSchema = z.object({
+  paperFail: z.string().min(1, '서류 탈락 안내 문자를 작성해주세요.'),
+  paperPass: z.string().min(1, '서류 합격 안내 문자를 작성해주세요.'),
+  finalFail: z.string().min(1, '최종 탈락 안내 문자를 작성해주세요.'),
+  finalPass: z.string().min(1, '최종 합격 안내 문자를 작성해주세요.'),
 });
 
 export const GetFormsResponseSchema = z.object({
@@ -128,13 +132,18 @@ export const GetRecruitsResponseSchema = z.object({
   recruits: z.array(z.custom<Recruit>()),
 });
 
+export const GetRecruitSmsResponseSchema = z.object({
+  recruit: z.custom<RecruitSms>(),
+});
+
 export type CreateRecruitRequest = z.infer<typeof CreateRecruitRequestSchema>;
-export type EmailCheckRequest = z.infer<typeof EmailCheckRequestSchema>;
-export type FinalizePaperRequest = z.infer<typeof FinalizePaperRequestSchema>;
 export type RecruitFormRequest = z.infer<typeof RecruitFormRequestSchema>;
+export type EmailCheckRequest = z.infer<typeof EmailCheckRequestSchema>;
 export type PhoneNumberCheckRequest = z.infer<typeof PhoneNumberCheckRequestSchema>;
 export type StudentIdCheckRequest = z.infer<typeof StudentIdCheckRequestSchema>;
+export type UpdateRecruitSmsRequest = z.infer<typeof UpdateRecruitSmsRequestSchema>;
 export type DuplicationCheckResponse = z.infer<typeof DuplicationCheckResponseSchema>;
 export type GetFormsResponse = z.infer<typeof GetFormsResponseSchema>;
 export type GetRecruitResponse = z.infer<typeof GetRecruitResponseSchema>;
 export type GetRecruitsResponse = z.infer<typeof GetRecruitsResponseSchema>;
+export type GetRecruitSmsResponse = z.infer<typeof GetRecruitSmsResponseSchema>;

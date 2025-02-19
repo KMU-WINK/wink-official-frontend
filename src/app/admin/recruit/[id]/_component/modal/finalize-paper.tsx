@@ -1,17 +1,11 @@
 import { useCallback } from 'react';
-import { useForm } from 'react-hook-form';
 
 import { Button } from '@/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/ui/form';
-import { Input } from '@/ui/input';
 
 import Api from '@/api';
-import { FinalizePaperRequest, FinalizePaperRequestSchema } from '@/api/type/domain/recruit';
 import Recruit from '@/api/type/schema/recruit';
 import { useApiWithToast } from '@/api/useApi';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 
 interface FinalizePaperModalProps {
   open: boolean;
@@ -28,33 +22,19 @@ export default function FinalizePaperModal({
 }: FinalizePaperModalProps) {
   const [isApi, startApi] = useApiWithToast();
 
-  const form = useForm<FinalizePaperRequest>({
-    resolver: zodResolver(FinalizePaperRequestSchema),
-    mode: 'onChange',
-    defaultValues: {
-      interviewUrl: '',
-    },
-  });
-
-  const onSubmit = useCallback(
-    (values: FinalizePaperRequest) => {
-      startApi(
-        async () => {
-          await Api.Domain.AdminRecruit.finalizePaper(recruit.id, values);
-          callback();
-        },
-        {
-          loading: '서류 결과를 확정하고 있습니다.',
-          success: '서류 결과를 확정했습니다.',
-          finally: () => {
-            setOpen(false);
-            form.reset();
-          },
-        },
-      );
-    },
-    [recruit],
-  );
+  const onSubmit = useCallback((recruit: Recruit) => {
+    startApi(
+      async () => {
+        await Api.Domain.AdminRecruitForm.finalizePaper(recruit.id);
+        callback();
+      },
+      {
+        loading: '서류 결과를 확정하고 있습니다.',
+        success: '서류 결과를 확정했습니다.',
+        finally: () => setOpen(false),
+      },
+    );
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -65,35 +45,22 @@ export default function FinalizePaperModal({
             {recruit.year}학년도 {recruit.semester}학기 신규 부원 모집 서류 결과를 확정합니다.
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-full space-y-4">
-            <div className="flex space-x-2">
-              <FormField
-                control={form.control}
-                name="interviewUrl"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>면접 안내 URL</FormLabel>
-                    <FormControl>
-                      <Input type="url" placeholder="면접 안내 URL을 입력해주세요." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+        <div className="flex flex-col w-full space-y-4">
+          <p className="text-red-600 text-sm">
+            확정 후 안내 문자가 전송됩니다.
+            <br />
+            이후에 서류 결과를 수정할 수 없습니다.
+          </p>
 
-            <p className="text-red-600 text-sm">
-              확정 후 안내 문자가 전송됩니다.
-              <br />
-              이후에 서류 결과를 수정할 수 없습니다.
-            </p>
-
-            <Button variant="wink" type="submit" disabled={isApi} className="w-full">
-              서류 결과 확정
-            </Button>
-          </form>
-        </Form>
+          <Button
+            variant="wink"
+            disabled={isApi}
+            className="w-full"
+            onClick={() => onSubmit(recruit)}
+          >
+            서류 결과 확정
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

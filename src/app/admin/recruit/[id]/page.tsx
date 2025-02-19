@@ -57,7 +57,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   const [finalizeInterviewModalOpen, setFinalizeInterviewModalOpen] = useState(false);
 
   const paperPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
-    await Api.Domain.AdminRecruit.paperPass(recruit.id, form.id);
+    await Api.Domain.AdminRecruitForm.paperPass(recruit.id, form.id);
 
     setforms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: true } : a)) : [],
@@ -68,7 +68,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
 
   const paperFail = useCallback(
     async (recruit: Recruit, form: RecruitForm) => {
-      await Api.Domain.AdminRecruit.paperFail(recruit.id, form.id);
+      await Api.Domain.AdminRecruitForm.paperFail(recruit.id, form.id);
 
       setforms((prev) =>
         prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: false } : a)) : [],
@@ -80,7 +80,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   );
 
   const interviewPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
-    await Api.Domain.AdminRecruit.interviewPass(recruit.id, form.id);
+    await Api.Domain.AdminRecruitForm.interviewPass(recruit.id, form.id);
 
     setforms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: true } : a)) : [],
@@ -90,7 +90,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
   }, []);
 
   const interviewFail = useCallback(async (recruit: Recruit, form: RecruitForm) => {
-    await Api.Domain.AdminRecruit.interviewFail(recruit.id, form.id);
+    await Api.Domain.AdminRecruitForm.interviewFail(recruit.id, form.id);
 
     setforms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: false } : a)) : [],
@@ -104,7 +104,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
       const { recruit } = await Api.Domain.AdminRecruit.getRecruit(params.id);
       setRecruit(recruit);
 
-      const { forms } = await Api.Domain.AdminRecruit.getForms(params.id);
+      const { forms } = await Api.Domain.AdminRecruitForm.getForms(params.id);
       setforms(forms);
     });
   }, [params.id]);

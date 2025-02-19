@@ -25,7 +25,7 @@ export default function FinalizeInterviewModal({
   const onSubmit = useCallback((recruit: Recruit) => {
     startApi(
       async () => {
-        await Api.Domain.AdminRecruit.finalizeInterview(recruit.id);
+        await Api.Domain.AdminRecruitForm.finalizeInterview(recruit.id);
         callback();
       },
       {
