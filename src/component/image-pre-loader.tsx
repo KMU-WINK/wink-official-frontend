@@ -74,6 +74,7 @@ export default function ImagePreLoader() {
 
       {histories.map((history) => (
         <Image
+          key={history.id}
           src={history.image}
           alt={history.image}
           width={600}
@@ -86,13 +87,20 @@ export default function ImagePreLoader() {
       {studies
         .filter((study) => study.image)
         .map((study) => (
-          <Image src={study.image!} alt={study.image!} width={200} height={125} quality={100} />
+          <Image
+            key={study.id}
+            src={study.image!}
+            alt={study.image!}
+            width={200}
+            height={125}
+            quality={100}
+          />
         ))}
 
       {users
         .filter((user) => user.avatar)
         .map((user) => (
-          <Avatar className="w-12 sm:w-16 h-12 sm:h-16">
+          <Avatar key={user.id} className="w-12 sm:w-16 h-12 sm:h-16">
             <AvatarImage src={user.avatar} alt={user.avatar} />
           </Avatar>
         ))}
