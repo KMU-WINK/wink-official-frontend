@@ -133,7 +133,7 @@ export const GetRecruitsResponseSchema = z.object({
 });
 
 export const GetRecruitSmsResponseSchema = z.object({
-  recruit: z.custom<RecruitSms>(),
+  recruitSms: z.custom<RecruitSms>(),
 });
 
 export type CreateRecruitRequest = z.infer<typeof CreateRecruitRequestSchema>;

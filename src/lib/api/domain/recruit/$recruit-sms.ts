@@ -8,7 +8,7 @@ export default class AdminRecruitSms {
     return this.request.get(`/admin/recruit/${recruitId}/sms`);
   }
 
-  public async paperPass(
+  public async updateRecruitSms(
     recruitId: string,
     data: UpdateRecruitSmsRequest,
   ): Promise<GetRecruitSmsResponse> {
