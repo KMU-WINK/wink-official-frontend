@@ -204,7 +204,10 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof But
           className,
         )}
         disabled={!canScrollPrev}
-        onClick={scrollPrev}
+        onClick={(e) => {
+          e.preventDefault();
+          scrollPrev();
+        }}
         {...props}
       >
         <ArrowLeft className="h-4 w-4" />
@@ -232,7 +235,10 @@ const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>
           className,
         )}
         disabled={!canScrollNext}
-        onClick={scrollNext}
+        onClick={(e) => {
+          e.preventDefault();
+          scrollNext();
+        }}
         {...props}
       >
         <ArrowRight className="h-4 w-4" />
