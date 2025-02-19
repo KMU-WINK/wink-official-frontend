@@ -9,6 +9,8 @@ import { useUserStore } from '@/store/user';
 
 import { nowPath } from '@/util';
 
+import Loading from '@/app/loading';
+
 interface MemberGuardProps {
   children: ReactNode;
 }
@@ -26,7 +28,7 @@ export default function MemberGuard({ children }: MemberGuardProps) {
     }
   }, [isInit, user]);
 
-  if (!isInit || !user) return null;
+  if (!isInit || !user) return <Loading />;
 
   return children;
 }

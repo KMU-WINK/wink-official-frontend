@@ -11,6 +11,8 @@ import { useUserStore } from '@/store/user';
 
 import { nowPath } from '@/util';
 
+import Loading from '@/app/loading';
+
 import { toast } from 'sonner';
 
 interface AdminGuardProps {
@@ -34,7 +36,7 @@ export default function AdminGuard({ children }: AdminGuardProps) {
     }
   }, [isInit, user]);
 
-  if (!isInit || !isAdmin(user?.role)) return null;
+  if (!isInit || !isAdmin(user?.role)) return <Loading />;
 
   return children;
 }

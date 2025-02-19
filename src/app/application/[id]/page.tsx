@@ -17,6 +17,8 @@ import Api from '@/api';
 import Application from '@/api/type/schema/application';
 import { useApi } from '@/api/useApi';
 
+import Loading from '@/app/loading';
+
 import { Pen, Trash2 } from 'lucide-react';
 
 interface ApplicationDetailPageProps {
@@ -46,7 +48,7 @@ export default function ApplicationDetailPage({ params }: ApplicationDetailPageP
     });
   }, []);
 
-  if (isApi || !application) return null;
+  if (isApi || !application) return <Loading />;
 
   return (
     <>

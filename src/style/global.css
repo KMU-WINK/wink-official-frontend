@@ -14,14 +14,11 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-*::-webkit-scrollbar {
-  width: 10px;
+* {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
 }
 
-*::-webkit-scrollbar-thumb {
-  width: 10px;
-  background-color: rgb(0 0 0 / 20%);
-  border: 2px solid transparent;
-  border-radius: 10px;
-  background-clip: content-box;
+*::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }

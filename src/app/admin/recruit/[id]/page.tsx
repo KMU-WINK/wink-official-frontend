@@ -34,6 +34,8 @@ import { useApi } from '@/api/useApi';
 
 import { cn, formatDate } from '@/util';
 
+import Loading from '@/app/loading';
+
 import { FileUser, Speech } from 'lucide-react';
 import { parseAsString, useQueryState } from 'nuqs';
 
@@ -137,7 +139,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
     );
   }, [forms, query]);
 
-  if (!recruit) return null;
+  if (!recruit) return <Loading />;
 
   return (
     <>

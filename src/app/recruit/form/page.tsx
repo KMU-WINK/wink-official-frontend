@@ -17,6 +17,7 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { nowDate, toDate } from '@/util';
 
+import Loading from '@/app/loading';
 import Step0 from '@/app/recruit/form/_step/0';
 import Step1 from '@/app/recruit/form/_step/1';
 import Step2 from '@/app/recruit/form/_step/2';
@@ -169,7 +170,7 @@ export default function RecruitApplicationPage() {
     return () => subscription.unsubscribe();
   }, [form.watch]);
 
-  if (isApi || !recruit) return null;
+  if (isApi || !recruit) return <Loading />;
 
   return (
     <>

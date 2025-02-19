@@ -31,6 +31,8 @@ import { formatDate, nowDate, toDate } from '@/util';
 import BackgroundImage from '@/public/recruit/background.webp';
 import RocketIcon from '@/public/recruit/icon/rocket_3d.webp';
 
+import Loading from '@/app/loading';
+
 import { endOfDay, startOfDay } from 'date-fns';
 import { toast } from 'sonner';
 
@@ -71,7 +73,7 @@ export default function RecruitPage() {
     setConfetti(false);
   }, [confetti]);
 
-  if (isApi) return null;
+  if (isApi) return <Loading />;
 
   return (
     <>

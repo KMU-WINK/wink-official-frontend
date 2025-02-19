@@ -16,6 +16,8 @@ import { useApi } from '@/api/useApi';
 
 import { useUserStore } from '@/store/user';
 
+import Loading from '@/app/loading';
+
 import { parseAsString, useQueryState } from 'nuqs';
 import { toast } from 'sonner';
 
@@ -63,7 +65,7 @@ export default function OauthLoginPage({ params }: OauthLoginPageProps) {
     });
   }, []);
 
-  if (isApi || !application) return null;
+  if (isApi || !application) return <Loading />;
 
   return (
     <div className="flex flex-col items-center px-6 pt-20 sm:pt-28 space-y-10">
