@@ -8,7 +8,7 @@ import { Input } from '@/ui/input';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Camping from '@/public/recruit/icon/camping.png';
+import Camping from '@/public/recruit/icon/camping.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

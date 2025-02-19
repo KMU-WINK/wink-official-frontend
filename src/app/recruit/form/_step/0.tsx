@@ -11,7 +11,7 @@ import { Label } from '@/ui/label';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Hand from '@/public/recruit/icon/hand.png';
+import Hand from '@/public/recruit/icon/hand.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

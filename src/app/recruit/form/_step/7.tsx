@@ -10,7 +10,7 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
 
-import IdCard from '@/public/recruit/icon/id_card.png';
+import IdCard from '@/public/recruit/icon/id_card.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

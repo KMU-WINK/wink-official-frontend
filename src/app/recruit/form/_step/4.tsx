@@ -11,7 +11,7 @@ import Api from '@/api';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Envelope from '@/public/recruit/icon/envelope.png';
+import Envelope from '@/public/recruit/icon/envelope.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

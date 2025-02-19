@@ -8,7 +8,7 @@ import { Input } from '@/ui/input';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Smile from '@/public/recruit/icon/smile.png';
+import Smile from '@/public/recruit/icon/smile.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

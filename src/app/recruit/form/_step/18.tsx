@@ -19,7 +19,7 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { formatDate } from '@/util';
 
-import BallotBox from '@/public/recruit/icon/ballot_box.png';
+import BallotBox from '@/public/recruit/icon/ballot_box.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

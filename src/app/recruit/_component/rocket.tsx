@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import RocketImage from '@/public/recruit/rocket.png';
+import RocketImage from '@/public/recruit/rocket.webp';
 
 import { motion } from 'framer-motion';
 

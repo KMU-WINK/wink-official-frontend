@@ -6,7 +6,7 @@ import { Button } from '@/ui/button';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Gear from '@/public/recruit/icon/gear.png';
+import Gear from '@/public/recruit/icon/gear.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

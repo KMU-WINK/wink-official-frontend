@@ -12,7 +12,7 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { formatDate, formatDateApi, toDate } from '@/util';
 
-import Calendar from '@/public/recruit/icon/calendar.png';
+import Calendar from '@/public/recruit/icon/calendar.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 

@@ -18,7 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import { cn } from '@/util';
 
-import GraduationCap from '@/public/recruit/icon/graduation_cap.png';
+import GraduationCap from '@/public/recruit/icon/graduation_cap.webp';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 

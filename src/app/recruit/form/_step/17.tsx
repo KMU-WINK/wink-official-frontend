@@ -10,7 +10,7 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
 
-import Bulb from '@/public/recruit/icon/bulb.png';
+import Bulb from '@/public/recruit/icon/bulb.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
