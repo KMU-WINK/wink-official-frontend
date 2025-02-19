@@ -1,4 +1,3 @@
-import AdminRecruit from '@/api/domain/$recruit';
 import AdminUser from '@/api/domain/$user';
 import Application from '@/api/domain/application';
 import Auth from '@/api/domain/auth';
@@ -11,7 +10,10 @@ import History from '@/api/domain/program/history';
 import Project from '@/api/domain/program/project';
 import Study from '@/api/domain/program/study';
 import Upload from '@/api/domain/program/upload';
-import Recruit from '@/api/domain/recruit';
+import AdminRecruit from '@/api/domain/recruit/$recruit';
+import AdminRecruitForm from '@/api/domain/recruit/$recruit-form';
+import AdminRecruitSms from '@/api/domain/recruit/$recruit-sms';
+import Recruit from '@/api/domain/recruit/recruit';
 import User from '@/api/domain/user';
 import WinkRequest from '@/api/request';
 
@@ -26,6 +28,8 @@ export default class Api {
     AdminUser: new AdminUser(this.request),
     Recruit: new Recruit(this.request),
     AdminRecruit: new AdminRecruit(this.request),
+    AdminRecruitForm: new AdminRecruitForm(this.request),
+    AdminRecruitSms: new AdminRecruitSms(this.request),
     Program: {
       Activity: new Activity(this.request),
       AdminActivity: new AdminActivity(this.request),

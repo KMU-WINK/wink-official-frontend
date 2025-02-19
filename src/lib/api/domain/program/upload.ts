@@ -5,6 +5,6 @@ export default class Upload {
   constructor(private readonly request: WinkRequest) {}
 
   public async uploadImage(): Promise<UploadImageResponse> {
-    return this.request.post('/program/upload');
+    return this.request.post('/program/upload/image');
   }
 }
