@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-
-import Image from 'next/image';
+import { IconMDove } from 'react-fluentui-emoji/lib/modern';
 
 import { devOpsTechStacks } from '@/app/recruit/form/_constant/tech_stack';
 
@@ -22,8 +21,6 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
 
-import Devops from '@/public/recruit/icon/devops.webp';
-
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
@@ -41,15 +38,9 @@ export default function Step15({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={Devops}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMDove size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

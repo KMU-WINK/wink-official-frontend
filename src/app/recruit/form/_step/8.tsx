@@ -1,14 +1,11 @@
 import { useState } from 'react';
-
-import Image from 'next/image';
+import { IconMCamping } from 'react-fluentui-emoji/lib/modern';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
 
 import { useRecruitStore } from '@/store/recruit';
-
-import Camping from '@/public/recruit/icon/camping.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -22,15 +19,9 @@ export default function Step8({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={Camping}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[80px] sm:h-[80px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMCamping size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

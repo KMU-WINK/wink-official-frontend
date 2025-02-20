@@ -31,7 +31,7 @@ import { useUserStore } from '@/store/user';
 
 import { nowPath } from '@/util';
 
-import logo from '@/public/logo.webp';
+import logo from '@/public/logo.png';
 
 import { FolderCode, KeyRound, LogOut, UserIcon, UserPen } from 'lucide-react';
 import { toast } from 'sonner';
@@ -57,8 +57,8 @@ export default function Header({ loading }: HeaderProps) {
           <Image
             src={logo}
             alt={logo.src}
-            width={64}
-            height={26}
+            width={200}
+            height={80}
             quality={100}
             priority
             className="w-[48px] h-[19.5px] sm:w-[64px] sm:h-[26px]"

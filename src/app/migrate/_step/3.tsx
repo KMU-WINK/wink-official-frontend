@@ -1,6 +1,5 @@
 import { useState } from 'react';
-
-import Image from 'next/image';
+import { IconMGraduationCap } from 'react-fluentui-emoji/lib/modern';
 
 import { departments } from '@/app/recruit/form/_constant/departments';
 
@@ -18,8 +17,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 import { cn } from '@/util';
 
-import GraduationCap from '@/public/recruit/icon/graduation_cap.webp';
-
 import { MigrateStepProps } from '@/app/migrate/page';
 
 import { motion } from 'framer-motion';
@@ -33,15 +30,9 @@ export default function Step3({ go, form }: MigrateStepProps) {
 
   return (
     <>
-      <Image
-        src={GraduationCap}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMGraduationCap size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

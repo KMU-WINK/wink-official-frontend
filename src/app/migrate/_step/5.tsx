@@ -1,12 +1,9 @@
 import { useState } from 'react';
-
-import Image from 'next/image';
+import { IconMTelephoneReceiver } from 'react-fluentui-emoji/lib/modern';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
 import { Input } from '@/ui/input';
-
-import Telephone from '@/public/recruit/icon/telephone.webp';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 
@@ -18,15 +15,9 @@ export default function Step5({ go, form }: MigrateStepProps) {
 
   return (
     <>
-      <Image
-        src={Telephone}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMTelephoneReceiver size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

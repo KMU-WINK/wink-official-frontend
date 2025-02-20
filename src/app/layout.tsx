@@ -81,8 +81,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <NuqsAdapter>
-          <ImagePreLoader />
-
           <Header loading={!isInit} />
 
           <main
@@ -97,6 +95,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           </main>
 
           {!IGNORE_PATHS.find((path) => pathname.startsWith(path)) && <Footer />}
+
+          <ImagePreLoader />
 
           <Toaster
             className="font-sans"

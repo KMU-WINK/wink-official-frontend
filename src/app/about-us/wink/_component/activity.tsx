@@ -44,7 +44,8 @@ export default function Activity() {
                 height={180}
                 quality={100}
                 placeholder="blur"
-                priority
+                priority={true}
+                loading="eager"
                 className="h-[180px] sm:h-auto rounded-md object-cover"
               />
             </div>

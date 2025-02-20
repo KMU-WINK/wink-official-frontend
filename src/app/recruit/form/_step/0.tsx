@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import { IconMHandWithFingersSplayedDefault } from 'react-fluentui-emoji/lib/modern';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import PrivacyModal from '@/app/recruit/form/_component/modal/privacy';
@@ -10,8 +10,6 @@ import { Checkbox } from '@/ui/checkbox';
 import { Label } from '@/ui/label';
 
 import { useRecruitStore } from '@/store/recruit';
-
-import Hand from '@/public/recruit/icon/hand.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -47,15 +45,9 @@ export default function Step0({ go }: RecruitStepProps) {
           },
         }}
       >
-        <Image
-          src={Hand}
-          width={72}
-          height={72}
-          quality={100}
-          placeholder="blur"
-          className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-          alt="icon"
-        />
+        <div className="size-[48px] sm:size-[72px]">
+          <IconMHandWithFingersSplayedDefault size="auto" />
+        </div>
       </motion.div>
 
       <div className="flex flex-col items-center">

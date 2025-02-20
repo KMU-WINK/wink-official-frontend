@@ -8,7 +8,7 @@ import { Input } from '@/ui/input';
 
 import { useRecruitStore } from '@/store/recruit';
 
-import Github from '@/public/recruit/icon/github.webp';
+import Github from '@/public/recruit/icon/github.png';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -27,7 +27,7 @@ export default function Step11({ go, form }: RecruitStepProps) {
         width={72}
         height={72}
         quality={100}
-        placeholder="blur"
+        priority
         className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
         alt="icon"
       />

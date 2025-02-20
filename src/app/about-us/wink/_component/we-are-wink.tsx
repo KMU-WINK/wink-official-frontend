@@ -18,7 +18,8 @@ export default function WeAreWink({ image }: WeAreWinkProps) {
         height={360}
         quality={100}
         placeholder="blur"
-        priority
+        priority={true}
+        loading="eager"
         className="h-[180px] sm:h-[360px] rounded-md object-cover"
       />
     </div>

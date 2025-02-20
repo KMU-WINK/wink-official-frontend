@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-
-import Image from 'next/image';
+import { IconMSpoutingWhale } from 'react-fluentui-emoji/lib/modern';
 
 import { frontendTechStacks } from '@/app/recruit/form/_constant/tech_stack';
 
@@ -22,8 +21,6 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
 
-import Frontend from '@/public/recruit/icon/fe.webp';
-
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
@@ -42,15 +39,9 @@ export default function Step13({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={Frontend}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMSpoutingWhale size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

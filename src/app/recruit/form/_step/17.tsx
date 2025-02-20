@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-
-import Image from 'next/image';
+import { IconMLightBulb } from 'react-fluentui-emoji/lib/modern';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
@@ -9,8 +8,6 @@ import { Textarea } from '@/ui/textarea';
 import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
-
-import Bulb from '@/public/recruit/icon/bulb.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -35,15 +32,9 @@ export default function Step17({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={Bulb}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMLightBulb size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
