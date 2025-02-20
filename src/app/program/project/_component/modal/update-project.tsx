@@ -27,6 +27,7 @@ interface UpdateProjectModalProps {
   setOpen: (open: boolean) => void;
   project?: Project;
   callback: (project: Project) => void;
+  isAdmin: boolean;
 }
 
 export default function UpdateProjectModal({
@@ -34,6 +35,7 @@ export default function UpdateProjectModal({
   setOpen,
   project,
   callback,
+  isAdmin,
 }: UpdateProjectModalProps) {
   const [isUploading, startUpload] = useApiWithToast();
   const [isApi, startApi] = useApiWithToast();
@@ -52,10 +54,9 @@ export default function UpdateProjectModal({
     (values: CreateProjectRequest) => {
       startApi(
         async () => {
-          const { project: _project } = await Api.Domain.Program.Project.updateProject(
-            project!.id,
-            values,
-          );
+          const { project: _project } = await (isAdmin
+            ? Api.Domain.Program.AdminProject.updateProject(project!.id, values)
+            : Api.Domain.Program.Project.updateProject(project!.id, values));
           callback(_project);
         },
         {
