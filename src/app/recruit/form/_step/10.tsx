@@ -1,12 +1,9 @@
 import { useState } from 'react';
-
-import Image from 'next/image';
+import { IconMGear } from 'react-fluentui-emoji/lib/modern';
 
 import { Button } from '@/ui/button';
 
 import { useRecruitStore } from '@/store/recruit';
-
-import Gear from '@/public/recruit/icon/gear.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -19,15 +16,9 @@ export default function Step10({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={Gear}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMGear size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

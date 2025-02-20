@@ -28,7 +28,8 @@ export default function WaveImage({ text, textStyle, direction, image }: WaveIma
         height={512}
         quality={100}
         placeholder="blur"
-        priority
+        priority={true}
+        loading="eager"
         className="h-[384px] sm:h-[512px] rounded-xl object-cover"
       />
     </div>

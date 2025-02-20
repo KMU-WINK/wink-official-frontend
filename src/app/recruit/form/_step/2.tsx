@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import { IconMMagnifyingGlassTiltedLeft } from 'react-fluentui-emoji/lib/modern';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/ui/button';
@@ -10,8 +10,6 @@ import { Input } from '@/ui/input';
 import Api from '@/api';
 
 import { useRecruitStore } from '@/store/recruit';
-
-import MagnifyingGlass from '@/public/recruit/icon/magnifying_class.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -27,15 +25,9 @@ export default function Step2({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={MagnifyingGlass}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMMagnifyingGlassTiltedLeft size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

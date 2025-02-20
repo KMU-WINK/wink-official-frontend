@@ -1,11 +1,9 @@
 import { useState } from 'react';
+import { IconMHandWithFingersSplayedDefault } from 'react-fluentui-emoji/lib/modern';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/ui/button';
-
-import Hand from '@/public/recruit/icon/hand.webp';
 
 import { MigrateStepProps } from '@/app/migrate/page';
 
@@ -35,15 +33,9 @@ export default function Step0({ go }: MigrateStepProps) {
           },
         }}
       >
-        <Image
-          src={Hand}
-          width={72}
-          height={72}
-          quality={100}
-          placeholder="blur"
-          className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-          alt="icon"
-        />
+        <div className="size-[48px] sm:size-[72px]">
+          <IconMHandWithFingersSplayedDefault size="auto" />
+        </div>
       </motion.div>
 
       <div className="flex flex-col items-center">

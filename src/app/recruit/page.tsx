@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Confetti from 'react-confetti';
+import { IconMRocket } from 'react-fluentui-emoji/lib/modern';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -29,7 +30,6 @@ import { useUserStore } from '@/store/user';
 import { formatDate, nowDate, toDate } from '@/util';
 
 import BackgroundImage from '@/public/recruit/background.webp';
-import RocketIcon from '@/public/recruit/icon/rocket_3d.webp';
 
 import Loading from '@/app/loading';
 
@@ -118,15 +118,9 @@ export default function RecruitPage() {
       {recruit && (
         <div className="flex flex-col items-center justify-center py-20 sm:py-28 space-y-10 sm:space-y-14">
           <div className="flex flex-col items-center justify-center space-y-4">
-            <Image
-              src={RocketIcon}
-              width={72}
-              height={72}
-              quality={100}
-              placeholder="blur"
-              className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-              alt="icon"
-            />
+            <div className="size-[48px] sm:size-[72px]">
+              <IconMRocket size="auto" />
+            </div>
             <p className="text-lg sm:text-2xl font-bold">
               {recruit.year}년도 {recruit.semester}학기 WINK 신규 부원
             </p>

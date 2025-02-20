@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { IconMBallotBoxWithBallot } from 'react-fluentui-emoji/lib/modern';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -19,8 +19,6 @@ import { useRecruitStore } from '@/store/recruit';
 
 import { formatDate } from '@/util';
 
-import BallotBox from '@/public/recruit/icon/ballot_box.webp';
-
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
@@ -35,15 +33,9 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={BallotBox}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMBallotBoxWithBallot size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

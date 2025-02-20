@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-
-import Image from 'next/image';
+import { IconMSpiralCalendar } from 'react-fluentui-emoji/lib/modern';
 
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
@@ -11,8 +10,6 @@ import { Separator } from '@/ui/separator';
 import { useRecruitStore } from '@/store/recruit';
 
 import { formatDate, formatDateApi, toDate } from '@/util';
-
-import Calendar from '@/public/recruit/icon/calendar.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -47,15 +44,9 @@ export default function Step9({ go, recruit, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={Calendar}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMSpiralCalendar size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

@@ -1,14 +1,11 @@
 import { useState } from 'react';
-
-import Image from 'next/image';
+import { IconMLaptop } from 'react-fluentui-emoji/lib/modern';
 
 import StackButton from '@/app/recruit/form/_component/StackButton';
 
 import { Button } from '@/ui/button';
 
 import { useRecruitStore } from '@/store/recruit';
-
-import Laptop from '@/public/recruit/icon/laptop.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -21,15 +18,9 @@ export default function Step12({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={Laptop}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMLaptop size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}

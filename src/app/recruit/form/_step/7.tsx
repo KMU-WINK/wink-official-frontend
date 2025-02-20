@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-
-import Image from 'next/image';
+import { IconMIdentificationCard } from 'react-fluentui-emoji/lib/modern';
 
 import { Button } from '@/ui/button';
 import { FormControl, FormField, FormItem, FormMessage } from '@/ui/form';
@@ -9,8 +8,6 @@ import { Textarea } from '@/ui/textarea';
 import { useRecruitStore } from '@/store/recruit';
 
 import { cn } from '@/util';
-
-import IdCard from '@/public/recruit/icon/id_card.webp';
 
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
@@ -35,15 +32,9 @@ export default function Step7({ go, form }: RecruitStepProps) {
 
   return (
     <>
-      <Image
-        src={IdCard}
-        width={72}
-        height={72}
-        quality={100}
-        placeholder="blur"
-        className="w-[48px] h-[48px] sm:w-[72px] sm:h-[72px]"
-        alt="icon"
-      />
+      <div className="size-[48px] sm:size-[72px]">
+        <IconMIdentificationCard size="auto" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -58,7 +49,6 @@ export default function Step7({ go, form }: RecruitStepProps) {
       >
         <p className="font-medium text-lg">간단한 자기소개를 부탁드려요!</p>
       </motion.div>
-
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
@@ -100,7 +90,6 @@ export default function Step7({ go, form }: RecruitStepProps) {
           )}
         />
       </motion.div>
-
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
