@@ -56,7 +56,8 @@ export default function ImagePreLoader() {
             width={250}
             height={250}
             quality={100}
-            priority
+            loading="eager"
+            priority={false}
           />
           {activity.images.map((image) => (
             <Image
@@ -66,7 +67,8 @@ export default function ImagePreLoader() {
               width={500}
               height={300}
               quality={100}
-              priority
+              loading="eager"
+              priority={false}
             />
           ))}
         </Fragment>
@@ -80,7 +82,8 @@ export default function ImagePreLoader() {
           width={600}
           height={338}
           quality={100}
-          priority
+          loading="eager"
+          priority={false}
         />
       ))}
 
@@ -94,6 +97,8 @@ export default function ImagePreLoader() {
             width={200}
             height={125}
             quality={100}
+            loading="eager"
+            priority={false}
           />
         ))}
 

@@ -118,6 +118,7 @@ export default function ProgramProjectPage() {
         setOpen={setUpdateProjectModal}
         project={selected}
         callback={onUpdateProject}
+        isAdmin={isAdmin(user?.role)}
       />
 
       <DeleteProjectModal

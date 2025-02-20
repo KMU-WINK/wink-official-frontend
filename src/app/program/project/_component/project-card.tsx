@@ -41,7 +41,7 @@ export default function ProjectCard({
       <div className="flex flex-col px-4 py-4">
         <div className="flex justify-between">
           <p className="sm:text-lg font-medium truncate">{project.title}</p>
-          {user?.id === project.author.id ? (
+          {(isAdmin(user?.role) || user?.id === project.author.id) && (
             <div className="flex space-x-2">
               <Pencil
                 className="w-4 h-4 text-neutral-500 hover:text-black cursor-pointer"
@@ -60,17 +60,6 @@ export default function ProjectCard({
                 }}
               />
             </div>
-          ) : isAdmin(user?.role) ? (
-            <Trash2
-              className="w-4 h-4 text-neutral-500 hover:text-black cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedProject(project);
-                setDeleteProjectModal(true);
-              }}
-            />
-          ) : (
-            <></>
           )}
         </div>
         <div className="flex justify-between">
