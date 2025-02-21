@@ -56,23 +56,23 @@ export default function AuthRegisterPage() {
         <Table className="w-full max-w-[300px] sm:max-w-[600px]">
           <TableBody>
             <TableRow>
-              <TableHead className="w-[100px]">이름</TableHead>
+              <TableHead className="min-w-[85px]">이름</TableHead>
               <TableCell>{user.name}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[100px]">학번</TableHead>
+              <TableHead className="min-w-[85px]">학번</TableHead>
               <TableCell>{user.studentId}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[100px]">학부(과)</TableHead>
+              <TableHead className="min-w-[85px]">학부(과)</TableHead>
               <TableCell>{user.department}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[100px]">이메일</TableHead>
+              <TableHead className="min-w-[85px]">이메일</TableHead>
               <TableCell>{user.email}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[100px]">전화번호</TableHead>
+              <TableHead className="min-w-[85px]">전화번호</TableHead>
               <TableCell>{user.phoneNumber}</TableCell>
             </TableRow>
           </TableBody>
