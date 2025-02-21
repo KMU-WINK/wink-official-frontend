@@ -23,6 +23,8 @@ import { useUserStore } from '@/store/user';
 
 import { formatDate, toDate } from '@/util';
 
+import HistoryPreLoader from '@/component/pre-loader/history';
+
 import { Pencil, Trash2 } from 'lucide-react';
 
 type HistoryWithDate = History & { date: Date };
@@ -81,6 +83,8 @@ export default function ProgramHistoryPage() {
 
   return (
     <>
+      <HistoryPreLoader histories={rawHistories} />
+
       <Title
         title="WINK, 우리들의 파도"
         subtitle="행사 / 세미나 / 대외 활동 기록을 년도 별로 볼 수 있습니다"

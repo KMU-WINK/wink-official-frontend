@@ -16,7 +16,6 @@ import { useInitStore } from '@/store/init';
 import { cn } from '@/util';
 
 import Loading from '@/app/loading';
-import ImagePreLoader from '@/component/image-pre-loader';
 import '@/style/global.css';
 
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
@@ -95,8 +94,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           </main>
 
           {!IGNORE_PATHS.find((path) => pathname.startsWith(path)) && <Footer />}
-
-          <ImagePreLoader />
 
           <Toaster
             className="font-sans"

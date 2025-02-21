@@ -71,7 +71,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(1);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">이름</TableHead>
+              <TableHead className="w-[120px] hover:underline cursor-pointer">이름</TableHead>
               <TableCell className="hover:underline cursor-pointer">
                 {form.getValues('name')}
               </TableCell>
@@ -82,7 +82,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(2);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">학번</TableHead>
+              <TableHead className="w-[120px] hover:underline cursor-pointer">학번</TableHead>
               <TableCell className="hover:underline cursor-pointer">
                 {form.getValues('studentId')}
               </TableCell>
@@ -93,7 +93,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(3);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">학과</TableHead>
+              <TableHead className="w-[120px] hover:underline cursor-pointer">학과</TableHead>
               <TableCell className="hover:underline cursor-pointer">
                 {form.getValues('department')}
               </TableCell>
@@ -104,7 +104,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(4);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">이메일</TableHead>
+              <TableHead className="w-[120px] hover:underline cursor-pointer">이메일</TableHead>
               <TableCell className="hover:underline cursor-pointer">
                 {form.getValues('email')}
               </TableCell>
@@ -115,7 +115,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(5);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">전화번호</TableHead>
+              <TableHead className="w-[120px] hover:underline cursor-pointer">전화번호</TableHead>
               <TableCell className="hover:underline cursor-pointer">
                 {form.getValues('phoneNumber')}
               </TableCell>
@@ -126,8 +126,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(6);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">지원동기</TableHead>
-              <TableCell className="break-all whitespace-pre-line hover:underline cursor-pointer">
+              <TableHead className="w-[120px] hover:underline cursor-pointer">지원동기</TableHead>
+              <TableCell className="whitespace-pre-line break-all hover:underline cursor-pointer">
                 {form.getValues('jiwonDonggi')}
               </TableCell>
             </TableRow>
@@ -137,8 +137,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(7);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">자기소개</TableHead>
-              <TableCell className="break-all whitespace-pre-line hover:underline cursor-pointer">
+              <TableHead className="w-[120px] hover:underline cursor-pointer">자기소개</TableHead>
+              <TableCell className="whitespace-pre-line break-all hover:underline cursor-pointer">
                 {form.getValues('selfIntroduce')}
               </TableCell>
             </TableRow>
@@ -148,8 +148,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(8);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">대외활동</TableHead>
-              <TableCell className="whitespace-pre-wrap hover:underline cursor-pointer">
+              <TableHead className="w-[120px] hover:underline cursor-pointer">대외활동</TableHead>
+              <TableCell className="whitespace-pre-line break-all hover:underline cursor-pointer">
                 {form.getValues('outings').join('\n') || '-'}
               </TableCell>
             </TableRow>
@@ -159,10 +159,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 go(9);
               }}
             >
-              <TableHead className="w-[180px] hover:underline cursor-pointer">
-                면접 가능한 날짜
-              </TableHead>
-              <TableCell className="whitespace-pre-wrap hover:underline cursor-pointer">
+              <TableHead className="w-[120px] hover:underline cursor-pointer">면접 날짜</TableHead>
+              <TableCell className="whitespace-pre-line break-all hover:underline cursor-pointer">
                 {form
                   .getValues('interviewDates')
                   .map((date) =>
@@ -181,9 +179,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     go(11);
                   }}
                 >
-                  <TableHead className="w-[180px] hover:underline cursor-pointer">
-                    Github 아이디
-                  </TableHead>
+                  <TableHead className="w-[120px] hover:underline cursor-pointer">Github</TableHead>
                   <TableCell className="hover:underline cursor-pointer">
                     {form.getValues('github') ? (
                       <Link
@@ -205,8 +201,10 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                       go(13);
                     }}
                   >
-                    <TableHead className="w-[180px] hover:underline cursor-pointer">
-                      프론트엔드 기술 스택
+                    <TableHead className="w-[120px] hover:underline cursor-pointer">
+                      프론트엔드
+                      <br />
+                      기술
                     </TableHead>
                     <TableCell className="hover:underline cursor-pointer">
                       {form.getValues('frontendTechStacks')!.length > 0
@@ -226,8 +224,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                       go(14);
                     }}
                   >
-                    <TableHead className="w-[180px] hover:underline cursor-pointer">
-                      백엔드 기술 스택
+                    <TableHead className="w-[120px] hover:underline cursor-pointer">
+                      백엔드 기술
                     </TableHead>
                     <TableCell className="hover:underline cursor-pointer">
                       {form.getValues('backendTechStacks')!.length > 0
@@ -247,8 +245,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                       go(15);
                     }}
                   >
-                    <TableHead className="w-[180px] hover:underline cursor-pointer">
-                      데브옵스 기술 스택
+                    <TableHead className="w-[120px] hover:underline cursor-pointer">
+                      데브옵스 기술
                     </TableHead>
                     <TableCell className="hover:underline cursor-pointer">
                       {form.getValues('devOpsTechStacks')!.length > 0
@@ -268,8 +266,8 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                       go(16);
                     }}
                   >
-                    <TableHead className="w-[180px] hover:underline cursor-pointer">
-                      디자인 기술 스택
+                    <TableHead className="w-[120px] hover:underline cursor-pointer">
+                      디자인 기술
                     </TableHead>
                     <TableCell className="hover:underline cursor-pointer">
                       {form.getValues('designTechStacks')!.length > 0
@@ -288,10 +286,12 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     go(17);
                   }}
                 >
-                  <TableHead className="w-[180px] hover:underline cursor-pointer">
-                    가장 기억에 남는 프로젝트
+                  <TableHead className="w-[120px] hover:underline cursor-pointer">
+                    가장 기억에
+                    <br />
+                    남는 프로젝트
                   </TableHead>
-                  <TableCell className="whitespace-pre-line hover:underline cursor-pointer">
+                  <TableCell className="whitespace-pre-line break-all hover:underline cursor-pointer">
                     {form.getValues('favoriteProject') || '-'}
                   </TableCell>
                 </TableRow>

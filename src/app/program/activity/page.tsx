@@ -22,6 +22,8 @@ import Activity from '@/api/type/schema/activity';
 
 import { cn } from '@/util';
 
+import ActivityPreLoader from '@/component/pre-loader/activity';
+
 export default function ProgramActivityPage() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
@@ -43,6 +45,8 @@ export default function ProgramActivityPage() {
 
   return (
     <>
+      <ActivityPreLoader activities={activities} />
+
       <Title title="WINK, 우리들의 파도" subtitle="다양한 친목 활동" />
 
       <div className="flex flex-col sm:flex-row gap-3">
