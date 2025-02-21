@@ -62,6 +62,9 @@ export default function ProjectCard({
             </div>
           )}
         </div>
+        <p className="text-sm sm:text-base font-light truncate text-neutral-600">
+          {project.description}
+        </p>
         <div className="flex justify-between">
           <p className="text-xs sm:text-sm text-neutral-500 truncate">
             {formatDate(project.createdAt)}

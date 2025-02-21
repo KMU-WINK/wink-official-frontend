@@ -5,8 +5,8 @@ import { URL_EXPRESSION, URL_MESSAGE } from '@/api/validation';
 import { z } from 'zod';
 
 export const CreateActivityRequestSchema = z.object({
-  title: z.string().min(1, '제목은 비어있을 수 없습니다'),
-  description: z.string().min(1, '설명은 비어있을 수 없습니다'),
+  title: z.string().min(1, '제목을 입력해주세요.'),
+  description: z.string().min(1, '설명을 입력해주세요.'),
   images: z.array(z.string().regex(URL_EXPRESSION, URL_MESSAGE)),
 });
 

@@ -45,6 +45,7 @@ export default function UpdateProjectModal({
     mode: 'onChange',
     defaultValues: {
       title: '',
+      description: '',
       image: '',
       link: '',
     },
@@ -104,12 +105,26 @@ export default function UpdateProjectModal({
 
             <FormField
               control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>설명</FormLabel>
+                  <FormControl>
+                    <Input placeholder="설명을 입력해주세요." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="link"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Github 주소</FormLabel>
+                  <FormLabel>프로젝트 주소</FormLabel>
                   <FormControl>
-                    <Input placeholder="Github 주소를 입력해주세요." {...field} />
+                    <Input placeholder="프로젝트 주소를 입력해주세요." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

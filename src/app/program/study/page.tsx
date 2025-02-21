@@ -70,7 +70,7 @@ export default function ProgramStudyPage() {
 
   return (
     <>
-      <Title title="WINK, 우리들의 파도" subtitle="나날히 성장해 가는 우리" />
+      <Title title="WINK, 우리들의 파도" subtitle="나날이 성장해 가는 우리" />
 
       <div className="flex flex-col sm:flex-row gap-2 w-[300px] sm:w-full sm:max-w-[900px]">
         <Input

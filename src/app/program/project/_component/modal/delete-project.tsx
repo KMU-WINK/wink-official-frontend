@@ -58,7 +58,11 @@ export default function DeleteProjectModal({
               <TableCell>{project.title}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[105px]">Github 주소</TableHead>
+              <TableHead>설명</TableHead>
+              <TableCell>{project.description}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableHead className="w-[105px]">프로젝트 주소</TableHead>
               <TableCell>{project.link}</TableCell>
             </TableRow>
           </TableBody>

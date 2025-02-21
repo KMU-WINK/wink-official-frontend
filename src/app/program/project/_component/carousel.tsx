@@ -81,11 +81,19 @@ export default function Carousel({ loading, projects }: CarouselProps) {
         </div>
       </div>
 
-      <div className="pt-12">
+      <div className="flex flex-col items-center space-y-1 pt-12">
         {loading ? (
-          <Skeleton className="w-[300px] h-7" />
+          <>
+            <Skeleton className="w-[100px] h-6" />
+            <Skeleton className="w-[300px] h-4" />
+          </>
         ) : (
-          <p className="font-semibold text-2xl">{projects[(angle % 360) / rotateAngle]?.title}</p>
+          <>
+            <p className="font-semibold text-2xl">{projects[(angle % 360) / rotateAngle]?.title}</p>
+            <p className="text-neutral-600 text-lg font-light truncate max-w-[300px]">
+              {projects[(angle % 360) / rotateAngle]?.description}
+            </p>
+          </>
         )}
       </div>
 

@@ -9,24 +9,24 @@ import {
 import { z } from 'zod';
 
 export const CheckRegisterRequestSchema = z.object({
-  token: z.string().min(1, '토큰은 비어있을 수 없습니다.'),
+  token: z.string().min(1, '토큰을 입력해주세요.'),
 });
 
 export const CheckResetPasswordRequestSchema = z.object({
-  token: z.string().min(1, '토큰은 비어있을 수 없습니다.'),
+  token: z.string().min(1, '토큰을 입력해주세요.'),
 });
 
 export const LoginRequestSchema = z.object({
-  email: z.string().min(1, '이메일은 비어있을 수 없습니다.'),
+  email: z.string().min(1, '이메일을 입력해주세요.'),
   password: z.string().min(1, '비밀번호는 비어있을 수 없습니다.'),
 });
 
 export const RefreshRequestSchema = z.object({
-  token: z.string().min(1, '토큰은 비어있을 수 없습니다.'),
+  token: z.string().min(1, '토큰을 입력해주세요.'),
 });
 
 export const RegisterRequestSchema = z.object({
-  token: z.string().min(1, '토큰은 비어있을 수 없습니다.'),
+  token: z.string().min(1, '토큰을 입력해주세요.'),
   password: z.string().regex(PASSWORD_EXPRESSION, PASSWORD_MESSAGE),
 });
 
@@ -35,7 +35,7 @@ export const RequestResetPasswordRequestSchema = z.object({
 });
 
 export const ResetPasswordRequestSchema = z.object({
-  token: z.string().min(1, '토큰은 비어있을 수 없습니다.'),
+  token: z.string().min(1, '토큰을 입력해주세요.'),
   newPassword: z.string().regex(PASSWORD_EXPRESSION, PASSWORD_MESSAGE),
 });
 
