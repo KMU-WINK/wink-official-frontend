@@ -4,7 +4,7 @@ import { URL_EXPRESSION, URL_MESSAGE } from '@/api/validation';
 import { z } from 'zod';
 
 export const CreateApplicationRequestSchema = z.object({
-  name: z.string().min(1, '애플리케이션 이름은 비어있을 수 없습니다.'),
+  name: z.string().min(1, '애플리케이션 이름을 입력해주세요.'),
 });
 
 export const UpdateApplicationLoginRequestSchema = z.object({
@@ -14,7 +14,7 @@ export const UpdateApplicationLoginRequestSchema = z.object({
 });
 
 export const UpdateApplicationRequestSchema = z.object({
-  name: z.string().min(1, '애플리케이션 이름은 비어있을 수 없습니다.'),
+  name: z.string().min(1, '애플리케이션 이름을 입력해주세요.'),
   img: z.string().regex(URL_EXPRESSION, URL_MESSAGE),
 });
 

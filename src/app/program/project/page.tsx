@@ -69,7 +69,7 @@ export default function ProgramProjectPage() {
 
   return (
     <>
-      <Title title="WINK, 우리들의 파도" subtitle="나날히 성장해 가는 우리" />
+      <Title title="WINK, 우리들의 파도" subtitle="나날이 성장해 가는 우리" />
 
       {user && (
         <Button variant="wink" onClick={() => setCreateProjectModal(true)}>
@@ -96,7 +96,7 @@ export default function ProgramProjectPage() {
           : Array.from({ length: 6 }).map((_, idx) => (
               <Skeleton
                 key={idx}
-                className="w-[280px] sm:w-[320px] h-[184px] sm:h-[212px] rounded-3xl"
+                className="w-[280px] sm:w-[320px] h-[204px] sm:h-[236px] rounded-3xl"
               />
             ))}
       </div>

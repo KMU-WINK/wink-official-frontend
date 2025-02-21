@@ -10,7 +10,8 @@ import {
 import { z } from 'zod';
 
 export const CreateProjectRequestSchema = z.object({
-  title: z.string().min(1, '제목은 비어있을 수 없습니다'),
+  title: z.string().min(1, '제목을 입력해주세요.'),
+  description: z.string().min(1, '설명을 입력해주세요.'),
   image: z.string().regex(URL_EXPRESSION, URL_MESSAGE),
   link: z.string().regex(GITHUB_PROJECT_URL_EXPRESSION, GITHUB_PROJECT_URL_MESSAGE),
 });

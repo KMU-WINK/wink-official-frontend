@@ -21,7 +21,7 @@ import {
 import { z } from 'zod';
 
 export const InviteRequestSchema = z.object({
-  name: z.string().min(1, '이름은 비어있을 수 없습니다.'),
+  name: z.string().min(1, '이름을 입력해주세요.'),
   studentId: z.string().length(8, STUDENT_ID_MESSAGE),
   department: z
     .string()
@@ -49,12 +49,12 @@ export const UpdateMyInfoRequestSchema = z.object({
 });
 
 export const UpdateMyPasswordRequestSchema = z.object({
-  password: z.string().min(1, '비밀번호는 비어있을 수 없습니다.'),
+  password: z.string().min(1, '비밀번호를 입력해주세요.'),
   newPassword: z.string().regex(PASSWORD_EXPRESSION, PASSWORD_MESSAGE),
 });
 
 export const UpdateRequestSchema = z.object({
-  name: z.string().min(1, '이름은 비어있을 수 없습니다.'),
+  name: z.string().min(1, '이름을 입력해주세요.'),
   studentId: z.string().length(8, STUDENT_ID_MESSAGE),
   department: z
     .string()
