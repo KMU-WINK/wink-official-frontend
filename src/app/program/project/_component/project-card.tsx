@@ -62,7 +62,7 @@ export default function ProjectCard({
             </div>
           )}
         </div>
-        <p className="text-xs sm:text-sm font-light truncate text-neutral-600">
+        <p className="text-xs sm:text-sm font-light truncate text-neutral-700">
           {project.description}
         </p>
         <div className="flex justify-between">
@@ -73,7 +73,7 @@ export default function ProjectCard({
             <Avatar className="w-4 sm:w-5 h-4 sm:h-5">
               <AvatarImage src={project.author.avatar} alt="avatar" />
               <AvatarFallback>
-                <UserIcon />
+                <UserIcon size={13} />
               </AvatarFallback>
             </Avatar>
             <p className="text-xs sm:text-sm text-neutral-500 truncate">{project.author.name}</p>
