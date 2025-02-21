@@ -313,32 +313,32 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">지원동기</TableHead>
-              <TableCell className="break-all whitespace-pre-line">
+              <TableCell className="whitespace-pre-line break-all">
                 {selectedForm.jiwonDonggi}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">자기소개</TableHead>
-              <TableCell className="break-all whitespace-pre-line">
+              <TableCell className="whitespace-pre-line break-all">
                 {selectedForm.selfIntroduce}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">외부활동</TableHead>
-              <TableCell className="whitespace-pre-wrap">
+              <TableCell className="whitespace-pre-line">
                 {selectedForm.outings.join('\n')}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">면접 가능한 날짜</TableHead>
-              <TableCell className="whitespace-pre-wrap">
+              <TableHead className="w-[180px]">면접 날짜</TableHead>
+              <TableCell className="whitespace-pre-line">
                 {selectedForm.whyCannotInterview
                   ? selectedForm.whyCannotInterview
                   : selectedForm.interviewDates.map((date) => formatDate(date, true)).join('\n')}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">Github 아이디</TableHead>
+              <TableHead className="w-[180px]">Github</TableHead>
               <TableCell>
                 {selectedForm.github ? (
                   <Link
@@ -399,7 +399,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
-              <TableCell className="whitespace-pre-line">
+              <TableCell className="whitespace-pre-line break-all">
                 {selectedForm.favoriteProject || '-'}
               </TableCell>
             </TableRow>
