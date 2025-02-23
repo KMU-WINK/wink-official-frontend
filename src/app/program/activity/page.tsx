@@ -82,7 +82,7 @@ export default function ProgramActivityPage() {
       </div>
 
       {selected ? (
-        <p className="text-xl sm:text-3xl font-bold">{selected?.title}</p>
+        <p className="text-xl sm:text-2xl font-semibold">{selected?.title}</p>
       ) : (
         <Skeleton className="w-72 h-8" />
       )}

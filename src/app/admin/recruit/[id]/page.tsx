@@ -19,6 +19,8 @@ import {
 import { Button } from '@/ui/button';
 import { Input } from '@/ui/input';
 import { ScrollArea, ScrollBar } from '@/ui/scroll-area';
+import { Separator } from '@/ui/separator';
+import { SidebarTrigger } from '@/ui/sidebar';
 import { Skeleton } from '@/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
@@ -143,23 +145,29 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
 
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink>관리자 페이지</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink>모집</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>
-              {recruit.year}년 {recruit.semester}학기
-            </BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <div className="flex space-x-1 items-center">
+        <SidebarTrigger />
+        <Separator orientation="vertical" />
+        <div className="pl-2">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink>관리자 페이지</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink>모집</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>
+                  {recruit.year}년 {recruit.semester}학기
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
       <div className="flex flex-col space-y-2">
         <div className="flex space-x-2">
