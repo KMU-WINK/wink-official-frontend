@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import InviteUserModal from '@/app/admin/user/_component/modal/invite-user';
 import UpdateUserModal from '@/app/admin/user/_component/modal/update-user';
@@ -30,6 +30,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/ui/pagination';
+import { Separator } from '@/ui/separator';
+import { SidebarTrigger } from '@/ui/sidebar';
 import { Skeleton } from '@/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/ui/table';
 
@@ -95,21 +97,27 @@ export default function AdminUserPage() {
 
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink>관리자 페이지</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink>유저</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>유저 목록</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <div className="flex space-x-1 items-center">
+        <SidebarTrigger />
+        <Separator orientation="vertical" />
+        <div className="pl-2">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink>관리자 페이지</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink>유저</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>유저 목록</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
       <div className="flex flex-col gap-2 w-full">
         <div className="flex gap-2">
@@ -128,11 +136,11 @@ export default function AdminUserPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[75px]">이름</TableHead>
+              <TableHead className="min-w-[120px]">이름</TableHead>
               <TableHead className="min-w-[100px]">학번</TableHead>
               <TableHead className="min-w-[250px]">학부(과)</TableHead>
               <TableHead className="min-w-[100px]">역할</TableHead>
-              <TableHead className="min-w-[75px]">회비 납부</TableHead>
+              <TableHead className="min-w-[100px]">회비 납부</TableHead>
               <TableHead className="w-[75px]">액션</TableHead>
             </TableRow>
           </TableHeader>
