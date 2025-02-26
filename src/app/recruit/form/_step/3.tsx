@@ -53,9 +53,10 @@ export default function Step3({ go, form }: RecruitStepProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0, pointerEvents: 'none' }}
         animate={{
           opacity: 1,
+          pointerEvents: 'auto',
           transition: {
             delay: 2.2,
             duration: 0.4,
@@ -124,9 +125,10 @@ export default function Step3({ go, form }: RecruitStepProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0, pointerEvents: 'none' }}
         animate={{
           opacity: 1,
+          pointerEvents: 'auto',
           transition: {
             delay: 3.1,
             duration: 0.4,

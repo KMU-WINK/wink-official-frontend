@@ -35,9 +35,10 @@ export default function Step10({ go, form }: RecruitStepProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0, pointerEvents: 'none' }}
         animate={{
           opacity: 1,
+          pointerEvents: 'auto',
           transition: {
             delay: 2.5,
             duration: 0.4,
