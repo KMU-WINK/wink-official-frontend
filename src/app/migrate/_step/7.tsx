@@ -106,6 +106,7 @@ export default function Step7({ form }: MigrateStepProps) {
               {
                 loading: 'WINK에 가입하고 있어요!',
                 success: '가입이 완료되었습니다.',
+                error: (e) => e.message,
                 finally: () => setClicked(false),
               },
             );
