@@ -47,10 +47,11 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, x: -10 }}
+        initial={{ opacity: 0, x: -10, pointerEvents: 'none' }}
         animate={{
           opacity: 1,
           x: 0,
+          pointerEvents: 'auto',
           transition: {
             delay: 1.9,
             duration: 0.4,
@@ -287,9 +288,10 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0, pointerEvents: 'none' }}
         animate={{
           opacity: 1,
+          pointerEvents: 'auto',
           transition: {
             delay: 2.8,
             duration: 0.4,
