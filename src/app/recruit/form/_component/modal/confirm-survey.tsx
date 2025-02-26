@@ -54,8 +54,8 @@ export default function ConfirmSurveyModal({
                   favoriteProject: form.getValues('favoriteProject') || undefined,
                 });
 
-                clear();
                 router.push('/recruit');
+                clear();
               },
               {
                 loading: '지원서를 제출하고 있습니다.',
