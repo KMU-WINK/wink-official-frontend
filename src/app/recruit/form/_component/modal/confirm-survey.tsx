@@ -65,6 +65,7 @@ export default function ConfirmSurveyModal({
                     <p className="text-neutral-500">면접 대상자는 추후 문자로 안내될 예정입니다.</p>
                   </div>
                 ),
+                error: (e) => e.message,
                 duration: 1000 * 60 * 3,
                 finally: () => setClicked(false),
               },
