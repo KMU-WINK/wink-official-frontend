@@ -21,7 +21,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/ui/dropdown-menu';
 import { Separator } from '@/ui/separator';
@@ -148,19 +147,6 @@ export default function AdminRecruitPage() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem
-                          onClick={(e) => {
-                            e.stopPropagation();
-
-                            window.open(
-                              `https://docs.google.com/forms/d/${recruit.googleFormId}/edit`,
-                              '_blank',
-                            );
-                          }}
-                        >
-                          구글 폼
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => {
                             e.stopPropagation();
