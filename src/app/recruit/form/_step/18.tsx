@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { IconMBallotBoxWithBallot } from 'react-fluentui-emoji/lib/modern';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+
+import ConfirmSurveyModal from '@/app/recruit/form/_component/modal/confirm-survey';
 
 import { Button } from '@/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
-import Api from '@/api';
 import {
   BackendTechStack,
   DesignTechStack,
@@ -22,14 +22,11 @@ import { formatDate } from '@/util';
 import { RecruitStepProps } from '@/app/recruit/form/page';
 
 import { motion } from 'framer-motion';
-import { toast } from 'sonner';
 
 export default function Step18({ go, recruit, form }: RecruitStepProps) {
-  const router = useRouter();
+  const { setModify, developer, stack } = useRecruitStore();
 
-  const { setModify, developer, stack, clear } = useRecruitStore();
-
-  const [clicked, setClicked] = useState(false);
+  const [confirmSurveyModalOpen, setConfirmSurveyModalOpen] = useState(false);
 
   return (
     <>
@@ -312,41 +309,17 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
           },
         }}
       >
-        <Button
-          variant="wink"
-          disabled={clicked}
-          onClick={() => {
-            setClicked(true);
-
-            toast.promise(
-              async () => {
-                await Api.Domain.Recruit.recruitForm(recruit.id, {
-                  ...form.getValues(),
-                  whyCannotInterview: form.getValues('whyCannotInterview') || undefined,
-                  github: form.getValues('github') || undefined,
-                  favoriteProject: form.getValues('favoriteProject') || undefined,
-                });
-
-                clear();
-                router.push('/recruit');
-              },
-              {
-                loading: '지원서를 제출하고 있습니다.',
-                success: (
-                  <div className="flex flex-col space-y-2">
-                    <p className="font-medium">지원서를 제출했습니다.</p>
-                    <p className="text-neutral-500">면접 대상자는 추후 문자로 안내될 예정입니다.</p>
-                  </div>
-                ),
-                duration: 1000 * 60 * 3,
-                finally: () => setClicked(false),
-              },
-            );
-          }}
-        >
-          지원하기
+        <Button variant="wink" onClick={() => setConfirmSurveyModalOpen(true)}>
+          지원서 제출하기
         </Button>
       </motion.div>
+
+      <ConfirmSurveyModal
+        open={confirmSurveyModalOpen}
+        setOpen={setConfirmSurveyModalOpen}
+        recruit={recruit}
+        form={form}
+      />
     </>
   );
 }
