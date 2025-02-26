@@ -40,7 +40,7 @@ export default function Footer() {
           (국민대학교 미래관 605-1)
         </p>
         <p className="text-neutral-500 font-light text-xs sm:text-sm">
-          &copy; WINK 2024. All rights reserved.
+          &copy; WINK 2025. All rights reserved.
         </p>
       </div>
     </footer>
