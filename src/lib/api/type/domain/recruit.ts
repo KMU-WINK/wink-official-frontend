@@ -120,6 +120,11 @@ export const UpdateRecruitSmsRequestSchema = z.object({
   finalPass: z.string().min(1, '최종 합격 안내 문자를 작성해주세요.'),
 });
 
+export const SendTestSmsRequestSchema = z.object({
+  phoneNumber: z.string().regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
+  field: z.enum(['PAPER_FAIL', 'PAPER_PASS', 'FINAL_FAIL', 'FINAL_PASS']),
+});
+
 export const GetFormsResponseSchema = z.object({
   forms: z.array(z.custom<RecruitForm>()),
 });
@@ -142,6 +147,7 @@ export type EmailCheckRequest = z.infer<typeof EmailCheckRequestSchema>;
 export type PhoneNumberCheckRequest = z.infer<typeof PhoneNumberCheckRequestSchema>;
 export type StudentIdCheckRequest = z.infer<typeof StudentIdCheckRequestSchema>;
 export type UpdateRecruitSmsRequest = z.infer<typeof UpdateRecruitSmsRequestSchema>;
+export type SendTestSmsRequest = z.infer<typeof SendTestSmsRequestSchema>;
 export type DuplicationCheckResponse = z.infer<typeof DuplicationCheckResponseSchema>;
 export type GetFormsResponse = z.infer<typeof GetFormsResponseSchema>;
 export type GetRecruitResponse = z.infer<typeof GetRecruitResponseSchema>;
