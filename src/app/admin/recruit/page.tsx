@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 
 import CreateRecruitModal from '@/app/admin/recruit/_component/modal/create-recruit';
 import DeleteRecruitModal from '@/app/admin/recruit/_component/modal/delete-recruit';
-import UpdateRecruitSmsModal from '@/app/admin/recruit/_component/modal/update-recruit-sms';
 
 import {
   Breadcrumb,
@@ -46,12 +45,10 @@ export default function AdminRecruitPage() {
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [updateRecruitSmsOpen, setUpdateRecruitSmsOpen] = useState(false);
 
   const onCreateRecruit = useCallback((recruit: Recruit) => {
     setRecruits((prev) => [recruit, ...prev!]);
-    setSelected(recruit);
-    setUpdateRecruitSmsOpen(true);
+    router.push(`/admin/recruit/${recruit.id}/sms`);
   }, []);
 
   const onDeleteRecruit = useCallback((id: string) => {
@@ -151,8 +148,7 @@ export default function AdminRecruitPage() {
                           onClick={(e) => {
                             e.stopPropagation();
 
-                            setSelected(recruit);
-                            setUpdateRecruitSmsOpen(true);
+                            router.push(`/admin/recruit/${recruit.id}/sms`);
                           }}
                         >
                           안내 문자 수정
@@ -194,12 +190,6 @@ export default function AdminRecruitPage() {
         setOpen={setDeleteModalOpen}
         recruit={selected}
         callback={onDeleteRecruit}
-      />
-
-      <UpdateRecruitSmsModal
-        open={updateRecruitSmsOpen}
-        setOpen={setUpdateRecruitSmsOpen}
-        recruit={selected}
       />
     </>
   );

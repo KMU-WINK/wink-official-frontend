@@ -1,5 +1,9 @@
 import WinkRequest from '@/api/request';
-import { GetRecruitSmsResponse, UpdateRecruitSmsRequest } from '@/api/type/domain/recruit';
+import {
+  GetRecruitSmsResponse,
+  SendTestSmsRequest,
+  UpdateRecruitSmsRequest,
+} from '@/api/type/domain/recruit';
 
 export default class AdminRecruitSms {
   constructor(private readonly request: WinkRequest) {}
@@ -13,5 +17,9 @@ export default class AdminRecruitSms {
     data: UpdateRecruitSmsRequest,
   ): Promise<GetRecruitSmsResponse> {
     return this.request.post(`/admin/recruit/${recruitId}/sms`, data);
+  }
+
+  public async sendTestSms(recruitId: string, data: SendTestSmsRequest): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/sms/test`, data);
   }
 }

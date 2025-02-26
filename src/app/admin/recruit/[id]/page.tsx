@@ -41,11 +41,11 @@ import Loading from '@/app/loading';
 import { FileUser, Speech } from 'lucide-react';
 import { parseAsString, useQueryState } from 'nuqs';
 
-interface AdminRecruitPageProps {
+interface AdminRecruitDetailPageProps {
   params: { id: string };
 }
 
-export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
+export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPageProps) {
   const [isApi, startApi] = useApi();
 
   const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
