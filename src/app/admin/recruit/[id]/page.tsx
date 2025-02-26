@@ -186,7 +186,7 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
           )}
         </div>
 
-        <div className="flex space-x-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <Input
             placeholder="검색어를 입력해주세요."
             value={query}
@@ -196,14 +196,22 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
           {recruit.step === Step.PRE && (
             <>
               {selectedForm && (
-                <>
-                  <Button variant="destructive" onClick={() => paperFail(recruit!, selectedForm)}>
+                <div className="flex gap-2">
+                  <Button
+                    variant="destructive"
+                    className="w-full md:w-fit"
+                    onClick={() => paperFail(recruit!, selectedForm)}
+                  >
                     서류 불합격
                   </Button>
-                  <Button variant="wink" onClick={() => paperPass(recruit!, selectedForm)}>
+                  <Button
+                    variant="wink"
+                    className="w-full md:w-fit"
+                    onClick={() => paperPass(recruit!, selectedForm)}
+                  >
                     서류 합격
                   </Button>
-                </>
+                </div>
               )}
               <Button
                 variant="outline"
@@ -218,9 +226,10 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
           {recruit.step === Step.PAPER_END && (
             <>
               {selectedForm && (
-                <>
+                <div className="flex gap-2">
                   <Button
                     variant="destructive"
+                    className="w-full md:w-fit"
                     disabled={!selectedForm.paperPass}
                     onClick={() => interviewFail(recruit!, selectedForm)}
                   >
@@ -228,12 +237,13 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
                   </Button>
                   <Button
                     variant="wink"
+                    className="w-full md:w-fit"
                     disabled={!selectedForm.paperPass}
                     onClick={() => interviewPass(recruit!, selectedForm)}
                   >
                     면접 합격
                   </Button>
-                </>
+                </div>
               )}
               <Button
                 variant="outline"
@@ -320,13 +330,21 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
               <TableCell>{selectedForm.phoneNumber}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">지원동기</TableHead>
+              <TableHead className="w-[180px]">
+                지원동기
+                <br />
+                <span className="text-xs font-light">({selectedForm.jiwonDonggi.length}자)</span>
+              </TableHead>
               <TableCell className="whitespace-pre-line break-all">
                 {selectedForm.jiwonDonggi}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">자기소개</TableHead>
+              <TableHead className="w-[180px]">
+                자기소개
+                <br />
+                <span className="text-xs font-light">({selectedForm.selfIntroduce.length}자)</span>
+              </TableHead>
               <TableCell className="whitespace-pre-line break-all">
                 {selectedForm.selfIntroduce}
               </TableCell>
@@ -406,7 +424,17 @@ export default function AdminRecruitPage({ params }: AdminRecruitPageProps) {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableHead className="w-[180px]">가장 기억에 남는 프로젝트</TableHead>
+              <TableHead className="w-[180px]">
+                가장 기억에 남는 프로젝트
+                {selectedForm.favoriteProject && (
+                  <>
+                    <br />
+                    <span className="text-xs font-light">
+                      ({selectedForm.favoriteProject.length}자)
+                    </span>
+                  </>
+                )}
+              </TableHead>
               <TableCell className="whitespace-pre-line break-all">
                 {selectedForm.favoriteProject || '-'}
               </TableCell>

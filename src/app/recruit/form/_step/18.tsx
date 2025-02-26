@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { IconMBallotBoxWithBallot } from 'react-fluentui-emoji/lib/modern';
 
-import Link from 'next/link';
-
 import ConfirmSurveyModal from '@/app/recruit/form/_component/modal/confirm-survey';
 
 import { Button } from '@/ui/button';
@@ -178,17 +176,7 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                 >
                   <TableHead className="w-[120px] hover:underline cursor-pointer">Github</TableHead>
                   <TableCell className="hover:underline cursor-pointer">
-                    {form.getValues('github') ? (
-                      <Link
-                        href={`https://github.com/${form.getValues('github')}`}
-                        target="_blank"
-                        className="text-blue-600 hover:text-blue-600/90"
-                      >
-                        {form.getValues('github')}
-                      </Link>
-                    ) : (
-                      '-'
-                    )}
+                    {form.getValues('github') ? form.getValues('github') : '-'}
                   </TableCell>
                 </TableRow>
                 {stack.includes('frontend') && (
