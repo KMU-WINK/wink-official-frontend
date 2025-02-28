@@ -12,7 +12,10 @@ const HOST = CryptoJS.AES.decrypt(
 ).toString(CryptoJS.enc.Utf8);
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const response = await fetch(HOST + new URL(request.url).searchParams.get('id'));
+  const response = await fetch(HOST + new URL(request.url).searchParams.get('id'), {
+    cache: 'force-cache',
+    next: { revalidate: 31536000 },
+  });
 
   const contentType = response.headers.get('content-type') || 'image/jpeg';
   const imageData = await response.arrayBuffer();

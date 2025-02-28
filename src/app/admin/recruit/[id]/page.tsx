@@ -53,7 +53,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
   const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
 
   const [recruit, setRecruit] = useState<Recruit>();
-  const [forms, setforms] = useState<RecruitForm[]>([]);
+  const [forms, setForms] = useState<RecruitForm[]>([]);
   const [queriedForms, setQueriedForms] = useState<RecruitForm[]>([]);
   const [selectedForm, setSelectedForm] = useState<RecruitForm>();
 
@@ -63,7 +63,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
   const paperPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.paperPass(recruit.id, form.id);
 
-    setforms((prev) =>
+    setForms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: true } : a)) : [],
     );
 
@@ -74,7 +74,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
     async (recruit: Recruit, form: RecruitForm) => {
       await Api.Domain.AdminRecruitForm.paperFail(recruit.id, form.id);
 
-      setforms((prev) =>
+      setForms((prev) =>
         prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: false } : a)) : [],
       );
 
@@ -86,7 +86,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
   const interviewPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.interviewPass(recruit.id, form.id);
 
-    setforms((prev) =>
+    setForms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: true } : a)) : [],
     );
 
@@ -96,7 +96,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
   const interviewFail = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.interviewFail(recruit.id, form.id);
 
-    setforms((prev) =>
+    setForms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: false } : a)) : [],
     );
 
@@ -109,13 +109,15 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
       setRecruit(recruit);
 
       const { forms } = await Api.Domain.AdminRecruitForm.getForms(params.id);
-      setforms(forms);
+      setForms(forms);
     });
   }, [params.id]);
 
   useEffect(() => {
     if (forms.length <= 0) return;
-    setSelectedForm(forms[0]);
+    if (!selectedForm) {
+      setSelectedForm(forms[0]);
+    }
   }, [forms]);
 
   useEffect(() => {
@@ -267,7 +269,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
             ))
           ) : queriedForms && queriedForms.length > 0 ? (
             queriedForms?.map((form) => (
-              <HoverCard key={form.id} openDelay={300} closeDelay={100}>
+              <HoverCard key={form.id}>
                 <HoverCardTrigger asChild>
                   <div
                     className={cn(
