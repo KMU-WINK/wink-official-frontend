@@ -37,6 +37,44 @@ export function formatDate(date: Date | string, showDayOfWeek = false) {
   return `${year}년 ${month}월 ${day}일${showDayOfWeek ? ` (${dayOfWeek})` : ''}`;
 }
 
+export function formatTime(date: Date | string) {
+  const d = toDate(date);
+  let hour = d.getHours();
+  const minute = String(d.getMinutes()).padStart(2, '0');
+  const ampm = hour >= 12 ? '오후' : '오전';
+
+  hour = hour % 12;
+  hour = hour || 12;
+
+  const hourStr = String(hour).padStart(2, '0');
+
+  return `${ampm} ${hourStr}시 ${minute}분`;
+}
+
+export function formatDateApiWithTime(date: Date | string) {
+  const d = toDate(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hour = String(d.getHours()).padStart(2, '0');
+  const minute = String(d.getMinutes()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hour}:${minute}`;
+}
+
+export function formatDateWithTime(date: Date | string, showDayOfWeek = false) {
+  const d = toDate(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hour = String(d.getHours()).padStart(2, '0');
+  const minute = String(d.getMinutes()).padStart(2, '0');
+
+  const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][d.getDay()];
+
+  return `${year}년 ${month}월 ${day}일${showDayOfWeek ? ` (${dayOfWeek})` : ''} ${hour}시 ${minute}분`;
+}
+
 // ############################################################################################
 
 export function nowPath() {
