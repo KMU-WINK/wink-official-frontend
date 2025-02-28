@@ -68,6 +68,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
         <meta property="og:image" content="https://i.imgur.com/qXRRE56.png" />
 
+        <script
+          src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
+          integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka"
+          crossOrigin="anonymous"
+          defer
+        />
+
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"

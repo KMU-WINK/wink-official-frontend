@@ -1,4 +1,4 @@
-import { Shapes, User, UserCheck, Waypoints } from 'lucide-react';
+import { Projector, School, Ticket, User, UserCheck, Video } from 'lucide-react';
 
 export const sideItems = [
   {
@@ -17,22 +17,37 @@ export const sideItems = [
     ],
   },
   {
-    group: '모집',
-    items: [
-      {
-        title: '모집 목록',
-        url: '/admin/recruit',
-        icon: Shapes,
-      },
-    ],
-  },
-  {
     group: '활동',
     items: [
       {
         title: '활동 목록',
         url: '/admin/activity',
-        icon: Waypoints,
+        icon: Video,
+      },
+    ],
+  },
+  {
+    group: '모집',
+    items: [
+      {
+        title: '모집 목록',
+        url: '/admin/recruit',
+        icon: Ticket,
+      },
+    ],
+  },
+  {
+    group: '정기 회의',
+    items: [
+      {
+        title: '정기 회의 목록',
+        url: '/admin/conference',
+        icon: Projector,
+      },
+      {
+        title: '정기 회의 출석부',
+        url: '/admin/conference/attendance',
+        icon: School,
       },
     ],
   },

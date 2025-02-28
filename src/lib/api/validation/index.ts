@@ -28,3 +28,6 @@ export const PHONE_NUMBER_MESSAGE = '올바른 전화번호가 아닙니다.';
 
 export const YYYY_MM_DD_EXPRESSION = /^\d{4}-\d{2}-\d{2}$/;
 export const YYYY_MM_DD_MESSAGE = '올바른 날짜가 아닙니다';
+
+export const YYYY_MM_DD_HH_MM_EXPRESSION = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
+export const YYYY_MM_DD_HH_MM_MESSAGE = '올바른 날짜와 시간이 아닙니다';
