@@ -2,6 +2,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       API_URL: string;
+      AES_KEY: string;
       NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY: string;
       NEXT_PUBLIC_KAKAO_TEMPLATE_ID: string;
     }

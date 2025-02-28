@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import FinalizeInterviewModal from '@/app/admin/recruit/[id]/_component/modal/finalize-interview';
@@ -17,6 +18,7 @@ import {
   BreadcrumbSeparator,
 } from '@/ui/breadcrumb';
 import { Button } from '@/ui/button';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/ui/hover-card';
 import { Input } from '@/ui/input';
 import { ScrollArea, ScrollBar } from '@/ui/scroll-area';
 import { Separator } from '@/ui/separator';
@@ -265,39 +267,53 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
             ))
           ) : queriedForms && queriedForms.length > 0 ? (
             queriedForms?.map((form) => (
-              <div
-                key={form.id}
-                className={cn(
-                  'w-[150px] border rounded-md px-5 py-3 shadow cursor-pointer hover:bg-neutral-50',
-                  form.id === selectedForm?.id ? 'bg-neutral-50 hover:bg-neutral-100/75' : '',
-                )}
-                onClick={() => setSelectedForm(form)}
-              >
-                <div className="flex justify-between">
-                  <p className="font-medium">{form.name}</p>
-
-                  <div className="flex space-x-1">
-                    {form.paperPass === null ? (
-                      <FileUser className="w-[18px] h-[18px] text-neutral-600" />
-                    ) : form.paperPass ? (
-                      <FileUser className="w-[18px] h-[18px] text-green-600" />
-                    ) : (
-                      <FileUser className="w-[18px] h-[18px] text-red-600" />
+              <HoverCard key={form.id} openDelay={300} closeDelay={100}>
+                <HoverCardTrigger asChild>
+                  <div
+                    className={cn(
+                      'w-[150px] border rounded-md px-5 py-3 shadow cursor-pointer hover:bg-neutral-50',
+                      form.id === selectedForm?.id ? 'bg-neutral-50 hover:bg-neutral-100/75' : '',
                     )}
+                    onClick={() => setSelectedForm(form)}
+                  >
+                    <div className="flex justify-between">
+                      <p className="font-medium">{form.name}</p>
 
-                    {recruit?.step !== Step.PRE &&
-                      form.paperPass &&
-                      (form.interviewPass === null ? (
-                        <Speech className="w-[18px] h-[18px] text-neutral-600" />
-                      ) : form.interviewPass ? (
-                        <Speech className="w-[18px] h-[18px] text-green-600" />
-                      ) : (
-                        <Speech className="w-[18px] h-[18px] text-red-600" />
-                      ))}
+                      <div className="flex space-x-1">
+                        {form.paperPass === null ? (
+                          <FileUser className="w-[18px] h-[18px] text-neutral-600" />
+                        ) : form.paperPass ? (
+                          <FileUser className="w-[18px] h-[18px] text-green-600" />
+                        ) : (
+                          <FileUser className="w-[18px] h-[18px] text-red-600" />
+                        )}
+
+                        {recruit?.step !== Step.PRE &&
+                          form.paperPass &&
+                          (form.interviewPass === null ? (
+                            <Speech className="w-[18px] h-[18px] text-neutral-600" />
+                          ) : form.interviewPass ? (
+                            <Speech className="w-[18px] h-[18px] text-green-600" />
+                          ) : (
+                            <Speech className="w-[18px] h-[18px] text-red-600" />
+                          ))}
+                      </div>
+                    </div>
+                    <p className="text-neutral-500 text-sm">{form.studentId}</p>
                   </div>
-                </div>
-                <p className="text-neutral-500 text-sm">{form.studentId}</p>
-              </div>
+                </HoverCardTrigger>
+                <HoverCardContent className="p-0 w-[225px] h-[300px]">
+                  <Image
+                    src={`/admin/recruit/avatar?id=${form.studentId}`}
+                    alt="profile"
+                    width={225}
+                    height={300}
+                    quality={100}
+                    unoptimized={true}
+                    className="w-[225px] h-[300px] rounded-md object-cover"
+                  />
+                </HoverCardContent>
+              </HoverCard>
             ))
           ) : (
             <p className="text-neutral-500">검색 결과가 없습니다.</p>
