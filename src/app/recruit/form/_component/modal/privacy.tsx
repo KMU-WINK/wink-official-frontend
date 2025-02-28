@@ -20,7 +20,7 @@ export default function PrivacyModal({ open, setOpen }: PrivacyModalProps) {
             <h2 className="font-medium">1. 수집 항목 및 이용 목적</h2>
             <p className="ml-5">가. 수집 항목 (필수)</p>
             <ul className="list-disc ml-14">
-              <li>이름, 학번, 학과, 이메일, 전화번호</li>
+              <li>이름, 학번, 학부(과), 이메일, 전화번호</li>
             </ul>
             <p className="ml-5">나. 수집 항목 (선택)</p>
             <ul className="list-disc ml-14">

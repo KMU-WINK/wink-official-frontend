@@ -113,7 +113,9 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
 
   useEffect(() => {
     if (forms.length <= 0) return;
-    setSelectedForm(forms[0]);
+    if (!selectedForm) {
+      setSelectedForm(forms[0]);
+    }
   }, [forms]);
 
   useEffect(() => {
