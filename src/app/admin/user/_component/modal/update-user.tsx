@@ -230,11 +230,13 @@ export default function UpdateUserModal({ open, setOpen, user, callback }: Updat
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {Object.values(Role).map((role) => (
-                          <SelectItem key={role} value={role}>
-                            {getKoreanRole(role)}
-                          </SelectItem>
-                        ))}
+                        {Object.values(Role)
+                          .filter((role) => role !== Role.ADMIN)
+                          .map((role) => (
+                            <SelectItem key={role} value={role}>
+                              {getKoreanRole(role)}
+                            </SelectItem>
+                          ))}
                       </SelectContent>
                     </Select>
                   </FormControl>

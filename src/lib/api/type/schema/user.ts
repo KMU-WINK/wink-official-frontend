@@ -16,6 +16,7 @@ export interface Social {
 }
 
 export enum Role {
+  ADMIN = 'ADMIN',
   PRESIDENT = 'PRESIDENT',
   VICE_PRESIDENT = 'VICE_PRESIDENT',
   TREASURY_HEAD = 'TREASURY_HEAD',
@@ -32,6 +33,7 @@ export enum Role {
 
 export const isAdmin = (role: Role | undefined): boolean => {
   return (
+    role === Role.ADMIN ||
     role === Role.PRESIDENT ||
     role === Role.VICE_PRESIDENT ||
     role === Role.TREASURY_HEAD ||
@@ -47,6 +49,7 @@ export const isAdmin = (role: Role | undefined): boolean => {
 
 export const getKoreanRole = (role: Role): string => {
   const _MAPPER: Record<Role, string> = {
+    [Role.ADMIN]: '관리자',
     [Role.PRESIDENT]: '회장',
     [Role.VICE_PRESIDENT]: '부회장',
     [Role.PLANNING_HEAD]: '기획부 부장',
