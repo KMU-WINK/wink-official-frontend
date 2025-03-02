@@ -92,7 +92,7 @@ export default function ConferenceDetailPage({ params }: ConferenceDetailPagePro
   if (!conference) return <Loading />;
 
   return (
-    <div className="flex flex-col space-y-4 items-center justify-center p-6 md:p-10 min-h-[calc(100dvh-56px-274px)]">
+    <div className="flex flex-col space-y-4 items-center justify-center p-6 pt-10 md:p-10 md:pt-14 min-h-[calc(100dvh-56px-274px)]">
       <div className="size-[56px] md:size-[96px]">
         <Icon size="auto" />
       </div>
@@ -101,22 +101,24 @@ export default function ConferenceDetailPage({ params }: ConferenceDetailPagePro
         {formatDate(new Date(conference.date))} 정기 회의
       </h1>
 
-      <Table className="w-fit justify-self-center">
-        <TableBody>
-          <TableRow>
-            <TableHead>날짜</TableHead>
-            <TableCell>{formatDate(new Date(conference.date), true)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableHead>시간</TableHead>
-            <TableCell>{formatTime(new Date(conference.date))}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableHead>장소</TableHead>
-            <TableCell>{conference.location}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <div className="flex items-center justify-center">
+        <Table className="w-fit">
+          <TableBody>
+            <TableRow>
+              <TableHead>날짜</TableHead>
+              <TableCell>{formatDate(new Date(conference.date), true)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableHead>시간</TableHead>
+              <TableCell>{formatTime(new Date(conference.date))}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableHead>장소</TableHead>
+              <TableCell>{conference.location}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
 
       <div className="flex space-x-2">
         <Button

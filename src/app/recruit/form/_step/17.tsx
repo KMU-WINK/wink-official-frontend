@@ -63,14 +63,16 @@ export default function Step17({ go, form }: RecruitStepProps) {
         }}
         className="w-full max-w-[300px] sm:max-w-[600px]"
       >
-        <p
-          className={cn(
-            'text-sm justify-self-end',
-            (favoriteProject?.length ?? 0) <= 700 ? 'text-neutral-500' : 'text-red-500',
-          )}
-        >
-          {favoriteProject?.length ?? 0} / 700
-        </p>
+        <div className="flex justify-end">
+          <p
+            className={cn(
+              'text-sm',
+              (favoriteProject?.length ?? 0) <= 700 ? 'text-neutral-500' : 'text-red-500',
+            )}
+          >
+            {favoriteProject?.length ?? 0} / 700
+          </p>
+        </div>
         <FormField
           control={form.control}
           name="favoriteProject"

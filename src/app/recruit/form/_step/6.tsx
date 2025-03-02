@@ -63,14 +63,16 @@ export default function Step6({ go, form }: RecruitStepProps) {
         }}
         className="w-full max-w-[300px] sm:max-w-[600px]"
       >
-        <p
-          className={cn(
-            'text-sm justify-self-end',
-            jiwonDonggi.length <= 500 ? 'text-neutral-500' : 'text-red-500',
-          )}
-        >
-          {jiwonDonggi.length} / 500
-        </p>
+        <div className="flex justify-end">
+          <p
+            className={cn(
+              'text-sm',
+              jiwonDonggi.length <= 500 ? 'text-neutral-500' : 'text-red-500',
+            )}
+          >
+            {jiwonDonggi.length} / 500
+          </p>
+        </div>
         <FormField
           control={form.control}
           name="jiwonDonggi"
