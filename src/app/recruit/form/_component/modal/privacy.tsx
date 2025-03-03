@@ -34,10 +34,6 @@ export default function PrivacyModal({ open, setOpen }: PrivacyModalProps) {
             </ul>
           </section>
           <section>
-            <h2 className="font-medium">2. 개인정보 보유 및 이용 기간</h2>
-            <p className="ml-5">모집 종료 후 6개월간 보관 후 파기</p>
-          </section>
-          <section>
             <h2 className="font-medium">3. 동의 거부 권리 및 불이익</h2>
             <p className="ml-5">
               개인정보 제공을 거부할 수 있으나, 미동의 시 신입부원 모집에 지원할 수 없습니다.

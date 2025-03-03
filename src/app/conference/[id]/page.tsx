@@ -29,13 +29,13 @@ export default function ConferenceDetailPage({ params }: ConferenceDetailPagePro
 
   const [conference, setConference] = useState<Conference>();
   const [survey, setSurvey] = useState(false);
-  const [participant, setParticipant] = useState(false);
+  const [present, setPresent] = useState(false);
 
   const [president, setPresident] = useState<User>();
 
   const Icon = useMemo(
-    () => (survey ? (participant ? IconMHuggingFace : IconMSadButRelievedFace) : IconMSunWithFace),
-    [survey, participant],
+    () => (survey ? (present ? IconMHuggingFace : IconMSadButRelievedFace) : IconMSunWithFace),
+    [survey, present],
   );
 
   const onSurveyAbsent = useCallback(() => {
@@ -43,7 +43,7 @@ export default function ConferenceDetailPage({ params }: ConferenceDetailPagePro
       async () => {
         await Api.Domain.Conference.surveyAbsent(params.id);
         setSurvey(true);
-        setParticipant(false);
+        setPresent(false);
       },
       {
         loading: '정기 회의에 불참석 투표를 하고있습니다.',
@@ -57,7 +57,7 @@ export default function ConferenceDetailPage({ params }: ConferenceDetailPagePro
       async () => {
         await Api.Domain.Conference.surveyPresent(params.id);
         setSurvey(true);
-        setParticipant(true);
+        setPresent(true);
       },
       {
         loading: '정기 회의에 참석 투표를 하고있습니다.',
@@ -75,9 +75,9 @@ export default function ConferenceDetailPage({ params }: ConferenceDetailPagePro
 
   useEffect(() => {
     startApi2(async () => {
-      const { survey, participant } = await Api.Domain.Conference.current(params.id);
+      const { survey, present } = await Api.Domain.Conference.current(params.id);
       setSurvey(survey);
-      setParticipant(participant);
+      setPresent(present);
     });
   }, [params.id]);
 
@@ -123,21 +123,17 @@ export default function ConferenceDetailPage({ params }: ConferenceDetailPagePro
       <div className="flex space-x-2">
         <Button
           variant="destructive"
-          disabled={isApi || (survey && !participant)}
+          disabled={isApi || (survey && !present)}
           onClick={onSurveyAbsent}
         >
           불참석
         </Button>
-        <Button
-          variant="wink"
-          disabled={isApi || (survey && participant)}
-          onClick={onSurveyPresent}
-        >
+        <Button variant="wink" disabled={isApi || (survey && present)} onClick={onSurveyPresent}>
           참석
         </Button>
       </div>
 
-      {survey && !participant && (
+      {survey && !present && (
         <div className="flex flex-col space-y-1  text-center text-sm">
           <p className="text-red-500 font-medium">아래 연락처로 사유를 보내주세요</p>
           <p className="text-neutral-500">

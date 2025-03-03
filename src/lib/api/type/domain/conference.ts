@@ -23,7 +23,7 @@ export const GetConferencesPageableResponseSchema = z.object({
 
 export const GetCurrentParticipantResponseSchema = z.object({
   survey: z.boolean(),
-  participant: z.boolean(),
+  present: z.boolean(),
 });
 
 export type CreateConferenceRequest = z.infer<typeof CreateConferenceRequestSchema>;
