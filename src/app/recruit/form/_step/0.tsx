@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { IconMHandWithFingersSplayedDefault } from 'react-fluentui-emoji/lib/modern';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-import PrivacyModal from '@/app/recruit/form/_component/modal/privacy';
 
 import { Button } from '@/ui/button';
 import { Checkbox } from '@/ui/checkbox';
@@ -21,8 +20,7 @@ export default function Step0({ go }: RecruitStepProps) {
 
   const { step } = useRecruitStore();
 
-  const [isAgreePrivacy, setAgreePrivacy] = useState<CheckedState>('indeterminate');
-  const [openPrivacyModal, setOpenPrivacyModal] = useState(false);
+  const [isAgreePrivacy, setAgreePrivacy] = useState<CheckedState>(false);
 
   const [clicked, setClicked] = useState(false);
 
@@ -101,15 +99,9 @@ export default function Step0({ go }: RecruitStepProps) {
             onCheckedChange={(value) => setAgreePrivacy(value)}
           />
           <Label htmlFor="privacy" className="text-neutral-500 font-normal">
-            <span
-              className="underline cursor-pointer "
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenPrivacyModal(true);
-              }}
-            >
-              개인정보처리약관
-            </span>
+            <Link href="/privacy" className="underline" target="_blank">
+              개인정보 처리방침
+            </Link>
             에 동의합니다.
           </Label>
         </motion.div>
@@ -151,8 +143,6 @@ export default function Step0({ go }: RecruitStepProps) {
           네
         </Button>
       </motion.div>
-
-      <PrivacyModal open={openPrivacyModal} setOpen={setOpenPrivacyModal} />
     </>
   );
 }
