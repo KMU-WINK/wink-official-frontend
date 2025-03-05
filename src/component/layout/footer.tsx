@@ -34,6 +34,12 @@ export default function Footer() {
         ))}
       </div>
 
+      <div className="flex">
+        <Link href="/privacy" className="text-neutral-500 text-center text-sm sm:text-base">
+          개인정보 처리방침
+        </Link>
+      </div>
+
       <div className="flex flex-col items-center space-y-1.5">
         <p className="text-neutral-500 text-center text-sm sm:text-base">
           서울특별시 성북구 정릉로 77 <br className="block sm:hidden" />
