@@ -20,7 +20,7 @@ import { Button } from '@/ui/button';
 import { Input } from '@/ui/input';
 import { ScrollArea, ScrollBar } from '@/ui/scroll-area';
 import { Separator } from '@/ui/separator';
-import { SidebarTrigger } from '@/ui/sidebar';
+import { SidebarTrigger, useSidebar } from '@/ui/sidebar';
 import { Skeleton } from '@/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/ui/table';
 
@@ -48,10 +48,12 @@ interface AdminRecruitDetailPageProps {
 export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPageProps) {
   const [isApi, startApi] = useApi();
 
+  const { state } = useSidebar();
+
   const [query, setQuery] = useQueryState('query', parseAsString.withDefault(''));
 
   const [recruit, setRecruit] = useState<Recruit>();
-  const [forms, setforms] = useState<RecruitForm[]>([]);
+  const [forms, setForms] = useState<RecruitForm[]>([]);
   const [queriedForms, setQueriedForms] = useState<RecruitForm[]>([]);
   const [selectedForm, setSelectedForm] = useState<RecruitForm>();
 
@@ -61,7 +63,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
   const paperPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.paperPass(recruit.id, form.id);
 
-    setforms((prev) =>
+    setForms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: true } : a)) : [],
     );
 
@@ -72,7 +74,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
     async (recruit: Recruit, form: RecruitForm) => {
       await Api.Domain.AdminRecruitForm.paperFail(recruit.id, form.id);
 
-      setforms((prev) =>
+      setForms((prev) =>
         prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: false } : a)) : [],
       );
 
@@ -84,7 +86,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
   const interviewPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.interviewPass(recruit.id, form.id);
 
-    setforms((prev) =>
+    setForms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: true } : a)) : [],
     );
 
@@ -94,7 +96,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
   const interviewFail = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.interviewFail(recruit.id, form.id);
 
-    setforms((prev) =>
+    setForms((prev) =>
       prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: false } : a)) : [],
     );
 
@@ -107,7 +109,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
       setRecruit(recruit);
 
       const { forms } = await Api.Domain.AdminRecruitForm.getForms(params.id);
-      setforms(forms);
+      setForms(forms);
     });
   }, [params.id]);
 
@@ -259,7 +261,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
         </div>
       </div>
 
-      <ScrollArea className="md:w-[calc(100dvw-315px)]">
+      <ScrollArea className={state === 'expanded' ? 'md:w-[calc(100dvw-315px)]' : 'md:w-screen'}>
         <div className="flex space-x-3">
           {isApi ? (
             Array.from({ length: 10 }).map((_, idx) => (
