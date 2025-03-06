@@ -174,7 +174,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
       </div>
 
       <div className="flex flex-col space-y-2">
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap gap-2">
           <Badge variant="outline" className="text-sm">
             전체 지원자&nbsp;<span className="font-normal">{forms.length}명</span>
           </Badge>
