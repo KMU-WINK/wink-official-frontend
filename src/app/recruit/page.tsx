@@ -159,8 +159,10 @@ export default function RecruitPage() {
           >
             {qnas.map(({ question, answer }, index) => (
               <AccordionItem key={index} value={index.toString()}>
-                <AccordionTrigger className="text-sm sm:text-base">{question}</AccordionTrigger>
-                <AccordionContent className="text-xs sm:text-base">{answer}</AccordionContent>
+                <AccordionTrigger className="text-sm sm:text-base text-start">
+                  {question}
+                </AccordionTrigger>
+                <AccordionContent className="text-xs sm:text-base ">{answer}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
