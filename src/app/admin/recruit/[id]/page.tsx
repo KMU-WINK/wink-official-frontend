@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -59,6 +59,32 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
 
   const [finalizePaperModalOpen, setFinalizePaperModalOpen] = useState(false);
   const [finalizeInterviewModalOpen, setFinalizeInterviewModalOpen] = useState(false);
+
+  const sizeOfPaperPass = useMemo(() => forms.filter((x) => x.paperPass).length, [forms]);
+  const sizeOfInterviewPass = useMemo(() => forms.filter((x) => x.interviewPass).length, [forms]);
+
+  const staticsOfPaperPass = useMemo(
+    () =>
+      forms
+        .filter((x) => x.paperPass)
+        .reduce<Record<string, number>>((acc, form) => {
+          const prefix = form.studentId.substring(2, 4);
+          acc[prefix] = (acc[prefix] || 0) + 1;
+          return acc;
+        }, {}),
+    [forms],
+  );
+  const staticsOfInterviewPass = useMemo(
+    () =>
+      forms
+        .filter((x) => x.interviewPass)
+        .reduce<Record<string, number>>((acc, form) => {
+          const prefix = form.studentId.substring(2, 4);
+          acc[prefix] = (acc[prefix] || 0) + 1;
+          return acc;
+        }, {}),
+    [forms],
+  );
 
   const paperPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.paperPass(recruit.id, form.id);
@@ -180,13 +206,29 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
           </Badge>
           <Badge variant="outline" className="text-sm">
             서류 합격자&nbsp;
-            <span className="font-normal">{forms.filter((x) => x.paperPass).length}명</span>
+            <span className="font-normal">{sizeOfPaperPass}명</span>
           </Badge>
-          {recruit?.step !== Step.PRE && (
-            <Badge variant="outline" className="text-sm">
-              면접 합격자&nbsp;
-              <span className="font-normal">{forms.filter((x) => x.interviewPass).length}명</span>
+          {Object.entries(staticsOfPaperPass).map(([year, count]) => (
+            <Badge variant="outline" className="flex gap-1 items-end text-sm" key={year}>
+              <span>서류 합격자</span>
+              <span className="text-xs font-medium text-neutral-500">({year}학번)</span>
+              <span className="font-normal">{count}명</span>
             </Badge>
+          ))}
+          {recruit?.step !== Step.PRE && (
+            <>
+              <Badge variant="outline" className="text-sm">
+                면접 합격자&nbsp;
+                <span className="font-normal">{sizeOfInterviewPass}명</span>
+              </Badge>
+              {Object.entries(staticsOfInterviewPass).map(([year, count]) => (
+                <Badge variant="outline" className="flex gap-1 items-end text-sm" key={year}>
+                  <span>면접 합격자</span>
+                  <span className="text-xs font-medium">({year})</span>
+                  <span className="font-normal">{count}명</span>
+                </Badge>
+              ))}
+            </>
           )}
         </div>
 
