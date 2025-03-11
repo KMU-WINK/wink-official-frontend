@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
 import FinalizeInterviewModal from '@/app/admin/recruit/[id]/_component/modal/finalize-interview';
 import FinalizePaperModal from '@/app/admin/recruit/[id]/_component/modal/finalize-paper';
 
-import { Badge } from '@/ui/badge';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -59,32 +58,6 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
 
   const [finalizePaperModalOpen, setFinalizePaperModalOpen] = useState(false);
   const [finalizeInterviewModalOpen, setFinalizeInterviewModalOpen] = useState(false);
-
-  const sizeOfPaperPass = useMemo(() => forms.filter((x) => x.paperPass).length, [forms]);
-  const sizeOfInterviewPass = useMemo(() => forms.filter((x) => x.interviewPass).length, [forms]);
-
-  const staticsOfPaperPass = useMemo(
-    () =>
-      forms
-        .filter((x) => x.paperPass)
-        .reduce<Record<string, number>>((acc, form) => {
-          const prefix = form.studentId.substring(2, 4);
-          acc[prefix] = (acc[prefix] || 0) + 1;
-          return acc;
-        }, {}),
-    [forms],
-  );
-  const staticsOfInterviewPass = useMemo(
-    () =>
-      forms
-        .filter((x) => x.interviewPass)
-        .reduce<Record<string, number>>((acc, form) => {
-          const prefix = form.studentId.substring(2, 4);
-          acc[prefix] = (acc[prefix] || 0) + 1;
-          return acc;
-        }, {}),
-    [forms],
-  );
 
   const paperClear = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.paperClear(recruit.id, form.id);
@@ -178,11 +151,13 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
         )
         .sort((a, b) => {
           const rank = (form: RecruitForm) => {
-            if (form.interviewPass === true) return 1;
-            if (form.paperPass === true) return 2;
-            if (form.interviewPass === false) return 3;
-            if (form.paperPass === false) return 4;
-            return 5;
+            if (form.paperPass && form.interviewPass === null) return 1;
+            if (form.paperPass && form.interviewPass === true) return 2;
+            if (form.paperPass && form.interviewPass === false) return 3;
+            if (form.interviewPass === null && form.paperPass === null) return 4;
+            if (form.interviewPass === null && form.paperPass === true) return 5;
+            if (form.interviewPass === null && form.paperPass === false) return 6;
+            return 7;
           };
 
           const rankDiff = rank(a) - rank(b);
@@ -220,39 +195,13 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
       </div>
 
       <div className="flex flex-col space-y-2">
-        <div className="flex flex-wrap gap-2">
-          <Badge variant="outline" className="text-sm">
-            전체 지원자&nbsp;<span className="font-normal">{forms.length}명</span>
-          </Badge>
-          <Badge variant="outline" className="text-sm">
-            서류 합격자&nbsp;
-            <span className="font-normal">{sizeOfPaperPass}명</span>
-          </Badge>
-          {Object.entries(staticsOfPaperPass).map(([year, count]) => (
-            <Badge variant="outline" className="flex gap-1 items-end text-sm" key={year}>
-              <span>서류 합격자</span>
-              <span className="text-xs font-medium text-neutral-500">({year}학번)</span>
-              <span className="font-normal">{count}명</span>
-            </Badge>
-          ))}
-          {recruit?.step !== Step.PRE && (
-            <>
-              <Badge variant="outline" className="text-sm">
-                면접 합격자&nbsp;
-                <span className="font-normal">{sizeOfInterviewPass}명</span>
-              </Badge>
-              {Object.entries(staticsOfInterviewPass).map(([year, count]) => (
-                <Badge variant="outline" className="flex gap-1 items-end text-sm" key={year}>
-                  <span>면접 합격자</span>
-                  <span className="text-xs font-medium">({year})</span>
-                  <span className="font-normal">{count}명</span>
-                </Badge>
-              ))}
-            </>
-          )}
-        </div>
-
         <div className="flex flex-col md:flex-row gap-2">
+          <Link href={`/admin/recruit/${recruit.id}/statistics`}>
+            <Button variant="outline" className="w-full">
+              통계
+            </Button>
+          </Link>
+
           <Input
             placeholder="검색어를 입력해주세요."
             value={query}
@@ -264,75 +213,70 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
               {selectedForm && (
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
-                    className="w-full md:w-fit"
-                    onClick={() => paperClear(recruit!, selectedForm)}
-                  >
-                    초기화
-                  </Button>
-                  <Button
                     variant="destructive"
                     className="w-full md:w-fit"
-                    onClick={() => paperFail(recruit!, selectedForm)}
+                    onClick={() =>
+                      selectedForm.paperPass !== false
+                        ? paperFail(recruit!, selectedForm)
+                        : paperClear(recruit!, selectedForm)
+                    }
                   >
-                    불합격
+                    {selectedForm.paperPass !== false ? '불합격' : '초기화'}
                   </Button>
                   <Button
                     variant="wink"
                     className="w-full md:w-fit"
-                    onClick={() => paperPass(recruit!, selectedForm)}
+                    onClick={() =>
+                      selectedForm.paperPass !== true
+                        ? paperPass(recruit!, selectedForm)
+                        : paperClear(recruit!, selectedForm)
+                    }
                   >
-                    합격
+                    {selectedForm.paperPass !== true ? '합격' : '초기화'}
                   </Button>
                 </div>
               )}
-              <Button
-                variant="outline"
-                disabled={forms?.some((x) => x.paperPass === null) || forms.length === 0}
-                onClick={() => setFinalizePaperModalOpen(true)}
-              >
-                결과 확정
-              </Button>
+              {!(forms?.some((x) => x.paperPass === null) || forms.length === 0) && (
+                <Button variant="outline" onClick={() => setFinalizePaperModalOpen(true)}>
+                  확정
+                </Button>
+              )}
             </>
           )}
 
           {recruit.step === Step.PAPER_END && (
             <>
-              {selectedForm && (
+              {selectedForm && selectedForm.paperPass && (
                 <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    className="w-full md:w-fit"
-                    disabled={!selectedForm.paperPass}
-                    onClick={() => interviewClear(recruit!, selectedForm)}
-                  >
-                    초기화
-                  </Button>
                   <Button
                     variant="destructive"
                     className="w-full md:w-fit"
-                    disabled={!selectedForm.paperPass}
-                    onClick={() => interviewFail(recruit!, selectedForm)}
+                    onClick={() =>
+                      selectedForm.interviewPass !== false
+                        ? interviewFail(recruit!, selectedForm)
+                        : interviewClear(recruit!, selectedForm)
+                    }
                   >
-                    불합격
+                    {selectedForm.interviewPass !== false ? '불합격' : '초기화'}
                   </Button>
                   <Button
                     variant="wink"
                     className="w-full md:w-fit"
-                    disabled={!selectedForm.paperPass}
-                    onClick={() => interviewPass(recruit!, selectedForm)}
+                    onClick={() =>
+                      selectedForm.interviewPass !== true
+                        ? interviewPass(recruit!, selectedForm)
+                        : interviewClear(recruit!, selectedForm)
+                    }
                   >
-                    합격
+                    {selectedForm.interviewPass !== true ? '합격' : '초기화'}
                   </Button>
                 </div>
               )}
-              <Button
-                variant="outline"
-                disabled={forms?.some((x) => x.paperPass && x.interviewPass === null)}
-                onClick={() => setFinalizeInterviewModalOpen(true)}
-              >
-                결과 확정
-              </Button>
+              {!forms?.some((x) => x.paperPass && x.interviewPass === null) && (
+                <Button variant="outline" onClick={() => setFinalizeInterviewModalOpen(true)}>
+                  확정
+                </Button>
+              )}
             </>
           )}
         </div>
