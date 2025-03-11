@@ -1,6 +1,5 @@
 import WinkRequest from '@/api/request';
 import {
-  UpdateMyAvatarResponse,
   UpdateMyInfoRequest,
   UpdateMyPasswordRequest,
   UserResponse,
@@ -16,10 +15,6 @@ export default class User {
 
   public async updateMyInfo(data: UpdateMyInfoRequest): Promise<UserResponse> {
     return this.request.put('/user/info', data);
-  }
-
-  public async updateMyAvatar(): Promise<UpdateMyAvatarResponse> {
-    return this.request.post('/user/avatar');
   }
 
   public async deleteMyAvatar(): Promise<UserResponse> {
