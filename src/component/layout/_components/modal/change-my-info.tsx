@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar';
@@ -9,10 +9,11 @@ import { Input } from '@/ui/input';
 
 import Api from '@/api';
 import { UpdateMyInfoRequest, UpdateMyInfoRequestSchema } from '@/api/type/domain/user';
-import User from '@/api/type/schema/user';
 import { useApiWithToast } from '@/api/useApi';
 
 import { useUserStore } from '@/store/user';
+
+import { uploadS3 } from '@/util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash2, Upload, UserIcon } from 'lucide-react';
@@ -32,6 +33,7 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
     resolver: zodResolver(UpdateMyInfoRequestSchema),
     mode: 'onChange',
     defaultValues: {
+      avatar: '',
       description: '',
       github: '',
       instagram: '',
@@ -39,65 +41,12 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
     },
   });
 
-  const handleImageUpload = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      startUpload(
-        async () => {
-          const { url } = await Api.Domain.User.updateMyAvatar();
-
-          await fetch(url, {
-            method: 'PUT',
-            body: file,
-            headers: {
-              'Content-Type': file.type,
-            },
-          });
-
-          const avatarUrl = url.replace('/original', '').replace(/\?.+$/, '.webp');
-
-          return new Promise<void>((resolve, reject) => {
-            let isUploaded = false;
-            const checkInterval = setInterval(async () => {
-              const response = await fetch(avatarUrl);
-
-              if (response.ok) {
-                clearInterval(checkInterval);
-
-                isUploaded = true;
-
-                setUser({
-                  ...user,
-                  avatar: avatarUrl,
-                } as User);
-
-                resolve();
-              }
-            }, 500);
-
-            setTimeout(() => {
-              if (isUploaded) return;
-              clearInterval(checkInterval);
-              reject();
-            }, 1000 * 30);
-          });
-        },
-        {
-          loading: '프로필 사진을 수정중입니다.',
-          success: '프로필 사진을 수정했습니다.',
-        },
-      );
-    },
-    [user],
-  );
-
   const onSubmit = useCallback(
     (values: UpdateMyInfoRequest) =>
       startApi(
         async () => {
           const { user } = await Api.Domain.User.updateMyInfo({
+            avatar: values.avatar || undefined,
             description: values.description || undefined,
             github: values.github || undefined,
             instagram: values.instagram || undefined,
@@ -115,8 +64,11 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
     [],
   );
 
+  const avatar = form.watch('avatar');
+
   useEffect(() => {
     form.reset({
+      avatar: user?.avatar || '',
       description: user?.description || '',
       github: user?.social?.github || '',
       instagram: user?.social?.instagram || '',
@@ -142,7 +94,7 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
               }}
             >
               <Avatar className="w-24 h-24">
-                <AvatarImage src={user?.avatar} alt="avatar" />
+                <AvatarImage src={avatar} alt="avatar" />
                 <AvatarFallback>
                   <UserIcon />
                 </AvatarFallback>
@@ -183,8 +135,23 @@ export default function ChangeMyInfoModal({ open, setOpen }: ChangeMyInfoModalPr
               type="file"
               className="hidden"
               accept="image/*"
-              disabled={isUploading}
-              onChange={handleImageUpload}
+              onChange={async (e) =>
+                startUpload(
+                  async () =>
+                    form.setValue(
+                      'avatar',
+                      (
+                        await uploadS3(e.target.files!, () =>
+                          Api.Domain.Program.Upload.uploadImage(),
+                        )
+                      )[0],
+                    ),
+                  {
+                    loading: '이미지를 업로드하고 있습니다.',
+                    success: '이미지를 업로드했습니다.',
+                  },
+                )
+              }
             />
 
             <FormField

@@ -38,6 +38,7 @@ export const RemovePreUserRequestSchema = z.object({
 });
 
 export const UpdateMyInfoRequestSchema = z.object({
+  avatar: z.string().regex(URL_EXPRESSION, URL_MESSAGE).optional().or(z.literal('')),
   description: z.string().max(30, '소개는 30자를 초과할 수 없습니다.').optional(),
   github: z
     .string()
@@ -80,10 +81,6 @@ export const AdminUsersResponseSchema = z.object({
   users: z.custom<Page<User>>(),
 });
 
-export const UpdateMyAvatarResponseSchema = z.object({
-  url: z.string(),
-});
-
 export const UserResponseSchema = z.object({
   user: z.custom<User>(),
 });
@@ -100,6 +97,5 @@ export type UpdateRequest = z.infer<typeof UpdateRequestSchema>;
 export type AdminPreUserResponse = z.infer<typeof AdminPreUserResponseSchema>;
 export type AdminPreUsersResponse = z.infer<typeof AdminPreUsersResponseSchema>;
 export type AdminUsersResponse = z.infer<typeof AdminUsersResponseSchema>;
-export type UpdateMyAvatarResponse = z.infer<typeof UpdateMyAvatarResponseSchema>;
 export type UserResponse = z.infer<typeof UserResponseSchema>;
 export type UsersResponse = z.infer<typeof UsersResponseSchema>;
