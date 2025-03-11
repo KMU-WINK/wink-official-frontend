@@ -13,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from '@/ui/breadcrumb';
 import { Button } from '@/ui/button';
+import { Checkbox } from '@/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -128,7 +129,8 @@ export default function AdminUserPrePage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[75px]">이름</TableHead>
+              <TableHead className="min-w-[75px]">테스터</TableHead>
+              <TableHead className="min-w-[120px]">이름</TableHead>
               <TableHead className="min-w-[100px]">학번</TableHead>
               <TableHead className="min-w-[250px]">학과</TableHead>
               <TableHead className="min-w-[250px]">이메일</TableHead>
@@ -140,6 +142,9 @@ export default function AdminUserPrePage() {
             {isApi ? (
               Array.from({ length: 10 }, (_, index) => (
                 <TableRow key={index}>
+                  <TableCell>
+                    <Skeleton className="size-[20px]" />
+                  </TableCell>
                   <TableCell>
                     <Skeleton className="w-[40px] h-4" />
                   </TableCell>
@@ -160,6 +165,9 @@ export default function AdminUserPrePage() {
             ) : users && users.content.length > 0 ? (
               users!.content.map((user) => (
                 <TableRow key={user.id}>
+                  <TableCell>
+                    <Checkbox checked={user.test} disabled />{' '}
+                  </TableCell>
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.studentId}</TableCell>
                   <TableCell>{user.department}</TableCell>
