@@ -8,6 +8,10 @@ export default class AdminRecruitForm {
     return this.request.get(`/admin/recruit/${recruitId}/form`);
   }
 
+  public async paperClear(recruitId: string, formId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/form/${formId}/paper/clear`);
+  }
+
   public async paperPass(recruitId: string, formId: string): Promise<void> {
     return this.request.post(`/admin/recruit/${recruitId}/form/${formId}/paper/pass`);
   }
@@ -18,6 +22,10 @@ export default class AdminRecruitForm {
 
   public async finalizePaper(recruitId: string): Promise<void> {
     return this.request.post(`/admin/recruit/${recruitId}/form/paper/finalize`);
+  }
+
+  public async interviewClear(recruitId: string, formId: string): Promise<void> {
+    return this.request.post(`/admin/recruit/${recruitId}/form/${formId}/interview/clear`);
   }
 
   public async interviewPass(recruitId: string, formId: string): Promise<void> {

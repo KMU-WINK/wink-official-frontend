@@ -86,6 +86,16 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
     [forms],
   );
 
+  const paperClear = useCallback(async (recruit: Recruit, form: RecruitForm) => {
+    await Api.Domain.AdminRecruitForm.paperClear(recruit.id, form.id);
+
+    setForms((prev) =>
+      prev ? prev.map((a) => (a.id === form.id ? { ...form, paperPass: null } : a)) : [],
+    );
+
+    setSelectedForm((prev) => (prev?.id === form.id ? { ...prev, paperPass: null } : prev));
+  }, []);
+
   const paperPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.paperPass(recruit.id, form.id);
 
@@ -108,6 +118,16 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
     },
     [recruit],
   );
+
+  const interviewClear = useCallback(async (recruit: Recruit, form: RecruitForm) => {
+    await Api.Domain.AdminRecruitForm.interviewClear(recruit.id, form.id);
+
+    setForms((prev) =>
+      prev ? prev.map((a) => (a.id === form.id ? { ...form, interviewPass: null } : a)) : [],
+    );
+
+    setSelectedForm((prev) => (prev?.id === form.id ? { ...prev, interviewPass: null } : prev));
+  }, []);
 
   const interviewPass = useCallback(async (recruit: Recruit, form: RecruitForm) => {
     await Api.Domain.AdminRecruitForm.interviewPass(recruit.id, form.id);
@@ -244,18 +264,25 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
               {selectedForm && (
                 <div className="flex gap-2">
                   <Button
+                    variant="outline"
+                    className="w-full md:w-fit"
+                    onClick={() => paperClear(recruit!, selectedForm)}
+                  >
+                    초기화
+                  </Button>
+                  <Button
                     variant="destructive"
                     className="w-full md:w-fit"
                     onClick={() => paperFail(recruit!, selectedForm)}
                   >
-                    서류 불합격
+                    불합격
                   </Button>
                   <Button
                     variant="wink"
                     className="w-full md:w-fit"
                     onClick={() => paperPass(recruit!, selectedForm)}
                   >
-                    서류 합격
+                    합격
                   </Button>
                 </div>
               )}
@@ -264,7 +291,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
                 disabled={forms?.some((x) => x.paperPass === null) || forms.length === 0}
                 onClick={() => setFinalizePaperModalOpen(true)}
               >
-                서류 결과 확정
+                결과 확정
               </Button>
             </>
           )}
@@ -274,12 +301,20 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
               {selectedForm && (
                 <div className="flex gap-2">
                   <Button
+                    variant="outline"
+                    className="w-full md:w-fit"
+                    disabled={!selectedForm.paperPass}
+                    onClick={() => interviewClear(recruit!, selectedForm)}
+                  >
+                    초기화
+                  </Button>
+                  <Button
                     variant="destructive"
                     className="w-full md:w-fit"
                     disabled={!selectedForm.paperPass}
                     onClick={() => interviewFail(recruit!, selectedForm)}
                   >
-                    면접 불합격
+                    불합격
                   </Button>
                   <Button
                     variant="wink"
@@ -287,7 +322,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
                     disabled={!selectedForm.paperPass}
                     onClick={() => interviewPass(recruit!, selectedForm)}
                   >
-                    면접 합격
+                    합격
                   </Button>
                 </div>
               )}
@@ -296,7 +331,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
                 disabled={forms?.some((x) => x.paperPass && x.interviewPass === null)}
                 onClick={() => setFinalizeInterviewModalOpen(true)}
               >
-                면접 결과 확정
+                결과 확정
               </Button>
             </>
           )}
