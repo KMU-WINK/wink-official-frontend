@@ -59,9 +59,8 @@ export default function Step10({ go, form }: RecruitStepProps) {
             form.resetField('backendTechStacks');
             form.resetField('devOpsTechStacks');
             form.resetField('designTechStacks');
-            form.resetField('favoriteProject');
 
-            go(18);
+            go(17);
           }}
         >
           아니요

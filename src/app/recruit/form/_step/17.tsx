@@ -108,21 +108,6 @@ export default function Step17({ go, form }: RecruitStepProps) {
         }}
         className="flex items-center space-x-4"
       >
-        {!modify && (
-          <Button
-            variant="outline"
-            disabled={clicked}
-            onClick={() => {
-              setClicked(true);
-
-              form.setValue('favoriteProject', '');
-              go(step + 1);
-            }}
-          >
-            건너뛰기
-          </Button>
-        )}
-
         <Button
           variant="wink"
           disabled={clicked}

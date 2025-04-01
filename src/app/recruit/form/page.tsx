@@ -193,7 +193,7 @@ export default function RecruitApplicationPage() {
 
             14 <= step && step <= 17 && setBack(true);
 
-            if (step === 18 && !developer) {
+            if (step === 17 && !developer) {
               go(10);
               return;
             }
