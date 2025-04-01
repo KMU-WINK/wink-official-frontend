@@ -62,11 +62,11 @@ export const RecruitFormRequestSchema = z
       .regex(PHONE_NUMBER_EXPRESSION, PHONE_NUMBER_MESSAGE),
     jiwonDonggi: z
       .string()
-      .min(100, '지원동기는 100자 이상이어야 합니다.')
+      .min(300, '지원동기는 300자 이상이어야 합니다.')
       .max(500, '지원동기는 500자 이하이어야 합니다.'),
     selfIntroduce: z
       .string()
-      .min(100, '자기소개는 100자 이상이어야 합니다.')
+      .min(300, '자기소개는 300자 이상이어야 합니다.')
       .max(500, '자기소개는 500자 이하이어야 합니다.'),
     outings: z.array(z.string()),
     interviewDates: z
@@ -84,7 +84,7 @@ export const RecruitFormRequestSchema = z
     designTechStacks: z.array(z.enum(Object.keys(DesignTechStack) as [string, ...string[]])),
     favoriteProject: z
       .string()
-      .max(700, '가장 기억에 남는 프로젝트는 700자 이하이어야 합니다.')
+      .max(750, '가장 기억에 남는 프로젝트는 750자 이하이어야 합니다.')
       .optional(),
   })
   .superRefine((data, ctx) => {
