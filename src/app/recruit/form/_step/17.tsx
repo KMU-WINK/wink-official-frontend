@@ -67,10 +67,10 @@ export default function Step17({ go, form }: RecruitStepProps) {
           <p
             className={cn(
               'text-sm',
-              (favoriteProject?.length ?? 0) <= 700 ? 'text-neutral-500' : 'text-red-500',
+              (favoriteProject?.length ?? 0) <= 1000 ? 'text-neutral-500' : 'text-red-500',
             )}
           >
-            {favoriteProject?.length ?? 0} / 700
+            {favoriteProject?.length ?? 0} / 1000
           </p>
         </div>
         <FormField
@@ -81,7 +81,7 @@ export default function Step17({ go, form }: RecruitStepProps) {
               <FormControl>
                 <Textarea
                   className="overflow-hidden resize-none"
-                  placeholder="가장 기억에 남는 프로젝트를 입력해주세요."
+                  placeholder="스스로 공부하거나 기억에 남는 프로젝트를 알려주세요."
                   {...field}
                   ref={(e) => {
                     field.ref(e);

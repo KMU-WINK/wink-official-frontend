@@ -51,7 +51,6 @@ export default function ConfirmSurveyModal({
                   ...form.getValues(),
                   whyCannotInterview: form.getValues('whyCannotInterview') || undefined,
                   github: form.getValues('github') || undefined,
-                  favoriteProject: form.getValues('favoriteProject') || undefined,
                 });
 
                 router.push('/recruit');

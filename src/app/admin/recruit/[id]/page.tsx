@@ -450,7 +450,7 @@ export default function AdminRecruitDetailPage({ params }: AdminRecruitDetailPag
             </TableRow>
             <TableRow>
               <TableHead className="w-[180px]">
-                가장 기억에 남는 프로젝트
+                스스로 공부하거나 기억에 남는 프로젝트
                 {selectedForm.favoriteProject && (
                   <>
                     <br />

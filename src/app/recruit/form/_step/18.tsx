@@ -272,10 +272,10 @@ export default function Step18({ go, recruit, form }: RecruitStepProps) {
                     go(17);
                   }}
                 >
-                  <TableHead className="w-[120px] hover:underline cursor-pointer">
-                    가장 기억에
+                  <TableHead className="w-[150px] hover:underline cursor-pointer">
+                    스스로 공부하거나
                     <br />
-                    남는 프로젝트
+                    기억에 남는 프로젝트
                   </TableHead>
                   <TableCell className="whitespace-pre-line break-all hover:underline cursor-pointer">
                     {form.getValues('favoriteProject') || '-'}

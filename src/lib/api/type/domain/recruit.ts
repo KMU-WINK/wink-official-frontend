@@ -84,8 +84,8 @@ export const RecruitFormRequestSchema = z
     designTechStacks: z.array(z.enum(Object.keys(DesignTechStack) as [string, ...string[]])),
     favoriteProject: z
       .string()
-      .max(750, '가장 기억에 남는 프로젝트는 750자 이하이어야 합니다.')
-      .optional(),
+      .min(100, '100자 이상이어야 합니다.')
+      .max(1000, '1000자 이하이어야 합니다.'),
   })
   .superRefine((data, ctx) => {
     if (data.interviewDates.includes('0001-01-01') && !data.whyCannotInterview) {
