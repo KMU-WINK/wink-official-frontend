@@ -1,0 +1,56 @@
+name: Sync Repository for Vercel deploy
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  check-org:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - id: check
+        run: |
+          if [ "${{ github.repository_owner }}" == "KMU-WINK" ]; then
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+
+  sync-repository:
+    needs: check-org
+    if: needs.check-org.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your personal repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.REPOSITORY_DEPLOY_KEY }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Add original repository as remote
+        run: |
+          git remote add upstream git@github.com:${{ secrets.REPOSITORY_OWNER }}/${{ secrets.REPOSITORY_NAME }}.git
+
+      - name: Fetch from upstream
+        run: |
+          git fetch upstream
+
+      - name: Merge changes from upstream's develop branch
+        run: |
+          git merge upstream/develop -X theirs --allow-unrelated-histories || true
+
+      - name: Push changes to personal repository
+        run: |
+          git push origin HEAD
