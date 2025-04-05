@@ -24,8 +24,11 @@ jobs:
     if: needs.check-org.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your personal repository
+      - name: Checkout personal repository
         uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.REPOSITORY_OWNER }}/${{ secrets.REPOSITORY_NAME }}
+          ssh-key: ${{ secrets.REPOSITORY_DEPLOY_KEY }}
 
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.9.1
@@ -39,18 +42,19 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Add original repository as remote
+      - name: Add organization repository as upstream
         run: |
-          git remote add upstream git@github.com:${{ secrets.REPOSITORY_OWNER }}/${{ secrets.REPOSITORY_NAME }}.git
+          git remote add upstream git@github.com:${{ github.repository }}.git
 
       - name: Fetch from upstream
         run: |
           git fetch upstream
 
-      - name: Merge changes from upstream's develop branch
+      - name: Merge changes from organization's develop branch
         run: |
+          git checkout develop
           git merge upstream/develop -X theirs --allow-unrelated-histories || true
 
       - name: Push changes to personal repository
         run: |
-          git push origin HEAD
+          git push origin develop
